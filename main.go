@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"gitlab.com/Dank-del/SibylAPI-Go/core/utils"
+	"gitlab.com/Dank-del/SibylAPI-Go/routes"
 	"os"
 	"runtime/debug"
 
@@ -30,10 +32,23 @@ func runApp() {
 	}
 
 	database.StartDatabase()
-
-	err = server.RunSibylSystem()
+	if database.SESSION.Find(&database.Token{}).RowsAffected == 0 {
+		d, err := utils.CreateToken(sibylConfig.SibylConfig.MasterId, server.AdminParam)
+		if err != nil {
+			logging.Fatal(err)
+		}
+		logging.Info("Creating Initial ADMIN token")
+		logging.Info(d.Hash)
+		logging.Info("Write it down, cause it won't appear again!")
+	}
+	serv := server.RunSibylSystem()
 	if err != nil {
 		logging.Fatal(err)
+	}
+	server.ServerEngine.GET("createToken", routes.CreateToken)
+	err = serv.Run()
+	if err != nil {
+		logging.Error(err)
 	}
 }
 

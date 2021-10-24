@@ -12,11 +12,13 @@ type Token struct {
 	Permission string `json:"permission"`
 }
 
-func GetFromToken (token string) (*Token, error) {
+func GetFromToken(token string) (*Token, error) {
 	if SESSION == nil {
-		return nil, errors.New("Failed to Get token data as Session is nil, just like rishi's tiddies")
+		return nil, errors.New("failed to Get token data as Session is nil")
 	}
-    p := Token{}
+	print(SESSION.Find(&Token{}).RowsAffected)
+
+	p := Token{}
 	SESSION.Where("hash = ?", token).Take(&p)
 	return &p, nil
 }
@@ -26,4 +28,10 @@ func (t *Token) IsAdmin() bool {
 		return false
 	}
 	return t.Permission == server.AdminParam
+}
+
+func NewToken(t *Token) {
+	tx := SESSION.Begin()
+	tx.Save(&t)
+	tx.Commit()
 }
