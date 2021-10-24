@@ -7,10 +7,11 @@ require (
 	go.uber.org/zap v1.19.1
 	gorm.io/driver/sqlite v1.1.6
 	gorm.io/gorm v1.21.16
+	github.com/bigkevmcd/go-configparser v0.0.0-20210106142102-909504547ead
+	gorm.io/driver/postgres v1.1.2
 )
 
 require (
-	github.com/bigkevmcd/go-configparser v0.0.0-20210106142102-909504547ead // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
@@ -39,5 +40,4 @@ require (
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
-	gorm.io/driver/postgres v1.1.2 // indirect
 )
