@@ -11,6 +11,7 @@ tmp_files/
 labs/
 *.old.go
 *.db
+*.log
 
 # ignore debug binary file
 __debug_bin

@@ -19,3 +19,17 @@ func GenerateCurrentDateTime() string {
 
 	return str
 }
+
+// format of the date time will be dd-MM-yyyy HH-mm-ss
+func GenerateSuitabletDateTime() string {
+	t := time.Now()
+
+	str := stringUtils.MakeSureNum(t.Day(), 2) + "-"
+	str += stringUtils.MakeSureNum(int(t.Month()), 2) + "-"
+	str += stringUtils.MakeSureNum(t.Year(), 4) + "--"
+	str += stringUtils.MakeSureNum(t.Hour(), 2) + "-"
+	str += stringUtils.MakeSureNum(t.Minute(), 2) + "-"
+	str += stringUtils.MakeSureNum(t.Second(), 2)
+
+	return str
+}

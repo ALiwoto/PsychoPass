@@ -49,6 +49,14 @@ func LoadConfigFromFile(fileName string) error {
 		SibylConfig.MasterId, _ = strconv.ParseInt(os.Getenv("MASTER_ID"), 10, 64)
 	}
 
+	SibylConfig.MaxPanic, err = configContent.GetInt64("general", "max_panics")
+	if err != nil {
+		SibylConfig.MaxPanic, _ = strconv.ParseInt(os.Getenv("MAX_PANICS"), 10, 64)
+		if SibylConfig.MaxPanic == 0 {
+			SibylConfig.MaxPanic = -1
+		}
+	}
+
 	SibylConfig.UseSqllite, err = configContent.GetBool("database", "use_sqlite")
 	if err != nil {
 		usesqlite := os.Getenv("USE_SQLITE")
@@ -79,4 +87,11 @@ func GetPort() string {
 		return SibylConfig.Port
 	}
 	return "8080" // default port is set to 8080
+}
+
+func GetMaxPanics() int64 {
+	if SibylConfig != nil {
+		return SibylConfig.MaxPanic
+	}
+	return 0
 }

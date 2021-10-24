@@ -1,6 +1,8 @@
 package logging
 
 import (
+	"fmt"
+	"io/fs"
 	"io/ioutil"
 	"log"
 	"os"
@@ -30,10 +32,7 @@ func LoadLogger() func() {
 	SUGARED = loggerMgr.Sugar()
 
 	return func() {
-		err := loggerMgr.Sync()
-		if err != nil {
-			log.Fatal(err.Error())
-		}
+		_ = loggerMgr.Sync()
 	}
 }
 
@@ -95,7 +94,11 @@ func Fatal(args ...interface{}) {
 
 func LogPanic(details []byte) {
 	p := string(os.PathSeparator)
-	_ = ioutil.WriteFile("logs"+p+"panics"+
-		"panic_"+timeUtils.GenerateCurrentDateTime(),
-		details, 0)
+	path := "logs" + p + "panics/" +
+		"panic_" + timeUtils.GenerateSuitabletDateTime() + ".log"
+	err := ioutil.WriteFile(path,
+		details, fs.ModePerm)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
