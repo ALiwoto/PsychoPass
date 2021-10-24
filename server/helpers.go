@@ -2,20 +2,14 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.com/Dank-del/SibylAPI-Go/config"
-	"log"
+	"gitlab.com/Dank-del/SibylAPI-Go/core/sibylConfig"
+	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/logging"
 )
 
-func SibylServer(c *config.ServerConfig) *gin.Engine {
-	port := c.Port
-
-	if port == "" {
-		port = "8080"
-		log.Printf("Defaulting to port %s", port)
-	}
-
+func RunSibylSystem() error {
+	port := sibylConfig.GetPort()
 	// Starts a new Gin instance with no middle-ware
-	r := gin.New()
+	ServerEngine = gin.New()
 
 	// Define handlers
 	/*r.GET("/", func(c *gin.Context) {
@@ -24,9 +18,10 @@ func SibylServer(c *config.ServerConfig) *gin.Engine {
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})*/
-
+	LoadHandlers()
 	// Listen and serve on defined port
-	log.Printf("Listening on port %s", port)
-	// r.Run(":" + port)
-	return r
+	logging.Info("Listening on port ", port)
+	ServerEngine.Run(":" + port)
+
+	return nil
 }
