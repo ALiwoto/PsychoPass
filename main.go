@@ -7,6 +7,7 @@ import (
 
 	"gitlab.com/Dank-del/SibylAPI-Go/core/sibylConfig"
 	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/logging"
+	"gitlab.com/Dank-del/SibylAPI-Go/database"
 	"gitlab.com/Dank-del/SibylAPI-Go/server"
 )
 
@@ -27,6 +28,8 @@ func runApp() {
 	if err != nil {
 		logging.Fatal(err)
 	}
+
+	database.StartDatabase()
 
 	err = server.RunSibylSystem()
 	if err != nil {

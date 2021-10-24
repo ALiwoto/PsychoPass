@@ -2,28 +2,38 @@ package database
 
 import (
 	"fmt"
+
+	"gitlab.com/Dank-del/SibylAPI-Go/core/sibylConfig"
+	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/logging"
+	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"log"
 )
 
 var SESSION *gorm.DB
 
 func StartDatabase() {
-	db, err := gorm.Open(sqlite.Open(fmt.Sprintf("sibyl.db")), &gorm.Config{})
+	var db *gorm.DB
+	var err error
+	if sibylConfig.SibylConfig.UseSqllite {
+		db, err = gorm.Open(sqlite.Open(
+			fmt.Sprintf("%s.db", sibylConfig.SibylConfig.DbName)), &gorm.Config{})
+	} else {
+		db, err = gorm.Open(postgres.Open(sibylConfig.SibylConfig.DbUrl), &gorm.Config{})
+	}
+
 	if err != nil {
-		log.Fatalln("failed to connect database")
+		logging.Fatal("failed to connect to the database:", err)
 	}
 
 	SESSION = db
-	log.Println("Database connected")
+	logging.Info("Database connected")
 
 	// Create tables if they don't exist
 	err = SESSION.AutoMigrate(&User{}, &Token{})
 	if err != nil {
-		log.Fatalln(err)
+		logging.Fatal(err)
 	}
 
-	log.Println("Auto-migrated database schema")
-
+	logging.Info("Auto-migrated database schema")
 }
