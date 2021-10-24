@@ -4,16 +4,16 @@ import "strconv"
 
 // MakeSureNum will make sure that when you convert `i`
 // to string, its length be the exact same as `count`.
-// it will appened 0 to the left side of the number to do so.
+// it will append 0 to the left side of the number to do so.
 // for example:
 // MakeSureNum(5, 8) will return "00000005"
 func MakeSureNum(i, count int) string {
 	return MakeSureNumCustom(i, count, "0")
 }
 
-// MakeSureNum will make sure that when you convert `i`
+// MakeSureNumCustom will make sure that when you convert `i`
 // to string, its length be the exact same as `count`.
-// it will appened 0 to the left side of the number to do so.
+// it will append 0 to the left side of the number to do so.
 // for example:
 // MakeSureNum(5, 8) will return "00000005"
 func MakeSureNumCustom(i, count int, holder string) string {

@@ -57,16 +57,16 @@ func LoadConfigFromFile(fileName string) error {
 		}
 	}
 
-	SibylConfig.UseSqllite, err = configContent.GetBool("database", "use_sqlite")
+	SibylConfig.UseSqlite, err = configContent.GetBool("database", "use_sqlite")
 	if err != nil {
 		usesqlite := os.Getenv("USE_SQLITE")
-		SibylConfig.UseSqllite = usesqlite == "yes" || usesqlite == "true"
+		SibylConfig.UseSqlite = usesqlite == "yes" || usesqlite == "true"
 	}
 
 	SibylConfig.DbUrl, err = configContent.Get("database", "url")
 	if err != nil || len(SibylConfig.DbUrl) == 0 {
 		SibylConfig.DbUrl = os.Getenv("DB_URL")
-		if len(SibylConfig.DbUrl) == 0 && !SibylConfig.UseSqllite {
+		if len(SibylConfig.DbUrl) == 0 && !SibylConfig.UseSqlite {
 			return errors.New("no database url is specified")
 		}
 	}

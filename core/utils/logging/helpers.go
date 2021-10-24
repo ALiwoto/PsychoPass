@@ -95,7 +95,7 @@ func Fatal(args ...interface{}) {
 func LogPanic(details []byte) {
 	p := string(os.PathSeparator)
 	path := "logs" + p + "panics/" +
-		"panic_" + timeUtils.GenerateSuitabletDateTime() + ".log"
+		"panic_" + timeUtils.GenerateSuitableDateTime() + ".log"
 	err := ioutil.WriteFile(path,
 		details, fs.ModePerm)
 	if err != nil {

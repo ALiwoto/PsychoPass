@@ -6,7 +6,7 @@ import (
 	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/logging"
 )
 
-func RunSibylSystem() error {
+func RunSibylSystem() *gin.Engine {
 	port := sibylConfig.GetPort()
 	// Starts a new Gin instance with no middle-ware
 	ServerEngine = gin.New()
@@ -21,7 +21,6 @@ func RunSibylSystem() error {
 	LoadHandlers()
 	// Listen and serve on defined port
 	logging.Info("Listening on port ", port)
-	ServerEngine.Run(":" + port)
 
-	return nil
+	return ServerEngine
 }

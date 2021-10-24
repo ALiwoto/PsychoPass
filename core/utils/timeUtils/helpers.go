@@ -6,7 +6,7 @@ import (
 	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/stringUtils"
 )
 
-// format of the date time will be dd/MM/yyyy HH:mm:ss
+// GenerateCurrentDateTime format of the date time will be dd/MM/yyyy HH:mm:ss
 func GenerateCurrentDateTime() string {
 	t := time.Now()
 
@@ -20,8 +20,8 @@ func GenerateCurrentDateTime() string {
 	return str
 }
 
-// format of the date time will be dd-MM-yyyy HH-mm-ss
-func GenerateSuitabletDateTime() string {
+// GenerateSuitableDateTime will format of the date time to dd-MM-yyyy HH-mm-ss
+func GenerateSuitableDateTime() string {
 	t := time.Now()
 
 	str := stringUtils.MakeSureNum(t.Day(), 2) + "-"

@@ -13,6 +13,7 @@ import (
 func CreateToken(c *gin.Context) {
 	key := c.GetHeader("Sibyl-Token")
 	userId := c.GetHeader("User-ID")
+	//permission := c.GetHeader("Sibyl-Permission")
 	d, err := database.GetFromToken(key)
 	if err != nil {
 		c.JSON(http.StatusBadGateway, &CreateTokenResponse{

@@ -15,7 +15,7 @@ var SESSION *gorm.DB
 func StartDatabase() {
 	var db *gorm.DB
 	var err error
-	if sibylConfig.SibylConfig.UseSqllite {
+	if sibylConfig.SibylConfig.UseSqlite {
 		db, err = gorm.Open(sqlite.Open(
 			fmt.Sprintf("%s.db", sibylConfig.SibylConfig.DbName)), &gorm.Config{})
 	} else {
