@@ -26,8 +26,6 @@ func runApp() {
 	err := sibylConfig.LoadConfig()
 	if err != nil {
 		logging.Fatal(err)
-	} else {
-		panic("test")
 	}
 
 	err = server.RunSibylSystem()
