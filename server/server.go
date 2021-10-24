@@ -1,16 +1,13 @@
 package server
 
-
 import (
-	"log"
-	"net/http"
-	"os"
-
 	"github.com/gin-gonic/gin"
+	"gitlab.com/Dank-del/SibylAPI-Go/config"
+	"log"
 )
 
-func SibylServer() *gin.Engine {
-	port := os.Getenv("PORT")
+func SibylServer(c *config.ServerConfig) *gin.Engine {
+	port := c.Port
 
 	if port == "" {
 		port = "8080"
@@ -21,12 +18,12 @@ func SibylServer() *gin.Engine {
 	r := gin.New()
 
 	// Define handlers
-	r.GET("/", func(c *gin.Context) {
+	/*r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Hello World!")
 	})
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
-	})
+	})*/
 
 	// Listen and serve on defined port
 	log.Printf("Listening on port %s", port)

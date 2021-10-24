@@ -1,6 +1,6 @@
 // SRC: https://gist.github.com/nicklaw5/9d2d76b04d345152364d9b8cb4b554e9
 
-package Hashing
+package hashing
 
 import (
 	"crypto/sha1"
