@@ -57,6 +57,12 @@ func LoadConfigFromFile(fileName string) error {
 		}
 	}
 
+	SibylConfig.Debug, err = configContent.GetBool("general", "debug")
+	if err != nil {
+		debug := os.Getenv("SIBYL_DEBUG")
+		SibylConfig.Debug = debug == "yes" || debug == "true"
+	}
+
 	SibylConfig.UseSqlite, err = configContent.GetBool("database", "use_sqlite")
 	if err != nil {
 		usesqlite := os.Getenv("USE_SQLITE")
@@ -101,4 +107,11 @@ func GetMaxHashSize() int64 {
 		return SibylConfig.TokenSize
 	}
 	return 0
+}
+
+func IsDebug() bool {
+	if SibylConfig == nil {
+		return false
+	}
+	return SibylConfig.Debug
 }

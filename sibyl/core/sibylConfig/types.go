@@ -8,4 +8,5 @@ type SibylSystemConfig struct {
 	DbName    string `json:"db_name"`
 	UseSqlite bool   `json:"use_sqlite"`
 	Port      string `json:"port"`
+	Debug     bool   `json:"debug"`
 }

@@ -8,19 +8,21 @@ import (
 
 func RunSibylSystem() {
 	port := sibylConfig.GetPort()
+
+	if !sibylConfig.IsDebug() {
+		gin.SetMode(gin.ReleaseMode)
+	} else {
+		gin.SetMode(gin.DebugMode)
+	}
+
 	// Starts a new Gin instance with no middle-ware
 	ServerEngine = gin.New()
-
-	// Define handlers
-	/*r.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "Hello World!")
-	})
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
-	})*/
 	LoadHandlers()
 	// Listen and serve on defined port
 	logging.Info("Listening on port ", port)
 
-	ServerEngine.Run(":" + port)
+	err := ServerEngine.Run(":" + port)
+	if err != nil {
+		logging.Error(err)
+	}
 }
