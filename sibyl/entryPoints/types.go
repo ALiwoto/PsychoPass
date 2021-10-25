@@ -9,3 +9,9 @@ type CreateTokenResponse struct {
 	Success bool              `json:"success"`
 	Err     *sv.EndpointError `json:"error"`
 }
+
+type UserResponse struct {
+	User    *sv.User          `json:"user"`
+	Success bool              `json:"success"`
+	Err     *sv.EndpointError `json:"error"`
+}

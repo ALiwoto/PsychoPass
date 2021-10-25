@@ -52,6 +52,17 @@ func Error(args ...interface{}) {
 	}
 }
 
+// UnexpectedError works like Error function and logs the error details to a
+// specified log file (a new log file is used each time).
+func UnexpectedError(err error) {
+	if SUGARED != nil {
+		SUGARED.Error("Unexpected Error: ", err)
+	} else {
+		log.Println("Unexpected Error: ", err)
+	}
+	_ = ioutil.WriteFile(GetLogErrorPath(), []byte(err.Error()), fs.ModePerm)
+}
+
 func Info(args ...interface{}) {
 	if SUGARED != nil {
 		SUGARED.Info(args...)
@@ -96,9 +107,14 @@ func LogPanic(details []byte) {
 	p := string(os.PathSeparator)
 	path := "logs" + p + "panics/" +
 		"panic_" + timeUtils.GenerateSuitableDateTime() + ".log"
-	err := ioutil.WriteFile(path,
-		details, fs.ModePerm)
+	err := ioutil.WriteFile(path, details, fs.ModePerm)
 	if err != nil {
 		fmt.Println(err)
 	}
+}
+
+func GetLogErrorPath() string {
+	p := string(os.PathSeparator)
+	return "logs" + p + "errors/" +
+		"error_" + timeUtils.GenerateSuitableDateTime() + ".log"
 }

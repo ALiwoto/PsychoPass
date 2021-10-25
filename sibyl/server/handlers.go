@@ -26,4 +26,8 @@ func LoadHandlers() {
 	// deleteBan handlers
 	ServerEngine.GET("deleteBan", entryPoints.DeleteBan)
 	ServerEngine.POST("deleteBan", entryPoints.DeleteBan)
+
+	// getInfo handlers
+	ServerEngine.GET("getInfo", entryPoints.GetInfo)
+	ServerEngine.POST("getInfo", entryPoints.GetInfo)
 }

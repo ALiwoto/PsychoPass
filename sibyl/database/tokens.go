@@ -8,7 +8,7 @@ import (
 	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/hashing"
 )
 
-func GetFromId(id int64) (*sv.Token, error) {
+func GetTokenFromId(id int64) (*sv.Token, error) {
 	if SESSION == nil {
 		return nil, errors.New("failed to Get token data as Session is nil")
 	}
@@ -23,12 +23,12 @@ func GetFromId(id int64) (*sv.Token, error) {
 	return &p, nil
 }
 
-func GetFromToken(token string) (*sv.Token, error) {
+func GetTokenFromString(token string) (*sv.Token, error) {
 	id := hashing.GetIdFromToken(token)
 	if id == 0 {
 		return nil, errors.New("token is invalid")
 	}
-	u, err := GetFromId(id)
+	u, err := GetTokenFromId(id)
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +40,7 @@ func GetFromToken(token string) (*sv.Token, error) {
 }
 
 func UpdateTokenLastUsageById(id int64) {
-	u, err := GetFromId(id)
+	u, err := GetTokenFromId(id)
 	if err != nil || u == nil {
 		return
 	}
