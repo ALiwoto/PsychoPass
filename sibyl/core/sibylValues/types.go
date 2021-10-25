@@ -34,3 +34,9 @@ type EndpointError struct {
 	Message   string `json:"message"`
 	Origin    string `json:"origin"`
 }
+
+type SibylOperation struct {
+	Message string `json:"message"`
+	Time    string `json:"time"`
+	Success bool   `json:"success"`
+}
