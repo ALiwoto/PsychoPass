@@ -44,6 +44,10 @@ func LoadConfigFromFile(fileName string) error {
 		}
 	}
 
+	if SibylConfig.TokenSize < 20 {
+		logging.Fatal("Exiting cause token size is less than 20")
+	}
+
 	SibylConfig.MasterId, err = configContent.GetInt64("general", "masterid")
 	if err != nil {
 		SibylConfig.MasterId, _ = strconv.ParseInt(os.Getenv("MASTER_ID"), 10, 64)
