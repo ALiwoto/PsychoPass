@@ -91,7 +91,7 @@ func RevokeToken(c *gin.Context) {
 		return
 	}
 	id, err := strconv.ParseInt(userId, 10, 64)
-	if err != nil {
+	if err != nil || id == 0 {
 		SendErrorToken(c, &sv.EndpointError{
 			ErrorCode: 502,
 			Message:   ErrInvalidUserId,
@@ -170,13 +170,6 @@ func GetToken(c *gin.Context) {
 			Origin:    "getToken",
 		}, http.StatusBadGateway)
 	}
-}
-
-func SendErrorToken(c *gin.Context, err *sv.EndpointError, status int) {
-	c.JSON(status, &CreateTokenResponse{
-		Err:     err,
-		Success: false,
-	})
 }
 
 func AddBan(c *gin.Context) {
@@ -281,32 +274,29 @@ func GetInfo(c *gin.Context) {
 	userId := utils.GetParam(c, "user-id", "userId", "id")
 	d, err := database.GetTokenFromString(token)
 	if err != nil || d == nil {
-		c.JSON(http.StatusBadGateway,
-			&sv.SibylOperation{
-				Success: false,
-				Message: ErrInvalidToken,
-				Time:    timeUtils.GenerateCurrentDateTime(),
-			})
+		SendErrorUser(c, &sv.EndpointError{
+			ErrorCode: 502,
+			Message:   ErrInvalidToken,
+			Origin:    "GetInfo",
+		}, http.StatusBadGateway)
 		return
 	}
 	id, err := strconv.ParseInt(userId, 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadGateway,
-			&sv.SibylOperation{
-				Success: false,
-				Message: ErrInvalidUserId,
-				Time:    timeUtils.GenerateCurrentDateTime(),
-			})
+	if err != nil || id == 0 {
+		SendErrorUser(c, &sv.EndpointError{
+			ErrorCode: 502,
+			Message:   ErrInvalidUserId,
+			Origin:    "GetInfo",
+		}, http.StatusBadGateway)
 		return
 	}
 	u, _ := database.GetUserFromId(id)
 	if u == nil {
-		c.JSON(http.StatusNotFound,
-			&sv.SibylOperation{
-				Success: false,
-				Message: ErrUserNotFound,
-				Time:    timeUtils.GenerateCurrentDateTime(),
-			})
+		SendErrorUser(c, &sv.EndpointError{
+			ErrorCode: 404,
+			Message:   ErrUserNotFound,
+			Origin:    "GetInfo",
+		}, http.StatusBadGateway)
 		return
 	}
 
