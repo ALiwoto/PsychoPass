@@ -2,9 +2,10 @@ package entryPoints
 
 import (
 	"fmt"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/timeUtils"
 	"net/http"
 	"strconv"
+
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/timeUtils"
 
 	"github.com/gin-gonic/gin"
 	sv "gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
@@ -176,7 +177,7 @@ func SendErrorToken(c *gin.Context, err *sv.EndpointError, status int) {
 
 func AddBan(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
-	userId := utils.GetParam(c, "userId", "id")
+	userId := utils.GetParam(c, "userId", "id", "user-id")
 	banReason := utils.GetParam(c, "reason", "banreason")
 	banMsg := utils.GetParam(c, "message", "msg", "banmsg")
 	d, err := database.GetFromToken(token)
