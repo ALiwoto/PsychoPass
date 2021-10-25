@@ -18,4 +18,8 @@ func LoadHandlers() {
 	// get token handlers
 	ServerEngine.GET("getToken", entryPoints.GetToken)
 	ServerEngine.POST("getToken", entryPoints.RevokeToken)
+
+	// addBan handlers
+	ServerEngine.GET("addBan", entryPoints.AddBan)
+	ServerEngine.POST("addBan", entryPoints.AddBan)
 }
