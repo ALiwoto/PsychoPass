@@ -117,7 +117,7 @@ func RevokeToken(c *gin.Context) {
 	}
 }
 
-// RevokeToken function will revoke the specified token.
+// GetToken function will revoke the specified token.
 func GetToken(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "id")
