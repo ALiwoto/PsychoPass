@@ -1,6 +1,8 @@
 package entryPoints
 
 import (
+	"fmt"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/timeUtils"
 	"net/http"
 	"strconv"
 
@@ -170,4 +172,44 @@ func SendErrorToken(c *gin.Context, err *sv.EndpointError, status int) {
 		Err:     err,
 		Success: false,
 	})
+}
+
+func AddBan(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	userId := utils.GetParam(c, "userId", "id")
+	banReason := utils.GetParam(c, "reason", "banreason")
+	banMsg := utils.GetParam(c, "message", "msg", "banmsg")
+	d, err := database.GetFromToken(token)
+	if err != nil {
+		c.JSON(http.StatusBadGateway,
+			&sv.SibylOperation{
+				Success: false,
+				Message: fmt.Sprintf("User wasn't banned due to %s", err.Error()),
+				Time:    timeUtils.GenerateCurrentDateTime(),
+			})
+		return
+	}
+	if d.CanBan() {
+		id, err := strconv.ParseInt(userId, 10, 64)
+		if err != nil {
+			c.JSON(http.StatusBadGateway,
+				&sv.SibylOperation{
+					Success: false,
+					Message: fmt.Sprintf("User wasn't banned due to %s", err.Error()),
+					Time:    timeUtils.GenerateCurrentDateTime(),
+				})
+			return
+		}
+		database.AddBan(id, banReason, banMsg)
+		c.JSON(http.StatusOK, &sv.SibylOperation{Success: true, Message: "User was banned", Time: timeUtils.GenerateCurrentDateTime()})
+		return
+	} else {
+		c.JSON(http.StatusForbidden,
+			&sv.SibylOperation{
+				Success: false,
+				Message: "User wasn't banned as you lack permissions",
+				Time:    timeUtils.GenerateCurrentDateTime(),
+			})
+		return
+	}
 }
