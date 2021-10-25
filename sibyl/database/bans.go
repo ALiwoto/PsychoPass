@@ -17,3 +17,9 @@ func AddBan(UserID int64, Reason string, Message string) {
 	tx.Save(ban)
 	tx.Commit()
 }
+
+func DeleteBan(UserID int64) {
+	tx := SESSION.Begin()
+	tx.Where("user_id = ?", UserID).Delete(&sv.User{})
+	tx.Commit()
+}

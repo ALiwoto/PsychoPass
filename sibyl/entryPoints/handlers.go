@@ -213,3 +213,41 @@ func AddBan(c *gin.Context) {
 		return
 	}
 }
+
+func DeleteBan(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	userId := utils.GetParam(c, "userId", "id")
+	d, err := database.GetFromToken(token)
+	if err != nil {
+		c.JSON(http.StatusBadGateway,
+			&sv.SibylOperation{
+				Success: false,
+				Message: "User wasn't unbanned due to an issue with the token",
+				Time:    timeUtils.GenerateCurrentDateTime(),
+			})
+		return
+	}
+	if d.CanBan() {
+		id, err := strconv.ParseInt(userId, 10, 64)
+		if err != nil {
+			c.JSON(http.StatusBadGateway,
+				&sv.SibylOperation{
+					Success: false,
+					Message: "User wasn't unbanned due to failure with parsing of user id",
+					Time:    timeUtils.GenerateCurrentDateTime(),
+				})
+			return
+		}
+		database.DeleteBan(id)
+		c.JSON(http.StatusOK, &sv.SibylOperation{Success: true, Message: "User was unbanned", Time: timeUtils.GenerateCurrentDateTime()})
+		return
+	} else {
+		c.JSON(http.StatusForbidden,
+			&sv.SibylOperation{
+				Success: false,
+				Message: "User wasn't unbanned as you lack permissions",
+				Time:    timeUtils.GenerateCurrentDateTime(),
+			})
+		return
+	}
+}
