@@ -3,8 +3,9 @@ package database
 import (
 	"fmt"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/core/sibylConfig"
-	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/logging"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylConfig"
+	sv "gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -30,10 +31,14 @@ func StartDatabase() {
 	logging.Info("Database connected")
 
 	// Create tables if they don't exist
-	err = SESSION.AutoMigrate(&User{}, &Token{})
+	err = SESSION.AutoMigrate(&sv.User{}, &sv.Token{})
 	if err != nil {
 		logging.Fatal(err)
 	}
 
 	logging.Info("Auto-migrated database schema")
+}
+
+func IsFirstTime() bool {
+	return SESSION.Find(&sv.Token{}).RowsAffected == 0
 }

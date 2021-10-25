@@ -2,15 +2,17 @@ package main
 
 import (
 	"fmt"
-	"gitlab.com/Dank-del/SibylAPI-Go/core/utils"
-	"gitlab.com/Dank-del/SibylAPI-Go/routes"
+	"io/fs"
 	"os"
 	"runtime/debug"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/core/sibylConfig"
-	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/logging"
-	"gitlab.com/Dank-del/SibylAPI-Go/database"
-	"gitlab.com/Dank-del/SibylAPI-Go/server"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils"
+
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylConfig"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/server"
 )
 
 func main() {
@@ -32,24 +34,18 @@ func runApp() {
 	}
 
 	database.StartDatabase()
-	if database.SESSION.Find(&database.Token{}).RowsAffected == 0 {
-		d, err := utils.CreateToken(sibylConfig.SibylConfig.MasterId, server.AdminParam)
+	if database.IsFirstTime() {
+		d, err := utils.CreateToken(sibylConfig.SibylConfig.MasterId,
+			sibylValues.Owner)
 		if err != nil {
 			logging.Fatal(err)
 		}
 		logging.Info("Creating Initial ADMIN token")
 		logging.Info(d.Hash)
-		logging.Info("Write it down, cause it won't appear again!")
+		os.WriteFile("owner.token", []byte(d.Hash), fs.ModePerm)
 	}
-	serv := server.RunSibylSystem()
-	if err != nil {
-		logging.Fatal(err)
-	}
-	server.ServerEngine.GET("createToken", routes.CreateToken)
-	err = serv.Run()
-	if err != nil {
-		logging.Error(err)
-	}
+
+	server.RunSibylSystem()
 }
 
 var totalPanics int

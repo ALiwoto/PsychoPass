@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/bigkevmcd/go-configparser"
-	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/logging"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
 )
 
 func LoadConfig() error {
@@ -92,6 +92,13 @@ func GetPort() string {
 func GetMaxPanics() int64 {
 	if SibylConfig != nil {
 		return SibylConfig.MaxPanic
+	}
+	return 0
+}
+
+func GetMaxHashSize() int64 {
+	if SibylConfig != nil {
+		return SibylConfig.TokenSize
 	}
 	return 0
 }

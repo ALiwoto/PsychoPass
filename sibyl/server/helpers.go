@@ -2,11 +2,11 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.com/Dank-del/SibylAPI-Go/core/sibylConfig"
-	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/logging"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylConfig"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
 )
 
-func RunSibylSystem() *gin.Engine {
+func RunSibylSystem() {
 	port := sibylConfig.GetPort()
 	// Starts a new Gin instance with no middle-ware
 	ServerEngine = gin.New()
@@ -22,5 +22,5 @@ func RunSibylSystem() *gin.Engine {
 	// Listen and serve on defined port
 	logging.Info("Listening on port ", port)
 
-	return ServerEngine
+	ServerEngine.Run(":" + port)
 }

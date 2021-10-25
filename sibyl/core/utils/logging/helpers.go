@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/core/utils/timeUtils"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/timeUtils"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
