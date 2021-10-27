@@ -39,7 +39,7 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	md.AppendMonoThis(t.Hash).AppendNormalThis("\n\n")
 	md.AppendBoldThis("Please don't share this token with anyone!")
 	if t.HasRole() {
-		md.AppendItalicThis("You are a valid").AppendNormalThis(" ")
+		md.AppendItalicThis("\nYou are a valid").AppendNormalThis(" ")
 		md.AppendMonoThis(t.GetStringPermission()).AppendNormal(".")
 	}
 
