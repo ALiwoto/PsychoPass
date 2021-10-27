@@ -48,3 +48,7 @@ func ReportUserHandler(c *gin.Context) {
 		return
 	}
 }
+
+func GetUpdateHandler(c *gin.Context) {
+
+}

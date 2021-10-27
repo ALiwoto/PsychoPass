@@ -6,13 +6,14 @@ import (
 	"log"
 	"net/http"
 	"testing"
+	"time"
 )
 
 func TestReportUser01(t *testing.T) {
 	// run the app in anoter goroutine
-	//go runApp()
+	go runApp()
 
-	//time.Sleep(time.Millisecond * 5600)
+	time.Sleep(time.Millisecond * 5600)
 
 	ownerToken := getOwnerToken()
 	doTestReportUser01(t, ownerToken, "report", http.MethodPost)
@@ -66,4 +67,12 @@ func doTestReportUser01(t *testing.T, ownerToken, path, method string) {
 	}
 
 	log.Println(string(strValue))
+}
+
+func TestReportUser01RequestOnly(t *testing.T) {
+	ownerToken := getOwnerToken()
+	doTestReportUser01(t, ownerToken, "report", http.MethodPost)
+	doTestReportUser01(t, ownerToken, "reportUser", http.MethodPost)
+	doTestReportUser01(t, ownerToken, "report", http.MethodGet)
+	doTestReportUser01(t, ownerToken, "reportUser", http.MethodGet)
 }

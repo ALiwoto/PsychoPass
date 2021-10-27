@@ -32,6 +32,9 @@ func LoadHandlers() {
 
 	// report handlers
 	bindHandler(reportHandlers.ReportUserHandler, "report", "reportUser")
+
+	// get update handlers
+	bindHandler(reportHandlers.GetUpdateHandler, "getUpdate", "fetchUpdate")
 }
 
 func bindHandler(handler gin.HandlerFunc, paths ...string) {
