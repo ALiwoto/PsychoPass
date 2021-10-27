@@ -29,8 +29,9 @@ func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	user := ctx.EffectiveUser
 	t, err := database.GetTokenFromId(user.Id)
-	if err != nil {
+	if err != nil || t == nil {
 		logging.UnexpectedError(err)
+		return ext.EndGroups
 	}
 
 	md := mdparser.GetNormal("Hi ").AppendMentionThis(user.FirstName, user.Id)
@@ -52,8 +53,9 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 func revokeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	user := ctx.EffectiveUser
 	t, err := database.GetTokenFromId(user.Id)
-	if err != nil {
+	if err != nil || t == nil {
 		logging.UnexpectedError(err)
+		return ext.EndGroups
 	}
 
 	database.RevokeTokenHash(t, hashing.GetUserToken(user.Id))

@@ -31,7 +31,7 @@ func TestCreateToken01(t *testing.T) {
 
 func doTestCreateToken01(t *testing.T, ownerToken, path, method string) {
 	// create a new token
-	req, err := http.NewRequest(http.MethodPost, baseUrl+path, nil)
+	req, err := http.NewRequest(http.MethodPost, getBaseUrl()+path, nil)
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -87,7 +87,7 @@ func TestCreateToken02(t *testing.T) {
 }
 
 func doTestCreateToken02(t *testing.T, ownerToken, path, method string) {
-	url := baseUrl + path + "?user-id=" + userId01 + "&token=" + ownerToken
+	url := getBaseUrl() + path + "?user-id=" + userId01 + "&token=" + ownerToken
 	// create a new token
 	req, err := http.NewRequest(http.MethodPost, url, nil)
 	if err != nil {
@@ -145,7 +145,7 @@ func TestCreateToken03(t *testing.T) {
 }
 
 func doTestCreateToken03(t *testing.T, ownerToken, path, method string) {
-	url := baseUrl + path + "?user-id=" + userId01 + "&token=" + ownerToken
+	url := getBaseUrl() + path + "?user-id=" + userId01 + "&token=" + ownerToken
 	// create a new token
 	req, err := http.NewRequest(http.MethodPost, url, nil)
 	if err != nil {
@@ -198,7 +198,7 @@ func doTestCreateToken03(t *testing.T, ownerToken, path, method string) {
 }
 
 func doTestCreateToken03Wrong(t *testing.T, ownerToken, path, method string) {
-	url := baseUrl + path + "?user-id=" + userId01 + "&token=" + ownerToken
+	url := getBaseUrl() + path + "?user-id=" + userId01 + "&token=" + ownerToken
 	// create a new token
 	req, err := http.NewRequest(http.MethodPost, url, nil)
 	if err != nil {
@@ -255,7 +255,7 @@ func TestCreateToken04(t *testing.T) {
 }
 
 func doTestCreateToken04(t *testing.T, ownerToken, path, method string) {
-	url := baseUrl + path + "?user-id=" + userId03 + "&token=" + ownerToken +
+	url := getBaseUrl() + path + "?user-id=" + userId03 + "&token=" + ownerToken +
 		"&permission=" + strconv.Itoa(int(sibylValues.Owner))
 	// create a new token
 	req, err := http.NewRequest(http.MethodPost, url, nil)
@@ -328,7 +328,7 @@ func TestCreateToken05(t *testing.T) {
 
 func doTestCreateToken05(t *testing.T, ownerToken, path, method string) {
 	// create a new token
-	req, err := http.NewRequest(http.MethodPost, baseUrl+path, nil)
+	req, err := http.NewRequest(http.MethodPost, getBaseUrl()+path, nil)
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -398,7 +398,7 @@ func TestCreateToken06(t *testing.T) {
 }
 
 func doTestCreateToken06(t *testing.T, ownerToken, path, method string) {
-	url := baseUrl + path + "?user-id=" + userId01 + "&token=" + ownerToken +
+	url := getBaseUrl() + path + "?user-id=" + userId01 + "&token=" + ownerToken +
 		"&permission=" + strconv.Itoa(int(sibylValues.Inspector))
 	// create a new token
 	req, err := http.NewRequest(http.MethodPost, url, nil)
@@ -454,7 +454,7 @@ func doTestCreateToken06(t *testing.T, ownerToken, path, method string) {
 }
 
 func doTestCreateToken06Wrong(t *testing.T, ownerToken, path, method string) {
-	url := baseUrl + path + "?user-id=" + userId01 + "&token=" + ownerToken
+	url := getBaseUrl() + path + "?user-id=" + userId01 + "&token=" + ownerToken
 	// create a new token
 	req, err := http.NewRequest(http.MethodPost, url, nil)
 	if err != nil {

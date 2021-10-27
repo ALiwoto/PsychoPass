@@ -2,6 +2,7 @@ package tests_test
 
 import (
 	"io/fs"
+	"io/ioutil"
 	"os"
 
 	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylConfig"
@@ -13,7 +14,7 @@ import (
 	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/tgCore"
 )
 
-const baseUrl = "http://localhost:8080/"
+//const baseUrl = "http://localhost:8080/"
 const (
 	userId01 = "1341091260"
 	userId02 = userId01
@@ -29,6 +30,18 @@ var (
 	user04TokenTmp = ""
 	user05TokenTmp = ""
 )
+
+var (
+	baseUrl = ""
+)
+
+func getBaseUrl() string {
+	if len(baseUrl) == 0 {
+		b, _ := ioutil.ReadFile("baseUrl.ini")
+		baseUrl = string(b)
+	}
+	return baseUrl
+}
 
 func runApp() {
 	//defer recoverFromPanic()

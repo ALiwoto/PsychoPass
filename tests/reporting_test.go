@@ -6,14 +6,13 @@ import (
 	"log"
 	"net/http"
 	"testing"
-	"time"
 )
 
 func TestReportUser01(t *testing.T) {
 	// run the app in anoter goroutine
-	go runApp()
+	//go runApp()
 
-	time.Sleep(time.Millisecond * 5600)
+	//time.Sleep(time.Millisecond * 5600)
 
 	ownerToken := getOwnerToken()
 	doTestReportUser01(t, ownerToken, "report", http.MethodPost)
@@ -24,7 +23,7 @@ func TestReportUser01(t *testing.T) {
 
 func doTestReportUser01(t *testing.T, ownerToken, path, method string) {
 	// create a new token
-	req, err := http.NewRequest(http.MethodPost, baseUrl+path, nil)
+	req, err := http.NewRequest(http.MethodPost, getBaseUrl()+path, nil)
 	if err != nil {
 		t.Fatal(err)
 		return
