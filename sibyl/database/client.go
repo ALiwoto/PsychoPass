@@ -14,11 +14,20 @@ import (
 var SESSION *gorm.DB
 
 func StartDatabase() {
+	// check if `SESSION` variable is already established or not.
+	// if yes, check if we have got any error from it or not.
+	// if there is an error in the session, it mean we have to establish
+	// a new connection again.
+	if SESSION != nil && SESSION.Error == nil {
+		return
+	}
+
 	var db *gorm.DB
 	var err error
 	if sibylConfig.SibylConfig.UseSqlite {
 		db, err = gorm.Open(sqlite.Open(
-			fmt.Sprintf("%s.db", sibylConfig.SibylConfig.DbName)), &gorm.Config{})
+			fmt.Sprintf("%s.db", sibylConfig.SibylConfig.DbName)),
+			&gorm.Config{})
 	} else {
 		db, err = gorm.Open(postgres.Open(sibylConfig.SibylConfig.DbUrl), &gorm.Config{})
 	}

@@ -3,12 +3,15 @@ module gitlab.com/Dank-del/SibylAPI-Go
 go 1.17
 
 require (
-	github.com/bigkevmcd/go-configparser v0.0.0-20210106142102-909504547ead
-	github.com/gin-gonic/gin v1.7.4
-	go.uber.org/zap v1.19.1
-	gorm.io/driver/postgres v1.1.2
-	gorm.io/driver/sqlite v1.1.6
 	gorm.io/gorm v1.21.16
+	go.uber.org/zap v1.19.1
+	gorm.io/driver/sqlite v1.1.6
+	gorm.io/driver/postgres v1.1.2
+	github.com/gin-gonic/gin v1.7.4
+	github.com/ALiwoto/mdparser v1.0.6
+	github.com/ALiwoto/StrongStringGo v1.0.4
+	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.1
+	github.com/bigkevmcd/go-configparser v0.0.0-20210106142102-909504547ead
 )
 
 require (

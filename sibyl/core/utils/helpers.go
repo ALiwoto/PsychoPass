@@ -15,7 +15,7 @@ func CreateToken(id int64, permission sv.UserPermission) (*sv.Token, error) {
 	h := hashing.GetUserToken(id)
 	data := &sv.Token{
 		Permission: permission,
-		Id:         id,
+		UserId:     id,
 		Hash:       h,
 	}
 

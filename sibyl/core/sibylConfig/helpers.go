@@ -4,7 +4,9 @@ import (
 	"errors"
 	"os"
 	"strconv"
+	"strings"
 
+	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/bigkevmcd/go-configparser"
 	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
 )
@@ -17,12 +19,14 @@ func LoadConfigFromFile(fileName string) error {
 	if SibylConfig != nil {
 		return nil
 	}
+
 	SibylConfig = &SibylSystemConfig{}
 	configContent, err := configparser.NewConfigParserFromFile(fileName)
 	if err != nil {
 		return err
 	}
 
+	// general section variables:
 	SibylConfig.Port, err = configContent.Get("general", "port")
 	if err != nil {
 		SibylConfig.Port = os.Getenv("PORT")
@@ -67,6 +71,7 @@ func LoadConfigFromFile(fileName string) error {
 		SibylConfig.Debug = debug == "yes" || debug == "true"
 	}
 
+	// database section variables:
 	SibylConfig.UseSqlite, err = configContent.GetBool("database", "use_sqlite")
 	if err != nil {
 		usesqlite := os.Getenv("USE_SQLITE")
@@ -89,7 +94,79 @@ func LoadConfigFromFile(fileName string) error {
 		}
 	}
 
+	// telegram section variables
+	SibylConfig.BotToken, err = configContent.Get("telegram", "bot_token")
+	if err != nil || len(SibylConfig.BotToken) == 0 {
+		SibylConfig.BotToken = os.Getenv("BOT_TOKEN")
+	}
+
+	dropStr, err := configContent.Get("telegram", "drop_updates")
+	if err != nil || len(SibylConfig.BotToken) == 0 {
+		dropStr = os.Getenv("BOT_TOKEN")
+	}
+	dropStr = strings.ToLower(strings.TrimSpace(dropStr))
+	if dropStr == "yes" || dropStr == "on" || dropStr == "enable" {
+		SibylConfig.DropUpdates = true
+	}
+
+	baseStr, err := configContent.Get("telegram", "base_chats")
+	if err != nil || len(SibylConfig.BotToken) == 0 {
+		baseStr = os.Getenv("BASE_CHATS")
+	}
+	SibylConfig.BaseChats = parseBaseStr(strings.TrimSpace(baseStr))
+
+	preStr, err := configContent.Get("telegram", "cmd_prefixes")
+	if err != nil || len(SibylConfig.BotToken) == 0 {
+		preStr = os.Getenv("CMD_PREFIXES")
+	}
+	SibylConfig.CmdPrefixes = parseCmdPrefixes(preStr)
+
 	return nil
+}
+
+func parseCmdPrefixes(value string) []rune {
+	if len(value) == 0 {
+		return []rune{'!', '/'}
+	}
+
+	value = strings.TrimSpace(value)
+	if strings.Contains(value, " ") {
+		var all []rune
+		mystrs := ws.FixSplitWhite(strings.Split(value, " "))
+		for _, str := range mystrs {
+			all = append(all, rune(str[0]))
+		}
+		return all
+	} else {
+		if len(value) > 0 {
+			return []rune(value)
+		}
+		return nil
+	}
+}
+
+func parseBaseStr(value string) []int64 {
+	if !strings.Contains(value, " ") && !strings.Contains(value, ",") {
+		return nil
+	}
+
+	mystrs := ws.Split(value, " ", ",")
+	if len(mystrs) == 0 {
+		return nil
+	}
+
+	var tmp int64
+	var err error
+	var all []int64
+	for _, str := range mystrs {
+		tmp, err = strconv.ParseInt(str, 10, 64)
+		if err != nil || tmp == 0 {
+			continue
+		}
+		all = append(all, tmp)
+	}
+
+	return all
 }
 
 func GetPort() string {
@@ -111,6 +188,41 @@ func GetMaxHashSize() int64 {
 		return SibylConfig.TokenSize
 	}
 	return 0
+}
+
+func GetBotToken() string {
+	if SibylConfig != nil {
+		return SibylConfig.BotToken
+	}
+	return ""
+}
+
+func DropUpdates() bool {
+	if SibylConfig != nil {
+		return SibylConfig.DropUpdates
+	}
+	return false
+}
+
+func GetMasterId() int64 {
+	if SibylConfig != nil {
+		return SibylConfig.MasterId
+	}
+	return 0
+}
+
+func GetBaseChatIds() []int64 {
+	if SibylConfig != nil {
+		return SibylConfig.BaseChats
+	}
+	return nil
+}
+
+func GetCmdPrefixes() []rune {
+	if SibylConfig != nil {
+		return SibylConfig.CmdPrefixes
+	}
+	return []rune{'/', '!', '?'}
 }
 
 func IsDebug() bool {

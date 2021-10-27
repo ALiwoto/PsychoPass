@@ -7,7 +7,7 @@ const (
 
 	// ErrInvalidUserId is the error message when the target's user id
 	// is invalid.
-	ErrInvalidUserId = "Invalid user-id"
+	ErrInvalidUserId = "Invalid user-id provided"
 
 	// ErrUserNotFound is the error message when the target's user id
 	// cannot be found in the sibyl database.
@@ -16,11 +16,7 @@ const (
 	// ErrInvalidToken is the error message when the current user's
 	// token is invalid.
 	ErrInvalidToken = "Invalid token"
+	ErrNoToken      = "Token is required for this action"
 
-	ErrInternalServerError = "Internal server error. Incidents have been reported."
-)
-
-const (
-	MessageBanned   = "User was banned"
-	MessageUnbanned = "User was unbanned"
+	ErrInternalServerError = "Internal server error; incidents have been reported."
 )

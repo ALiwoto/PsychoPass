@@ -123,7 +123,7 @@ func doTestCreateToken02(t *testing.T, ownerToken, path, method string) {
 
 	/* Expected result should be something like this:
 		4
-	2021/10/25 20:19:40 {"token":{"id":1341091260,"hash":"1341091260:MiDvOMnpj8Tf7HK6OLVqVMIJg7F4on9Tyr6mRFhtVpesncgMidjc8BbN6etulbfq","permission":0,"created_at":"2021-10-25T19:54:51.194525003Z"},"success":true,"error":null}
+	2021/10/25 20:19:40 {"result":{"id":1341091260,"hash":"1341091260:MiDvOMnpj8Tf7HK6OLVqVMIJg7F4on9Tyr6mRFhtVpesncgMidjc8BbN6etulbfq","permission":0,"created_at":"2021-10-25T19:54:51.194525003Z"},"success":true,"error":null}
 	*/
 
 	log.Println(string(strValue))
@@ -184,14 +184,14 @@ func doTestCreateToken03(t *testing.T, ownerToken, path, method string) {
 		return
 	}
 
-	token, _ := valueMap["token"].(map[string]interface{})
+	token, _ := valueMap["result"].(map[string]interface{})
 	if token == nil {
 		t.Fatal("token cannot be nil")
 	}
 	user01TokenTmp, _ = token["hash"].(string)
 	/* Expected result should be something like this:
 		4
-	2021/10/25 20:19:40 {"token":{"id":1341091260,"hash":"1341091260:MiDvOMnpj8Tf7HK6OLVqVMIJg7F4on9Tyr6mRFhtVpesncgMidjc8BbN6etulbfq","permission":0,"created_at":"2021-10-25T19:54:51.194525003Z"},"success":true,"error":null}
+	2021/10/25 20:19:40 {"result":{"id":1341091260,"hash":"1341091260:MiDvOMnpj8Tf7HK6OLVqVMIJg7F4on9Tyr6mRFhtVpesncgMidjc8BbN6etulbfq","permission":0,"created_at":"2021-10-25T19:54:51.194525003Z"},"success":true,"error":null}
 	*/
 
 	log.Println(string(strValue))
@@ -233,7 +233,7 @@ func doTestCreateToken03Wrong(t *testing.T, ownerToken, path, method string) {
 	}
 
 	/* Expected result should be something like this:
-	2021/10/25 20:48:37 {"token":null,"success":false,"error":{"code":502,"message":"Permission Denied","origin":"CreateToken"}}
+	2021/10/25 20:48:37 {"result":null,"success":false,"error":{"code":502,"message":"Permission Denied","origin":"CreateToken"}}
 	*/
 
 	log.Println(string(strValue))
@@ -295,14 +295,14 @@ func doTestCreateToken04(t *testing.T, ownerToken, path, method string) {
 		return
 	}
 
-	token, _ := valueMap["token"].(map[string]interface{})
+	token, _ := valueMap["result"].(map[string]interface{})
 	if token == nil {
 		t.Fatal("token cannot be nil")
 	}
 	user03TokenTmp, _ = token["hash"].(string)
 
 	/* Expected result should be something like this:
-	2021/10/25 21:43:31 {"token":{"id":895373440,"hash":"895373440:WXXwxWYzr4-Gp8NNo7N7-Rx1cs3xmEWPQk1n_rHplfwbkUssvTGlHbmKnK8T7eWc","permission":3,"created_at":"2021-10-25T21:41:33.695577585Z"},"success":true,"error":null}
+	2021/10/25 21:43:31 {"result":{"id":895373440,"hash":"895373440:WXXwxWYzr4-Gp8NNo7N7-Rx1cs3xmEWPQk1n_rHplfwbkUssvTGlHbmKnK8T7eWc","permission":3,"created_at":"2021-10-25T21:41:33.695577585Z"},"success":true,"error":null}
 	*/
 
 	log.Println(string(strValue))
@@ -369,14 +369,14 @@ func doTestCreateToken05(t *testing.T, ownerToken, path, method string) {
 		return
 	}
 
-	token, _ := valueMap["token"].(map[string]interface{})
+	token, _ := valueMap["result"].(map[string]interface{})
 	if token == nil {
 		t.Fatal("token cannot be nil")
 	}
 	user04TokenTmp, _ = token["hash"].(string)
 
 	/* Expected result should be something like this:
-	2021/10/25 22:00:53 {"token":{"id":792109647,"hash":"792109647:i2g0Nw-FVPw50HCASCSNeHgTaMnqdYFE8m1ohdTInH_qrsgOcWEdDxRa7ocMuz0w","permission":3,"created_at":"2021-10-25T22:00:53.478450044Z"},"success":true,"error":null}
+	2021/10/25 22:00:53 {"result":{"id":792109647,"hash":"792109647:i2g0Nw-FVPw50HCASCSNeHgTaMnqdYFE8m1ohdTInH_qrsgOcWEdDxRa7ocMuz0w","permission":3,"created_at":"2021-10-25T22:00:53.478450044Z"},"success":true,"error":null}
 	*/
 
 	log.Println(string(strValue))
@@ -416,7 +416,9 @@ func doTestCreateToken06(t *testing.T, ownerToken, path, method string) {
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatal("got unexpected status code: ", res.StatusCode)
+		strValue, _ := ioutil.ReadAll(res.Body)
+		t.Fatal("got unexpected status code: ", res.StatusCode,
+			"and this value: ", strValue)
 		return
 	}
 
@@ -438,14 +440,14 @@ func doTestCreateToken06(t *testing.T, ownerToken, path, method string) {
 		return
 	}
 
-	token, _ := valueMap["token"].(map[string]interface{})
+	token, _ := valueMap["result"].(map[string]interface{})
 	if token == nil {
 		t.Fatal("token cannot be nil")
 	}
 	user05TokenTmp, _ = token["hash"].(string)
 	/* Expected result should be something like this:
 		4
-	2021/10/25 20:19:40 {"token":{"id":1341091260,"hash":"1341091260:MiDvOMnpj8Tf7HK6OLVqVMIJg7F4on9Tyr6mRFhtVpesncgMidjc8BbN6etulbfq","permission":0,"created_at":"2021-10-25T19:54:51.194525003Z"},"success":true,"error":null}
+	2021/10/25 20:19:40 {"result":{"id":1341091260,"hash":"1341091260:MiDvOMnpj8Tf7HK6OLVqVMIJg7F4on9Tyr6mRFhtVpesncgMidjc8BbN6etulbfq","permission":0,"created_at":"2021-10-25T19:54:51.194525003Z"},"success":true,"error":null}
 	*/
 
 	log.Println(string(strValue))
@@ -487,7 +489,7 @@ func doTestCreateToken06Wrong(t *testing.T, ownerToken, path, method string) {
 	}
 
 	/* Expected result should be something like this:
-	2021/10/25 20:48:37 {"token":null,"success":false,"error":{"code":502,"message":"Permission Denied","origin":"CreateToken"}}
+	2021/10/25 20:48:37 {"result":null,"success":false,"error":{"code":502,"message":"Permission Denied","origin":"CreateToken"}}
 	*/
 
 	log.Println(string(strValue))

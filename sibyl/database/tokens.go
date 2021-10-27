@@ -14,8 +14,8 @@ func GetTokenFromId(id int64) (*sv.Token, error) {
 	}
 
 	p := sv.Token{}
-	SESSION.Where("id = ?", id).Take(&p)
-	if len(p.Hash) == 0 || p.Id == 0 || p.Id != id {
+	SESSION.Where("user_id = ?", id).Take(&p)
+	if len(p.Hash) == 0 || p.UserId == 0 || p.UserId != id {
 		// not found
 		return nil, nil
 	}
@@ -53,6 +53,35 @@ func UpdateTokenLastUsageById(id int64) {
 
 func UpdateTokenLastUsage(t *sv.Token) {
 	t.LastUsage = time.Now()
+	tx := SESSION.Begin()
+	tx.Save(t)
+	tx.Commit()
+}
+
+func UpdateTokenPermission(t *sv.Token, perm sv.UserPermission) {
+	t.Permission = perm
+	tx := SESSION.Begin()
+	tx.Save(t)
+	tx.Commit()
+}
+
+func ApplyReport(r *sv.Report) {
+	if r == nil || r.IsDestroyed() {
+		return
+	}
+
+	t, err := GetTokenFromId(r.ReporterId)
+	if err != nil || t == nil || t.UserId != r.ReporterId {
+		return
+	}
+
+	if r.IsAccepted() {
+		t.AcceptedReports++
+	} else if r.IsClosed() {
+		t.DeniedReports++
+	} else {
+		return
+	}
 	tx := SESSION.Begin()
 	tx.Save(t)
 	tx.Commit()

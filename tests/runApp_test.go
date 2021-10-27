@@ -10,6 +10,7 @@ import (
 	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
 	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
 	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/server"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/tgCore"
 )
 
 const baseUrl = "http://localhost:8080/"
@@ -38,16 +39,17 @@ func runApp() {
 
 	database.StartDatabase()
 	if database.IsFirstTime() {
-		d, err := utils.CreateToken(sibylConfig.SibylConfig.MasterId,
-			sibylValues.Owner)
+		d, err := utils.CreateToken(sibylConfig.GetMasterId(), sibylValues.Owner)
 		if err != nil {
 			logging.Fatal(err)
 		}
-		logging.Info("Creating Initial ADMIN token")
+
+		logging.Info("Creating initial owner token...")
 		logging.Info(d.Hash)
 		os.WriteFile("owner.token", []byte(d.Hash), fs.ModePerm)
 	}
 
+	tgCore.StartTelegramBot()
 	server.RunSibylSystem()
 }
 

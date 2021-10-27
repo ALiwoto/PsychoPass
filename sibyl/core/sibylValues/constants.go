@@ -1,5 +1,7 @@
 package sibylValues
 
+import "time"
+
 const (
 	// NormalUser Can read from the Sibyl System.
 	NormalUser UserPermission = iota
@@ -9,4 +11,19 @@ const (
 	Inspector
 	// Owner Can create/revoke tokens.
 	Owner
+)
+
+const (
+	MarkDownV2 = "markdownv2"
+)
+
+const (
+	MaxReportCacheTime = 50 * time.Minute
+)
+
+const (
+	reportStateWaiting reportState = iota
+	reportStateAccepted
+	reportStateClosed
+	reportStateDestroyed
 )

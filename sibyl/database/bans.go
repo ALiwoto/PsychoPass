@@ -6,13 +6,14 @@ import (
 	sv "gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
 )
 
-func AddBan(userID int64, reason string, message string) {
+func AddBan(userID, adder int64, reason string, message string) {
 	user := &sv.User{
-		UserID:  userID,
-		Reason:  reason,
-		Banned:  true,
-		Date:    time.Now(),
-		Message: message,
+		UserID:   userID,
+		Reason:   reason,
+		Banned:   true,
+		Date:     time.Now(),
+		Message:  message,
+		BannedBy: adder,
 	}
 	NewUser(user)
 }
@@ -27,8 +28,8 @@ func DeleteUser(userID int64) {
 	tx.Commit()
 }
 
-// DeleteUserBan will unban a user from the sibyl database.
-func DeleteUserBan(user *sv.User) {
+// RemoveUserBan will unban a user from the sibyl database.
+func RemoveUserBan(user *sv.User) {
 	if user.Banned {
 		user.Banned = false
 		user.Reason = ""

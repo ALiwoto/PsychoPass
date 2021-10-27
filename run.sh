@@ -4,7 +4,7 @@ buildApp()
 	# clear the screen (the terminal)
 	clear
 
-	echo -e "building it, please wait a bit..."
+	echo -e "building Sibyl System, please wait a bit..."
 
 	go build -o sibylSystem
 }
@@ -14,7 +14,7 @@ runApp()
 	# clear the screen (the terminal)
 	clear
 
-	echo -e "we are done building it,\n->now running the sibyl system...\n-------------------"
+	echo -e "we are done building it,\n->now running the Sibyl System...\n-------------------"
 
 	./sibylSystem
 }

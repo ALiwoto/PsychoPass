@@ -1,33 +1,42 @@
 package server
 
-import "gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints"
+import (
+	"github.com/gin-gonic/gin"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints/banHandlers"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints/infoHandlers"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints/reportHandlers"
+	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints/tokenHandlers"
+)
 
 func LoadHandlers() {
 	// create token handlers
-	ServerEngine.GET("create", entryPoints.CreateToken)
-	ServerEngine.POST("create", entryPoints.CreateToken)
-	ServerEngine.GET("createToken", entryPoints.CreateToken)
-	ServerEngine.POST("createToken", entryPoints.CreateToken)
+	bindHandler(tokenHandlers.CreateTokenHandler, "create",
+		"createToken", "generate")
 
 	// revoke token handlers
-	ServerEngine.GET("revoke", entryPoints.RevokeToken)
-	ServerEngine.POST("revoke", entryPoints.RevokeToken)
-	ServerEngine.GET("revokeToken", entryPoints.RevokeToken)
-	ServerEngine.POST("revokeToken", entryPoints.RevokeToken)
+	bindHandler(tokenHandlers.RevokeTokenHandler,
+		"revoke", "revokeToken")
 
 	// get token handlers
-	ServerEngine.GET("getToken", entryPoints.GetToken)
-	ServerEngine.POST("getToken", entryPoints.RevokeToken)
+	bindHandler(tokenHandlers.GetTokenHandler, "getToken")
 
 	// addBan handlers
-	ServerEngine.GET("addBan", entryPoints.AddBan)
-	ServerEngine.POST("addBan", entryPoints.AddBan)
+	bindHandler(banHandlers.AddBanHandler, "addBan")
 
 	// deleteBan handlers
-	ServerEngine.GET("deleteBan", entryPoints.DeleteBan)
-	ServerEngine.POST("deleteBan", entryPoints.DeleteBan)
+	bindHandler(banHandlers.RemoveBanHandler, "deleteBan", "removeBan",
+		"revertBan")
 
 	// getInfo handlers
-	ServerEngine.GET("getInfo", entryPoints.GetInfo)
-	ServerEngine.POST("getInfo", entryPoints.GetInfo)
+	bindHandler(infoHandlers.GetInfoHandler, "getInfo", "fetchInfo")
+
+	// report handlers
+	bindHandler(reportHandlers.ReportUserHandler, "report", "reportUser")
+}
+
+func bindHandler(handler gin.HandlerFunc, paths ...string) {
+	for _, path := range paths {
+		ServerEngine.GET(path, handler)
+		ServerEngine.POST(path, handler)
+	}
 }
