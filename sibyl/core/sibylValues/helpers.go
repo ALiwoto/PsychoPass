@@ -7,7 +7,7 @@ import (
 	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/timeUtils"
 )
 
-func SetReportHander(h ReportHandler) {
+func SetReportHandler(h ReportHandler) {
 	if h == nil || SendReportHandler != nil {
 		return
 	}
@@ -70,8 +70,8 @@ func reportMapCleaner() {
 			}
 
 			// if this report is too old, remove it from the memory.
-			// if someone click on a report and mark it as accepted,
-			// the reporter won't recieve anything.
+			// if someone clicks on a report and mark it as accepted,
+			// the reporter won't receive anything.
 			if time.Since(value.date) > MaxReportCacheTime {
 				delete(reportUniqueMap, key)
 				continue

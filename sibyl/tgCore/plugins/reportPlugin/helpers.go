@@ -44,21 +44,27 @@ func getReportButtons(rId int64) gotgbot.ReplyMarkup {
 func editAcceptedMessage(b *gotgbot.Bot, ctx *ext.Context) error {
 	msg := ctx.EffectiveMessage
 	u := ctx.EffectiveUser
-	msg.EditText(b, msg.Text+"\n"+"Accepted by "+u.FirstName+".",
+	_, err := msg.EditText(b, msg.Text+"\n"+"Accepted by "+u.FirstName+".",
 		&gotgbot.EditMessageTextOpts{
 			Entities:              msg.Entities,
 			DisableWebPagePreview: true,
 		})
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
 func editClosedMessage(b *gotgbot.Bot, ctx *ext.Context) error {
 	msg := ctx.EffectiveMessage
 	u := ctx.EffectiveUser
-	msg.EditText(b, msg.Text+"\n"+"Closed by "+u.FirstName+".",
+	_, err := msg.EditText(b, msg.Text+"\n"+"Closed by "+u.FirstName+".",
 		&gotgbot.EditMessageTextOpts{
 			Entities:              msg.Entities,
 			DisableWebPagePreview: true,
 		})
+	if err != nil {
+		return err
+	}
 	return nil
 }

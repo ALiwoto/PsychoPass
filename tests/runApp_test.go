@@ -59,7 +59,10 @@ func runApp() {
 
 		logging.Info("Creating initial owner token...")
 		logging.Info(d.Hash)
-		os.WriteFile("owner.token", []byte(d.Hash), fs.ModePerm)
+		err = os.WriteFile("owner.token", []byte(d.Hash), fs.ModePerm)
+		if err != nil {
+			logging.Fatal(err)
+		}
 	}
 
 	tgCore.StartTelegramBot()

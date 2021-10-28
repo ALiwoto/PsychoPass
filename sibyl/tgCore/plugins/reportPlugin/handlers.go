@@ -15,7 +15,7 @@ import (
 )
 
 func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
-	sv.SetReportHander(SendReportHandler)
+	sv.SetReportHandler(SendReportHandler)
 	reportCB := handlers.NewCallback(reportCallBackQuery, reportCallBackResponse)
 	d.AddHandler(reportCB)
 }
@@ -90,17 +90,27 @@ func reportCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	if t.CanBan() {
-		go ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
-			Text:      "Done!",
-			ShowAlert: true,
-			CacheTime: 5,
-		})
+		go func() {
+			_, err := ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
+				Text:      "Done!",
+				ShowAlert: true,
+				CacheTime: 5,
+			})
+			if err != nil {
+				logging.Error(err)
+			}
+		}()
 	} else {
-		go ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
-			Text:      "Permission denied.",
-			ShowAlert: true,
-			CacheTime: 5,
-		})
+		go func() {
+			_, err := ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
+				Text:      "Permission denied.",
+				ShowAlert: true,
+				CacheTime: 5,
+			})
+			if err != nil {
+				logging.Error(err)
+			}
+		}()
 		return ext.EndGroups
 	}
 
@@ -115,17 +125,26 @@ func reportCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	//doActionForMessage(b, ctx, report)
 	switch mystrs[1] {
 	case acceptCbValue:
-		editAcceptedMessage(b, ctx)
+		err := editAcceptedMessage(b, ctx)
+		if err != nil {
+			return err
+		}
 		if report != nil {
 			report.MarkAsAccepted()
 		}
 	case closeCbValue:
-		editClosedMessage(b, ctx)
+		err := editClosedMessage(b, ctx)
+		if err != nil {
+			return err
+		}
 		if report != nil {
 			report.MarkAsClosed()
 		}
 	case deleteCbValue:
-		ctx.EffectiveMessage.Delete(b)
+		_, err := ctx.EffectiveMessage.Delete(b)
+		if err != nil {
+			return err
+		}
 		if report != nil {
 			report.MarkAsClosed()
 		}

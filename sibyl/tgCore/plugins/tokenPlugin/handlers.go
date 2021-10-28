@@ -43,9 +43,12 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		md.AppendMonoThis(t.GetStringPermission()).AppendNormal(".")
 	}
 
-	b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
+	_, err = b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode: sv.MarkDownV2,
 	})
+	if err != nil {
+		return err
+	}
 
 	return ext.EndGroups
 }
@@ -69,9 +72,12 @@ func revokeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		md.AppendMonoThis(t.GetStringPermission()).AppendNormal(".")
 	}
 
-	b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
+	_, err = b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode: sv.MarkDownV2,
 	})
+	if err != nil {
+		return err
+	}
 
 	return ext.EndGroups
 }
