@@ -1,7 +1,5 @@
 package sibylValues
 
-import "time"
-
 const (
 	// NormalUser Can read from the Sibyl System.
 	NormalUser UserPermission = iota
@@ -15,8 +13,4 @@ const (
 
 const (
 	MarkDownV2 = "markdownv2"
-)
-
-const (
-	MaxReportCacheTime = 50 * time.Minute
 )

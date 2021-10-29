@@ -61,7 +61,6 @@ func noRootHandler(c *gin.Context) {
 	switch path {
 	case "create", "createtoken", "generate":
 		tokenHandlers.CreateTokenHandler(c)
-		return
 	case "revoke", "revoketoken":
 		tokenHandlers.RevokeTokenHandler(c)
 	case "changeperm", "promote":

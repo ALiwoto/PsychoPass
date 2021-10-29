@@ -17,7 +17,7 @@ import (
 )
 
 func main() {
-	f := logging.LoadLogger()
+	f := logging.LoadLogger(true)
 	defer func() {
 		if f != nil {
 			f()

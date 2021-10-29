@@ -14,8 +14,13 @@ import (
 
 var SUGARED *zap.SugaredLogger
 
-func InitZapLog() *zap.Logger {
-	config := zap.NewDevelopmentConfig()
+func InitZapLog(debug bool) *zap.Logger {
+	var config zap.Config
+	if debug {
+		config = zap.NewDevelopmentConfig()
+	} else {
+		config = zap.NewProductionConfig()
+	}
 	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	config.EncoderConfig.TimeKey = "timestamp"
 	config.EncoderConfig.EncodeTime = zapcore.RFC3339TimeEncoder
@@ -23,11 +28,11 @@ func InitZapLog() *zap.Logger {
 	return logger
 }
 
-func LoadLogger() func() {
+func LoadLogger(debug bool) func() {
 	if SUGARED != nil {
 		return func() {}
 	}
-	loggerMgr := InitZapLog()
+	loggerMgr := InitZapLog(debug)
 	zap.ReplaceGlobals(loggerMgr)
 	SUGARED = loggerMgr.Sugar()
 
