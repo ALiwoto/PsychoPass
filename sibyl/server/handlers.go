@@ -70,11 +70,11 @@ func noRootHandler(c *gin.Context) {
 		banHandlers.AddBanHandler(c)
 	case "addban", "ban", "banuser":
 		banHandlers.AddBanHandler(c)
-	case "deleteban", "removeban", "revertban", "remBan":
+	case "deleteban", "removeban", "revertban", "remban":
 		banHandlers.RemoveBanHandler(c)
 	case "getinfo", "fetchinfo":
 		infoHandlers.GetInfoHandler(c)
-	case "checkToken":
+	case "checktoken":
 		infoHandlers.CheckTokenHandler(c)
 	case "report", "reportuser":
 		reportHandlers.ReportUserHandler(c)
