@@ -13,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CreateToken function will create a new token for the specified
+// CreateTokenHandler function will create a new token for the specified
 // user. if user already have a token in the db, it will just return that
 // token.
 func CreateTokenHandler(c *gin.Context) {
@@ -102,7 +102,7 @@ func ChangeTokenPermHandler(c *gin.Context) {
 	}
 }
 
-// RevokeToken function will revoke the specified token.
+// RevokeTokenHandler function will revoke the specified token.
 // you should pass the user-id of your target.
 func RevokeTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
@@ -139,7 +139,7 @@ func RevokeTokenHandler(c *gin.Context) {
 	}
 }
 
-// GetToken function will revoke the specified token.
+// GetTokenHandler function will revoke the specified token.
 func GetTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "userId", "id")

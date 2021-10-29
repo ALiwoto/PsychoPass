@@ -32,7 +32,7 @@ const (
 	// (token-related headers are empty)
 	ErrNoToken = "Token is required for this action"
 
-	// ErrNoToken is the error message that should be sent when there is nothing
+	// ErrInternalServerError is the error message that should be sent when there is nothing
 	// wrong from client-side; rather something unexpected had happened on
 	// server-side.
 	ErrInternalServerError = "Internal server error; incidents have been reported."

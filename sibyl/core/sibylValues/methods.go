@@ -52,13 +52,13 @@ func (t *Token) CanCreateToken() bool {
 	return t.Permission > Inspector
 }
 
-// CanCreateToken returns true if the token with its current
+// CanRevokeToken returns true if the token with its current
 // permission can revoke tokens in Sibyl System or not.
 func (t *Token) CanRevokeToken() bool {
 	return t.Permission > Inspector
 }
 
-// CanCreateToken returns true if the token with its current
+// CanSeeStats returns true if the token with its current
 // permission can see stats of another tokens or not.
 func (t *Token) CanSeeStats() bool {
 	return t.Permission > Enforcer
@@ -71,7 +71,7 @@ func (t *Token) CanGetToken() bool {
 	return t.Permission == Owner
 }
 
-// CanGetToken returns true if the token with its current
+// CanChangePermission returns true if the token with its current
 // permission can change permission of another tokens or not.
 func (t *Token) CanChangePermission() bool {
 	return t.Permission > Inspector
@@ -93,7 +93,7 @@ func (t *Token) SetCacheDate() {
 	t.cacheDate = time.Now()
 }
 
-//---------------------------------------------------------
+// GetStringPermission ---------------------------------------------------------
 func (p UserPermission) GetStringPermission() string {
 	switch p {
 	case NormalUser:
