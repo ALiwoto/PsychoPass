@@ -59,21 +59,22 @@ func StartDatabase() {
 }
 
 func cleanMaps() {
+	mtime := sibylConfig.GetMaxCacheTime()
 	for {
-		time.Sleep(MaxCacheTime)
+		time.Sleep(mtime)
 		if tokenDbMap == nil || userDbMap == nil {
 			return
 		}
 		tokenMapMutex.Lock()
 		for key, value := range tokenDbMap {
-			if value == nil || time.Since(value.GetCacheDate()) > MaxCacheTime {
+			if value == nil || time.Since(value.GetCacheDate()) > mtime {
 				delete(tokenDbMap, key)
 			}
 		}
 		tokenMapMutex.Unlock()
 		userMapMutex.Lock()
 		for key, value := range userDbMap {
-			if value == nil || time.Since(value.GetCacheDate()) > MaxCacheTime {
+			if value == nil || time.Since(value.GetCacheDate()) > mtime {
 				delete(tokenDbMap, key)
 			}
 		}

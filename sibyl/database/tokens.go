@@ -17,6 +17,7 @@ func GetTokenFromId(id int64) (*sv.Token, error) {
 	t := tokenDbMap[id]
 	tokenMapMutex.Unlock()
 	if t != nil {
+		t.SetCacheDate()
 		return t, nil
 	}
 

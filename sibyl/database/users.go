@@ -15,6 +15,7 @@ func GetUserFromId(id int64) (*sv.User, error) {
 	u := userDbMap[id]
 	userMapMutex.Unlock()
 	if u != nil {
+		u.SetCacheDate()
 		return u, nil
 	}
 

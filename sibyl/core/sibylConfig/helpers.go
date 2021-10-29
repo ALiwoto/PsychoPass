@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
@@ -121,6 +122,11 @@ func LoadConfigFromFile(fileName string) error {
 	}
 	SibylConfig.CmdPrefixes = parseCmdPrefixes(preStr)
 
+	SibylConfig.MaxCacheTime, err = configContent.GetInt64("database", "max_cache_time")
+	if err != nil {
+		SibylConfig.MaxCacheTime, _ = strconv.ParseInt(os.Getenv("MAX_CACHE_TIME"), 10, 64)
+	}
+
 	return nil
 }
 
@@ -172,6 +178,13 @@ func parseBaseStr(value string) []int64 {
 	}
 
 	return all
+}
+
+func GetMaxCacheTime() time.Duration {
+	if SibylConfig != nil {
+		return time.Duration(SibylConfig.MaxCacheTime) * time.Minute
+	}
+	return 40 * time.Minute
 }
 
 func GetPort() string {
