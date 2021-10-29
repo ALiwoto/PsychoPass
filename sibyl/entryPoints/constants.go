@@ -15,7 +15,7 @@ const (
 
 	// ErrUserNotBanned is the error message that should be sent when the
 	// target's user id can be found in the sibyl database but
-	// it's already unbanned.
+	// it's already unbanned (or never banned).
 	ErrUserNotBanned = "User is not banned"
 
 	// ErrNoReason is the error message that should be sent when the user

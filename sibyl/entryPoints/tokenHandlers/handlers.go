@@ -18,7 +18,7 @@ import (
 // token.
 func CreateTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
-	userId := utils.GetParam(c, "user-id", "id")
+	userId := utils.GetParam(c, "user-id", "userid", "id")
 	perm, _ := strconv.Atoi(utils.GetParam(c, "perm", "permission"))
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginCreateToken)
@@ -66,7 +66,7 @@ func CreateTokenHandler(c *gin.Context) {
 
 func ChangeTokenPermHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
-	userId := utils.GetParam(c, "user-id", "id")
+	userId := utils.GetParam(c, "user-id", "userid", "id")
 	perm, _ := strconv.Atoi(utils.GetParam(c, "perm", "permission"))
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginCreateToken)
@@ -91,8 +91,12 @@ func ChangeTokenPermHandler(c *gin.Context) {
 		if u != nil {
 			if u.Permission != sv.UserPermission(perm) {
 				database.UpdateTokenPermission(u, sv.UserPermission(perm))
+			} else {
+				entry.SendResult(c, MessagePermSame+u.GetTitleStringPermission())
+				return
 			}
-			entry.SendResult(c, MessagePermissionChanged+u.GetTitleStringPermission())
+
+			entry.SendResult(c, MessagePermChanged+u.GetTitleStringPermission())
 			return
 		}
 
@@ -106,7 +110,7 @@ func ChangeTokenPermHandler(c *gin.Context) {
 // you should pass the user-id of your target.
 func RevokeTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
-	userId := utils.GetParam(c, "user-id", "id")
+	userId := utils.GetParam(c, "user-id", "userid", "id")
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginRevokeToken)
 		return

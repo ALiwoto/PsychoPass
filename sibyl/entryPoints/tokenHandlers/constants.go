@@ -7,5 +7,6 @@ const (
 )
 
 const (
-	MessagePermissionChanged = "Permission changed to "
+	MessagePermChanged = "Permission changed to "
+	MessagePermSame    = "Permission is already set to "
 )
