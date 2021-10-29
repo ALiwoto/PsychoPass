@@ -8,6 +8,8 @@ import (
 	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/reportHandlers"
 	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/tokenHandlers"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func LoadHandlers() {
@@ -40,6 +42,7 @@ func LoadHandlers() {
 	// report handlers
 	bindHandler(reportHandlers.ReportUserHandler, "report", "reportUser")
 
+	ServerEngine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	bindNoRoot()
 }
 
