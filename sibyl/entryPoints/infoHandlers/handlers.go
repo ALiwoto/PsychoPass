@@ -37,3 +37,19 @@ func GetInfoHandler(c *gin.Context) {
 
 	entry.SendResult(c, u)
 }
+
+func CheckTokenHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginGetInfo)
+		return
+	}
+
+	d, err := database.GetTokenFromString(token)
+	if err != nil || d == nil {
+		entry.SendResult(c, false)
+		return
+	}
+
+	entry.SendResult(c, true)
+}
