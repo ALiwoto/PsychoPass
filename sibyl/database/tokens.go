@@ -46,6 +46,7 @@ func GetTokenFromString(token string) (*sv.Token, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	if u == nil || u.Hash != token {
 		return nil, errors.New("token is invalid")
 	}

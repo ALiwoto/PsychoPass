@@ -62,6 +62,7 @@ func AddBanHandler(c *gin.Context) {
 				PreviousBan: &pre,
 				CurrentBan:  u,
 			})
+			return
 		}
 
 		by := hashing.GetIdFromToken(token)
