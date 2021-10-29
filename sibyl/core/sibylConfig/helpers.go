@@ -101,15 +101,6 @@ func LoadConfigFromFile(fileName string) error {
 		SibylConfig.BotToken = os.Getenv("BOT_TOKEN")
 	}
 
-	dropStr, err := configContent.Get("telegram", "drop_updates")
-	if err != nil || len(SibylConfig.BotToken) == 0 {
-		dropStr = os.Getenv("BOT_TOKEN")
-	}
-	dropStr = strings.ToLower(strings.TrimSpace(dropStr))
-	if dropStr == "yes" || dropStr == "on" || dropStr == "enable" {
-		SibylConfig.DropUpdates = true
-	}
-
 	baseStr, err := configContent.Get("telegram", "base_chats")
 	if err != nil || len(SibylConfig.BotToken) == 0 {
 		baseStr = os.Getenv("BASE_CHATS")
@@ -213,13 +204,6 @@ func GetBotToken() string {
 		return SibylConfig.BotToken
 	}
 	return ""
-}
-
-func DropUpdates() bool {
-	if SibylConfig != nil {
-		return SibylConfig.DropUpdates
-	}
-	return false
 }
 
 func GetMasterId() int64 {
