@@ -60,7 +60,7 @@ func AddBanHandler(c *gin.Context) {
 		}
 
 		by := hashing.GetIdFromToken(token)
-		database.AddBan(id, by, banReason, banMsg, srcUrl)
+		u = database.AddBan(id, by, banReason, banMsg, srcUrl)
 		entry.SendResult(c, &BanResult{
 			CurrentBan: u,
 		})

@@ -6,7 +6,7 @@ import (
 	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
 )
 
-func AddBan(userID, adder int64, reason, message, src string) {
+func AddBan(userID, adder int64, reason, message, src string) *sv.User {
 	user := &sv.User{
 		UserID:       userID,
 		Reason:       reason,
@@ -18,6 +18,7 @@ func AddBan(userID, adder int64, reason, message, src string) {
 	}
 
 	NewUser(user)
+	return user
 }
 
 // DeleteUser will delete a user from the sibyl database.
