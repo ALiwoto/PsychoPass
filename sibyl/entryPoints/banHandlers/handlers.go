@@ -37,6 +37,11 @@ func AddBanHandler(c *gin.Context) {
 			return
 		}
 
+		if len(banReason) == 0 {
+			entry.SendNoReasonError(c, OriginAddBan)
+			return
+		}
+
 		u, err := database.GetUserFromId(id)
 		if u != nil && err == nil && u.Banned {
 			if u.Reason == banReason && u.Message == banMsg &&

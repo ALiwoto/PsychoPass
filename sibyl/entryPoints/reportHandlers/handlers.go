@@ -35,6 +35,11 @@ func ReportUserHandler(c *gin.Context) {
 			return
 		}
 
+		if len(reason) == 0 {
+			entry.SendNoReasonError(c, OriginReport)
+			return
+		}
+
 		by := hashing.GetIdFromToken(token)
 		if sv.SendReportHandler != nil {
 			r := sv.NewReport(reason, msg, id, by, d.Permission)

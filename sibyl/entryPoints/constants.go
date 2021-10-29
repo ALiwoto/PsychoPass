@@ -18,6 +18,10 @@ const (
 	// it's already unbanned.
 	ErrUserNotBanned = "User is not banned"
 
+	// ErrNoReason is the error message that should be sent when the user
+	// has sent a request without providing any reason.
+	ErrNoReason = "Reason is required for this action"
+
 	// ErrUserAlreadyBanned is the error message that should be sent when
 	// the target's user id can be found in the sibyl database but
 	// it's already banned with the exact same parameters.
