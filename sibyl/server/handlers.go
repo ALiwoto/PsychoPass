@@ -19,7 +19,7 @@ func LoadHandlers() {
 	bindHandler(tokenHandlers.RevokeTokenHandler, "revoke", "revokeToken")
 
 	// change token permission handlers
-	bindHandler(tokenHandlers.RevokeTokenHandler, "changePerm", "promote")
+	bindHandler(tokenHandlers.ChangeTokenPermHandler, "changePerm", "promote")
 
 	// get token handlers
 	bindHandler(tokenHandlers.GetTokenHandler, "getToken")
