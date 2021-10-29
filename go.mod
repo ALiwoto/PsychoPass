@@ -1,4 +1,4 @@
-module gitlab.com/Dank-del/SibylAPI-Go
+module github.com/AnimeKaizoku/sibylapi-go
 
 go 1.17
 

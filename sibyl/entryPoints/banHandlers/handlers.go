@@ -2,13 +2,14 @@ package banHandlers
 
 import (
 	"strconv"
+	"time"
 
-	entry "gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints"
+	entry "github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints"
 
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
 	"github.com/gin-gonic/gin"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/hashing"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
 )
 
 func AddBanHandler(c *gin.Context) {
@@ -16,6 +17,8 @@ func AddBanHandler(c *gin.Context) {
 	userId := utils.GetParam(c, "userId", "id", "user-id")
 	banReason := utils.GetParam(c, "reason", "banReason", "ban-reason")
 	banMsg := utils.GetParam(c, "message", "msg", "banMsg", "ban-msg")
+	srcUrl := utils.GetParam(c, "srcUrl", "source",
+		"source-url", "ban-src", "src")
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginAddBan)
 		return
@@ -34,9 +37,33 @@ func AddBanHandler(c *gin.Context) {
 			return
 		}
 
+		u, err := database.GetUserFromId(id)
+		if u != nil && err == nil && u.Banned {
+			if u.Reason == banReason && u.Message == banMsg &&
+				u.BanSourceUrl == srcUrl {
+				entry.SendUserAlreadyBannedError(c, OriginAddBan)
+				return
+			}
+
+			pre := *u
+			by := hashing.GetIdFromToken(token)
+			u.BannedBy = by
+			u.Message = banMsg
+			u.Date = time.Now()
+			u.Reason = banReason
+			u.BanSourceUrl = srcUrl
+			database.UpdateBanparameter(u)
+			entry.SendResult(c, &BanResult{
+				PreviousBan: &pre,
+				CurrentBan:  u,
+			})
+		}
+
 		by := hashing.GetIdFromToken(token)
-		database.AddBan(id, by, banReason, banMsg)
-		entry.SendResult(c, MessageBanned)
+		database.AddBan(id, by, banReason, banMsg, srcUrl)
+		entry.SendResult(c, &BanResult{
+			CurrentBan: u,
+		})
 		return
 	} else {
 		entry.SendPermissionDenied(c, OriginAddBan)
@@ -68,6 +95,11 @@ func RemoveBanHandler(c *gin.Context) {
 		u, _ := database.GetUserFromId(id)
 		if u == nil {
 			entry.SendUserNotFoundError(c, OriginRemoveBan)
+			return
+		}
+
+		if !u.Banned {
+			entry.SendUserNotBannedError(c, OriginRemoveBan)
 			return
 		}
 

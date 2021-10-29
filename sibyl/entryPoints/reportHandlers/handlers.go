@@ -3,13 +3,13 @@ package reportHandlers
 import (
 	"strconv"
 
-	entry "gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints"
+	entry "github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints"
 
+	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
 	"github.com/gin-gonic/gin"
-	sv "gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/hashing"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
 )
 
 func ReportUserHandler(c *gin.Context) {
@@ -47,8 +47,4 @@ func ReportUserHandler(c *gin.Context) {
 		entry.SendPermissionDenied(c, OriginReport)
 		return
 	}
-}
-
-func GetUpdateHandler(c *gin.Context) {
-
 }

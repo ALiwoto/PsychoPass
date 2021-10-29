@@ -3,15 +3,18 @@ package tests_test
 import (
 	"io/fs"
 	"io/ioutil"
+	"net/http"
 	"os"
+	"strings"
+	"time"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylConfig"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/server"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/tgCore"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylConfig"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/server"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/tgCore"
 )
 
 //const baseUrl = "http://localhost:8080/"
@@ -43,6 +46,29 @@ func getBaseUrl() string {
 	return baseUrl
 }
 
+func decideToRun() {
+	b := getBaseUrl()
+	if strings.Contains(b, "localhost") ||
+		strings.Contains(b, "0.0.0.0") {
+		// run the app in anoter goroutine
+		go runApp()
+
+		time.Sleep(time.Millisecond * 600)
+	}
+}
+
+func closeServer() {
+	if server.ServerEngine == nil {
+		return
+	}
+	srv := &http.Server{
+		Addr:    sibylConfig.GetPort(),
+		Handler: server.ServerEngine,
+	}
+
+	srv.Close()
+}
+
 func runApp() {
 	//defer recoverFromPanic()
 	err := sibylConfig.LoadConfig()
@@ -59,10 +85,7 @@ func runApp() {
 
 		logging.Info("Creating initial owner token...")
 		logging.Info(d.Hash)
-		err = os.WriteFile("owner.token", []byte(d.Hash), fs.ModePerm)
-		if err != nil {
-			logging.Fatal(err)
-		}
+		os.WriteFile("owner.token", []byte(d.Hash), fs.ModePerm)
 	}
 
 	tgCore.StartTelegramBot()

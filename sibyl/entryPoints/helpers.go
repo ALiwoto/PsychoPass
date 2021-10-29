@@ -3,8 +3,8 @@ package entryPoints
 import (
 	"net/http"
 
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/timeUtils"
 	"github.com/gin-gonic/gin"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/timeUtils"
 )
 
 func SendError(c *gin.Context, err *EndpointError, code int) {
@@ -80,6 +80,30 @@ func SendUserNotFoundError(c *gin.Context, origin string) {
 		Error: &EndpointError{
 			ErrorCode: http.StatusNotFound,
 			Message:   ErrUserNotFound,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
+func SendUserNotBannedError(c *gin.Context, origin string) {
+	c.JSON(http.StatusConflict, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusConflict,
+			Message:   ErrUserNotBanned,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
+func SendUserAlreadyBannedError(c *gin.Context, origin string) {
+	c.JSON(http.StatusAccepted, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusAccepted,
+			Message:   ErrUserAlreadyBanned,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
 		},

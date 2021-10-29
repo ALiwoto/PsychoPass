@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
 	"github.com/bigkevmcd/go-configparser"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
 )
 
 func LoadConfig() error {
@@ -147,7 +147,12 @@ func parseCmdPrefixes(value string) []rune {
 
 func parseBaseStr(value string) []int64 {
 	if !strings.Contains(value, " ") && !strings.Contains(value, ",") {
-		return nil
+		value = strings.TrimSpace(value)
+		tmp, err := strconv.ParseInt(value, 10, 64)
+		if err != nil || tmp == 0 {
+			return nil
+		}
+		return []int64{tmp}
 	}
 
 	mystrs := ws.Split(value, " ", ",")

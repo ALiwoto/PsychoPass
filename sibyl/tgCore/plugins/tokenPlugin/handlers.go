@@ -2,13 +2,14 @@ package tokenPlugin
 
 import (
 	"github.com/ALiwoto/mdparser/mdparser"
+	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
-	sv "gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/hashing"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
 )
 
 func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
@@ -29,9 +30,18 @@ func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	user := ctx.EffectiveUser
 	t, err := database.GetTokenFromId(user.Id)
-	if err != nil || t == nil {
+	if err != nil {
 		logging.UnexpectedError(err)
 		return ext.EndGroups
+	}
+
+	if t == nil {
+		// should create a new token
+		t, err = utils.CreateToken(user.Id, sv.NormalUser)
+		if err != nil {
+			logging.UnexpectedError(err)
+			return ext.EndGroups
+		}
 	}
 
 	md := mdparser.GetNormal("Hi ").AppendMentionThis(user.FirstName, user.Id)
@@ -43,12 +53,9 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		md.AppendMonoThis(t.GetStringPermission()).AppendNormal(".")
 	}
 
-	_, err = b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
+	b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode: sv.MarkDownV2,
 	})
-	if err != nil {
-		return err
-	}
 
 	return ext.EndGroups
 }
@@ -72,12 +79,9 @@ func revokeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		md.AppendMonoThis(t.GetStringPermission()).AppendNormal(".")
 	}
 
-	_, err = b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
+	b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode: sv.MarkDownV2,
 	})
-	if err != nil {
-		return err
-	}
 
 	return ext.EndGroups
 }

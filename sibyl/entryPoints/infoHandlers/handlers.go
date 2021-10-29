@@ -3,10 +3,10 @@ package infoHandlers
 import (
 	"strconv"
 
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
+	entry "github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints"
 	"github.com/gin-gonic/gin"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
-	entry "gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints"
 )
 
 func GetInfoHandler(c *gin.Context) {

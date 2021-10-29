@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
 )
 
 //---------------------------------------------------------
@@ -17,11 +17,8 @@ import (
 // TestCreateToken01 test to create a token using the owner token with http
 // headers. The token should be created successfully.
 func TestCreateToken01(t *testing.T) {
-	// run the app in anoter goroutine
-	go runApp()
-
-	time.Sleep(time.Millisecond * 1600)
-
+	decideToRun()
+	t.Cleanup(closeServer)
 	ownerToken := getOwnerToken()
 	doTestCreateToken01(t, ownerToken, "create", http.MethodPost)
 	doTestCreateToken01(t, ownerToken, "createToken", http.MethodPost)
@@ -49,7 +46,12 @@ func doTestCreateToken01(t *testing.T, ownerToken, path, method string) {
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatal("got unexpected status code: ", res.StatusCode)
+		strValue, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			t.Fatal(err)
+			return
+		}
+		t.Fatal("got unexpected status code: ", res.StatusCode, string(strValue))
 		return
 	}
 
@@ -74,10 +76,8 @@ func doTestCreateToken01(t *testing.T, ownerToken, path, method string) {
 // TestCreateToken02 is a test function to create a token using the owner token
 /// with http url encoded variables. The token should be created successfully.
 func TestCreateToken02(t *testing.T) {
-	// run the app in anoter goroutine
-	go runApp()
-
-	time.Sleep(time.Millisecond * 1600)
+	decideToRun()
+	t.Cleanup(closeServer)
 
 	ownerToken := getOwnerToken()
 	doTestCreateToken02(t, ownerToken, "create", http.MethodPost)
@@ -86,7 +86,45 @@ func TestCreateToken02(t *testing.T) {
 	doTestCreateToken02(t, ownerToken, "createToken", http.MethodGet)
 }
 
+func TestCreateToken02Crazy(t *testing.T) {
+	decideToRun()
+	t.Cleanup(closeServer)
+	t.Log("hello")
+	ownerToken := getOwnerToken()
+	doTestCreateToken02(t, ownerToken, "create", http.MethodPost)
+	doTestCreateToken02(t, ownerToken, "createToken", http.MethodPost)
+
+	start := time.Now()
+	go func() {
+		for i := 0; i < 10; i++ {
+			go doTestCreateToken02CrazyPart(t, ownerToken)
+			//log.Println(i)
+		}
+	}()
+	for mm < 10 {
+		time.Sleep(time.Second)
+	}
+
+	log.Println("done in:", time.Since(start).Microseconds())
+	t.Log("done in:", time.Since(start).Microseconds())
+}
+
+var mm int
+
+func doTestCreateToken02CrazyPart(t *testing.T, ownerToken string) {
+	for i := 0; i < 5; i++ {
+		doTestCreateToken02b(t, ownerToken, "create", http.MethodGet, false)
+		doTestCreateToken02b(t, ownerToken, "createToken", http.MethodGet, false)
+		//log.Println(i)
+	}
+	mm++
+}
+
 func doTestCreateToken02(t *testing.T, ownerToken, path, method string) {
+	doTestCreateToken02b(t, ownerToken, path, method, true)
+}
+
+func doTestCreateToken02b(t *testing.T, ownerToken, path, method string, l bool) {
 	url := getBaseUrl() + path + "?user-id=" + userId01 + "&token=" + ownerToken
 	// create a new token
 	req, err := http.NewRequest(http.MethodPost, url, nil)
@@ -104,7 +142,13 @@ func doTestCreateToken02(t *testing.T, ownerToken, path, method string) {
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		t.Fatal("got unexpected status code: ", res.StatusCode)
+		strValue, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			t.Fatal(err)
+			return
+		}
+		t.Fatal("got unexpected status code: ", res.StatusCode,
+			"with content", string(strValue))
 		return
 	}
 
@@ -126,16 +170,16 @@ func doTestCreateToken02(t *testing.T, ownerToken, path, method string) {
 	2021/10/25 20:19:40 {"result":{"id":1341091260,"hash":"1341091260:MiDvOMnpj8Tf7HK6OLVqVMIJg7F4on9Tyr6mRFhtVpesncgMidjc8BbN6etulbfq","permission":0,"created_at":"2021-10-25T19:54:51.194525003Z"},"success":true,"error":null}
 	*/
 
-	log.Println(string(strValue))
+	if l {
+		log.Println(string(strValue))
+	}
 }
 
 //---------------------------------------------------------
 
 func TestCreateToken03(t *testing.T) {
-	// run the app in anoter goroutine
-	go runApp()
-
-	time.Sleep(time.Millisecond * 1600)
+	decideToRun()
+	t.Cleanup(closeServer)
 
 	ownerToken := getOwnerToken()
 	doTestCreateToken03(t, ownerToken, "create", http.MethodPost)
@@ -242,10 +286,8 @@ func doTestCreateToken03Wrong(t *testing.T, ownerToken, path, method string) {
 //---------------------------------------------------------
 
 func TestCreateToken04(t *testing.T) {
-	// run the app in anoter goroutine
-	go runApp()
-
-	time.Sleep(time.Millisecond * 1600)
+	decideToRun()
+	t.Cleanup(closeServer)
 
 	ownerToken := getOwnerToken()
 	doTestCreateToken04(t, ownerToken, "create", http.MethodPost)
@@ -313,11 +355,8 @@ func doTestCreateToken04(t *testing.T, ownerToken, path, method string) {
 // TestCreateToken01 test to create a token using the owner token with http
 // headers. The token should be created successfully.
 func TestCreateToken05(t *testing.T) {
-	// run the app in anoter goroutine
-	go runApp()
-
-	// give it some time to start listening
-	time.Sleep(time.Millisecond * 1600)
+	decideToRun()
+	t.Cleanup(closeServer)
 
 	ownerToken := getOwnerToken()
 	doTestCreateToken05(t, ownerToken, "create", http.MethodPost)
@@ -385,10 +424,8 @@ func doTestCreateToken05(t *testing.T, ownerToken, path, method string) {
 //---------------------------------------------------------
 
 func TestCreateToken06(t *testing.T) {
-	// run the app in anoter goroutine
-	go runApp()
-
-	time.Sleep(time.Millisecond * 1600)
+	decideToRun()
+	t.Cleanup(closeServer)
 
 	ownerToken := getOwnerToken()
 	doTestCreateToken06(t, ownerToken, "create", http.MethodPost)

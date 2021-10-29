@@ -3,6 +3,9 @@ package sibylValues
 import (
 	"strconv"
 	"strings"
+	"time"
+
+	"github.com/ALiwoto/mdparser/mdparser"
 )
 
 //---------------------------------------------------------
@@ -82,6 +85,14 @@ func (t *Token) GetTitleStringPermission() string {
 	return strings.Title(t.Permission.GetStringPermission())
 }
 
+func (t *Token) GetCacheDate() time.Time {
+	return t.cacheDate
+}
+
+func (t *Token) SetCacheDate() {
+	t.cacheDate = time.Now()
+}
+
 //---------------------------------------------------------
 func (p UserPermission) GetStringPermission() string {
 	switch p {
@@ -100,61 +111,33 @@ func (p UserPermission) GetStringPermission() string {
 
 //---------------------------------------------------------
 
-func (r *Report) CreateUniqueId() {
-	if r.uniqueId != 0 || reportMutex == nil {
-		return
-	}
-
-	reportMutex.Lock()
-	r.uniqueId = currentUniqueId
-	currentUniqueId++
-	reportUniqueMap[r.uniqueId] = r
-	reportMutex.Unlock()
+func (r *Report) ParseAsMd() mdparser.WMarkDown {
+	md := mdparser.GetNormal("\u200D#Report Event:\n")
+	md.AppendBoldThis("・User:").AppendNormalThis(" ")
+	md.AppendMentionThis(strconv.FormatInt(r.ReporterId, 10), r.ReporterId)
+	md.AppendNormalThis("\n")
+	md.AppendBoldThis("・By " + r.ReporterPermission).AppendNormalThis(" ")
+	md.AppendMentionThis(strconv.FormatInt(r.ReporterId, 10), r.ReporterId)
+	md.AppendNormalThis("\n")
+	md.AppendBoldThis("・Reason:").AppendNormalThis(" ")
+	md.AppendMonoThis(r.ReportReason)
+	md.AppendNormalThis("\n")
+	md.AppendBoldThis("・Date:").AppendNormalThis(" ")
+	md.AppendItalicThis(r.ReportDate)
+	md.AppendNormalThis("\n\n")
+	md.AppendBoldThis("・Message:").AppendNormalThis(" ")
+	md.AppendNormalThis(r.ReportMessage)
+	return md
 }
 
-func (r *Report) MarkAsAccepted() {
-	if r.state == reportStateWaiting {
-		r.state = reportStateAccepted
-	}
+//---------------------------------------------------------
+
+func (u *User) GetCacheDate() time.Time {
+	return u.cacheDate
 }
 
-func (r *Report) MarkAsClosed() {
-	if r.state == reportStateWaiting {
-		r.state = reportStateClosed
-	}
-}
-
-func (r *Report) Destroy() {
-	if r.uniqueId != 0 || reportMutex == nil {
-		return
-	}
-
-	reportMutex.Lock()
-	if reportUniqueMap[r.uniqueId] != nil {
-		delete(reportUniqueMap, r.uniqueId)
-	}
-	reportMutex.Unlock()
-
-	r.state = reportStateDestroyed
-}
-
-func (r *Report) GetUniqueId() int64 {
-	return r.uniqueId
-}
-
-func (r *Report) IsAccepted() bool {
-	return r.state == reportStateAccepted
-}
-func (r *Report) IsWaiting() bool {
-	return r.state == reportStateWaiting
-}
-
-func (r *Report) IsClosed() bool {
-	return r.state == reportStateClosed
-}
-
-func (r *Report) IsDestroyed() bool {
-	return r.state == reportStateDestroyed
+func (u *User) SetCacheDate() {
+	u.cacheDate = time.Now()
 }
 
 //---------------------------------------------------------

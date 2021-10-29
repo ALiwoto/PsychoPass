@@ -1,11 +1,13 @@
 package server
 
 import (
+	"strings"
+
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/banHandlers"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/infoHandlers"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/reportHandlers"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/tokenHandlers"
 	"github.com/gin-gonic/gin"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints/banHandlers"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints/infoHandlers"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints/reportHandlers"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints/tokenHandlers"
 )
 
 func LoadHandlers() {
@@ -14,18 +16,20 @@ func LoadHandlers() {
 		"createToken", "generate")
 
 	// revoke token handlers
-	bindHandler(tokenHandlers.RevokeTokenHandler,
-		"revoke", "revokeToken")
+	bindHandler(tokenHandlers.RevokeTokenHandler, "revoke", "revokeToken")
+
+	// change token permission handlers
+	bindHandler(tokenHandlers.RevokeTokenHandler, "changePerm", "promote")
 
 	// get token handlers
 	bindHandler(tokenHandlers.GetTokenHandler, "getToken")
 
 	// addBan handlers
-	bindHandler(banHandlers.AddBanHandler, "addBan")
+	bindHandler(banHandlers.AddBanHandler, "addBan", "ban", "banUser")
 
 	// deleteBan handlers
 	bindHandler(banHandlers.RemoveBanHandler, "deleteBan", "removeBan",
-		"revertBan")
+		"revertBan", "remBan")
 
 	// getInfo handlers
 	bindHandler(infoHandlers.GetInfoHandler, "getInfo", "fetchInfo")
@@ -33,13 +37,44 @@ func LoadHandlers() {
 	// report handlers
 	bindHandler(reportHandlers.ReportUserHandler, "report", "reportUser")
 
-	// get update handlers
-	bindHandler(reportHandlers.GetUpdateHandler, "getUpdate", "fetchUpdate")
+	bindNoRoot()
 }
 
 func bindHandler(handler gin.HandlerFunc, paths ...string) {
 	for _, path := range paths {
 		ServerEngine.GET(path, handler)
 		ServerEngine.POST(path, handler)
+	}
+}
+
+func bindNoRoot() {
+	ServerEngine.NoRoute(noRootHandler)
+}
+
+func noRootHandler(c *gin.Context) {
+	path := strings.TrimSpace(c.Request.URL.Path)
+	path = strings.Trim(path, "/")
+	path = strings.ToLower(path)
+	switch path {
+	case "create", "createtoken", "generate":
+		tokenHandlers.CreateTokenHandler(c)
+		return
+	case "revoke", "revoketoken":
+		tokenHandlers.RevokeTokenHandler(c)
+	case "changeperm", "promote":
+		tokenHandlers.ChangeTokenPermHandler(c)
+	case "gettoken":
+		banHandlers.AddBanHandler(c)
+	case "addban", "ban", "banuser":
+		banHandlers.AddBanHandler(c)
+	case "deleteban", "removeban", "revertban", "remBan":
+		banHandlers.RemoveBanHandler(c)
+	case "getinfo", "fetchinfo":
+		infoHandlers.GetInfoHandler(c)
+	case "report", "reportuser":
+		reportHandlers.ReportUserHandler(c)
+	default:
+		// TODO: send docs or redirect to docs or something else.
+		return
 	}
 }

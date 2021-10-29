@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
-	sv "gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/hashing"
+	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
 )
 
 func GetTokenFromId(id int64) (*sv.Token, error) {
@@ -13,12 +13,25 @@ func GetTokenFromId(id int64) (*sv.Token, error) {
 		return nil, errors.New("failed to Get token data as Session is nil")
 	}
 
+	tokenMapMutex.Lock()
+	t := tokenDbMap[id]
+	tokenMapMutex.Unlock()
+	if t != nil {
+		return t, nil
+	}
+
 	p := sv.Token{}
+	lockdb()
 	SESSION.Where("user_id = ?", id).Take(&p)
+	unlockdb()
 	if len(p.Hash) == 0 || p.UserId == 0 || p.UserId != id {
 		// not found
 		return nil, nil
 	}
+	p.SetCacheDate()
+	tokenMapMutex.Lock()
+	tokenDbMap[p.UserId] = &p
+	tokenMapMutex.Unlock()
 
 	return &p, nil
 }
@@ -46,56 +59,44 @@ func UpdateTokenLastUsageById(id int64) {
 	}
 
 	u.LastUsage = time.Now()
+	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(u)
 	tx.Commit()
+	unlockdb()
 }
 
 func UpdateTokenLastUsage(t *sv.Token) {
 	t.LastUsage = time.Now()
+	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(t)
 	tx.Commit()
+	unlockdb()
 }
 
 func UpdateTokenPermission(t *sv.Token, perm sv.UserPermission) {
 	t.Permission = perm
+	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(t)
 	tx.Commit()
-}
-
-func ApplyReport(r *sv.Report) {
-	if r == nil || r.IsDestroyed() {
-		return
-	}
-
-	t, err := GetTokenFromId(r.ReporterId)
-	if err != nil || t == nil || t.UserId != r.ReporterId {
-		return
-	}
-
-	if r.IsAccepted() {
-		t.AcceptedReports++
-	} else if r.IsClosed() {
-		t.DeniedReports++
-	} else {
-		return
-	}
-	tx := SESSION.Begin()
-	tx.Save(t)
-	tx.Commit()
+	unlockdb()
 }
 
 func RevokeTokenHash(t *sv.Token, hash string) {
 	t.Hash = hash
+	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(t)
 	tx.Commit()
+	unlockdb()
 }
 
 func NewToken(t *sv.Token) {
+	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(t)
 	tx.Commit()
+	unlockdb()
 }

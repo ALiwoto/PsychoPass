@@ -1,9 +1,9 @@
 package server
 
 import (
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylConfig"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
 	"github.com/gin-gonic/gin"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylConfig"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
 )
 
 func RunSibylSystem() {

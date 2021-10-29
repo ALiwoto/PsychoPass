@@ -2,10 +2,12 @@ package database
 
 import (
 	"fmt"
+	"sync"
+	"time"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylConfig"
-	sv "gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylConfig"
+	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -45,7 +47,38 @@ func StartDatabase() {
 		logging.Fatal(err)
 	}
 
+	if sibylConfig.SibylConfig.UseSqlite {
+		dbMutex = &sync.Mutex{}
+	}
+	tokenMapMutex = &sync.Mutex{}
+	tokenDbMap = make(map[int64]*sv.Token)
+	userMapMutex = &sync.Mutex{}
+	userDbMap = make(map[int64]*sv.User)
+	go cleanMaps()
 	logging.Info("Auto-migrated database schema")
+}
+
+func cleanMaps() {
+	for {
+		time.Sleep(MaxCacheTime)
+		if tokenDbMap == nil || userDbMap == nil {
+			return
+		}
+		tokenMapMutex.Lock()
+		for key, value := range tokenDbMap {
+			if value == nil || time.Since(value.GetCacheDate()) > MaxCacheTime {
+				delete(tokenDbMap, key)
+			}
+		}
+		tokenMapMutex.Unlock()
+		userMapMutex.Lock()
+		for key, value := range userDbMap {
+			if value == nil || time.Since(value.GetCacheDate()) > MaxCacheTime {
+				delete(tokenDbMap, key)
+			}
+		}
+		userMapMutex.Unlock()
+	}
 }
 
 func IsFirstTime() bool {

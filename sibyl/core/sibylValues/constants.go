@@ -20,10 +20,3 @@ const (
 const (
 	MaxReportCacheTime = 50 * time.Minute
 )
-
-const (
-	reportStateWaiting reportState = iota
-	reportStateAccepted
-	reportStateClosed
-	reportStateDestroyed
-)

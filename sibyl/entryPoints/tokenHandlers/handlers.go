@@ -3,17 +3,17 @@ package tokenHandlers
 import (
 	"strconv"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
-	entry "gitlab.com/Dank-del/SibylAPI-Go/sibyl/entryPoints"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
+	entry "github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints"
 
+	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
 	"github.com/gin-gonic/gin"
-	sv "gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/hashing"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
 )
 
-// CreateTokenHandler function will create a new token for the specified
+// CreateToken function will create a new token for the specified
 // user. if user already have a token in the db, it will just return that
 // token.
 func CreateTokenHandler(c *gin.Context) {
@@ -31,7 +31,7 @@ func CreateTokenHandler(c *gin.Context) {
 		return
 	}
 
-	database.UpdateTokenLastUsage(d)
+	go database.UpdateTokenLastUsage(d)
 	if d.CanCreateToken() {
 		id, err := strconv.ParseInt(userId, 10, 64)
 		if err != nil || id == 0 {
@@ -41,6 +41,9 @@ func CreateTokenHandler(c *gin.Context) {
 
 		u, _ := database.GetTokenFromId(id)
 		if u != nil {
+			if u.Permission != sv.UserPermission(perm) {
+				database.UpdateTokenPermission(u, sv.UserPermission(perm))
+			}
 			entry.SendResult(c, u)
 			return
 		}
@@ -61,7 +64,45 @@ func CreateTokenHandler(c *gin.Context) {
 	}
 }
 
-// RevokeTokenHandler function will revoke the specified token.
+func ChangeTokenPermHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	userId := utils.GetParam(c, "user-id", "id")
+	perm, _ := strconv.Atoi(utils.GetParam(c, "perm", "permission"))
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginCreateToken)
+		return
+	}
+
+	d, err := database.GetTokenFromString(token)
+	if err != nil || d == nil {
+		entry.SendInvalidTokenError(c, OriginCreateToken)
+		return
+	}
+
+	go database.UpdateTokenLastUsage(d)
+	if d.CanCreateToken() {
+		id, err := strconv.ParseInt(userId, 10, 64)
+		if err != nil || id == 0 {
+			entry.SendInvalidUserIdError(c, OriginCreateToken)
+			return
+		}
+
+		u, _ := database.GetTokenFromId(id)
+		if u != nil {
+			if u.Permission != sv.UserPermission(perm) {
+				database.UpdateTokenPermission(u, sv.UserPermission(perm))
+			}
+			entry.SendResult(c, MessagePermissionChanged+u.GetTitleStringPermission())
+			return
+		}
+
+		entry.SendUserNotFoundError(c, OriginCreateToken)
+	} else {
+		entry.SendPermissionDenied(c, OriginCreateToken)
+	}
+}
+
+// RevokeToken function will revoke the specified token.
 // you should pass the user-id of your target.
 func RevokeTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
@@ -98,7 +139,7 @@ func RevokeTokenHandler(c *gin.Context) {
 	}
 }
 
-// GetTokenHandler function will revoke the specified token.
+// GetToken function will revoke the specified token.
 func GetTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "userId", "id")

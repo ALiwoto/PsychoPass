@@ -4,10 +4,10 @@ import (
 	"io/ioutil"
 	"strings"
 
+	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
 	"github.com/gin-gonic/gin"
-	sv "gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/hashing"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
 )
 
 // CreateToken creates a token for the given user.

@@ -6,14 +6,14 @@ import (
 	"os"
 	"runtime/debug"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylValues"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/sibylConfig"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/logging"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/database"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/server"
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/tgCore"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylConfig"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/server"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/tgCore"
 )
 
 func main() {

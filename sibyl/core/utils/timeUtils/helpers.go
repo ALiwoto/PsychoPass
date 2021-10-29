@@ -3,7 +3,7 @@ package timeUtils
 import (
 	"time"
 
-	"gitlab.com/Dank-del/SibylAPI-Go/sibyl/core/utils/stringUtils"
+	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/stringUtils"
 )
 
 // GenerateCurrentDateTime format of the date time will be dd/MM/yyyy HH:mm:ss

@@ -5,3 +5,7 @@ const (
 	OriginRevokeToken = "RevokeToken"
 	OriginGetToken    = "GetToken"
 )
+
+const (
+	MessagePermissionChanged = "Permission changed to "
+)

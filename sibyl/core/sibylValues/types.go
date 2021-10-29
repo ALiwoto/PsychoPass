@@ -4,15 +4,17 @@ import "time"
 
 type UserPermission int
 type ReportHandler func(r *Report)
-type reportState int
 
 type User struct {
-	UserID   int64     `json:"user_id" gorm:"primaryKey"`
-	Banned   bool      `json:"banned"`
-	Reason   string    `json:"reason"`
-	Message  string    `json:"message"`
-	Date     time.Time `json:"date"`
-	BannedBy int64     `json:"banned_by"`
+	UserID           int64     `json:"user_id" gorm:"primaryKey"`
+	Banned           bool      `json:"banned"`
+	Reason           string    `json:"reason"`
+	Message          string    `json:"message"`
+	BanSourceUrl     string    `json:"ban_source_url"`
+	Date             time.Time `json:"date"`
+	BannedBy         int64     `json:"banned_by"`
+	CrimeCoefficient float64   `json:"crime_coefficient"`
+	cacheDate        time.Time `json:"-"`
 }
 
 type Token struct {
@@ -34,6 +36,8 @@ type Token struct {
 	AcceptedReports int `json:"accepted_reports"`
 
 	DeniedReports int `json:"denied_reports"`
+
+	cacheDate time.Time `json:"-"`
 }
 
 type Report struct {
@@ -43,7 +47,4 @@ type Report struct {
 	ReportReason       string
 	ReportMessage      string
 	ReporterPermission string
-	uniqueId           int64
-	date               time.Time
-	state              reportState
 }
