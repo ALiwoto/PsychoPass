@@ -102,6 +102,13 @@ func LoadConfigFromFile(fileName string) error {
 		SibylConfig.BotToken = os.Getenv("BOT_TOKEN")
 	}
 
+	// database section variables:
+	SibylConfig.DropUpdates, err = configContent.GetBool("telegram", "drop_updates")
+	if err != nil {
+		dropUpdates := os.Getenv("DROP_UPDATES")
+		SibylConfig.DropUpdates = dropUpdates == "yes" || dropUpdates == "true"
+	}
+
 	baseStr, err := configContent.Get("telegram", "base_chats")
 	if err != nil || len(SibylConfig.BotToken) == 0 {
 		baseStr = os.Getenv("BASE_CHATS")
@@ -184,6 +191,13 @@ func GetPort() string {
 		return SibylConfig.Port
 	}
 	return "8080" // default port is set to 8080
+}
+
+func DropUpdates() bool {
+	if SibylConfig != nil {
+		return SibylConfig.DropUpdates
+	}
+	return true
 }
 
 func GetMaxPanics() int64 {

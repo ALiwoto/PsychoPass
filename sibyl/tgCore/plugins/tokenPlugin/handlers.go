@@ -28,6 +28,10 @@ func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 }
 
 func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
+	if ctx.EffectiveChat.Type != "private" {
+		return ext.EndGroups
+	}
+
 	user := ctx.EffectiveUser
 	t, err := database.GetTokenFromId(user.Id)
 	if err != nil {

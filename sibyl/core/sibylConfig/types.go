@@ -11,6 +11,7 @@ type SibylSystemConfig struct {
 	Port             string   `json:"port"`
 	BotToken         string   `json:"bot_token"`
 	Debug            bool     `json:"debug"`
+	DropUpdates      bool     `json:"drop_updates"`
 	OrdinaryPrefixes []string `json:"cmd_prefixes"`
 	CmdPrefixes      []rune   `json:"-"`
 	BaseChats        []int64  `json:"base_chats"`
