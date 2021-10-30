@@ -5,4 +5,5 @@ const (
 	CreateCmd = "create"
 	NewCmd    = "new"
 	RevokeCmd = "revoke"
+	AssignCmd = "assign"
 )
