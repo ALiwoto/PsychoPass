@@ -104,7 +104,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	user := ctx.EffectiveUser
 	msg := ctx.EffectiveMessage
 	t, err := database.GetTokenFromId(user.Id)
-	if err != nil || t == nil || t.CanChangePermission() {
+	if err != nil || t == nil || !t.CanChangePermission() {
 		return ext.EndGroups
 	}
 
@@ -112,16 +112,38 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if len(args) < 2 {
 		// show help.
 		md := mdparser.GetNormal("Dear ").AppendMentionThis(user.FirstName, user.Id)
-		md.AppendNormalThis(" ").AppendNormalThis(", this command lets you assign users to ")
+		md.AppendNormalThis(" , this command lets you assign users to ")
 		md.AppendHyperLinkThis("Sibyl", "http://t.me/SibylSystem")
 		md.AppendNormalThis("\nPlease provide a type with the command.")
-		md.AppendBoldThis("Your options are:")
+		md.AppendBoldThis("\nYour options are:")
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign inspector ID")
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign enforcer ID")
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign civilian ID")
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
+		})
+		if err != nil {
+			logging.UnexpectedError(err)
+		}
+
+		return ext.EndGroups
+	}
+
+	_, err = sv.ConvertToPermission(args[1])
+	if err != nil {
+		md := mdparser.GetNormal("Invalid permission provided: ")
+		md.AppendMonoThis(args[1])
+		md.AppendNormalThis("\nHere is a list of possible permissions:")
+		md.AppendNormalThis("\n- ").AppendMonoThis("inspector")
+		md.AppendNormalThis("\n- ").AppendMonoThis("enforcer")
+		md.AppendNormalThis("\n- ").AppendMonoThis("civilian")
+
+		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:                sv.MarkDownV2,
+			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
 		})
 		if err != nil {
 			logging.UnexpectedError(err)
