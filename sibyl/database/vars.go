@@ -3,7 +3,7 @@ package database
 import (
 	"sync"
 
-	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 )
 
 var (

@@ -3,9 +3,9 @@ package infoHandlers
 import (
 	"strconv"
 
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
-	entry "github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
+	entry "github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints"
 	"github.com/gin-gonic/gin"
 )
 

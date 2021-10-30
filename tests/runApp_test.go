@@ -8,13 +8,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylConfig"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/server"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/tgCore"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/server"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore"
 )
 
 //const baseUrl = "http://localhost:8080/"

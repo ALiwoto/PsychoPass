@@ -3,7 +3,7 @@ package database
 import (
 	"errors"
 
-	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 )
 
 func GetUserFromId(id int64) (*sv.User, error) {

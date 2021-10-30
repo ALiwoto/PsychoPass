@@ -2,11 +2,11 @@ package tokenPlugin
 
 import (
 	"github.com/ALiwoto/mdparser/mdparser"
-	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"

@@ -3,9 +3,9 @@ package tgCore
 import (
 	"net/http"
 
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylConfig"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/logging"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 )
 

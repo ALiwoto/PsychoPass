@@ -4,11 +4,11 @@ import (
 	"strconv"
 	"time"
 
-	entry "github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints"
+	entry "github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints"
 
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
 	"github.com/gin-gonic/gin"
 )
 

@@ -4,7 +4,7 @@ bin/
 *.exe
 #vendor/
 sibylBinary
-SibylAPI-Go
+PsychoPass
 sibylSystem
 *.old.go
 woto_files/

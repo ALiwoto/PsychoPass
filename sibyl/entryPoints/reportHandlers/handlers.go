@@ -3,12 +3,12 @@ package reportHandlers
 import (
 	"strconv"
 
-	entry "github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints"
+	entry "github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints"
 
-	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
 	"github.com/gin-gonic/gin"
 )
 

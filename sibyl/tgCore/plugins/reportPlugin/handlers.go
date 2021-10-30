@@ -1,8 +1,8 @@
 package reportPlugin
 
 import (
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylConfig"
-	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 )
 

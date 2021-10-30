@@ -1,4 +1,4 @@
-module github.com/AnimeKaizoku/sibylapi-go
+module github.com/AnimeKaizoku/PsychoPass
 
 go 1.17
 

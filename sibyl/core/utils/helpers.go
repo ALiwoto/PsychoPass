@@ -4,9 +4,9 @@ import (
 	"io/ioutil"
 	"strings"
 
-	sv "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/hashing"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/database"
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
 	"github.com/gin-gonic/gin"
 )
 

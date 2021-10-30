@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 )
 
 //---------------------------------------------------------

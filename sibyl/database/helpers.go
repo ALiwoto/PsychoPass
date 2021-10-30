@@ -1,6 +1,6 @@
 package database
 
-import "github.com/AnimeKaizoku/sibylapi-go/sibyl/core/sibylConfig"
+import "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
 
 func lockdb() {
 	if sibylConfig.SibylConfig.UseSqlite {

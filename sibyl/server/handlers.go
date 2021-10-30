@@ -3,10 +3,10 @@ package server
 import (
 	"strings"
 
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/banHandlers"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/infoHandlers"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/reportHandlers"
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/entryPoints/tokenHandlers"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/banHandlers"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/infoHandlers"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/reportHandlers"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/tokenHandlers"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"

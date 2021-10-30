@@ -1,7 +1,7 @@
 package sibylValues
 
 import (
-	"github.com/AnimeKaizoku/sibylapi-go/sibyl/core/utils/timeUtils"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/timeUtils"
 )
 
 func NewReport(reason, message string, target, reporter int64,
