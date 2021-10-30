@@ -197,7 +197,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	} else {
 		targetId, err = strconv.ParseInt(args[2], 10, 64)
 	}
-	if (err != nil || targetId == 0) && !preReplied {
+	if (err != nil || targetId == 0) && !replied {
 		md := mdparser.GetNormal("Invalid ID provided: ")
 		md.AppendMonoThis(args[2])
 		md.AppendNormalThis("!\nPlease make sure the target's ID is a valid integer.")
