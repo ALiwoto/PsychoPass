@@ -2,7 +2,7 @@
 .docker_build/
 bin/
 *.exe
-#vendor/
+vendor/
 sibylBinary
 PsychoPass
 sibylSystem
