@@ -269,9 +269,9 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	mdback := mdparser.GetNormal("Your permission has been changed to ")
-	mdback.AppendMonoThis(t.GetStringPermission())
+	mdback.AppendMonoThis(u.GetStringPermission())
 	mdback.AppendNormalThis("!\n\nHere is your token:\n")
-	mdback.AppendMonoThis(t.Hash).AppendNormalThis("\n\n")
+	mdback.AppendMonoThis(u.Hash).AppendNormalThis("\n\n")
 	mdback.AppendBoldThis("Please don't share this token with anyone!")
 	_, err = b.SendMessage(targetId, mdback.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode: sv.MarkDownV2,
