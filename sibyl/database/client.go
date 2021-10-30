@@ -62,9 +62,15 @@ func cleanMaps() {
 	mtime := sibylConfig.GetMaxCacheTime()
 	for {
 		time.Sleep(mtime)
+
+		// please don't use len() function here, as it may return
+		// `true` in some situations, but the maps may actually be
+		// healthy, but they are only unused and so their caches are
+		// completely deleted by cleaner.
 		if tokenDbMap == nil || userDbMap == nil {
 			return
 		}
+
 		tokenMapMutex.Lock()
 		for key, value := range tokenDbMap {
 			if value == nil || time.Since(value.GetCacheDate()) > mtime {
@@ -72,6 +78,7 @@ func cleanMaps() {
 			}
 		}
 		tokenMapMutex.Unlock()
+
 		userMapMutex.Lock()
 		for key, value := range userDbMap {
 			if value == nil || time.Since(value.GetCacheDate()) > mtime {

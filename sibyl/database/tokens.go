@@ -1,7 +1,6 @@
 package database
 
 import (
-	"errors"
 	"time"
 
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
@@ -10,7 +9,7 @@ import (
 
 func GetTokenFromId(id int64) (*sv.Token, error) {
 	if SESSION == nil {
-		return nil, errors.New("failed to Get token data as Session is nil")
+		return nil, ErrNoSession
 	}
 
 	tokenMapMutex.Lock()
@@ -40,15 +39,16 @@ func GetTokenFromId(id int64) (*sv.Token, error) {
 func GetTokenFromString(token string) (*sv.Token, error) {
 	id := hashing.GetIdFromToken(token)
 	if id == 0 {
-		return nil, errors.New("token is invalid")
+		return nil, ErrInvalidToken
 	}
+
 	u, err := GetTokenFromId(id)
 	if err != nil {
 		return nil, err
 	}
 
 	if u == nil || u.Hash != token {
-		return nil, errors.New("token is invalid")
+		return nil, ErrInvalidToken
 	}
 
 	return u, nil

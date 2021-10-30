@@ -7,6 +7,7 @@ func lockdb() {
 		dbMutex.Lock()
 	}
 }
+
 func unlockdb() {
 	if sibylConfig.SibylConfig.UseSqlite {
 		dbMutex.Unlock()

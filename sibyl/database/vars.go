@@ -1,9 +1,15 @@
 package database
 
 import (
+	"errors"
 	"sync"
 
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+)
+
+var (
+	ErrInvalidToken = errors.New("token is invalid")
+	ErrNoSession    = errors.New("database session is not initialized")
 )
 
 var (
