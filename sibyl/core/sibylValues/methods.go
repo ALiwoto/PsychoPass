@@ -105,7 +105,7 @@ func (t *Token) SetCacheDate() {
 	t.cacheDate = time.Now()
 }
 
-// GetStringPermission ---------------------------------------------------------
+//---------------------------------------------------------
 func (p UserPermission) GetStringPermission() string {
 	switch p {
 	case NormalUser:
@@ -119,6 +119,19 @@ func (p UserPermission) GetStringPermission() string {
 	default:
 		return strconv.Itoa(int(p))
 	}
+}
+
+func (p UserPermission) IsValid() bool {
+	switch p {
+	case NormalUser, Enforcer, Inspector, Owner:
+		return true
+	default:
+		return false
+	}
+}
+
+func (p UserPermission) IsOwner() bool {
+	return p == Owner
 }
 
 //---------------------------------------------------------

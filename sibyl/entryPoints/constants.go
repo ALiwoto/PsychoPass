@@ -9,6 +9,10 @@ const (
 	// the target's user id is invalid. (contains invalid characters)
 	ErrInvalidUserId = "Invalid user-id provided"
 
+	// ErrInvalidPerm is the error message that should be sent when
+	// the target's permission param is invalid.
+	ErrInvalidPerm = "Invalid permission provided"
+
 	// ErrUserNotFound is the error message that should be sent when the
 	// target's user id cannot be found in the sibyl database.
 	ErrUserNotFound = "User not found"

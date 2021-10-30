@@ -74,6 +74,18 @@ func SendInvalidUserIdError(c *gin.Context, origin string) {
 	})
 }
 
+func SendInvalidPermError(c *gin.Context, origin string) {
+	c.JSON(http.StatusBadGateway, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusBadGateway,
+			Message:   ErrInvalidPerm,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
 func SendNoReasonError(c *gin.Context, origin string) {
 	c.JSON(http.StatusBadGateway, &EndpointResponse{
 		Success: false,

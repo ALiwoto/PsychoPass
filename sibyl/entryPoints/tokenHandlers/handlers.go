@@ -19,7 +19,7 @@ import (
 func CreateTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "userid", "id")
-	perm, _ := strconv.Atoi(utils.GetParam(c, "perm", "permission"))
+	permInt, _ := strconv.Atoi(utils.GetParam(c, "perm", "permission"))
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginCreateToken)
 		return
@@ -36,6 +36,12 @@ func CreateTokenHandler(c *gin.Context) {
 		id, err := strconv.ParseInt(userId, 10, 64)
 		if err != nil || id == 0 {
 			entry.SendInvalidUserIdError(c, OriginCreateToken)
+			return
+		}
+
+		perm := sv.UserPermission(permInt)
+		if !perm.IsValid() || perm.IsOwner() {
+			entry.SendInvalidPermError(c, OriginCreateToken)
 			return
 		}
 
@@ -71,7 +77,7 @@ func CreateTokenHandler(c *gin.Context) {
 func ChangeTokenPermHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "userid", "id")
-	perm, _ := strconv.Atoi(utils.GetParam(c, "perm", "permission"))
+	permInt, _ := strconv.Atoi(utils.GetParam(c, "perm", "permission"))
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginCreateToken)
 		return
@@ -88,6 +94,12 @@ func ChangeTokenPermHandler(c *gin.Context) {
 		id, err := strconv.ParseInt(userId, 10, 64)
 		if err != nil || id == 0 {
 			entry.SendInvalidUserIdError(c, OriginCreateToken)
+			return
+		}
+
+		perm := sv.UserPermission(permInt)
+		if !perm.IsValid() || perm.IsOwner() {
+			entry.SendInvalidPermError(c, OriginCreateToken)
 			return
 		}
 
