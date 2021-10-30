@@ -132,7 +132,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	_, err = sv.ConvertToPermission(args[1])
+	perm, err := sv.ConvertToPermission(args[1])
 	if err != nil {
 		md := mdparser.GetNormal("Invalid permission provided: ")
 		md.AppendMonoThis(args[1])
@@ -153,11 +153,27 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	var targetId int64
-	if len(args) > 3 {
+	if len(args) < 3 {
 		// show help.
-		targetId, err = strconv.ParseInt(args[2], 10, 64)
+		md := mdparser.GetNormal("You need to provide a user ID for this command.")
+		md.AppendBoldThis("\nYour options are:")
+		md.AppendNormalThis("\n- ").AppendMonoThis("/assign inspector ID")
+		md.AppendNormalThis("\n- ").AppendMonoThis("/assign enforcer ID")
+		md.AppendNormalThis("\n- ").AppendMonoThis("/assign civilian ID")
+
+		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:                sv.MarkDownV2,
+			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
+		})
+		if err != nil {
+			logging.UnexpectedError(err)
+		}
+
+		return ext.EndGroups
 	}
+
+	targetId, err := strconv.ParseInt(args[2], 10, 64)
 	if err != nil || targetId == 0 {
 		md := mdparser.GetNormal("Invalid ID provided: ")
 		md.AppendMonoThis(args[2])
@@ -173,6 +189,39 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		}
 
 		return ext.EndGroups
+	}
+
+	var md mdparser.WMarkDown
+	u, _ := database.GetTokenFromId(targetId)
+	if u != nil {
+		if u.IsOwner() {
+			md = mdparser.GetNormal("You can't change permission of another owner.\n")
+			md.AppendNormalThis("Please try another user ID.\n")
+		} else if u.Permission == perm {
+			md = mdparser.GetNormal("The user ").AppendMentionThis(user.FirstName, u.UserId)
+			md.AppendNormalThis(" already has the permission ")
+			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
+		} else {
+			pre := u.Permission
+			database.UpdateTokenPermission(u, perm)
+			md = mdparser.GetNormal("The user ").AppendMentionThis(user.FirstName, u.UserId)
+			md.AppendNormalThis(" has been assigned the permission ")
+			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
+			md.AppendItalicThis("\nThe previous permission was ")
+			md.AppendMonoThis(pre.GetStringPermission()).AppendNormal(".")
+		}
+	} else {
+		md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
+		md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
+	}
+
+	_, err = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+		ParseMode:                sv.MarkDownV2,
+		AllowSendingWithoutReply: true,
+		DisableWebPagePreview:    true,
+	})
+	if err != nil {
+		logging.UnexpectedError(err)
 	}
 
 	return ext.EndGroups
