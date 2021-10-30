@@ -37,6 +37,20 @@ func AddBanHandler(c *gin.Context) {
 			return
 		}
 
+		by := hashing.GetIdFromToken(token)
+		if by == id {
+			entry.SendCannotBanYourselfError(c, OriginAddBan)
+			return
+		}
+
+		tu, err := database.GetTokenFromId(id)
+		if err == nil && tu != nil {
+			if !tu.CanBeBanned() {
+				entry.SendCannotBeBannedError(c, OriginAddBan)
+				return
+			}
+		}
+
 		if len(banReason) == 0 {
 			entry.SendNoReasonError(c, OriginAddBan)
 			return
@@ -66,7 +80,6 @@ func AddBanHandler(c *gin.Context) {
 			return
 		}
 
-		by := hashing.GetIdFromToken(token)
 		u = database.AddBan(id, by, banReason, banMsg, srcUrl)
 		entry.SendResult(c, &BanResult{
 			CurrentBan: u,

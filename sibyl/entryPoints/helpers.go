@@ -98,12 +98,36 @@ func SendCannotReportYourselfError(c *gin.Context, origin string) {
 	})
 }
 
+func SendCannotBanYourselfError(c *gin.Context, origin string) {
+	c.JSON(http.StatusBadGateway, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusBadGateway,
+			Message:   ErrCannotBanYourself,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
 func SendCannotBeReportedError(c *gin.Context, origin string) {
 	c.JSON(http.StatusBadGateway, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
 			Message:   ErrCannotBeReported,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
+func SendCannotBeBannedError(c *gin.Context, origin string) {
+	c.JSON(http.StatusBadGateway, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusBadGateway,
+			Message:   ErrCannotBeBanned,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
 		},

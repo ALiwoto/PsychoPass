@@ -34,9 +34,15 @@ func (t *Token) CanReport() bool {
 	return t.Permission > NormalUser
 }
 
-// CanBeReport returns true if the token with its current
+// CanBeReported returns true if the token with its current
 // permission can be reported to sibyl system or not.
 func (t *Token) CanBeReported() bool {
+	return t.Permission == NormalUser
+}
+
+// CanBeBanned returns true if the token with its current
+// permission can be banned on sibyl system or not.
+func (t *Token) CanBeBanned() bool {
 	return t.Permission == NormalUser
 }
 
