@@ -13,6 +13,12 @@ const (
 	// the target's permission param is invalid.
 	ErrInvalidPerm = "Invalid permission provided"
 
+	// ErrCannotChangePerm is the error message that should be sent when
+	// there is a problem in changing someone's permission; for example
+	// the target user is an owner. as owner users can't change another owners'
+	// permission.
+	ErrCannotChangePerm = "Can't change target's permission"
+
 	// ErrUserNotFound is the error message that should be sent when the
 	// target's user id cannot be found in the sibyl database.
 	ErrUserNotFound = "User not found"

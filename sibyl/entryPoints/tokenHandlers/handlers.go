@@ -79,13 +79,13 @@ func ChangeTokenPermHandler(c *gin.Context) {
 	userId := utils.GetParam(c, "user-id", "userid", "id")
 	permInt, _ := strconv.Atoi(utils.GetParam(c, "perm", "permission"))
 	if len(token) == 0 {
-		entry.SendNoTokenError(c, OriginCreateToken)
+		entry.SendNoTokenError(c, OriginChangeTokenPerm)
 		return
 	}
 
 	d, err := database.GetTokenFromString(token)
 	if err != nil || d == nil {
-		entry.SendInvalidTokenError(c, OriginCreateToken)
+		entry.SendInvalidTokenError(c, OriginChangeTokenPerm)
 		return
 	}
 
@@ -93,7 +93,7 @@ func ChangeTokenPermHandler(c *gin.Context) {
 	if d.CanCreateToken() {
 		id, err := strconv.ParseInt(userId, 10, 64)
 		if err != nil || id == 0 {
-			entry.SendInvalidUserIdError(c, OriginCreateToken)
+			entry.SendInvalidUserIdError(c, OriginChangeTokenPerm)
 			return
 		}
 
@@ -105,20 +105,23 @@ func ChangeTokenPermHandler(c *gin.Context) {
 
 		u, _ := database.GetTokenFromId(id)
 		if u != nil {
-			if u.Permission != sv.UserPermission(perm) {
-				database.UpdateTokenPermission(u, sv.UserPermission(perm))
-			} else {
-				entry.SendResult(c, MessagePermSame+u.GetTitleStringPermission())
+			if u.IsOwner() || u.Permission == sv.UserPermission(perm) {
+				entry.SendCannotChangePermError(c, OriginChangeTokenPerm)
 				return
 			}
 
-			entry.SendResult(c, MessagePermChanged+u.GetTitleStringPermission())
+			pre := u.Permission
+			database.UpdateTokenPermission(u, sv.UserPermission(perm))
+			entry.SendResult(c, &ChangePermResult{
+				PreviousPerm: pre,
+				CurrentPerm:  perm,
+			})
 			return
 		}
 
-		entry.SendUserNotFoundError(c, OriginCreateToken)
+		entry.SendUserNotFoundError(c, OriginChangeTokenPerm)
 	} else {
-		entry.SendPermissionDenied(c, OriginCreateToken)
+		entry.SendPermissionDenied(c, OriginChangeTokenPerm)
 	}
 }
 
