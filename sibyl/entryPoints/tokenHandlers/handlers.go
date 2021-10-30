@@ -64,6 +64,10 @@ func CreateTokenHandler(c *gin.Context) {
 	}
 }
 
+// ChangeTokenPermHandler function will change the permission of the specified
+// token of the target user.
+// users should have enough access to change the permission of a token.
+// they need to pass the user-id of the target user and the new permission.
 func ChangeTokenPermHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "userid", "id")

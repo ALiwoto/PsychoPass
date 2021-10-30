@@ -50,6 +50,7 @@ func AddBanHandler(c *gin.Context) {
 				return
 			}
 
+			// make a copy of the current struct value.
 			pre := *u
 			by := hashing.GetIdFromToken(token)
 			u.BannedBy = by
@@ -110,7 +111,6 @@ func RemoveBanHandler(c *gin.Context) {
 		}
 
 		database.RemoveUserBan(u)
-
 		entry.SendResult(c, MessageUnbanned)
 		return
 	} else {
