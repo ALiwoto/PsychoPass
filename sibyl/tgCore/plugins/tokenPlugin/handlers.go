@@ -119,10 +119,14 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign inspector ID")
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign enforcer ID")
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign civilian ID")
-		msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,
 		})
+		if err != nil {
+			logging.UnexpectedError(err)
+		}
+
 		return ext.EndGroups
 	}
 
