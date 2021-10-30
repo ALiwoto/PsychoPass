@@ -115,7 +115,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		md := mdparser.GetNormal("Dear ").AppendMentionThis(user.FirstName, user.Id)
 		md.AppendNormalThis(" , this command lets you assign users to ")
 		md.AppendHyperLinkThis("Sibyl", "http://t.me/SibylSystem")
-		md.AppendNormalThis("\nPlease provide a type with the command.")
+		md.AppendNormalThis("\nPlease provide a valid type with the command.")
 		md.AppendBoldThis("\nYour options are:")
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign inspector ID")
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign enforcer ID")
@@ -153,8 +153,12 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	_, err = strconv.ParseInt(args[2], 10, 64)
-	if err != nil {
+	var targetId int64
+	if len(args) > 3 {
+		// show help.
+		targetId, err = strconv.ParseInt(args[2], 10, 64)
+	}
+	if err != nil || targetId == 0 {
 		md := mdparser.GetNormal("Invalid ID provided: ")
 		md.AppendMonoThis(args[2])
 		md.AppendNormalThis("!\nPlease make sure the target's ID is a valid integer.")
