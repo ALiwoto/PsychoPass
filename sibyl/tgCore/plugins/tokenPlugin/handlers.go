@@ -268,6 +268,19 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
 	}
 
+	mdback := mdparser.GetNormal("Your permission has been changed to ")
+	mdback.AppendMonoThis(t.GetStringPermission())
+	mdback.AppendNormalThis("!\n\nHere is your token:\n")
+	mdback.AppendMonoThis(t.Hash).AppendNormalThis("\n\n")
+	mdback.AppendBoldThis("Please don't share this token with anyone!")
+	_, err = b.SendMessage(targetId, mdback.ToString(), &gotgbot.SendMessageOpts{
+		ParseMode: sv.MarkDownV2,
+	})
+	if err != nil {
+		md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
+		md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
+	}
+
 	_, err = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode:                sv.MarkDownV2,
 		AllowSendingWithoutReply: true,
