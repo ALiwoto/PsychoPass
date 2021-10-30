@@ -109,7 +109,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	args := strongStringGo.Split(msg.Text, " ")
+	args := strongStringGo.Split(msg.Text, " ", "\n", "\t", ",", "-", "~")
 	if len(args) < 2 {
 		// show help.
 		md := mdparser.GetNormal("Dear ").AppendMentionThis(user.FirstName, user.Id)
