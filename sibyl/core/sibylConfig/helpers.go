@@ -54,10 +54,11 @@ func LoadConfigFromFile(fileName string) error {
 		logging.Fatal("Exiting cause token size is less than 20")
 	}
 
-	SibylConfig.MasterId, err = configContent.GetInt64("general", "masterid")
-	if err != nil {
-		SibylConfig.MasterId, _ = strconv.ParseInt(os.Getenv("MASTER_ID"), 10, 64)
+	ownersStr, err := configContent.Get("general", "owners")
+	if err != nil || len(ownersStr) == 0 {
+		ownersStr = os.Getenv("OWNERS")
 	}
+	SibylConfig.Owners = parseBaseStr(strings.TrimSpace(ownersStr))
 
 	SibylConfig.MaxPanic, err = configContent.GetInt64("general", "max_panics")
 	if err != nil {
@@ -110,13 +111,13 @@ func LoadConfigFromFile(fileName string) error {
 	}
 
 	baseStr, err := configContent.Get("telegram", "base_chats")
-	if err != nil || len(SibylConfig.BotToken) == 0 {
+	if err != nil || len(baseStr) == 0 {
 		baseStr = os.Getenv("BASE_CHATS")
 	}
 	SibylConfig.BaseChats = parseBaseStr(strings.TrimSpace(baseStr))
 
 	preStr, err := configContent.Get("telegram", "cmd_prefixes")
-	if err != nil || len(SibylConfig.BotToken) == 0 {
+	if err != nil || len(preStr) == 0 {
 		preStr = os.Getenv("CMD_PREFIXES")
 	}
 	SibylConfig.CmdPrefixes = parseCmdPrefixes(preStr)
@@ -221,11 +222,11 @@ func GetBotToken() string {
 	return ""
 }
 
-func GetMasterId() int64 {
+func GetOwnersID() []int64 {
 	if SibylConfig != nil {
-		return SibylConfig.MasterId
+		return SibylConfig.Owners
 	}
-	return 0
+	return nil
 }
 
 func GetBaseChatIds() []int64 {

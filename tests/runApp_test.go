@@ -1,7 +1,6 @@
 package tests_test
 
 import (
-	"io/fs"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -77,17 +76,7 @@ func runApp() {
 	}
 
 	database.StartDatabase()
-	if database.IsFirstTime() {
-		d, err := utils.CreateToken(sibylConfig.GetMasterId(), sibylValues.Owner)
-		if err != nil {
-			logging.Fatal(err)
-		}
-
-		logging.Info("Creating initial owner token...")
-		logging.Info(d.Hash)
-		os.WriteFile("owner.token", []byte(d.Hash), fs.ModePerm)
-	}
-
+	prepareOwnerToken()
 	tgCore.StartTelegramBot()
 	server.RunSibylSystem()
 }
@@ -95,4 +84,31 @@ func runApp() {
 // getOwnerToken returns the owner's token from owner.token file
 func getOwnerToken() string {
 	return string(utils.ReadFile("owner.token"))
+}
+
+func prepareOwnerToken() {
+	if database.IsFirstTime() {
+		err := ioutil.WriteFile(sibylValues.OwnersTokenFileName, []byte(""), 0644)
+		if err != nil {
+			logging.Fatal(err)
+		}
+
+		file, err := os.OpenFile(sibylValues.OwnersTokenFileName, os.O_APPEND|os.O_WRONLY, 0644)
+		if err != nil {
+			logging.Fatal(err)
+		}
+
+		for _, id := range sibylConfig.GetOwnersID() {
+			generateOwnerToken(id, file)
+		}
+	}
+}
+
+func generateOwnerToken(id int64, file *os.File) {
+	d, err := utils.CreateToken(id, sibylValues.Owner)
+	if err != nil {
+		logging.Fatal(err)
+	}
+
+	file.WriteString(d.Hash + "\n")
 }

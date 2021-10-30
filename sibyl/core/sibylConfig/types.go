@@ -2,7 +2,7 @@ package sibylConfig
 
 type SibylSystemConfig struct {
 	TokenSize        int64    `json:"toke_size"`
-	MasterId         int64    `json:"masterid"`
+	Owners           []int64  `json:"owners"`
 	MaxPanic         int64    `json:"max_panic"`
 	MaxCacheTime     int64    `json:"max_cache_time"`
 	DbUrl            string   `json:"db_url"`

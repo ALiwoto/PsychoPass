@@ -12,5 +12,6 @@ const (
 )
 
 const (
-	MarkDownV2 = "markdownv2"
+	MarkDownV2          = "markdownv2"
+	OwnersTokenFileName = "owners.token"
 )
