@@ -212,12 +212,24 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		}
 
 		return ext.EndGroups
-	} else {
+	} else if preReplied {
 		targetId = msg.ReplyToMessage.From.Id
 	}
 
 	if targetId == user.Id {
 		md := mdparser.GetNormal("You can't change your own permissions.")
+		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:                sv.MarkDownV2,
+			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
+		})
+		if err != nil {
+			logging.UnexpectedError(err)
+		}
+
+		return ext.EndGroups
+	} else if targetId == b.Id {
+		md := mdparser.GetNormal("You can't change my own permissions.")
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,
