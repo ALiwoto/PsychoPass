@@ -266,6 +266,16 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	} else {
 		md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
 		md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
+		_, err = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:                sv.MarkDownV2,
+			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
+		})
+		if err != nil {
+			logging.UnexpectedError(err)
+		}
+
+		return ext.EndGroups
 	}
 
 	mdback := mdparser.GetNormal("Your permission has been changed to ")
