@@ -151,9 +151,25 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		}
 
 		return ext.EndGroups
+	} else if perm.IsOwner() {
+		md := mdparser.GetNormal("You can't assign another people as an owner")
+		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:                sv.MarkDownV2,
+			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
+		})
+		if err != nil {
+			logging.UnexpectedError(err)
+		}
+
+		return ext.EndGroups
 	}
 
-	if len(args) < 3 {
+	var replied = msg.ReplyToMessage != nil && msg.ReplyToMessage.From != nil
+	var preReplied = replied // reserved value
+	var targetId int64
+
+	if len(args) < 3 && !replied {
 		// show help.
 		md := mdparser.GetNormal("You need to provide a user ID for this command.")
 		md.AppendBoldThis("\nYour options are:")
@@ -171,14 +187,37 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		}
 
 		return ext.EndGroups
+	} else if len(args) > 2 && replied {
+		// ignore this if the message itself contains the user ID.
+		replied = false
 	}
 
-	targetId, err := strconv.ParseInt(args[2], 10, 64)
-	if err != nil || targetId == 0 {
+	if replied {
+		targetId = msg.ReplyToMessage.From.Id
+	} else {
+		targetId, err = strconv.ParseInt(args[2], 10, 64)
+	}
+	if (err != nil || targetId == 0) && !preReplied {
 		md := mdparser.GetNormal("Invalid ID provided: ")
 		md.AppendMonoThis(args[2])
 		md.AppendNormalThis("!\nPlease make sure the target's ID is a valid integer.")
 
+		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:                sv.MarkDownV2,
+			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
+		})
+		if err != nil {
+			logging.UnexpectedError(err)
+		}
+
+		return ext.EndGroups
+	} else {
+		targetId = msg.ReplyToMessage.From.Id
+	}
+
+	if targetId == user.Id {
+		md := mdparser.GetNormal("You can't change your own permissions.")
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,
@@ -198,16 +237,18 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			md = mdparser.GetNormal("You can't change permission of another owner.\n")
 			md.AppendNormalThis("Please try another user ID.\n")
 		} else if u.Permission == perm {
-			md = mdparser.GetNormal("The user ").AppendMentionThis(user.FirstName, u.UserId)
+			md = mdparser.GetNormal("The user ")
+			md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
 			md.AppendNormalThis(" already has the permission ")
 			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
 		} else {
 			pre := u.Permission
 			database.UpdateTokenPermission(u, perm)
-			md = mdparser.GetNormal("The user ").AppendMentionThis(user.FirstName, u.UserId)
+			md = mdparser.GetNormal("The user ")
+			md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
 			md.AppendNormalThis(" has been assigned the permission ")
 			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
-			md.AppendItalicThis("\nThe previous permission was ")
+			md.AppendItalicThis("\n\nThe previous permission was ")
 			md.AppendMonoThis(pre.GetStringPermission()).AppendNormal(".")
 		}
 	} else {
