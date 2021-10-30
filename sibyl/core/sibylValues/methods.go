@@ -34,6 +34,12 @@ func (t *Token) CanReport() bool {
 	return t.Permission > NormalUser
 }
 
+// CanBeReport returns true if the token with its current
+// permission can be reported to sibyl system or not.
+func (t *Token) CanBeReported() bool {
+	return t.Permission == NormalUser
+}
+
 // HasRole returns true if and only if this token belongs to a
 // user which has a role in the Sibyl System (is not a normal user).
 func (t *Token) HasRole() bool {

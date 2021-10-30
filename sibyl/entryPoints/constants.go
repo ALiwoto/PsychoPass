@@ -22,6 +22,14 @@ const (
 	// has sent a request without providing any reason.
 	ErrNoReason = "Reason is required for this action"
 
+	// ErrCannotBeReported is the error message that should be sent when the user
+	// has sent a report request for a user that cannot be reported.
+	ErrCannotBeReported = "User cannot be reported"
+
+	// ErrNoReason is the error message that should be sent when the user
+	// has sent a report request for itself.
+	ErrCannotReportYourself = "You can't report yourself"
+
 	// ErrUserAlreadyBanned is the error message that should be sent when
 	// the target's user id can be found in the sibyl database but
 	// it's already banned with the exact same parameters.

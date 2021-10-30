@@ -29,9 +29,15 @@ func ReportUserHandler(c *gin.Context) {
 	}
 
 	if d.CanReport() {
+		by := hashing.GetIdFromToken(token)
 		id, err := strconv.ParseInt(userId, 10, 64)
 		if err != nil {
 			entry.SendInvalidUserIdError(c, OriginReport)
+			return
+		}
+
+		if by == id {
+			entry.SendCannotReportYourselfError(c, OriginReport)
 			return
 		}
 
@@ -40,7 +46,14 @@ func ReportUserHandler(c *gin.Context) {
 			return
 		}
 
-		by := hashing.GetIdFromToken(token)
+		u, err := database.GetTokenFromId(id)
+		if err == nil && u != nil {
+			if !u.CanBeReported() {
+				entry.SendCannotBeReportedError(c, OriginReport)
+				return
+			}
+		}
+
 		if sv.SendReportHandler != nil {
 			r := sv.NewReport(reason, msg, id, by, d.Permission)
 			go sv.SendReportHandler(r)
