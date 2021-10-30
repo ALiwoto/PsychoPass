@@ -1,8 +1,9 @@
 package tokenPlugin
 
 import (
-	"strings"
+	"strconv"
 
+	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
@@ -108,7 +109,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	args := strings.Split(msg.Text, " ")
+	args := strongStringGo.Split(msg.Text, " ")
 	if len(args) < 2 {
 		// show help.
 		md := mdparser.GetNormal("Dear ").AppendMentionThis(user.FirstName, user.Id)
@@ -135,10 +136,28 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if err != nil {
 		md := mdparser.GetNormal("Invalid permission provided: ")
 		md.AppendMonoThis(args[1])
-		md.AppendNormalThis("\nHere is a list of possible permissions:")
+		md.AppendNormalThis("!\nHere is a list of possible permissions:")
 		md.AppendNormalThis("\n- ").AppendMonoThis("inspector")
 		md.AppendNormalThis("\n- ").AppendMonoThis("enforcer")
 		md.AppendNormalThis("\n- ").AppendMonoThis("civilian")
+
+		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:                sv.MarkDownV2,
+			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
+		})
+		if err != nil {
+			logging.UnexpectedError(err)
+		}
+
+		return ext.EndGroups
+	}
+
+	_, err = strconv.ParseInt(args[2], 10, 64)
+	if err != nil {
+		md := mdparser.GetNormal("Invalid ID provided: ")
+		md.AppendMonoThis(args[2])
+		md.AppendNormalThis("!\nPlease make sure the target's ID is a valid integer.")
 
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
