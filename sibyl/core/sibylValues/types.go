@@ -60,7 +60,7 @@ type User struct {
 	CrimeCoefficient int       `json:"crime_coefficient"`
 	cacheDate        time.Time `json:"-"`
 	FlagTrolling     bool      `json:"-"`
-	FlagSpam         bool      `json:"-"`
+	FlagSpam         bool      `json:"flag_spam"`
 	FlagEvade        bool      `json:"-"`
 	FlagCustom       bool      `json:"-"`
 	FlagPsychoHazard bool      `json:"-"`

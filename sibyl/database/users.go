@@ -64,61 +64,58 @@ func FetchStat() (*sv.StatValue, error) {
 	var tmp int64
 	lockdb()
 
-	// users related stats
-	m := SESSION.Model(&sv.User{})
+	u := &sv.User{}
 
-	m.Where("banned = ?", true).Count(&tmp)
+	// users related stats
+	SESSION.Model(u).Where("banned = ?", true).Count(&tmp)
 	stat.BannedCount = tmp
 
-	m.Where("flag_trolling = ?", true).Count(&tmp)
+	SESSION.Model(u).Where("flag_trolling = ?", true).Count(&tmp)
 	stat.TrollingBanCount = tmp
 
-	m.Where("flag_spam = ?", true).Count(&tmp)
+	SESSION.Model(u).Where("flag_spam = ?", true).Count(&tmp)
 	stat.SpamBanCount = tmp
 
-	m.Where("flag_evade = ?", true).Count(&tmp)
+	SESSION.Model(u).Where("flag_evade = ?", true).Count(&tmp)
 	stat.EvadeBanCount = tmp
 
-	m.Where("flag_custom = ?", true).Count(&tmp)
+	SESSION.Model(u).Where("flag_custom = ?", true).Count(&tmp)
 	stat.CustomBanCount = tmp
 
-	m.Where("flag_psycho_hazard = ?", true).Count(&tmp)
+	SESSION.Model(u).Where("flag_psycho_hazard = ?", true).Count(&tmp)
 	stat.PsychoHazardBanCount = tmp
 
-	m.Where("flag_mal_imp = ?", true).Count(&tmp)
+	SESSION.Model(u).Where("flag_mal_imp = ?", true).Count(&tmp)
 	stat.MalImpBanCount = tmp
 
-	m.Where("flag_nsfw = ?", true).Count(&tmp)
+	SESSION.Model(u).Where("flag_nsfw = ?", true).Count(&tmp)
 	stat.NSFWBanCount = tmp
 
-	m.Where("flag_raid = ?", true).Count(&tmp)
+	SESSION.Model(u).Where("flag_raid = ?", true).Count(&tmp)
 	stat.RaidBanCount = tmp
 
-	m.Where("flag_mass_add = ?", true).Count(&tmp)
+	SESSION.Model(u).Where("flag_mass_add = ?", true).Count(&tmp)
 	stat.MassAddBanCount = tmp
 
-	m.Where("crime_coefficient < ? AND crime_coefficient > ?",
+	SESSION.Model(u).Where("crime_coefficient < ? AND crime_coefficient > ?",
 		sv.UpperCloudyFactor, sv.LowerCloudyFactor).Count(&tmp)
 	stat.CloudyCount = tmp
 
 	// token related stats:
-
-	m = SESSION.Model(&sv.Token{})
-	m.Count(&tmp)
+	t := &sv.Token{}
+	SESSION.Model(t).Count(&tmp)
 	stat.TokenCount = tmp
 
-	m.Where("permission = ?", sv.Inspector).Count(&tmp)
+	SESSION.Model(t).Where("permission = ?", sv.Inspector).Count(&tmp)
 	stat.InspectorsCount = tmp
 
-	m.Where("permission = ?", sv.Enforcer).Count(&tmp)
+	SESSION.Model(t).Where("permission = ?", sv.Enforcer).Count(&tmp)
 	stat.EnforcesCount = tmp
 
 	unlockdb()
 
 	if SESSION.Error != nil {
 		return nil, SESSION.Error
-	} else if m.Error != nil {
-		return nil, m.Error
 	}
 
 	return stat, nil
