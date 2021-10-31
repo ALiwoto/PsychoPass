@@ -16,6 +16,12 @@ const (
 	OwnersTokenFileName = "owners.token"
 )
 
+// Factor constants
+const (
+	LowerCloudyFactor = 50
+	UpperCloudyFactor = 100
+)
+
 /*
 Coefficients and Flags
 

@@ -206,8 +206,51 @@ func (u *User) IncreaseCrimeCoefficientByRanges(ranges ...*CrimeCoefficientRange
 	var cc int
 	for _, r := range ranges {
 		cc += r.GetRandom()
+		if r.IsValueInRange(RangeCivilian) {
+			// ignore civilian
+			continue
+		}
+		u.validateFlags(r)
 	}
 	u.CrimeCoefficient = cc
+}
+
+func (u *User) validateFlags(r *CrimeCoefficientRange) {
+	if r.IsValueInRange(RangeTrolling) && !u.FlagTrolling {
+		u.FlagTrolling = true
+	}
+
+	if r.IsValueInRange(RangeSpam) && !u.FlagSpam {
+		u.FlagSpam = true
+	}
+
+	if r.IsValueInRange(RangeEvade) && !u.FlagEvade {
+		u.FlagEvade = true
+	}
+
+	if r.IsValueInRange(RangeCustom) && !u.FlagCustom {
+		u.FlagCustom = true
+	}
+
+	if r.IsValueInRange(RangePsychoHazard) && !u.FlagPsychoHazard {
+		u.FlagPsychoHazard = true
+	}
+
+	if r.IsValueInRange(RangeMalImp) && !u.FlagMalImp {
+		u.FlagMalImp = true
+	}
+
+	if r.IsValueInRange(RangeNSFW) && !u.FlagNsfw {
+		u.FlagNsfw = true
+	}
+
+	if r.IsValueInRange(RangeRaid) && !u.FlagRaid {
+		u.FlagRaid = true
+	}
+
+	if r.IsValueInRange(RangeMassAdd) && !u.FlagMassAdd {
+		u.FlagMassAdd = true
+	}
 }
 
 //---------------------------------------------------------
@@ -227,6 +270,64 @@ func (c *CrimeCoefficientRange) IsValueInRange(value *CrimeCoefficientRange) boo
 
 func (c *CrimeCoefficientRange) GetRandom() int {
 	return rand.Intn(c.end-c.start) + c.start
+}
+
+//---------------------------------------------------------
+
+func (s *StatValue) GetBannedCountString() string {
+	return strconv.FormatInt(s.BannedCount, 10)
+}
+
+func (s *StatValue) GetTrollingCountString() string {
+	return strconv.FormatInt(s.TrollingBanCount, 10)
+}
+
+func (s *StatValue) GetSpamCountString() string {
+	return strconv.FormatInt(s.SpamBanCount, 10)
+}
+
+func (s *StatValue) GetEvadeCountString() string {
+	return strconv.FormatInt(s.EvadeBanCount, 10)
+}
+
+func (s *StatValue) GetCustomCountString() string {
+	return strconv.FormatInt(s.CustomBanCount, 10)
+}
+
+func (s *StatValue) GetPsychoHazardCountString() string {
+	return strconv.FormatInt(s.PsychoHazardBanCount, 10)
+}
+
+func (s *StatValue) GetMalImpBanCountString() string {
+	return strconv.FormatInt(s.MalImpBanCount, 10)
+}
+
+func (s *StatValue) GetNSFWBanCountString() string {
+	return strconv.FormatInt(s.NSFWBanCount, 10)
+}
+
+func (s *StatValue) GetRaidBanCountString() string {
+	return strconv.FormatInt(s.RaidBanCount, 10)
+}
+
+func (s *StatValue) GetMassAddBanCountString() string {
+	return strconv.FormatInt(s.MassAddBanCount, 10)
+}
+
+func (s *StatValue) GetCloudyCountString() string {
+	return strconv.FormatInt(s.CloudyCount, 10)
+}
+
+func (s *StatValue) GetTokenCountString() string {
+	return strconv.FormatInt(s.TokenCount, 10)
+}
+
+func (s *StatValue) GetInspectorsCountString() string {
+	return strconv.FormatInt(s.InspectorsCount, 10)
+}
+
+func (s *StatValue) GetEnforcesCountString() string {
+	return strconv.FormatInt(s.EnforcesCount, 10)
 }
 
 //---------------------------------------------------------

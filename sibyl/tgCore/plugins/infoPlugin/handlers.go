@@ -5,6 +5,7 @@ import (
 
 	"github.com/ALiwoto/mdparser/mdparser"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
@@ -51,31 +52,47 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	   ==============
 	*/
 
-	tbanned := strconv.FormatInt(database.GetBannedUsersCount(), 10)
 	md := mdparser.GetBold("📊 Current stats of ")
 	nme := func() mdparser.WMarkDown {
 		return md.AppendNormalThis("\n• ")
 	}
+	stat, err := database.FetchStat()
+	if err != nil {
+		md = mdparser.GetItalic("There was a problem when fetching stats from database.")
+		logging.UnexpectedError(err)
+		return ext.EndGroups
+	}
+
 	reasonAppend := func(c int64, r string) mdparser.WMarkDown {
 		nme().AppendMonoThis(strconv.FormatInt(c, 10))
 		return md.AppendNormalThis(" banned due to ").AppendMonoThis(r)
 	}
 
 	md.AppendHyperLinkThis("Sibyl System:", "http://t.me/SibylSystem")
-	nme().AppendNormalThis("Total ban count: ").AppendMonoThis(tbanned)
-	reasonAppend(10, "TROLLING")
-	reasonAppend(20, "SPAM")
-	reasonAppend(30, "EVADE")
-	reasonAppend(40, "CUSTOM")
-	reasonAppend(50, "PSYCHOHAZARD")
-	reasonAppend(60, "MALIMP")
-	reasonAppend(70, "NSFW")
-	reasonAppend(80, "RAID")
-	reasonAppend(90, "MASSADD")
-	nme().AppendMonoThis("300").AppendNormalThis(" users with Cloudy Psychopass")
-	nme().AppendMonoThis("90").AppendNormalThis(" tokens generated")
-	nme().AppendMonoThis("14").AppendNormalThis(" registered Inspectors")
-	nme().AppendMonoThis("250").AppendNormalThis(" registered Enforcers")
+	nme().AppendNormalThis("Total ban count: ")
+	md.AppendMonoThis(stat.GetBannedCountString())
+
+	reasonAppend(stat.TrollingBanCount, "TROLLING")
+	reasonAppend(stat.SpamBanCount, "SPAM")
+	reasonAppend(stat.EvadeBanCount, "EVADE")
+	reasonAppend(stat.CustomBanCount, "CUSTOM")
+	reasonAppend(stat.PsychoHazardBanCount, "PSYCHOHAZARD")
+	reasonAppend(stat.MalImpBanCount, "MALIMP")
+	reasonAppend(stat.NSFWBanCount, "NSFW")
+	reasonAppend(stat.RaidBanCount, "RAID")
+	reasonAppend(stat.MassAddBanCount, "MASSADD")
+
+	nme().AppendMonoThis(stat.GetCloudyCountString())
+	md.AppendNormalThis(" with Cloudy Psychopass")
+
+	nme().AppendMonoThis(stat.GetTokenCountString())
+	md.AppendNormalThis(" tokens generated")
+
+	nme().AppendMonoThis(stat.GetInspectorsCountString())
+	md.AppendNormalThis(" registered Inspectors")
+
+	nme().AppendMonoThis(stat.GetEnforcesCountString())
+	md.AppendNormalThis(" registered Enforcers")
 
 	_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode:             sibylValues.MarkDownV2,
