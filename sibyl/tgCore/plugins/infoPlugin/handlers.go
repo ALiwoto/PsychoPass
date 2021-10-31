@@ -94,6 +94,9 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	nme().AppendMonoThis(stat.GetEnforcesCountString())
 	md.AppendNormalThis(" registered Enforcers")
 
+	md.AppendNormalThis("\n\n- Server uptime: ")
+	md.AppendMonoThis(sibylValues.GetPrettyUptime())
+
 	_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode:             sibylValues.MarkDownV2,
 		DisableWebPagePreview: true,

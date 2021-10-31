@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"runtime/debug"
+	"time"
 
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
@@ -17,6 +18,7 @@ import (
 )
 
 func main() {
+	sibylValues.ServerStartTime = time.Now()
 	f := logging.LoadLogger(true)
 	defer func() {
 		if f != nil {

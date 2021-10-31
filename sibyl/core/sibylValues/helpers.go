@@ -3,6 +3,7 @@ package sibylValues
 import (
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/timeUtils"
@@ -174,3 +175,19 @@ func fixReasonString(value string) string {
 	value = strings.ReplaceAll(value, "psycho-hazard", ReasonPsychoHazard)
 	return value
 }
+
+func GetPrettyUptime() string {
+	return timeUtils.GetPrettyTimeDuration(time.Since(ServerStartTime))
+}
+
+/* OLD_ALGORITHM:
+
+func getPrettyUptime() string {
+
+	return fmt.Sprintf("%d days, %d hours, %d minutes",
+		int(time.Since(startTime).Hours()/24),
+		int(time.Since(startTime).Hours())%24,
+		int(time.Since(startTime).Minutes())%60)
+}
+
+*/

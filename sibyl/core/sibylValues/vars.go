@@ -2,6 +2,7 @@ package sibylValues
 
 import (
 	"errors"
+	"time"
 
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
@@ -11,6 +12,7 @@ var (
 	HelperBot         *gotgbot.Bot
 	BotUpdater        *ext.Updater
 	SendReportHandler ReportHandler
+	ServerStartTime   time.Time
 )
 
 var (
