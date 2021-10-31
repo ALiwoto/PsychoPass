@@ -62,7 +62,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	md.AppendHyperLinkThis("Sibyl System:", "http://t.me/SibylSystem")
-	nme().AppendMonoThis(tbanned).AppendNormalThis(" banned users")
+	nme().AppendNormalThis("Total ban count: ").AppendMonoThis(tbanned)
 	reasonAppend(10, "TROLLING")
 	reasonAppend(20, "SPAM")
 	reasonAppend(30, "EVADE")
