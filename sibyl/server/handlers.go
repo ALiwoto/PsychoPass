@@ -87,7 +87,7 @@ func noRootHandler(c *gin.Context) {
 	case "getall", "getallbans", "getbans":
 		infoHandlers.GetAllBansHandler(c)
 	case "getstats", "stats":
-		infoHandlers.GetAllBansHandler(c)
+		infoHandlers.GetStatsHandler(c)
 	case "report", "reportuser":
 		reportHandlers.ReportUserHandler(c)
 	default:
