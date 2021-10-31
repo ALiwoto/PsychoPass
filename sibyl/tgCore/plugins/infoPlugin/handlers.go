@@ -58,7 +58,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 	reasonAppend := func(c int64, r string) mdparser.WMarkDown {
 		nme().AppendMonoThis(strconv.FormatInt(c, 10))
-		return md.AppendNormalThis(" banned users with reason ").AppendMonoThis(r)
+		return md.AppendNormalThis(" banned users due to ").AppendMonoThis(r)
 	}
 
 	md.AppendHyperLinkThis("Sibyl System:", "http://t.me/SibylSystem")
@@ -78,7 +78,8 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	nme().AppendMonoThis("250").AppendNormalThis(" registered Enforcers")
 
 	_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
-		ParseMode: sibylValues.MarkDownV2,
+		ParseMode:             sibylValues.MarkDownV2,
+		DisableWebPagePreview: true,
 	})
 	return nil
 }
