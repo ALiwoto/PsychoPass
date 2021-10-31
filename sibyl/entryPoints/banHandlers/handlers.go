@@ -70,8 +70,8 @@ func AddBanHandler(c *gin.Context) {
 			u.BannedBy = by
 			u.Message = banMsg
 			u.Date = time.Now()
-			u.Reason = banReason
 			u.BanSourceUrl = srcUrl
+			u.SetAsBanReason(banReason)
 			u.IncreaseCrimeCoefficientAuto()
 			database.UpdateBanparameter(u)
 			entry.SendResult(c, &BanResult{

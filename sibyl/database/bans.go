@@ -9,14 +9,13 @@ import (
 func AddBan(userID, adder int64, reason, message, src string) *sv.User {
 	user := &sv.User{
 		UserID:       userID,
-		Reason:       reason,
 		Banned:       true,
 		Date:         time.Now(),
 		Message:      message,
 		BannedBy:     adder,
 		BanSourceUrl: src,
 	}
-
+	user.SetAsBanReason(reason)
 	user.IncreaseCrimeCoefficientAuto()
 	NewUser(user)
 	return user
