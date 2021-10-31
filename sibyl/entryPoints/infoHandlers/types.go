@@ -1,5 +1,7 @@
 package infoHandlers
 
+import sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+
 type InfoResult struct {
 	UserId          string `json:"user_id"`
 	IsBanned        bool   `json:"is_banned"`
@@ -7,4 +9,8 @@ type InfoResult struct {
 	Reason          string `json:"reason"`
 	Message         string `json:"message"`
 	CrimeCoeficient int    `json:"crime_coeficient"`
+}
+
+type GetBansResult struct {
+	Users []sv.User `json:"users"`
 }

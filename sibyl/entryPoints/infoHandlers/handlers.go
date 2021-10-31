@@ -38,6 +38,35 @@ func GetInfoHandler(c *gin.Context) {
 	entry.SendResult(c, u)
 }
 
+func GetAllBansHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginGetInfo)
+		return
+	}
+
+	d, err := database.GetTokenFromString(token)
+	if err != nil || d == nil {
+		entry.SendInvalidTokenError(c, OriginGetInfo)
+		return
+	}
+
+	if !d.CanGetToken() {
+		entry.SendPermissionDenied(c, OriginGetInfo)
+		return
+	}
+
+	bans, err := database.GetAllBannedUsers()
+	if err != nil {
+		entry.SendInternalServerError(c, OriginGetInfo)
+		return
+	}
+
+	entry.SendResult(c, &GetBansResult{
+		Users: bans,
+	})
+}
+
 func CheckTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	if len(token) == 0 {

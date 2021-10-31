@@ -34,6 +34,19 @@ func GetUserFromId(id int64) (*sv.User, error) {
 	return u, nil
 }
 
+func GetAllBannedUsers() ([]sv.User, error) {
+	if SESSION == nil {
+		return nil, ErrNoSession
+	}
+
+	var users []sv.User
+	lockdb()
+	SESSION.Where("banned = ?", true).Find(&users)
+	unlockdb()
+
+	return users, nil
+}
+
 func NewUser(u *sv.User) {
 	lockdb()
 	tx := SESSION.Begin()
