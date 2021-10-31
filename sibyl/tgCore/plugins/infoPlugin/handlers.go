@@ -58,7 +58,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 	reasonAppend := func(c int64, r string) mdparser.WMarkDown {
 		nme().AppendMonoThis(strconv.FormatInt(c, 10))
-		return md.AppendNormalThis(" banned users due to ").AppendMonoThis(r)
+		return md.AppendNormalThis(" banned due to ").AppendMonoThis(r)
 	}
 
 	md.AppendHyperLinkThis("Sibyl System:", "http://t.me/SibylSystem")
