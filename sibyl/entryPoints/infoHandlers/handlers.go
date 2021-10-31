@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
 	entry "github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints"
 	"github.com/gin-gonic/gin"
@@ -41,24 +42,24 @@ func GetInfoHandler(c *gin.Context) {
 func GetAllBansHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	if len(token) == 0 {
-		entry.SendNoTokenError(c, OriginGetInfo)
+		entry.SendNoTokenError(c, OriginGetAllBans)
 		return
 	}
 
 	d, err := database.GetTokenFromString(token)
 	if err != nil || d == nil {
-		entry.SendInvalidTokenError(c, OriginGetInfo)
+		entry.SendInvalidTokenError(c, OriginGetAllBans)
 		return
 	}
 
-	if !d.CanGetToken() {
-		entry.SendPermissionDenied(c, OriginGetInfo)
+	if !d.CanGetAllBans() {
+		entry.SendPermissionDenied(c, OriginGetAllBans)
 		return
 	}
 
 	bans, err := database.GetAllBannedUsers()
 	if err != nil {
-		entry.SendInternalServerError(c, OriginGetInfo)
+		entry.SendInternalServerError(c, OriginGetAllBans)
 		return
 	}
 
@@ -67,10 +68,38 @@ func GetAllBansHandler(c *gin.Context) {
 	})
 }
 
+func GetStatsHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginGetStats)
+		return
+	}
+
+	d, err := database.GetTokenFromString(token)
+	if err != nil || d == nil {
+		entry.SendInvalidTokenError(c, OriginGetStats)
+		return
+	}
+
+	if !d.CanGetStats() {
+		entry.SendPermissionDenied(c, OriginGetStats)
+		return
+	}
+
+	stats, err := database.FetchStat()
+	if err != nil {
+		logging.UnexpectedError(err)
+		entry.SendInternalServerError(c, OriginGetInfo)
+		return
+	}
+
+	entry.SendResult(c, stats)
+}
+
 func CheckTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	if len(token) == 0 {
-		entry.SendNoTokenError(c, OriginGetInfo)
+		entry.SendNoTokenError(c, OriginCheckToken)
 		return
 	}
 

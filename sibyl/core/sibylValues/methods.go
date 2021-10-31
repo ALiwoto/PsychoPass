@@ -87,7 +87,7 @@ func (t *Token) CanGetToken() bool {
 // CanGetAllBans returns true if the token with its current
 // permission can get all the banned users.
 func (t *Token) CanGetAllBans() bool {
-	return t.Permission > Enforcer
+	return t.Permission > NormalUser
 }
 
 // CanChangePermission returns true if the token with its current
