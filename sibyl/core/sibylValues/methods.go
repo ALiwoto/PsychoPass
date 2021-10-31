@@ -1,6 +1,7 @@
 package sibylValues
 
 import (
+	"math/rand"
 	"strconv"
 	"strings"
 	"time"
@@ -163,6 +164,48 @@ func (u *User) GetCacheDate() time.Time {
 
 func (u *User) SetCacheDate() {
 	u.cacheDate = time.Now()
+}
+
+func (u *User) GetCrimeCoefficientRange() *CrimeCoefficientRange {
+	return GetCrimeCoefficientRange(u.CrimeCoefficient)
+}
+
+func (u *User) SetAsPastBan() {
+	u.CrimeCoefficient = RangePastBanned.GetRandom()
+}
+
+func (u *User) IncreaseCrimeCoefficient(reason string) {
+	ranges := GetCCRangeByString(reason)
+	u.IncreaseCrimeCoefficientByRanges(ranges...)
+}
+
+func (u *User) IncreaseCrimeCoefficientAuto() {
+	u.IncreaseCrimeCoefficient(u.Reason)
+}
+
+func (u *User) IncreaseCrimeCoefficientByRanges(ranges ...*CrimeCoefficientRange) {
+	for _, r := range ranges {
+		u.CrimeCoefficient += r.GetRandom()
+	}
+}
+
+//---------------------------------------------------------
+
+func (c *CrimeCoefficientRange) IsInRange(value int) bool {
+	return c.start <= value && c.end >= value
+}
+
+func (c *CrimeCoefficientRange) IsValueInRange(value *CrimeCoefficientRange) bool {
+	if value == nil {
+		return false
+	}
+
+	return value == c ||
+		(c.start <= value.start && c.end >= value.end)
+}
+
+func (c *CrimeCoefficientRange) GetRandom() int {
+	return rand.Intn(c.end-c.start) + c.start
 }
 
 //---------------------------------------------------------

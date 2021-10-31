@@ -13,7 +13,7 @@ type User struct {
 	BanSourceUrl     string    `json:"ban_source_url"`
 	Date             time.Time `json:"date"`
 	BannedBy         int64     `json:"banned_by"`
-	CrimeCoefficient float64   `json:"crime_coefficient"`
+	CrimeCoefficient int       `json:"crime_coefficient"`
 	cacheDate        time.Time `json:"-"`
 }
 
@@ -47,4 +47,10 @@ type Report struct {
 	ReportReason       string
 	ReportMessage      string
 	ReporterPermission string
+}
+
+// CrimeCoefficientRange is the range of crime coefficients.
+type CrimeCoefficientRange struct {
+	start int
+	end   int
 }

@@ -17,6 +17,7 @@ func AddBan(userID, adder int64, reason, message, src string) *sv.User {
 		BanSourceUrl: src,
 	}
 
+	user.IncreaseCrimeCoefficientAuto()
 	NewUser(user)
 	return user
 }
@@ -41,6 +42,7 @@ func RemoveUserBan(user *sv.User) {
 		user.Message = ""
 		user.BannedBy = 0
 		user.Date = time.Now()
+		user.SetAsPastBan()
 	} else {
 		// user is not banned
 		return
