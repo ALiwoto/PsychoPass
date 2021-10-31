@@ -22,7 +22,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	user := ctx.EffectiveUser
 	msg := ctx.EffectiveMessage
 	t, err := database.GetTokenFromId(user.Id)
-	if err != nil || t == nil || !t.CanChangePermission() {
+	if err != nil || t == nil || !t.CanGetStats() {
 		return ext.EndGroups
 	}
 

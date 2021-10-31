@@ -96,6 +96,12 @@ func (t *Token) CanChangePermission() bool {
 	return t.Permission > Inspector
 }
 
+// CanGetStats returns true if the token with its current
+// permission can get all stats of sibyl system or not.
+func (t *Token) CanGetStats() bool {
+	return t.Permission > Enforcer
+}
+
 func (t *Token) GetStringPermission() string {
 	return t.Permission.GetStringPermission()
 }
