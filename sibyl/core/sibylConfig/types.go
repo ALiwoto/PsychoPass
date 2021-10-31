@@ -10,6 +10,7 @@ type SibylSystemConfig struct {
 	UseSqlite        bool     `json:"use_sqlite"`
 	Port             string   `json:"port"`
 	BotToken         string   `json:"bot_token"`
+	BotAPIUrl        string   `json:"api_url"`
 	Debug            bool     `json:"debug"`
 	DropUpdates      bool     `json:"drop_updates"`
 	OrdinaryPrefixes []string `json:"cmd_prefixes"`

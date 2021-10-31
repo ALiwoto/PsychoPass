@@ -103,6 +103,11 @@ func LoadConfigFromFile(fileName string) error {
 		SibylConfig.BotToken = os.Getenv("BOT_TOKEN")
 	}
 
+	SibylConfig.BotAPIUrl, err = configContent.Get("telegram", "api_url")
+	if err != nil || len(SibylConfig.BotAPIUrl) == 0 {
+		SibylConfig.BotAPIUrl = os.Getenv("API_URL")
+	}
+
 	// database section variables:
 	SibylConfig.DropUpdates, err = configContent.GetBool("telegram", "drop_updates")
 	if err != nil {
@@ -218,6 +223,13 @@ func GetMaxHashSize() int64 {
 func GetBotToken() string {
 	if SibylConfig != nil {
 		return SibylConfig.BotToken
+	}
+	return ""
+}
+
+func GetAPIUrl() string {
+	if SibylConfig != nil {
+		return SibylConfig.BotAPIUrl
 	}
 	return ""
 }

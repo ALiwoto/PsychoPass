@@ -22,8 +22,12 @@ func StartTelegramBot() {
 		Client:      http.Client{},
 		GetTimeout:  gotgbot.DefaultGetTimeout,
 		PostTimeout: gotgbot.DefaultPostTimeout,
-		APIURL:      "http://176.9.86.252:8888",
 	})
+
+	url := sibylConfig.GetAPIUrl()
+	if len(url) != 0 {
+		b.APIURL = url
+	}
 
 	if err != nil {
 		logging.Info("Unable to login to the helper bot due to:", err)
