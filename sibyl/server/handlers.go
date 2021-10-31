@@ -37,7 +37,10 @@ func LoadHandlers() {
 	bindHandler(infoHandlers.GetInfoHandler, "getInfo", "fetchInfo")
 
 	// get all bans handlers
-	bindHandler(infoHandlers.GetAllBansHandler, "getAll", "getAllBans")
+	bindHandler(infoHandlers.GetAllBansHandler, "getAll", "getAllBans", "getbans")
+
+	// stats handlers
+	bindHandler(infoHandlers.GetStatsHandler, "getStats", "stats")
 
 	// checkToken handlers
 	bindHandler(infoHandlers.CheckTokenHandler, "checkToken")
@@ -81,7 +84,9 @@ func noRootHandler(c *gin.Context) {
 		infoHandlers.GetInfoHandler(c)
 	case "checktoken":
 		infoHandlers.CheckTokenHandler(c)
-	case "getall", "getallbans":
+	case "getall", "getallbans", "getbans":
+		infoHandlers.GetAllBansHandler(c)
+	case "getstats", "stats":
 		infoHandlers.GetAllBansHandler(c)
 	case "report", "reportuser":
 		reportHandlers.ReportUserHandler(c)
