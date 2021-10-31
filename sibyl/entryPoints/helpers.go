@@ -15,7 +15,7 @@ func SendError(c *gin.Context, err *EndpointError, code int) {
 }
 
 func SendBadGateAway(c *gin.Context, message, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
@@ -39,7 +39,7 @@ func SendNoTokenError(c *gin.Context, origin string) {
 }
 
 func SendInvalidTokenError(c *gin.Context, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
@@ -63,7 +63,7 @@ func SendInternalServerError(c *gin.Context, origin string) {
 }
 
 func SendInvalidUserIdError(c *gin.Context, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
@@ -75,7 +75,7 @@ func SendInvalidUserIdError(c *gin.Context, origin string) {
 }
 
 func SendInvalidPermError(c *gin.Context, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
@@ -87,10 +87,10 @@ func SendInvalidPermError(c *gin.Context, origin string) {
 }
 
 func SendCannotChangePermError(c *gin.Context, origin string) {
-	c.JSON(http.StatusConflict, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusConflict,
 			Message:   ErrCannotChangePerm,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -99,7 +99,7 @@ func SendCannotChangePermError(c *gin.Context, origin string) {
 }
 
 func SendNoReasonError(c *gin.Context, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
@@ -111,7 +111,7 @@ func SendNoReasonError(c *gin.Context, origin string) {
 }
 
 func SendCannotReportYourselfError(c *gin.Context, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
@@ -123,7 +123,7 @@ func SendCannotReportYourselfError(c *gin.Context, origin string) {
 }
 
 func SendCannotBanYourselfError(c *gin.Context, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
@@ -135,7 +135,7 @@ func SendCannotBanYourselfError(c *gin.Context, origin string) {
 }
 
 func SendCannotBeReportedError(c *gin.Context, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
@@ -147,7 +147,7 @@ func SendCannotBeReportedError(c *gin.Context, origin string) {
 }
 
 func SendCannotBeBannedError(c *gin.Context, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
@@ -195,7 +195,7 @@ func SendUserAlreadyBannedError(c *gin.Context, origin string) {
 }
 
 func SendPermissionDenied(c *gin.Context, origin string) {
-	c.JSON(http.StatusBadGateway, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadGateway,
