@@ -190,6 +190,11 @@ func (u *User) SetAsBanReason(reason string) {
 	u.Reason += "\n" + reason
 }
 
+func (u *User) HasReason(reason string) bool {
+	return strings.Contains(strings.ToLower(u.Reason),
+		strings.ToLower(reason))
+}
+
 func (u *User) IncreaseCrimeCoefficientByRanges(ranges ...*CrimeCoefficientRange) {
 	var cc int
 	for _, r := range ranges {
