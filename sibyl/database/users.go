@@ -47,6 +47,13 @@ func GetAllBannedUsers() ([]sv.User, error) {
 	return users, nil
 }
 
+func GetBannedUsersCount() (c int64) {
+	lockdb()
+	SESSION.Model(&sv.User{}).Where("banned = ?", true).Count(&c)
+	unlockdb()
+	return
+}
+
 func NewUser(u *sv.User) {
 	lockdb()
 	tx := SESSION.Begin()
