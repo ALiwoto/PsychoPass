@@ -39,6 +39,9 @@ func ReportUserHandler(c *gin.Context) {
 		if by == id {
 			entry.SendCannotReportYourselfError(c, OriginReport)
 			return
+		} else if sv.IsInvalidID(id) {
+			entry.SendCannotBeReportedError(c, OriginReport)
+			return
 		}
 
 		if len(reason) == 0 {
