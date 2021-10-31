@@ -186,6 +186,7 @@ func (u *User) IncreaseCrimeCoefficientAuto() {
 func (u *User) SetAsBanReason(reason string) {
 	if len(u.Reason) == 0 {
 		u.Reason = reason
+		return
 	}
 	u.Reason += "\n" + reason
 }
