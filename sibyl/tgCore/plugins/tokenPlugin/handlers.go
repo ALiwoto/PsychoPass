@@ -167,6 +167,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	var replied = msg.ReplyToMessage != nil && msg.ReplyToMessage.From != nil
 	var preReplied = replied // reserved value
+	var isBot bool
 	var targetId int64
 
 	if len(args) < 3 && !replied {
@@ -194,26 +195,31 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	if replied {
 		targetId = msg.ReplyToMessage.From.Id
+		isBot = msg.ReplyToMessage.From.IsBot
 	} else {
 		targetId, err = strconv.ParseInt(args[2], 10, 64)
 	}
-	if (err != nil || targetId == 0) && !replied {
-		md := mdparser.GetNormal("Invalid ID provided: ")
-		md.AppendMonoThis(args[2])
-		md.AppendNormalThis("!\nPlease make sure the target's ID is a valid integer.")
 
-		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
-			ParseMode:                sv.MarkDownV2,
-			AllowSendingWithoutReply: true,
-			DisableWebPagePreview:    true,
-		})
-		if err != nil {
-			logging.UnexpectedError(err)
+	if err != nil || targetId == 0 {
+		if !replied && !preReplied {
+			md := mdparser.GetNormal("Invalid ID provided: ")
+			md.AppendMonoThis(args[2])
+			md.AppendNormalThis("!\nPlease make sure the target's ID is a valid integer.")
+
+			_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+				ParseMode:                sv.MarkDownV2,
+				AllowSendingWithoutReply: true,
+				DisableWebPagePreview:    true,
+			})
+			if err != nil {
+				logging.UnexpectedError(err)
+			}
+
+			return ext.EndGroups
+		} else if preReplied {
+			targetId = msg.ReplyToMessage.From.Id
+			isBot = msg.ReplyToMessage.From.IsBot
 		}
-
-		return ext.EndGroups
-	} else if preReplied {
-		targetId = msg.ReplyToMessage.From.Id
 	}
 
 	if targetId == user.Id {
@@ -230,6 +236,18 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	} else if targetId == b.Id {
 		md := mdparser.GetNormal("You can't change my own permissions.")
+		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:                sv.MarkDownV2,
+			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
+		})
+		if err != nil {
+			logging.UnexpectedError(err)
+		}
+
+		return ext.EndGroups
+	} else if isBot || sv.IsInvalidID(targetId) {
+		md := mdparser.GetNormal("Non living objects cannot use the Dominator.")
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,
@@ -264,7 +282,8 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			md.AppendMonoThis(pre.GetStringPermission()).AppendNormal(".")
 		}
 	} else {
-		md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
+		md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId) //\u200D
+		//md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId) //\u200D
 		md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
 		_, err = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,

@@ -47,3 +47,7 @@ func ConvertToPermission(value string) (UserPermission, error) {
 		return NormalUser, ErrInvalidPerm
 	}
 }
+
+func IsInvalidID(id int64) bool {
+	return id == 777000 || id == 1087968824
+}

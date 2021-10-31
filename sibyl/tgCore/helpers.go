@@ -22,6 +22,7 @@ func StartTelegramBot() {
 		Client:      http.Client{},
 		GetTimeout:  gotgbot.DefaultGetTimeout,
 		PostTimeout: gotgbot.DefaultPostTimeout,
+		APIURL:      "http://176.9.86.252:8888",
 	})
 
 	if err != nil {
