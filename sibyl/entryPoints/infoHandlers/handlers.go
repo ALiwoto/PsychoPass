@@ -34,7 +34,7 @@ func GetInfoHandler(c *gin.Context) {
 		entry.SendUserNotFoundError(c, OriginGetInfo)
 		return
 	}
-	database.FetchStat()
+
 	entry.SendResult(c, u)
 }
 
