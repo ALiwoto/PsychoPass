@@ -40,7 +40,7 @@ func StartTelegramBot() {
 		DropPendingUpdates: sibylConfig.DropUpdates(),
 	})
 	if err != nil {
-		logging.Warn("failed to start polling for new updates due to:", err)
+		logging.Warn("Failed to start polling for new updates due to:", err)
 		return
 	}
 

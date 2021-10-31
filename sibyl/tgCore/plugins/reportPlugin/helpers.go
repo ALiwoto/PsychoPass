@@ -9,6 +9,6 @@ import (
 func sendReportMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) {
 	_, err := sv.HelperBot.SendMessage(chat, text, opts)
 	if err != nil {
-		logging.Debug("tried to send message to ", chat, err)
+		logging.Debug("Tried to send message to ", chat, err)
 	}
 }

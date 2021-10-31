@@ -62,7 +62,7 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	md.AppendBoldThis("Please don't share this token with anyone!")
 	if t.HasRole() {
 		md.AppendItalicThis("\nYou are a valid").AppendNormalThis(" ")
-		md.AppendMonoThis(t.GetStringPermission()).AppendNormal(".")
+		md.AppendItalicThis(t.GetStringPermission()).AppendNormal(".")
 	}
 
 	b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
@@ -89,7 +89,7 @@ func revokeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	md.AppendBoldThis("Please don't share this token with anyone!")
 	if t.HasRole() {
 		md.AppendItalicThis("You are a valid").AppendNormalThis(" ")
-		md.AppendMonoThis(t.GetStringPermission()).AppendNormal(".")
+		md.AppendItalicThis(t.GetStringPermission()).AppendNormal(".")
 	}
 
 	b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
@@ -113,9 +113,9 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if len(args) < 2 {
 		// show help.
 		md := mdparser.GetNormal("Dear ").AppendMentionThis(user.FirstName, user.Id)
-		md.AppendNormalThis(" , this command lets you assign users to ")
+		md.AppendNormalThis(", this command lets you authorise dominator access for ")
 		md.AppendHyperLinkThis("Sibyl", "http://t.me/SibylSystem")
-		md.AppendNormalThis("\nPlease provide a valid type with the command.")
+		md.AppendNormalThis("\nRun command again in the following format")
 		md.AppendBoldThis("\nYour options are:")
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign inspector ID")
 		md.AppendNormalThis("\n- ").AppendMonoThis("/assign enforcer ID")
@@ -152,7 +152,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 		return ext.EndGroups
 	} else if perm.IsOwner() {
-		md := mdparser.GetNormal("You can't assign another people as an owner")
+		md := mdparser.GetNormal("This decision is of Sibyl to make!")
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,
@@ -204,7 +204,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		if !replied && !preReplied {
 			md := mdparser.GetNormal("Invalid ID provided: ")
 			md.AppendMonoThis(args[2])
-			md.AppendNormalThis("!\nPlease make sure the target's ID is a valid integer.")
+			md.AppendNormalThis("!\nPlease make sure the target's ID is valid.")
 
 			_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 				ParseMode:                sv.MarkDownV2,
@@ -235,7 +235,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 		return ext.EndGroups
 	} else if targetId == b.Id {
-		md := mdparser.GetNormal("You can't change my own permissions.")
+		md := mdparser.GetNormal("You can't change my permissions.")
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,
@@ -247,7 +247,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 		return ext.EndGroups
 	} else if isBot || sv.IsInvalidID(targetId) {
-		md := mdparser.GetNormal("Non living objects cannot use the Dominator.")
+		md := mdparser.GetNormal("Dominator authorisation is only for humans.")
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,
@@ -264,12 +264,12 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	u, _ := database.GetTokenFromId(targetId)
 	if u != nil {
 		if u.IsOwner() {
-			md = mdparser.GetNormal("You can't change permission of another owner.\n")
+			md = mdparser.GetNormal("This decision is of Sibyl to make.\n")
 			md.AppendNormalThis("Please try another user ID.\n")
 		} else if u.Permission == perm {
 			md = mdparser.GetNormal("The user ")
 			md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
-			md.AppendNormalThis(" already has the permission ")
+			md.AppendNormalThis(" is already assigned ")
 			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
 		} else {
 			pre := u.Permission
