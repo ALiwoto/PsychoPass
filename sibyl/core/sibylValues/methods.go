@@ -305,6 +305,10 @@ func (u *User) validateFlags(r *CrimeCoefficientRange) {
 		u.FlagRaid = true
 	}
 
+	if r.IsValueInRange(RangeSpamBot) && !u.FlagSpamBot {
+		u.FlagSpamBot = true
+	}
+
 	if r.IsValueInRange(RangeMassAdd) && !u.FlagMassAdd {
 		u.FlagMassAdd = true
 	}
