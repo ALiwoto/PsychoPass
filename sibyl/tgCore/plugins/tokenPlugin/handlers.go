@@ -270,14 +270,15 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if u != nil {
 		if u.IsOwner() {
 			md = mdparser.GetNormal("This decision is of Sibyl to make.\n")
-			md.AppendNormalThis("Please try another user ID.\n")
+			md.AppendNormalThis("Please try another user ID.")
 		} else if u.Permission == perm {
 			md = mdparser.GetNormal("The user ")
 			md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
 			md.AppendNormalThis(" is already assigned ")
 			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
-		} else if t.CanChangePermission(u.Permission, perm) {
-			md = mdparser.GetNormal("Access denied.")
+		} else if !t.CanChangePermission(u.Permission, perm) {
+			md = mdparser.GetNormal("Seems like you don't have enough privileges to ")
+			md.AppendNormalThis("do this action.\nPlease try another user ID.")
 		} else {
 			pre := u.Permission
 			database.UpdateTokenPermission(u, perm)
