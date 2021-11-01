@@ -18,6 +18,6 @@ const (
 
 // Factor constants
 const (
-	LowerCloudyFactor = 50
+	LowerCloudyFactor = 80
 	UpperCloudyFactor = 100
 )
