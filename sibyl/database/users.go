@@ -97,8 +97,11 @@ func FetchStat() (*sv.StatValue, error) {
 	SESSION.Model(u).Where("flag_mass_add = ?", true).Count(&tmp)
 	stat.MassAddBanCount = tmp
 
-	SESSION.Model(u).Where("crime_coefficient < ? AND crime_coefficient > ?",
-		sv.UpperCloudyFactor, sv.LowerCloudyFactor).Count(&tmp)
+	SESSION.Model(u).Where("flag_spam_bot = ?", true).Count(&tmp)
+	stat.SpamBotBanCount = tmp
+
+	SESSION.Model(u).Where("crime_coefficient < ? AND crime_coefficient > ? AND banned = ?",
+		sv.UpperCloudyFactor, sv.LowerCloudyFactor, false).Count(&tmp)
 	stat.CloudyCount = tmp
 
 	// token related stats:

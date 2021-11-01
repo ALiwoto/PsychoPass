@@ -35,7 +35,7 @@ func GenerateSuitableDateTime() string {
 	return str
 }
 
-func GetPrettyTimeDuration(d time.Duration) string {
+func GetPrettyTimeDuration(d time.Duration, shorten bool) string {
 	var result string
 	totalSeconds := int(d.Seconds())
 
@@ -58,6 +58,7 @@ func GetPrettyTimeDuration(d time.Duration) string {
 
 	yBool := year > 0
 	mBool := month > 0 || yBool
+	shorten = !mBool && shorten
 	dBool := day > 0 || mBool
 	hBool := hour > 0 || dBool
 	if yBool {
@@ -73,23 +74,48 @@ func GetPrettyTimeDuration(d time.Duration) string {
 		}
 	}
 	if dBool {
-		result += ", " + strconv.Itoa(day) + " day"
+		result += ", " + strconv.Itoa(day)
+		if shorten {
+			result += "d"
+		} else {
+			result += " day"
+		}
+
 		if day > 1 {
 			result += "s"
 		}
 	}
 	if hBool {
-		result += ", " + strconv.Itoa(hour) + " hour"
+		result += ", " + strconv.Itoa(hour)
+		if shorten {
+			result += "h"
+		} else {
+			result += " hour"
+		}
+
+		if hour > 1 {
+			result += "s"
+		}
 		if hour > 1 {
 			result += "s"
 		}
 		result += ", "
 	}
-	result += strconv.Itoa(minute) + " minute"
+	result += strconv.Itoa(minute)
+	if shorten {
+		result += "m"
+	} else {
+		result += " minute"
+	}
 	if minute > 1 {
 		result += "s"
 	}
-	result += ", " + strconv.Itoa(seconds) + " second"
+	result += ", " + strconv.Itoa(seconds)
+	if shorten {
+		result += "s"
+	} else {
+		result += " second"
+	}
 	if seconds > 1 {
 		result += "s"
 	}

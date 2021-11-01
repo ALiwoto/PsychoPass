@@ -41,6 +41,7 @@ type StatValue struct {
 	PsychoHazardBanCount int64 `json:"psycho_hazard_ban_count"`
 	MalImpBanCount       int64 `json:"mal_imp_ban_count"`
 	NSFWBanCount         int64 `json:"nsfw_ban_count"`
+	SpamBotBanCount      int64 `json:"spam_bot_ban_count"`
 	RaidBanCount         int64 `json:"raid_ban_count"`
 	MassAddBanCount      int64 `json:"mass_add_ban_count"`
 	CloudyCount          int64 `json:"cloudy_count"`
@@ -67,6 +68,7 @@ type User struct {
 	FlagMalImp       bool      `json:"-"`
 	FlagNsfw         bool      `json:"-"`
 	FlagRaid         bool      `json:"-"`
+	FlagSpamBot      bool      `json:"-"`
 	FlagMassAdd      bool      `json:"-"`
 }
 

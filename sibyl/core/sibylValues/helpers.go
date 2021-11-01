@@ -205,5 +205,5 @@ func canMatchStringArray(value string, array []string) bool {
 }
 
 func GetPrettyUptime() string {
-	return timeUtils.GetPrettyTimeDuration(time.Since(ServerStartTime))
+	return timeUtils.GetPrettyTimeDuration(time.Since(ServerStartTime), true)
 }
