@@ -196,23 +196,14 @@ func (u *User) IncreaseCrimeCoefficientAuto() {
 }
 
 func (u *User) SetAsBanReason(reason string) {
-	if len(u.Reason) == 0 {
-		u.Reason = reason
-		return
-	}
-	u.Reason += "\n" + reason
-}
-
-func (u *User) HasReason(reason string) bool {
-	return strings.Contains(strings.ToLower(u.Reason),
-		strings.ToLower(reason))
+	u.Reason = reason
 }
 
 func (u *User) IncreaseCrimeCoefficientByRanges(ranges ...*CrimeCoefficientRange) {
 	var cc int
 	for _, r := range ranges {
 		cc += r.GetRandom()
-		if r.IsValueInRange(RangeCivilian) {
+		if r == nil || r.IsValueInRange(RangeCivilian) {
 			// ignore civilian
 			continue
 		}

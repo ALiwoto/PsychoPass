@@ -100,7 +100,7 @@ func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {
 func GetCCRangeByString(value string) []*CrimeCoefficientRange {
 	value = fixReasonString(strings.ToLower(strings.TrimSpace(value)))
 	values := strongStringGo.Split(value, " ", "\n", ",", "|", "\t", ";",
-		".", "-", "--")
+		".", "..", "...", "....", "-", "--", "---")
 	var tmp *CrimeCoefficientRange
 	var result []*CrimeCoefficientRange
 	exists := func(c *CrimeCoefficientRange) bool {
