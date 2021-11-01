@@ -25,7 +25,7 @@ Coefficients and Flags
 ==== Flags     -  ========
 Range 0-100 (No bans) (Dominator Locked)
 • Civilian     - 0-80
-• Past Banned  - 81-100
+• PastBanned  - 81-100
 ==============
 Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
 • TROLLING     - 101-125 - Trolling
@@ -41,8 +41,16 @@ Range 300+ (Ban on Sight) (Lethal Eliminator)
 • MALIMP       - 351-400 - Malicious Impersonation
 • NSFW         - 401-450 - Sending NSFW Content in SFW
 • RAID         - 451-500 - Bulk join raid to vandalize
-• MASSADD      - 501-600 - Mass adding to group/channel
+• CRYPTO       - 501-550 - Crypto, btc, forex trading scams
+• MASSADD      - 551-600 - Mass adding to group/channel
 ==============
+
+Trigger word aliases
+EVADE   - evade, banevade
+MALIMP  - impersonation, malimp, fake profile
+NSFW    - porn, pornography, nsfw, cp
+Crypto  - btc, crypto, forex, trading, binary
+MASSADD - spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding
 */
 
 // crime coefficient increasement ranges
@@ -57,5 +65,65 @@ var (
 	RangeMalImp       = &CrimeCoefficientRange{351, 400}
 	RangeNSFW         = &CrimeCoefficientRange{401, 450}
 	RangeRaid         = &CrimeCoefficientRange{451, 500}
-	RangeMassAdd      = &CrimeCoefficientRange{501, 600}
+	RangeSpamBot      = &CrimeCoefficientRange{501, 550}
+	RangeMassAdd      = &CrimeCoefficientRange{551, 600}
+)
+
+var (
+	// Range 0-100 (No bans) (Dominator Locked)
+	// Civilian     - 0-80
+	// Past Banned  - 81-100
+	// Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
+	ReasonTrolling = []string{
+		"troll",
+	} // - 101-125 - Trolling
+	ReasonSpam = []string{
+		"spam",
+		"referral",
+		"flood",
+	} // - 126-200 - Spam/Unwanted Promotion
+	ReasonEvade = []string{
+		"evade",
+		"banevade",
+	} // - 201-250 - Ban Evade using alts
+	//ReasonCustom   = "custom" - 251-300 - Any Custom reason
+
+	// Range 300+ (Ban on Sight) (Lethal Eliminator)
+	ReasonMalImp = []string{
+		"malimp",
+		"impersonation",
+		"impersonating",
+		"impersonate",
+	} // - 351-400 - Malicious Impersonation
+	ReasonPsychoHazard = []string{
+		"psychohazard",
+		"team",
+		"cult",
+		"gang",
+		"association",
+	} // - 301-350 - Bulk banned due to some bad users
+	ReasonNSFW = []string{
+		"nsfw",
+		"cp",
+		"pornography",
+		"porn",
+	} // - 401-450 - Sending NSFW Content in SFW
+	ReasonRaid = []string{
+		"raid",
+		"joinraid",
+	} // - 451-500 - Bulk join raid to vandalize
+	ReasonSpamBot = []string{
+		"crypto",
+		"btc",
+		"bitcoin",
+		"forex",
+		"trading",
+		"binary",
+		"thotbot",
+	} // - 501-550 -  Spambot, crypto, btc, forex trading scams
+	ReasonMassAdd = []string{
+		"massadd",
+		"kidnapping",
+		"memberscraping",
+	} // - 551-600 - Mass adding to group/channel
 )

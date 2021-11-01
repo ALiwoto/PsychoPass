@@ -146,21 +146,23 @@ func getCCRangeByString(value string) *CrimeCoefficientRange {
 		ReasonRaid         = "raid"
 		ReasonMassAdd      = "massadd"
 	*/
-	if strings.HasPrefix(value, ReasonTrolling) {
+	if canMatchStringArray(value, ReasonTrolling) {
 		return RangeTrolling
-	} else if strings.HasPrefix(value, ReasonSpam) {
+	} else if canMatchStringArray(value, ReasonSpam) {
 		return RangeSpam
-	} else if strings.HasPrefix(value, ReasonEvade) {
+	} else if canMatchStringArray(value, ReasonEvade) {
 		return RangeEvade
-	} else if strings.HasPrefix(value, ReasonMalImp) {
+	} else if canMatchStringArray(value, ReasonMalImp) {
 		return RangeMalImp
-	} else if strings.HasPrefix(value, ReasonPsychoHazard) {
+	} else if canMatchStringArray(value, ReasonPsychoHazard) {
 		return RangePsychoHazard
-	} else if strings.HasPrefix(value, ReasonNSFW) {
+	} else if canMatchStringArray(value, ReasonNSFW) {
 		return RangeNSFW
-	} else if strings.HasPrefix(value, ReasonRaid) {
+	} else if canMatchStringArray(value, ReasonRaid) {
 		return RangeRaid
-	} else if strings.HasPrefix(value, ReasonMassAdd) {
+	} else if canMatchStringArray(value, ReasonSpamBot) {
+		return RangeSpamBot
+	} else if canMatchStringArray(value, ReasonMassAdd) {
 		return RangeMassAdd
 	}
 
@@ -168,26 +170,40 @@ func getCCRangeByString(value string) *CrimeCoefficientRange {
 }
 
 func fixReasonString(value string) string {
-	value = strings.ReplaceAll(value, "mass add", ReasonMassAdd)
-	value = strings.ReplaceAll(value, "mass-add", ReasonMassAdd)
-	value = strings.ReplaceAll(value, "n.s.f.w", ReasonNSFW)
-	value = strings.ReplaceAll(value, "psycho hazard", ReasonPsychoHazard)
-	value = strings.ReplaceAll(value, "psycho-hazard", ReasonPsychoHazard)
+	/*
+		Trigger word aliases
+		EVADE   - evade, banevade
+		MALIMP  - impersonation, malimp, fake profile
+		NSFW    - porn, pornography, nsfw, cp
+		Crypto  - btc, crypto, forex, trading, binary
+		MASSADD - spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding
+	*/
+	value = strings.ReplaceAll(value, "mass add", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "mass-add", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "member scraping", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "member adding", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "spam adding", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "bulk adding", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "n.s.f.w", ReasonNSFW[0])
+	value = strings.ReplaceAll(value, "psycho hazard", ReasonPsychoHazard[0])
+	value = strings.ReplaceAll(value, "psycho-hazard", ReasonPsychoHazard[0])
+	value = strings.ReplaceAll(value, "fake profile", ReasonMalImp[0])
+	value = strings.ReplaceAll(value, "fake name", ReasonMalImp[0])
+	value = strings.ReplaceAll(value, "fake username", ReasonMalImp[0])
+	value = strings.ReplaceAll(value, "fake alt", ReasonMalImp[0])
+	value = strings.ReplaceAll(value, "fake ID", ReasonMalImp[0])
 	return value
+}
+
+func canMatchStringArray(value string, array []string) bool {
+	for _, v := range array {
+		if strings.HasPrefix(value, v) {
+			return true
+		}
+	}
+	return false
 }
 
 func GetPrettyUptime() string {
 	return timeUtils.GetPrettyTimeDuration(time.Since(ServerStartTime))
 }
-
-/* OLD_ALGORITHM:
-
-func getPrettyUptime() string {
-
-	return fmt.Sprintf("%d days, %d hours, %d minutes",
-		int(time.Since(startTime).Hours()/24),
-		int(time.Since(startTime).Hours())%24,
-		int(time.Since(startTime).Minutes())%60)
-}
-
-*/
