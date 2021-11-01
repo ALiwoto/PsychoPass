@@ -79,10 +79,9 @@ func GetPrettyTimeDuration(d time.Duration, shorten bool) string {
 			result += "d"
 		} else {
 			result += " day"
-		}
-
-		if day > 1 {
-			result += "s"
+			if day > 1 {
+				result += "s"
+			}
 		}
 	}
 	if hBool {
@@ -91,14 +90,11 @@ func GetPrettyTimeDuration(d time.Duration, shorten bool) string {
 			result += "h"
 		} else {
 			result += " hour"
+			if hour > 1 {
+				result += "s"
+			}
 		}
 
-		if hour > 1 {
-			result += "s"
-		}
-		if hour > 1 {
-			result += "s"
-		}
 		result += ", "
 	}
 	result += strconv.Itoa(minute)
@@ -106,18 +102,19 @@ func GetPrettyTimeDuration(d time.Duration, shorten bool) string {
 		result += "m"
 	} else {
 		result += " minute"
+		if minute > 1 {
+			result += "s"
+		}
 	}
-	if minute > 1 {
-		result += "s"
-	}
+
 	result += ", " + strconv.Itoa(seconds)
 	if shorten {
 		result += "s"
 	} else {
 		result += " second"
-	}
-	if seconds > 1 {
-		result += "s"
+		if seconds > 1 {
+			result += "s"
+		}
 	}
 	return result
 }
