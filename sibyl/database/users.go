@@ -126,6 +126,7 @@ func FetchStat() (*sv.StatValue, error) {
 }
 
 func NewUser(u *sv.User) {
+	u.FormatBanDate()
 	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(u)
