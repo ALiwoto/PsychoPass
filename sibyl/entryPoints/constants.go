@@ -21,7 +21,7 @@ const (
 
 	// ErrSamePerm is the error message that should be sent when
 	// the user already has the same as requested permission.
-	ErrSamePerm = "Can't change target's permission"
+	ErrSamePerm = "Target already has the same permission"
 
 	// ErrUserNotFound is the error message that should be sent when the
 	// target's user id cannot be found in the sibyl database.
