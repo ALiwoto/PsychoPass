@@ -48,6 +48,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	   • MALIMP       - 351-400 - Malicious Impersonation
 	   • NSFW         - 401-450 - Sending NSFW Content in SFW
 	   • RAID         - 451-500 - Bulk join raid to vandalize
+	   • SPAMBOT       - 501-550 - SpamBot, crypto, btc, forex trading scams
 	   • MASSADD      - 501-600 - Mass adding to group/channel
 	   ==============
 	*/
@@ -80,6 +81,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	reasonAppend(stat.MalImpBanCount, "MALIMP")
 	reasonAppend(stat.NSFWBanCount, "NSFW")
 	reasonAppend(stat.RaidBanCount, "RAID")
+	reasonAppend(stat.SpamBotBanCount, "SPAMBOT")
 	reasonAppend(stat.MassAddBanCount, "MASSADD")
 
 	nme().AppendMonoThis(stat.GetCloudyCountString())
