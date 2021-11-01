@@ -79,8 +79,8 @@ var (
 	} // - 101-125 - Trolling
 	ReasonSpam = []string{
 		"spam",
+		"refer",
 		"referral",
-		"flood",
 	} // - 126-200 - Spam/Unwanted Promotion
 	ReasonEvade = []string{
 		"evade",
@@ -101,6 +101,7 @@ var (
 		"cult",
 		"gang",
 		"association",
+		"network", // https://t.me/SibylSystem/976
 	} // - 301-350 - Bulk banned due to some bad users
 	ReasonNSFW = []string{
 		"nsfw",
@@ -121,10 +122,12 @@ var (
 		"binary",
 		"thotbot",
 		"joinspam",
+		"binance",
+		"advertis",
 	} // - 501-550 -  Spambot, crypto, btc, forex trading scams
 	ReasonMassAdd = []string{
 		"massadd",
-		"kidnapping",
+		"kidnap",
 		"memberscraping",
 	} // - 551-600 - Mass adding to group/channel
 )

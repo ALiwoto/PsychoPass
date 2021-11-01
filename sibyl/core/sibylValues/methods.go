@@ -92,8 +92,15 @@ func (t *Token) CanGetAllBans() bool {
 
 // CanChangePermission returns true if the token with its current
 // permission can change permission of another tokens or not.
-func (t *Token) CanChangePermission() bool {
-	return t.Permission > Inspector
+func (t *Token) CanChangePermission(pre, target UserPermission) bool {
+	return !(t.Permission < Inspector || pre >= t.Permission ||
+		target >= t.Permission)
+}
+
+// CanTryChangePermission returns true if the token with its current
+// permission can try to change permission of another tokens or not.
+func (t *Token) CanTryChangePermission() bool {
+	return t.Permission > Enforcer
 }
 
 // CanGetStats returns true if the token with its current

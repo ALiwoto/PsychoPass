@@ -98,6 +98,18 @@ func SendCannotChangePermError(c *gin.Context, origin string) {
 	})
 }
 
+func SendSamePermError(c *gin.Context, origin string) {
+	c.JSON(http.StatusOK, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusConflict,
+			Message:   ErrSamePerm,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
 func SendNoReasonError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,

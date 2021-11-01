@@ -89,40 +89,46 @@ func ChangeTokenPermHandler(c *gin.Context) {
 		return
 	}
 
-	go database.UpdateTokenLastUsage(d)
-	if d.CanCreateToken() {
-		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil || sv.IsInvalidID(id) {
-			entry.SendInvalidUserIdError(c, OriginChangeTokenPerm)
-			return
-		}
-
-		perm := sv.UserPermission(permInt)
-		if !perm.IsValid() || perm.IsOwner() {
-			entry.SendInvalidPermError(c, OriginCreateToken)
-			return
-		}
-
-		u, _ := database.GetTokenFromId(id)
-		if u != nil {
-			if u.IsOwner() || u.Permission == sv.UserPermission(perm) {
-				entry.SendCannotChangePermError(c, OriginChangeTokenPerm)
-				return
-			}
-
-			pre := u.Permission
-			database.UpdateTokenPermission(u, sv.UserPermission(perm))
-			entry.SendResult(c, &ChangePermResult{
-				PreviousPerm: pre,
-				CurrentPerm:  perm,
-			})
-			return
-		}
-
-		entry.SendUserNotFoundError(c, OriginChangeTokenPerm)
-	} else {
+	if !d.CanTryChangePermission() {
 		entry.SendPermissionDenied(c, OriginChangeTokenPerm)
+		return
 	}
+
+	go database.UpdateTokenLastUsage(d)
+	id, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil || sv.IsInvalidID(id) {
+		entry.SendInvalidUserIdError(c, OriginChangeTokenPerm)
+		return
+	}
+
+	perm := sv.UserPermission(permInt)
+	if !perm.IsValid() || perm.IsOwner() {
+		entry.SendInvalidPermError(c, OriginCreateToken)
+		return
+	}
+
+	u, err := database.GetTokenFromId(id)
+	if err != nil || u == nil {
+		entry.SendUserNotFoundError(c, OriginChangeTokenPerm)
+		return
+	}
+
+	if !u.CanChangePermission(u.Permission, perm) {
+		entry.SendCannotChangePermError(c, OriginChangeTokenPerm)
+		return
+	}
+
+	if u.Permission == perm {
+		entry.SendSamePermError(c, OriginChangeTokenPerm)
+		return
+	}
+
+	pre := u.Permission
+	database.UpdateTokenPermission(u, perm)
+	entry.SendResult(c, &ChangePermResult{
+		PreviousPerm: pre,
+		CurrentPerm:  perm,
+	})
 }
 
 // RevokeTokenHandler function will revoke the specified token.

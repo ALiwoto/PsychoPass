@@ -109,7 +109,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	t, err := database.GetTokenFromId(user.Id)
-	if err != nil || t == nil || !t.CanChangePermission() {
+	if err != nil || t == nil || !t.CanTryChangePermission() {
 		return ext.EndGroups
 	}
 
@@ -193,7 +193,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 		return ext.EndGroups
 	} else if len(args) > 2 && replied {
-		// ignore this if the message itself contains the user ID.
+		// ignore replied message if the message itself contains the user ID.
 		replied = false
 	}
 
@@ -264,6 +264,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
+	invalid := true
 	var md mdparser.WMarkDown
 	u, _ := database.GetTokenFromId(targetId)
 	if u != nil {
@@ -275,6 +276,8 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
 			md.AppendNormalThis(" is already assigned ")
 			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
+		} else if t.CanChangePermission(u.Permission, perm) {
+			md = mdparser.GetNormal("Access denied.")
 		} else {
 			pre := u.Permission
 			database.UpdateTokenPermission(u, perm)
@@ -284,10 +287,10 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
 			md.AppendItalicThis("\n\nThe previous permission was ")
 			md.AppendMonoThis(pre.GetStringPermission()).AppendNormal(".")
+			invalid = false
 		}
 	} else {
-		md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId) //\u200D
-		//md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId) //\u200D
+		md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
 		md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
 		_, err = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
@@ -301,27 +304,26 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	mdback := mdparser.GetNormal("Your permission has been changed to ")
-	mdback.AppendMonoThis(u.GetStringPermission())
-	mdback.AppendNormalThis("!\n\nHere is your token:\n")
-	mdback.AppendMonoThis(u.Hash).AppendNormalThis("\n\n")
-	mdback.AppendBoldThis("Please don't share this token with anyone!")
-	_, err = b.SendMessage(targetId, mdback.ToString(), &gotgbot.SendMessageOpts{
-		ParseMode: sv.MarkDownV2,
-	})
-	if err != nil {
-		md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
-		md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
+	if !invalid {
+		mdback := mdparser.GetNormal("Your permission has been changed to ")
+		mdback.AppendMonoThis(u.GetStringPermission())
+		mdback.AppendNormalThis("!\n\nHere is your token:\n")
+		mdback.AppendMonoThis(u.Hash).AppendNormalThis("\n\n")
+		mdback.AppendBoldThis("Please don't share this token with anyone!")
+		_, err = b.SendMessage(targetId, mdback.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode: sv.MarkDownV2,
+		})
+		if err != nil {
+			md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
+			md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
+		}
 	}
 
-	_, err = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+	_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode:                sv.MarkDownV2,
 		AllowSendingWithoutReply: true,
 		DisableWebPagePreview:    true,
 	})
-	if err != nil {
-		logging.UnexpectedError(err)
-	}
 
 	return ext.EndGroups
 }
