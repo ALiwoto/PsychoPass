@@ -104,6 +104,10 @@ func revokeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	user := ctx.EffectiveUser
 	msg := ctx.EffectiveMessage
+	if sv.IsInvalidID(user.Id) {
+		return ext.EndGroups
+	}
+
 	t, err := database.GetTokenFromId(user.Id)
 	if err != nil || t == nil || !t.CanChangePermission() {
 		return ext.EndGroups
