@@ -120,6 +120,7 @@ var (
 		"trading",
 		"binary",
 		"thotbot",
+		"joinspam",
 	} // - 501-550 -  Spambot, crypto, btc, forex trading scams
 	ReasonMassAdd = []string{
 		"massadd",
