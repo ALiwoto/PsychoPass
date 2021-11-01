@@ -34,7 +34,7 @@ func CreateTokenHandler(c *gin.Context) {
 	go database.UpdateTokenLastUsage(d)
 	if d.CanCreateToken() {
 		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil || id == 0 {
+		if err != nil || sv.IsInvalidID(id) {
 			entry.SendInvalidUserIdError(c, OriginCreateToken)
 			return
 		}
@@ -92,7 +92,7 @@ func ChangeTokenPermHandler(c *gin.Context) {
 	go database.UpdateTokenLastUsage(d)
 	if d.CanCreateToken() {
 		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil || id == 0 {
+		if err != nil || sv.IsInvalidID(id) {
 			entry.SendInvalidUserIdError(c, OriginChangeTokenPerm)
 			return
 		}
@@ -142,7 +142,7 @@ func RevokeTokenHandler(c *gin.Context) {
 	}
 
 	id, err := strconv.ParseInt(userId, 10, 64)
-	if err != nil || id == 0 {
+	if err != nil || sv.IsInvalidID(id) {
 		entry.SendInvalidUserIdError(c, OriginRevokeToken)
 		return
 	}
@@ -179,7 +179,7 @@ func GetTokenHandler(c *gin.Context) {
 
 	if d.CanGetToken() {
 		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil || id == 0 {
+		if err != nil || sv.IsInvalidID(id) {
 			entry.SendInvalidUserIdError(c, OriginGetToken)
 			return
 		}

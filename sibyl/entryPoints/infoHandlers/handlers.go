@@ -3,6 +3,7 @@ package infoHandlers
 import (
 	"strconv"
 
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
@@ -25,7 +26,7 @@ func GetInfoHandler(c *gin.Context) {
 	}
 
 	id, err := strconv.ParseInt(userId, 10, 64)
-	if err != nil || id == 0 {
+	if err != nil || sv.IsInvalidID(id) {
 		entry.SendInvalidUserIdError(c, OriginGetInfo)
 		return
 	}

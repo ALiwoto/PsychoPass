@@ -31,7 +31,7 @@ func ReportUserHandler(c *gin.Context) {
 	if d.CanReport() {
 		by := hashing.GetIdFromToken(token)
 		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil {
+		if err != nil || sv.IsInvalidID(id) {
 			entry.SendInvalidUserIdError(c, OriginReport)
 			return
 		}

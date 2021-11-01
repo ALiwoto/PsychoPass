@@ -6,6 +6,7 @@ import (
 
 	entry "github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints"
 
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
@@ -32,7 +33,7 @@ func AddBanHandler(c *gin.Context) {
 
 	if d.CanBan() {
 		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil {
+		if err != nil || sv.IsInvalidID(id) {
 			entry.SendInvalidUserIdError(c, OriginAddBan)
 			return
 		}
@@ -108,7 +109,7 @@ func RemoveBanHandler(c *gin.Context) {
 
 	if d.CanBan() {
 		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil {
+		if err != nil || sv.IsInvalidID(id) {
 			entry.SendInvalidUserIdError(c, OriginRemoveBan)
 			return
 		}
