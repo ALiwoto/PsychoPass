@@ -189,6 +189,7 @@ func (u *User) SetAsPastBan() {
 func (u *User) IncreaseCrimeCoefficient(reason string) {
 	ranges := GetCCRangeByString(reason)
 	u.IncreaseCrimeCoefficientByRanges(ranges...)
+	u.SetBanFlags()
 }
 
 func (u *User) IncreaseCrimeCoefficientAuto() {
@@ -203,14 +204,69 @@ func (u *User) FormatBanDate() {
 	u.BanDate = time.Now().Format("2006-01-02 at 15:04:05")
 }
 
+func (u *User) SetBanFlags() {
+	/*
+		FlagTrolling     bool      `json:"-"`
+		FlagSpam         bool      `json:"-"`
+		FlagEvade        bool      `json:"-"`
+		FlagCustom       bool      `json:"-"`
+		FlagPsychoHazard bool      `json:"-"`
+		FlagMalImp       bool      `json:"-"`
+		FlagNsfw         bool      `json:"-"`
+		FlagRaid         bool      `json:"-"`
+		FlagSpamBot      bool      `json:"-"`
+		FlagMassAdd      bool      `json:"-"`
+	*/
+	u.BanFlags = nil
+	if !u.Banned {
+		return
+	}
+
+	if u.FlagTrolling {
+		u.BanFlags = append(u.BanFlags, BanFlagTrolling)
+	}
+	if u.FlagSpam {
+		u.BanFlags = append(u.BanFlags, BanFlagSpam)
+	}
+	if u.FlagEvade {
+		u.BanFlags = append(u.BanFlags, BanFlagEvade)
+	}
+	if u.FlagCustom {
+		u.BanFlags = append(u.BanFlags, BanFlagCustom)
+	}
+	if u.FlagPsychoHazard {
+		u.BanFlags = append(u.BanFlags, BanFlagPsychoHazard)
+	}
+	if u.FlagMalImp {
+		u.BanFlags = append(u.BanFlags, BanFlagMalImp)
+	}
+	if u.FlagNsfw {
+		u.BanFlags = append(u.BanFlags, BanFlagNSFW)
+	}
+	if u.FlagRaid {
+		u.BanFlags = append(u.BanFlags, BanFlagRaid)
+	}
+	if u.FlagSpamBot {
+		u.BanFlags = append(u.BanFlags, BanFlagSpamBot)
+	}
+	if u.FlagMassAdd {
+		u.BanFlags = append(u.BanFlags, BanFlagMassAdd)
+	}
+
+	if len(u.BanFlags) == 0 {
+		u.BanFlags = append(u.BanFlags, BanFlagCustom)
+	}
+}
+
 func (u *User) IncreaseCrimeCoefficientByRanges(ranges ...*CrimeCoefficientRange) {
 	var cc int
+	u.invalidateFlags()
 	for _, r := range ranges {
-		cc += r.GetRandom()
 		if r == nil || r.IsValueInRange(RangeCivilian) {
 			// ignore civilian
 			continue
 		}
+		cc += r.GetRandom()
 		u.validateFlags(r)
 	}
 	u.CrimeCoefficient = cc
@@ -252,6 +308,19 @@ func (u *User) validateFlags(r *CrimeCoefficientRange) {
 	if r.IsValueInRange(RangeMassAdd) && !u.FlagMassAdd {
 		u.FlagMassAdd = true
 	}
+}
+
+func (u *User) invalidateFlags() {
+	u.FlagTrolling = false
+	u.FlagSpam = false
+	u.FlagEvade = false
+	u.FlagCustom = false
+	u.FlagPsychoHazard = false
+	u.FlagMalImp = false
+	u.FlagNsfw = false
+	u.FlagRaid = false
+	u.FlagSpamBot = false
+	u.FlagMassAdd = false
 }
 
 //---------------------------------------------------------
