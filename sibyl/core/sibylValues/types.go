@@ -29,7 +29,7 @@ Range 300+ (Ban on Sight) (Lethal Eliminator)
 */
 
 type UserPermission int
-type UserFlag int
+type BanFlag string
 type ReportHandler func(r *Report)
 
 type StatValue struct {
@@ -56,9 +56,11 @@ type User struct {
 	Reason           string    `json:"reason"`
 	Message          string    `json:"message"`
 	BanSourceUrl     string    `json:"ban_source_url"`
-	Date             time.Time `json:"date"`
+	Date             time.Time `json:"-"`
 	BannedBy         int64     `json:"banned_by"`
 	CrimeCoefficient int       `json:"crime_coefficient"`
+	BanDate          string    `json:"date" gorm:"-" sql:"-"`
+	BanFlags         []BanFlag `json:"ban_flags" gorm:"-" sql:"-"`
 	cacheDate        time.Time `json:"-"`
 	FlagTrolling     bool      `json:"-"`
 	FlagSpam         bool      `json:"-"`

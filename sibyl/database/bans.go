@@ -41,6 +41,7 @@ func RemoveUserBan(user *sv.User) {
 		user.Message = ""
 		user.BannedBy = 0
 		user.Date = time.Now()
+		user.FormatBanDate()
 		user.SetAsPastBan()
 	} else {
 		// user is not banned

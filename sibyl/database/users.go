@@ -27,6 +27,7 @@ func GetUserFromId(id int64) (*sv.User, error) {
 	}
 
 	u.SetCacheDate()
+	u.FormatBanDate()
 	userMapMutex.Lock()
 	userDbMap[u.UserID] = u
 	userMapMutex.Unlock()
