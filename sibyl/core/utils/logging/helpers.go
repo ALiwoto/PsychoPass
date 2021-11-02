@@ -30,7 +30,7 @@ func InitZapLog(debug bool) *zap.Logger {
 
 func LoadLogger(debug bool) func() {
 	if SUGARED != nil {
-		return func() {}
+		return nil
 	}
 	loggerMgr := InitZapLog(debug)
 	zap.ReplaceGlobals(loggerMgr)

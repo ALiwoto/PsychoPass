@@ -20,11 +20,9 @@ import (
 func main() {
 	sibylValues.ServerStartTime = time.Now()
 	f := logging.LoadLogger(true)
-	defer func() {
-		if f != nil {
-			f()
-		}
-	}()
+	if f != nil {
+		defer f()
+	}
 
 	runApp()
 }
