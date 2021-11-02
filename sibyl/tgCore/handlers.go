@@ -2,6 +2,7 @@ package tgCore
 
 import (
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/infoPlugin"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/reportPlugin"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/tokenPlugin"
@@ -17,8 +18,9 @@ func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 }
 
 func loadLimiter(d *ext.Dispatcher) {
-	limiter := ratelimiter.NewLimiter(d, false, false)
-	limiter.TextOnly = true
+	sv.RateLimiter = ratelimiter.NewLimiter(d, false, false)
+	sv.RateLimiter.TextOnly = true
+	sv.RateLimiter.ConsiderUser = true
 	/*
 		# ratelimiter's punishment (ignoring) time in minutes.
 		ratelimiter_punishment_time = 40
@@ -37,18 +39,23 @@ func loadLimiter(d *ext.Dispatcher) {
 	timeout := sibylConfig.GetRateLimiterTimeout()
 	maxMessages := sibylConfig.GetRateLimiterMaxMessages()
 	maxCache := sibylConfig.GetRateLimiterMaxCache()
+	ex := sibylConfig.GetOwnersID()
 	if pt != 0 {
-		limiter.SetPunishmentDuration(pt)
+		sv.RateLimiter.SetPunishmentDuration(pt)
 	}
 	if timeout != 0 {
-		limiter.SetFloodWaitTime(timeout)
+		sv.RateLimiter.SetFloodWaitTime(timeout)
 	}
 	if maxMessages != 0 {
-		limiter.SetMaxMessageCount(int(maxMessages))
+		sv.RateLimiter.SetMaxMessageCount(int(maxMessages))
 	}
 	if maxCache != 0 {
-		limiter.SetMaxCacheDuration(maxCache)
+		sv.RateLimiter.SetMaxCacheDuration(maxCache)
 	}
 
-	limiter.Start()
+	if len(ex) != 0 {
+		sv.RateLimiter.SetAsExceptionList(ex)
+	}
+
+	sv.RateLimiter.Start()
 }
