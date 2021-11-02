@@ -52,7 +52,8 @@ func recoverFromPanic() {
 		details := debug.Stack()
 		fmt.Println("Got panic:", r)
 		fmt.Println(string(details))
-		logging.LogPanic(details)
+		detailsStr := fmt.Sprint(r) + "\n" + string(details)
+		logging.LogPanic([]byte(detailsStr))
 		max := sibylConfig.GetMaxPanics()
 		if max != -1 && totalPanics >= int(max) {
 			fmt.Println("Too many panics, exiting")

@@ -11,6 +11,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var SESSION *gorm.DB
@@ -26,12 +27,21 @@ func StartDatabase() {
 
 	var db *gorm.DB
 	var err error
+	var conf *gorm.Config
+	if sibylConfig.IsDebug() {
+		conf = &gorm.Config{
+			Logger: logger.Default.LogMode(logger.Info),
+		}
+	} else {
+		conf = &gorm.Config{
+			Logger: logger.Default.LogMode(logger.Error),
+		}
+	}
 	if sibylConfig.SibylConfig.UseSqlite {
 		db, err = gorm.Open(sqlite.Open(
-			fmt.Sprintf("%s.db", sibylConfig.SibylConfig.DbName)),
-			&gorm.Config{})
+			fmt.Sprintf("%s.db", sibylConfig.SibylConfig.DbName)), conf)
 	} else {
-		db, err = gorm.Open(postgres.Open(sibylConfig.SibylConfig.DbUrl), &gorm.Config{})
+		db, err = gorm.Open(postgres.Open(sibylConfig.SibylConfig.DbUrl), conf)
 	}
 
 	if err != nil {
