@@ -23,6 +23,7 @@ func LoadConfigFromFile(fileName string) error {
 	}
 
 	SibylConfig = &SibylSystemConfig{}
+	env := os.Getenv
 	configContent, err := configparser.NewConfigParserFromFile(fileName)
 	if err != nil {
 		return err
@@ -31,7 +32,7 @@ func LoadConfigFromFile(fileName string) error {
 	// general section variables:
 	SibylConfig.Port, err = configContent.Get("general", "port")
 	if err != nil {
-		SibylConfig.Port = os.Getenv("PORT")
+		SibylConfig.Port = env("PORT")
 		if len(SibylConfig.Port) == 0 {
 			logging.Error("No port specified in config file or environment variable." +
 				"Using default port 8080")
@@ -41,7 +42,7 @@ func LoadConfigFromFile(fileName string) error {
 
 	SibylConfig.TokenSize, err = configContent.GetInt64("general", "token_size")
 	if err != nil {
-		tokenSizeStr := os.Getenv("TOKEN_SIZE")
+		tokenSizeStr := env("TOKEN_SIZE")
 		SibylConfig.TokenSize, _ = strconv.ParseInt(tokenSizeStr, 10, 64)
 		if SibylConfig.TokenSize == 0 {
 			logging.Error("No token-size specified in config file or environment variable." +
@@ -56,13 +57,13 @@ func LoadConfigFromFile(fileName string) error {
 
 	ownersStr, err := configContent.Get("general", "owners")
 	if err != nil || len(ownersStr) == 0 {
-		ownersStr = os.Getenv("OWNERS")
+		ownersStr = env("OWNERS")
 	}
 	SibylConfig.Owners = parseBaseStr(strings.TrimSpace(ownersStr))
 
 	SibylConfig.MaxPanic, err = configContent.GetInt64("general", "max_panics")
 	if err != nil {
-		SibylConfig.MaxPanic, _ = strconv.ParseInt(os.Getenv("MAX_PANICS"), 10, 64)
+		SibylConfig.MaxPanic, _ = strconv.ParseInt(env("MAX_PANICS"), 10, 64)
 		if SibylConfig.MaxPanic == 0 {
 			SibylConfig.MaxPanic = -1
 		}
@@ -70,20 +71,20 @@ func LoadConfigFromFile(fileName string) error {
 
 	SibylConfig.Debug, err = configContent.GetBool("general", "debug")
 	if err != nil {
-		debug := os.Getenv("SIBYL_DEBUG")
+		debug := env("SIBYL_DEBUG")
 		SibylConfig.Debug = debug == "yes" || debug == "true"
 	}
 
 	// database section variables:
 	SibylConfig.UseSqlite, err = configContent.GetBool("database", "use_sqlite")
 	if err != nil {
-		usesqlite := os.Getenv("USE_SQLITE")
+		usesqlite := env("USE_SQLITE")
 		SibylConfig.UseSqlite = usesqlite == "yes" || usesqlite == "true"
 	}
 
 	SibylConfig.DbUrl, err = configContent.Get("database", "url")
 	if err != nil || len(SibylConfig.DbUrl) == 0 {
-		SibylConfig.DbUrl = os.Getenv("DB_URL")
+		SibylConfig.DbUrl = env("DB_URL")
 		if len(SibylConfig.DbUrl) == 0 && !SibylConfig.UseSqlite {
 			return errors.New("no database url is specified")
 		}
@@ -91,45 +92,88 @@ func LoadConfigFromFile(fileName string) error {
 
 	SibylConfig.DbName, err = configContent.Get("database", "db_name")
 	if err != nil || len(SibylConfig.DbUrl) == 0 {
-		SibylConfig.DbName = os.Getenv("DB_NAME")
+		SibylConfig.DbName = env("DB_NAME")
 		if len(SibylConfig.DbName) == 0 {
 			SibylConfig.DbName = "sibyldb"
 		}
 	}
 
+	SibylConfig.MaxCacheTime, err = configContent.GetInt64("database", "max_cache_time")
+	if err != nil {
+		SibylConfig.MaxCacheTime, _ = strconv.ParseInt(env("MAX_CACHE_TIME"), 10, 64)
+	}
+
 	// telegram section variables
 	SibylConfig.BotToken, err = configContent.Get("telegram", "bot_token")
 	if err != nil || len(SibylConfig.BotToken) == 0 {
-		SibylConfig.BotToken = os.Getenv("BOT_TOKEN")
+		SibylConfig.BotToken = env("BOT_TOKEN")
 	}
 
 	SibylConfig.BotAPIUrl, err = configContent.Get("telegram", "api_url")
 	if err != nil || len(SibylConfig.BotAPIUrl) == 0 {
-		SibylConfig.BotAPIUrl = os.Getenv("API_URL")
+		SibylConfig.BotAPIUrl = env("API_URL")
 	}
 
 	// database section variables:
 	SibylConfig.DropUpdates, err = configContent.GetBool("telegram", "drop_updates")
 	if err != nil {
-		dropUpdates := os.Getenv("DROP_UPDATES")
+		dropUpdates := env("DROP_UPDATES")
 		SibylConfig.DropUpdates = dropUpdates == "yes" || dropUpdates == "true"
 	}
 
 	baseStr, err := configContent.Get("telegram", "base_chats")
 	if err != nil || len(baseStr) == 0 {
-		baseStr = os.Getenv("BASE_CHATS")
+		baseStr = env("BASE_CHATS")
 	}
 	SibylConfig.BaseChats = parseBaseStr(strings.TrimSpace(baseStr))
 
 	preStr, err := configContent.Get("telegram", "cmd_prefixes")
 	if err != nil || len(preStr) == 0 {
-		preStr = os.Getenv("CMD_PREFIXES")
+		preStr = env("CMD_PREFIXES")
 	}
 	SibylConfig.CmdPrefixes = parseCmdPrefixes(preStr)
 
-	SibylConfig.MaxCacheTime, err = configContent.GetInt64("database", "max_cache_time")
+	/*
+		# ratelimiter's punishment (ignoring) time in minutes.
+		ratelimiter_punishment_time = 40
+		# ratelimiter's message sending timeout. (in seconds)
+		ratelimiter_timeout = 4
+		# ratelimiter's message sending interval. if user sends more than this amount
+		# of messages per `ratelimiter_timeout` period, bot will ignore him for
+		# `ratelimiter_punishment_time` minutes.
+		ratelimiter_max_messages = 6
+		# ratelimiter's maximum amount of caching for a user. (in minutes)
+		# recommended to be more than `ratelimiter_punishment_time` +
+		# `ratelimiter_timeout`; otherwise will be ignored by library itself.
+		ratelimiter_max_cache = 50
+	*/
+
+	SibylConfig.RateLimiterPunishmentTime, err =
+		configContent.GetInt64("telegram", "ratelimiter_punishment_time")
 	if err != nil {
-		SibylConfig.MaxCacheTime, _ = strconv.ParseInt(os.Getenv("MAX_CACHE_TIME"), 10, 64)
+		SibylConfig.RateLimiterPunishmentTime, _ =
+			strconv.ParseInt(env("RATELIMITER_PUNISHMENT_TIME"), 10, 64)
+	}
+
+	SibylConfig.RateLimiterTimeout, err =
+		configContent.GetInt64("telegram", "ratelimiter_timeout")
+	if err != nil {
+		SibylConfig.MaxCacheTime, _ =
+			strconv.ParseInt(env("RATELIMITER_TIMEOUT"), 10, 64)
+	}
+
+	SibylConfig.RateLimiterMaxMessages, err =
+		configContent.GetInt64("telegram", "ratelimiter_max_messages")
+	if err != nil {
+		SibylConfig.MaxCacheTime, _ =
+			strconv.ParseInt(env("RATELIMITER_MAX_MESSAGE"), 10, 64)
+	}
+
+	SibylConfig.RateLimiterMaxCache, err =
+		configContent.GetInt64("telegram", "ratelimiter_max_cache")
+	if err != nil {
+		SibylConfig.MaxCacheTime, _ =
+			strconv.ParseInt(env("RATELIMITER_MAX_CACHE"), 10, 64)
 	}
 
 	return nil
@@ -260,4 +304,32 @@ func IsDebug() bool {
 		return false
 	}
 	return SibylConfig.Debug
+}
+
+func GetRateLimiterPunishmentTime() time.Duration {
+	if SibylConfig == nil {
+		return 40 * time.Minute
+	}
+	return time.Duration(SibylConfig.RateLimiterPunishmentTime) * time.Minute
+}
+
+func GetRateLimiterTimeout() time.Duration {
+	if SibylConfig == nil {
+		return 4 * time.Second
+	}
+	return time.Duration(SibylConfig.RateLimiterTimeout) * time.Second
+}
+
+func GetRateLimiterMaxMessages() int64 {
+	if SibylConfig == nil {
+		return 6
+	}
+	return SibylConfig.RateLimiterMaxMessages
+}
+
+func GetRateLimiterMaxCache() time.Duration {
+	if SibylConfig == nil {
+		return 50 * time.Minute
+	}
+	return time.Duration(SibylConfig.RateLimiterMaxCache) * time.Minute
 }
