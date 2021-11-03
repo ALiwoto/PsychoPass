@@ -259,6 +259,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	var md mdparser.WMarkDown
 	var topMsg *gotgbot.Message
 	u, _ := database.GetTokenFromId(targetId)
+	//isDemote := u.Permission > perm
 	if u != nil {
 		if u.IsOwner() {
 			md = mdparser.GetNormal("This decision is of Sibyl to make.\n")

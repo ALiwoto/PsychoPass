@@ -190,6 +190,7 @@ func (u *User) GetCrimeCoefficientRange() *CrimeCoefficientRange {
 }
 
 func (u *User) SetAsPastBan() {
+	u.invalidateFlags()
 	u.CrimeCoefficient = RangePastBanned.GetRandom()
 }
 
