@@ -52,7 +52,8 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 
 	time.Sleep(2 * time.Second)
 
-	md = suMd.AppendBoldThis("• Is banned: ")
+	md = suMd.AppendBoldThis("\n• ID: ").AppendMonoThis(strNameId).ElThis()
+	md.AppendBoldThis("• Is banned: ")
 	md.AppendMonoThis(strconv.FormatBool(targetUser.Banned)).ElThis()
 	md.AppendBoldThis("• Crime Coefficient: ")
 	md.AppendMonoThis(strconv.Itoa(targetUser.CrimeCoefficient)).ElThis()
@@ -84,7 +85,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context,
 	namae := targetChat.FirstName
 	uMd = mdparser.GetUserMention(namae, targetChat.Id)
 	strId := strconv.FormatInt(targetChat.Id, 10)
-	md = mdparser.GetBold(" • User: ").AppendThis(uMd).ElThis()
+	md = mdparser.GetBold("\u200D • User: ").AppendThis(uMd).ElThis()
 	md.AppendBoldThis(" • ID: ").AppendMonoThis(strId).ElThis()
 	md.AppendBoldThis(" • Is banned: ").AppendMonoThis("false").ElThis()
 	md.AppendBoldThis(" • Crime Coefficient: ").AppendMonoThis(targer.EstimateCrimeCoefficient())
@@ -104,8 +105,8 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context,
 
 	md = mdparser.GetBold("Assigned Successfully! ").ElThis().AppendThis(md).ElThis()
 	md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" has now been assigned as ")
-	md.AppendBoldThis(perm).ElThis()
-	md.AppendNormalThis("Their dominator and token have been sent to their ")
+	md.AppendBoldThis(perm)
+	md.AppendNormalThis("!\nTheir dominator and token have been sent to their ")
 	md.AppendHyperLinkThis("PM", "http://t.me/"+b.Username).AppendNormalThis(".")
 	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
