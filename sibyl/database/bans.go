@@ -36,11 +36,6 @@ func DeleteUser(userID int64) {
 // RemoveUserBan will unban a user from the sibyl database.
 func RemoveUserBan(user *sv.User) {
 	if user.Banned {
-		user.Banned = false
-		user.Reason = ""
-		user.Message = ""
-		user.BannedBy = 0
-		user.Date = time.Now()
 		user.FormatBanDate()
 		user.SetAsPastBan()
 	} else {
