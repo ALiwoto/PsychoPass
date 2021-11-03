@@ -52,7 +52,8 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 
 	time.Sleep(2 * time.Second)
 
-	md.AppendBoldThis("• Is banned: ").AppendMonoThis(strconv.FormatBool(targetUser.Banned)).ElThis()
+	md = suMd.AppendBoldThis("• Is banned: ")
+	md.AppendMonoThis(strconv.FormatBool(targetUser.Banned)).ElThis()
 	md.AppendBoldThis("• Crime Coefficient: ")
 	md.AppendMonoThis(strconv.Itoa(targetUser.CrimeCoefficient)).ElThis()
 
