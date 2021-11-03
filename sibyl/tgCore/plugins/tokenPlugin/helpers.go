@@ -102,7 +102,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context,
 	time.Sleep(2 * time.Second)
 
 	md = mdparser.GetBold("Assigned Successfully! ").ElThis().AppendThis(md).ElThis()
-	md.AppendNormalThis("✳️").AppendThis(uMd).AppendNormalThis(" has now been assigned as ")
+	md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" has now been assigned as ")
 	md.AppendBoldThis(perm).ElThis()
 	md.AppendNormalThis("Their dominator and token have been sent to their ")
 	md.AppendHyperLinkThis("PM", "http://t.me/"+b.Username).AppendNormalThis(".")
