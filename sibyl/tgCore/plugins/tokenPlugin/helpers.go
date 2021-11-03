@@ -16,11 +16,12 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 	var err error
 	var md, uMd, suMd mdparser.WMarkDown
 	msg := ctx.EffectiveMessage
-	strName := strconv.FormatInt(targetUser.UserID, 10)
+	var strName string
 	strNameId := strconv.FormatInt(targetUser.UserID, 10) // reserved value
 	if replied {
+		strName = msg.ReplyToMessage.From.FirstName
 		suMd = mdparser.GetBold("• User: ")
-		suMd.AppendMentionThis(msg.ReplyToMessage.From.FirstName, targetUser.UserID).ElThis()
+		suMd.AppendMentionThis(strName, targetUser.UserID).ElThis()
 		suMd.AppendBoldThis("• ID: ").AppendMonoThis(strNameId).ElThis()
 	} else {
 		ch, err := b.GetChat(targetUser.UserID)
@@ -49,9 +50,8 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 		return
 	}
 
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 
-	md = suMd.ElThis()
 	md.AppendBoldThis("• Is banned: ").AppendMonoThis(strconv.FormatBool(targetUser.Banned)).ElThis()
 	md.AppendBoldThis("• Crime Coefficient: ")
 	md.AppendMonoThis(strconv.Itoa(targetUser.CrimeCoefficient)).ElThis()
@@ -64,7 +64,7 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 		return
 	}
 
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 
 	md.ElThis().AppendBoldThis("Verdict: ").AppendThis(uMd).ElThis()
 	md.AppendNormalThis("cannot be assigned as " + p + " because their crime coefficient is ")
@@ -84,7 +84,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context,
 	strId := strconv.FormatInt(targetChat.Id, 10)
 	md = mdparser.GetBold(" • User: ").AppendThis(uMd).ElThis()
 	md.AppendBoldThis(" • ID: ").AppendMonoThis(strId).ElThis()
-	md.AppendBoldThis(" • Is banned: ").AppendMonoThis("false")
+	md.AppendBoldThis(" • Is banned: ").AppendMonoThis("false").ElThis()
 	md.AppendBoldThis(" • Crime Coefficient: ").AppendMonoThis(targer.EstimateCrimeCoefficient())
 	md.ElThis()
 	// let the goroutine sleep for 1 second
