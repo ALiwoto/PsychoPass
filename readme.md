@@ -1,3 +1,6 @@
+### Psycho Pass 
+A world where a human's state of mind and the criminal potential of their personality can be quantified. While all sorts of inclinations are recorded and policed, these measured numbers used to judge people's souls are commonly called one's... PSYCHO-PASS.
+
 
 # Coefficients and Flags
 
@@ -36,6 +39,3 @@
 - `NSFW`    - porn, pornography, nsfw, cp
 - `Crypto`  - btc, crypto, forex, trading, binary
 - `MASSADD` - spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding
-
-
-Test Line
