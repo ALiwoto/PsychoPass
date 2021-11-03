@@ -53,7 +53,11 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	   ==============
 	*/
 
-	md := mdparser.GetBold("📊 Current stats of ")
+	md := mdparser.GetEmpty()
+
+	fetchGitStats(md)
+
+	md = mdparser.GetBold("📊 Current stats of ")
 	nme := func() mdparser.WMarkDown {
 		return md.AppendNormalThis("\n• ")
 	}
