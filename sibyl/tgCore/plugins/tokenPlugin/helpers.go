@@ -29,7 +29,7 @@ func showUserBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p str
 	time.Sleep(3 * time.Second)
 
 	md = mdparser.GetBold("User: ").Append(uMd).ElThis()
-	md.AppendBoldThis("Is banned: ").AppendMonoThis(strconv.FormatBool(targetUser.Banned))
+	md.AppendBoldThis("Is banned: ").AppendMonoThis(strconv.FormatBool(targetUser.Banned)).ElThis()
 	md.AppendBoldThis("Crime Coefficient: ")
 	md.AppendMonoThis(strconv.Itoa(targetUser.CrimeCoefficient)).ElThis()
 
@@ -43,7 +43,7 @@ func showUserBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p str
 
 	time.Sleep(3 * time.Second)
 
-	md.AppendNormalThis("\n\n").AppendBoldThis("Verdict: ").AppendThis(uMd)
+	md.ElThis().AppendBoldThis("Verdict: ").AppendThis(uMd)
 	md.AppendNormalThis("cannot be assigned as " + p + " because their crime coefficient is over ")
 	md.AppendMonoThis(targetUser.EstimateCrimeCoefficient()).ElThis()
 	md.AppendBoldThis("Attached reason: ").AppendMonoThis(targetUser.Reason)
