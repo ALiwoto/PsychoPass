@@ -254,25 +254,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	} else {
 		targetUser, err := database.GetUserFromId(targetId)
 		if err == nil && targetUser != nil && targetUser.Banned {
-			md := mdparser.GetNormal("Can't register the user because they are banned in")
-			md.AppendHyperLinkThis("Sibyl System.", "http://t.me/SibylSystem").ElThis()
-			md.AppendBoldThis("Reason: ").AppendMonoThis(targetUser.Reason)
-			if len(targetUser.BanFlags) > 0 {
-				md.AppendNormalThis(" [ ")
-				for i, flag := range targetUser.BanFlags {
-					if i != 0 {
-						md.AppendNormalThis(", ")
-					}
-					md.AppendMonoThis(string(flag))
-				}
-				md.AppendNormalThis(" ]")
-			}
-			md.ElThis()
-			_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
-				ParseMode:                sv.MarkDownV2,
-				AllowSendingWithoutReply: true,
-				DisableWebPagePreview:    true,
-			})
+			go showUserBanned(b, ctx, targetUser, perm.GetStringPermission())
 			return ext.EndGroups
 		}
 	}

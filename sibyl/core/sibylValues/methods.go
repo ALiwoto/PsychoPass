@@ -211,6 +211,15 @@ func (u *User) FormatBanDate() {
 	u.BanDate = time.Now().Format("2006-01-02 at 15:04:05")
 }
 
+func (u *User) EstimateCrimeCoefficient() string {
+	c := u.CrimeCoefficient
+	if c > 100 {
+		str := strconv.Itoa(c)
+		return str[:len(str)-1] + "0"
+	}
+	return strconv.Itoa(c)
+}
+
 func (u *User) SetBanFlags() {
 	/*
 		FlagTrolling     bool      `json:"-"`
