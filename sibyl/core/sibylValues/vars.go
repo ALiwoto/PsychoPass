@@ -82,7 +82,7 @@ var (
 	ReasonSpam = []string{
 		"spam",
 		"refer",
-		"referral",
+		"promo",
 	} // - 126-200 - Spam/Unwanted Promotion
 	ReasonEvade = []string{
 		"evade",
