@@ -253,12 +253,6 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			DisableWebPagePreview:    true,
 		})
 		return ext.EndGroups
-	} else {
-		targetUser, err = database.GetUserFromId(targetId)
-		if err == nil && targetUser != nil && targetUser.Banned {
-			go showUserIsBanned(b, ctx, targetUser, perm.GetStringPermission(), replied)
-			return ext.EndGroups
-		}
 	}
 
 	invalid := true
@@ -278,6 +272,12 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			md = mdparser.GetNormal("Seems like you don't have enough privileges to ")
 			md.AppendNormalThis("do this action.\nPlease try another user ID.")
 		} else {
+			targetUser, err = database.GetUserFromId(targetId)
+			if err == nil && targetUser != nil && targetUser.Banned {
+				go showUserIsBanned(b, ctx, targetUser, perm.GetStringPermission(), replied)
+				return ext.EndGroups
+			}
+
 			//pre := u.Permission
 			database.UpdateTokenPermission(u, perm)
 			mmd := mdparser.GetNormal("Running a cymatic scan....")
