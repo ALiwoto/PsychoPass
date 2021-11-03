@@ -340,9 +340,10 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		if targetUser == nil {
 			targetUser, err = database.GetUserFromId(targetId)
 			if err != nil || targetUser == nil {
-				sendShouldStart()
+				// means user is not found in the database;
+				// so insert it by force.
+				targetUser = database.ForceInsert(targetId, perm)
 			}
-			return ext.EndGroups
 		}
 
 		go showUserAssigned(b, ctx, &pm.Chat, perm.GetStringPermission(), topMsg, targetUser)

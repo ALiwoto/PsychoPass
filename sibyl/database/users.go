@@ -1,6 +1,8 @@
 package database
 
 import (
+	"time"
+
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 )
 
@@ -134,4 +136,21 @@ func NewUser(u *sv.User) {
 	tx.Save(u)
 	tx.Commit()
 	unlockdb()
+	u.SetCacheDate()
+	userMapMutex.Lock()
+	userDbMap[u.UserID] = u
+	userMapMutex.Unlock()
+}
+
+// ForceInsert function acts like `AddBan`, but it doesn't ban the user.
+// it will calculate an average crime coefficient by the passed-by permission.
+func ForceInsert(userID int64, perm sv.UserPermission) *sv.User {
+	user := &sv.User{
+		UserID: userID,
+		Banned: false,
+		Date:   time.Now(),
+	}
+	user.IncreaseCrimeCoefficientByPerm(perm)
+	NewUser(user)
+	return user
 }

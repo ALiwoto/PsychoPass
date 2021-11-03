@@ -203,6 +203,16 @@ func (u *User) IncreaseCrimeCoefficientAuto() {
 	u.IncreaseCrimeCoefficient(u.Reason)
 }
 
+func (u *User) IncreaseCrimeCoefficientByPerm(p UserPermission) {
+	if p == Owner || p == Inspector || u.Banned {
+		return
+	} else if p == Enforcer {
+		u.CrimeCoefficient = rand.Intn(10)
+	} else if p == NormalUser {
+		u.CrimeCoefficient = RangeCivilian.GetRandom() / 4
+	}
+}
+
 func (u *User) SetAsBanReason(reason string) {
 	u.Reason = reason
 }

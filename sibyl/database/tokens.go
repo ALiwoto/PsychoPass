@@ -20,9 +20,9 @@ func GetTokenFromId(id int64) (*sv.Token, error) {
 		return t, nil
 	}
 
-	p := sv.Token{}
+	p := &sv.Token{}
 	lockdb()
-	SESSION.Where("user_id = ?", id).Take(&p)
+	SESSION.Where("user_id = ?", id).Take(p)
 	unlockdb()
 	if len(p.Hash) == 0 || p.UserId == 0 || p.UserId != id {
 		// not found
@@ -30,10 +30,10 @@ func GetTokenFromId(id int64) (*sv.Token, error) {
 	}
 	p.SetCacheDate()
 	tokenMapMutex.Lock()
-	tokenDbMap[p.UserId] = &p
+	tokenDbMap[p.UserId] = p
 	tokenMapMutex.Unlock()
 
-	return &p, nil
+	return p, nil
 }
 
 func GetTokenFromString(token string) (*sv.Token, error) {
