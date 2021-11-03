@@ -66,15 +66,17 @@ func GetPrettyTimeDuration(d time.Duration, shorten bool) string {
 		if year > 1 {
 			result += "s"
 		}
+		result += " "
 	}
 	if mBool {
-		result += ", " + strconv.Itoa(month) + " month"
+		result += " " + strconv.Itoa(month) + " month"
 		if month > 1 {
 			result += "s"
 		}
+		result += " "
 	}
 	if dBool {
-		result += ", " + strconv.Itoa(day)
+		result += strconv.Itoa(day)
 		if shorten {
 			result += "d"
 		} else {
@@ -83,9 +85,10 @@ func GetPrettyTimeDuration(d time.Duration, shorten bool) string {
 				result += "s"
 			}
 		}
+		result += " "
 	}
 	if hBool {
-		result += ", " + strconv.Itoa(hour)
+		result += strconv.Itoa(hour)
 		if shorten {
 			result += "h"
 		} else {
@@ -94,8 +97,7 @@ func GetPrettyTimeDuration(d time.Duration, shorten bool) string {
 				result += "s"
 			}
 		}
-
-		result += ", "
+		result += " "
 	}
 	result += strconv.Itoa(minute)
 	if shorten {
@@ -107,7 +109,7 @@ func GetPrettyTimeDuration(d time.Duration, shorten bool) string {
 		}
 	}
 
-	result += ", " + strconv.Itoa(seconds)
+	result += " " + strconv.Itoa(seconds)
 	if shorten {
 		result += "s"
 	} else {

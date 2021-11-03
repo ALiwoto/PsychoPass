@@ -4,6 +4,8 @@ github.com/ALiwoto/StrongStringGo v1.0.5 h1:MIm+NIqPnZQPBlvZElcmjbdU1C4BY4wXraND
 github.com/ALiwoto/StrongStringGo v1.0.5/go.mod h1:t7WxtiphnwdgJaq443DSCAw7q+Ut3V8Pg1kT6IcdKmE=
 github.com/ALiwoto/mdparser v1.0.6 h1:KqS6LnBmzKlT0Jw2nIvcmV4hpzEIYj5KqYJ197vUANQ=
 github.com/ALiwoto/mdparser v1.0.6/go.mod h1:gZEKnGa5cr03YsbL64CTmBNZS9v4CZz31yOzuXISdfc=
+github.com/ALiwoto/mdparser v1.0.7 h1:tIorE6pZfLTLlmyaHEWa2bG9UpZzGYgTPcSxDshcO8w=
+github.com/ALiwoto/mdparser v1.0.7/go.mod h1:93EnoGxVukI17RVlKi/yW0UX7mtMaDTHbheZsishw7c=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/KyleBanks/depth v1.2.1 h1:5h8fQADFrWtarTdtDudMmGsC7GPbOAu6RVB3ffsVFHc=
 github.com/KyleBanks/depth v1.2.1/go.mod h1:jzSb9d0L43HxTQfT+oSA1EEp2q+ne2uh6XgeJcm8brE=
