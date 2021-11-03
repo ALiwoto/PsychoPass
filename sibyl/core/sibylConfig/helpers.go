@@ -1,7 +1,10 @@
 package sibylConfig
 
 import (
+	"encoding/json"
 	"errors"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
@@ -15,6 +18,48 @@ import (
 
 func LoadConfig() error {
 	return LoadConfigFromFile("config.ini")
+}
+
+func LoadTriggers() error {
+	var t *sibylValues.Triggers
+	logging.Info("Loading triggers from triggers.json")
+	f, err := ioutil.ReadFile("triggers.json")
+	if err == nil {
+		err = json.Unmarshal(f, &t)
+		if err != nil {
+			return err
+		}
+		sibylValues.ReasonEvade = t.Evade
+		sibylValues.ReasonMalImp = t.MalImpersonation
+		sibylValues.ReasonNSFW = t.Nsfw
+		sibylValues.ReasonTrolling = t.Trolling
+		sibylValues.ReasonMassAdd = t.MassAdd
+		sibylValues.ReasonSpam = t.Spam
+		sibylValues.ReasonPsychoHazard = t.PsychoHazard
+		sibylValues.ReasonSpamBot = t.SpamBot
+		sibylValues.ReasonRaid = t.Raid
+	} else {
+		logging.Info("Failed to load from triggers.json")
+		logging.Info("Loading triggers from sample_triggers.json")
+		f, err := ioutil.ReadFile("sample_triggers.json")
+		if err != nil {
+			return err
+		}
+		err = json.Unmarshal(f, &t)
+		if err != nil {
+			return err
+		}
+		sibylValues.ReasonEvade = t.Evade
+		sibylValues.ReasonMalImp = t.MalImpersonation
+		sibylValues.ReasonNSFW = t.Nsfw
+		sibylValues.ReasonTrolling = t.Trolling
+		sibylValues.ReasonMassAdd = t.MassAdd
+		sibylValues.ReasonSpam = t.Spam
+		sibylValues.ReasonPsychoHazard = t.PsychoHazard
+		sibylValues.ReasonSpamBot = t.SpamBot
+		sibylValues.ReasonRaid = t.Raid
+	}
+	return nil
 }
 
 func LoadConfigFromFile(fileName string) error {

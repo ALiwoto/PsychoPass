@@ -111,3 +111,15 @@ type CrimeCoefficientRange struct {
 	start int
 	end   int
 }
+
+type Triggers struct {
+	Spam             []string `json:"spam"`
+	Trolling         []string `json:"trolling"`
+	Evade            []string `json:"evade"`
+	MalImpersonation []string `json:"mal_impersonation"`
+	PsychoHazard     []string `json:"psycho_hazard"`
+	Nsfw             []string `json:"nsfw"`
+	Raid             []string `json:"raid"`
+	SpamBot          []string `json:"spam_bot"`
+	MassAdd          []string `json:"mass_add"`
+}

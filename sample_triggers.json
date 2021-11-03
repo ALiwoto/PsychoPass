@@ -1,0 +1,55 @@
+{
+  "spam": [
+    "spam",
+    "refer",
+    "promo"
+  ],
+  "trolling": [
+    "troll"
+  ],
+  "evade": [
+    "evade",
+    "banevade"
+  ],
+  "mal_impersonation": [
+    "malimp",
+    "impersonation",
+    "impersonating",
+    "impersonate"
+  ],
+  "psycho_hazard": [
+    "psychohazard",
+    "team",
+    "cult",
+    "gang",
+    "association",
+    "network"
+  ],
+  "nsfw": [
+    "nsfw",
+    "cp",
+    "pornography",
+    "porn"
+  ],
+  "raid": [
+    "raid",
+    "joinraid"
+  ],
+  "spam_bot": [
+    "crypto",
+    "btc",
+    "bitcoin",
+    "forex",
+    "trading",
+    "binary",
+    "thotbot",
+    "joinspam",
+    "binance",
+    "advertis"
+  ],
+  "mass_add": [
+    "massadd",
+    "kidnap",
+    "memberscraping"
+  ]
+}

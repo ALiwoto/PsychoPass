@@ -76,60 +76,17 @@ var (
 	// Civilian     - 0-80
 	// Past Banned  - 81-100
 	// Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
-	ReasonTrolling = []string{
-		"troll",
-	} // - 101-125 - Trolling
-	ReasonSpam = []string{
-		"spam",
-		"refer",
-		"promo",
-	} // - 126-200 - Spam/Unwanted Promotion
-	ReasonEvade = []string{
-		"evade",
-		"banevade",
-	} // - 201-250 - Ban Evade using alts
+	ReasonTrolling []string
+	ReasonSpam     []string // - 126-200 - Spam/Unwanted Promotion
+	ReasonEvade    []string // - 201-250 - Ban Evade using alts
 	//ReasonCustom   = "custom" - 251-300 - Any Custom reason
 
 	// Range 300+ (Ban on Sight) (Lethal Eliminator)
-	ReasonMalImp = []string{
-		"malimp",
-		"impersonation",
-		"impersonating",
-		"impersonate",
-	} // - 351-400 - Malicious Impersonation
-	ReasonPsychoHazard = []string{
-		"psychohazard",
-		"team",
-		"cult",
-		"gang",
-		"association",
-		"network", // https://t.me/SibylSystem/976
-	} // - 301-350 - Bulk banned due to some bad users
-	ReasonNSFW = []string{
-		"nsfw",
-		"cp",
-		"pornography",
-		"porn",
-	} // - 401-450 - Sending NSFW Content in SFW
-	ReasonRaid = []string{
-		"raid",
-		"joinraid",
-	} // - 451-500 - Bulk join raid to vandalize
-	ReasonSpamBot = []string{
-		"crypto",
-		"btc",
-		"bitcoin",
-		"forex",
-		"trading",
-		"binary",
-		"thotbot",
-		"joinspam",
-		"binance",
-		"advertis",
-	} // - 501-550 -  Spambot, crypto, btc, forex trading scams
-	ReasonMassAdd = []string{
-		"massadd",
-		"kidnap",
-		"memberscraping",
-	} // - 551-600 - Mass adding to group/channel
+
+	ReasonMalImp       []string // - 351-400 - Malicious Impersonation
+	ReasonPsychoHazard []string // - 301-350 - Bulk banned due to some bad users
+	ReasonNSFW         []string // - 401-450 - Sending NSFW Content in SFW
+	ReasonRaid         []string // - 451-500 - Bulk join raid to vandalize
+	ReasonSpamBot      []string // - 501-550 -  Spambot, crypto, btc, forex trading scams
+	ReasonMassAdd      []string // - 551-600 - Mass adding to group/channel
 )
