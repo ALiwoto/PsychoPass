@@ -3,12 +3,13 @@ package sibylConfig
 import (
 	"encoding/json"
 	"errors"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
@@ -275,8 +276,13 @@ func parseBaseStr(value string) []int64 {
 }
 
 func GetMaxCacheTime() time.Duration {
+
 	if SibylConfig != nil {
-		return time.Duration(SibylConfig.MaxCacheTime) * time.Minute
+		d := time.Duration(SibylConfig.MaxCacheTime)
+		if d < 40 {
+			return 40 * time.Minute
+		}
+		return d * time.Minute
 	}
 	return 40 * time.Minute
 }

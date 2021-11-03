@@ -92,7 +92,7 @@ func cleanMaps() {
 		userMapMutex.Lock()
 		for key, value := range userDbMap {
 			if value == nil || time.Since(value.GetCacheDate()) > mtime {
-				delete(tokenDbMap, key)
+				delete(userDbMap, key)
 			}
 		}
 		userMapMutex.Unlock()
