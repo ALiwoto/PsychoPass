@@ -226,6 +226,8 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		}
 	}
 
+	// WARNING: this value may be nil; always check before using it.
+	var targetUser *sv.User
 	// target id validation section
 	if targetId == user.Id {
 		md := mdparser.GetNormal("You can't change your own permissions.")
@@ -252,15 +254,16 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		})
 		return ext.EndGroups
 	} else {
-		targetUser, err := database.GetUserFromId(targetId)
+		targetUser, err = database.GetUserFromId(targetId)
 		if err == nil && targetUser != nil && targetUser.Banned {
-			go showUserBanned(b, ctx, targetUser, perm.GetStringPermission())
+			go showUserIsBanned(b, ctx, targetUser, perm.GetStringPermission(), replied)
 			return ext.EndGroups
 		}
 	}
 
 	invalid := true
 	var md mdparser.WMarkDown
+	var topMsg *gotgbot.Message
 	u, _ := database.GetTokenFromId(targetId)
 	if u != nil {
 		if u.IsOwner() {
@@ -275,14 +278,23 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			md = mdparser.GetNormal("Seems like you don't have enough privileges to ")
 			md.AppendNormalThis("do this action.\nPlease try another user ID.")
 		} else {
-			pre := u.Permission
+			//pre := u.Permission
 			database.UpdateTokenPermission(u, perm)
-			md = mdparser.GetNormal("The user ")
-			md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
-			md.AppendNormalThis(" has been assigned the permission ")
-			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
-			md.AppendItalicThis("\n\nThe previous permission was ")
-			md.AppendMonoThis(pre.GetStringPermission()).AppendNormal(".")
+			mmd := mdparser.GetNormal("Running a cymatic scan....")
+			topMsg, _ = msg.Reply(b, mmd.ToString(), &gotgbot.SendMessageOpts{
+				ParseMode: sv.MarkDownV2,
+			})
+			if topMsg == nil {
+				return ext.EndGroups
+			}
+			/*
+				md = mdparser.GetNormal("The user ")
+				md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
+				md.AppendNormalThis(" has been assigned the permission ")
+				md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
+				md.AppendItalicThis("\n\nThe previous permission was ")
+				md.AppendMonoThis(pre.GetStringPermission()).AppendNormal(".")
+			*/
 			invalid = false
 		}
 	} else {
@@ -301,25 +313,48 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	if !invalid {
+		var pm *gotgbot.Message
 		mdback := mdparser.GetNormal("Your permission has been changed to ")
 		mdback.AppendMonoThis(u.GetStringPermission())
 		mdback.AppendNormalThis("!\n\nHere is your token:\n")
 		mdback.AppendMonoThis(u.Hash).AppendNormalThis("\n\n")
 		mdback.AppendBoldThis("Please don't share this token with anyone!")
-		_, err = b.SendMessage(targetId, mdback.ToString(), &gotgbot.SendMessageOpts{
-			ParseMode: sv.MarkDownV2,
+		pm, err = b.SendMessage(targetId, mdback.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:             sv.MarkDownV2,
+			DisableWebPagePreview: true,
 		})
-		if err != nil {
+		sendShouldStart := func() {
 			md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
 			md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
+			_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+				ParseMode:                sv.MarkDownV2,
+				AllowSendingWithoutReply: false,
+				DisableWebPagePreview:    true,
+			})
 		}
+		if err != nil || pm == nil {
+			sendShouldStart()
+			return ext.EndGroups
+		}
+		if targetUser == nil {
+			targetUser, err = database.GetUserFromId(targetId)
+			if err != nil || targetUser == nil {
+				sendShouldStart()
+			}
+			return ext.EndGroups
+		}
+
+		go showUserAssigned(b, ctx, &pm.Chat, perm.GetStringPermission(), topMsg, targetUser)
+		return ext.EndGroups
 	}
 
-	_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
-		ParseMode:                sv.MarkDownV2,
-		AllowSendingWithoutReply: true,
-		DisableWebPagePreview:    true,
-	})
+	if md != nil {
+		_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:                sv.MarkDownV2,
+			AllowSendingWithoutReply: true,
+			DisableWebPagePreview:    true,
+		})
+	}
 
 	return ext.EndGroups
 }

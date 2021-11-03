@@ -215,9 +215,12 @@ func (u *User) EstimateCrimeCoefficient() string {
 	c := u.CrimeCoefficient
 	if c > 100 {
 		str := strconv.Itoa(c)
-		return str[:len(str)-1] + "0"
+		return "over " + str[:len(str)-2] + "00"
 	}
-	return strconv.Itoa(c)
+	if c < 10 {
+		return "under 10"
+	}
+	return "under 100"
 }
 
 func (u *User) SetBanFlags() {

@@ -184,10 +184,10 @@ func fixReasonString(value string) string {
 	*/
 	value = strings.ReplaceAll(value, "mass add", ReasonMassAdd[0])
 	value = strings.ReplaceAll(value, "mass-add", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "member scraping", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "member adding", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "spam adding", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "bulk adding", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "member scrap", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "member add", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "spam add", ReasonMassAdd[0])
+	value = strings.ReplaceAll(value, "bulk add", ReasonMassAdd[0])
 	value = strings.ReplaceAll(value, "n.s.f.w", ReasonNSFW[0])
 	value = strings.ReplaceAll(value, "psycho hazard", ReasonPsychoHazard[0])
 	value = strings.ReplaceAll(value, "psycho-hazard", ReasonPsychoHazard[0])
@@ -195,7 +195,7 @@ func fixReasonString(value string) string {
 	value = strings.ReplaceAll(value, "fake name", ReasonMalImp[0])
 	value = strings.ReplaceAll(value, "fake username", ReasonMalImp[0])
 	value = strings.ReplaceAll(value, "fake alt", ReasonMalImp[0])
-	value = strings.ReplaceAll(value, "fake ID", ReasonMalImp[0])
+	value = strings.ReplaceAll(value, "fake id", ReasonMalImp[0])
 	return value
 }
 
