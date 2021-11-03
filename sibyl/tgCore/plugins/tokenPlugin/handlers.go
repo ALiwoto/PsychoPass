@@ -324,7 +324,8 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			DisableWebPagePreview: true,
 		})
 		sendShouldStart := func() {
-			md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
+			md = mdparser.GetUserMention("\u200D", targetId)
+			md.AppendMonoThis(strconv.FormatInt(targetId, 10))
 			md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
 			_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 				ParseMode:                sv.MarkDownV2,
