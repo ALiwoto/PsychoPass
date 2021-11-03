@@ -67,8 +67,8 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 
 	time.Sleep(2 * time.Second)
 
-	md.ElThis().AppendBoldThis("Verdict: ").AppendThis(uMd).ElThis()
-	md.AppendNormalThis("cannot be assigned as " + p + " because their crime coefficient is ")
+	md.ElThis().AppendBoldThis("Verdict: ").AppendThis(uMd)
+	md.AppendNormalThis(" cannot be assigned as " + p + " because their crime coefficient is ")
 	md.AppendMonoThis(targetUser.EstimateCrimeCoefficient()).ElThis()
 	md.AppendBoldThis("Attached reason: ").AppendMonoThis(targetUser.Reason)
 	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
