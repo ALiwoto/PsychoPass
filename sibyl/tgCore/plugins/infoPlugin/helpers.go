@@ -19,7 +19,7 @@ func fetchGitStats(md mdparser.WMarkDown) {
 	}
 	shortGit := allRaws[0]
 	longGit := allRaws[1]
-	gitVs := strongStringGo.Split(allRaws[2], " ")
+	gitVs := strongStringGo.Split(allRaws[2], " ", "\t")
 	if len(gitVs) != 2 {
 		return
 	}
@@ -32,9 +32,11 @@ func fetchGitStats(md mdparser.WMarkDown) {
 		return
 	}
 	vsInt := upstream - local
+	commitUrl := gitBaseUrl + "/commit/" + longGit
 
-	md.AppendNormalThis("ℹ️ ").AppendHyperLinkThis("Git", gitBaseUrl).AppendBoldThis("Status:\n")
-	md.AppendNormalThis("• Currently on: ").AppendHyperLinkThis(shortGit, gitBaseUrl+"/commit/"+longGit)
-	md.AppendNormalThis("• Running behind by: ").AppendMonoThis(strconv.Itoa(vsInt))
-	md.AppendNormalThis(" commits\n")
+	md.AppendNormalThis("ℹ️ ").AppendHyperLinkThis("Git ", gitBaseUrl)
+	md.AppendBoldThis("Status:")
+	md.AppendNormalThis("\n• Currently on: ").AppendHyperLinkThis(shortGit, commitUrl)
+	md.AppendNormalThis("\n• Running behind by: ").AppendMonoThis(strconv.Itoa(vsInt))
+	md.AppendNormalThis(" commits\n\n")
 }
