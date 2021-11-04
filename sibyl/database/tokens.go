@@ -64,7 +64,7 @@ func GetAllRegistered(includeOwners bool) ([]int64, error) {
 	if includeOwners {
 		SESSION.Where("permission > ?", sv.NormalUser).Find(&tokens)
 	} else {
-		SESSION.Where("permission > ? AND NOT permission = ",
+		SESSION.Where("permission > ? AND NOT permission = ?",
 			sv.NormalUser, sv.Owner).Find(&tokens)
 	}
 	unlockdb()
