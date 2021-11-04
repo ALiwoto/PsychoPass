@@ -11,7 +11,14 @@ import (
 func fetchGitStats(md mdparser.WMarkDown) {
 	rawGit := shellUtils.GetGitStats()
 	if len(rawGit) == 0 {
-		return
+		// try again; in some situations, when we recently have
+		// pushed to HEAD, the git command may not be able to
+		// find the HEAD commit.
+		rawGit = shellUtils.GetGitStats()
+		if len(rawGit) == 0 {
+			// give up and return :(
+			return
+		}
 	}
 	allRaws := strongStringGo.Split(rawGit, "\n")
 	if len(allRaws) < 3 {
