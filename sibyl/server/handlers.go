@@ -80,7 +80,7 @@ func noRootHandler(c *gin.Context) {
 		tokenHandlers.ChangeTokenPermHandler(c)
 	case "gettoken":
 		banHandlers.AddBanHandler(c)
-	case "getRegistered", "registeredUsers", "getAllregistered":
+	case "getregistered", "registeredusers", "getallregistered":
 		tokenHandlers.GetAllRegisteredUsersHandler(c)
 	case "addban", "ban", "banuser":
 		banHandlers.AddBanHandler(c)
