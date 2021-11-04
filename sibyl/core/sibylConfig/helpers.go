@@ -276,7 +276,6 @@ func parseBaseStr(value string) []int64 {
 }
 
 func GetMaxCacheTime() time.Duration {
-
 	if SibylConfig != nil {
 		d := time.Duration(SibylConfig.MaxCacheTime)
 		if d < 40 {

@@ -363,6 +363,9 @@ func (u *User) validateFlags(r *CrimeCoefficientRange) {
 }
 
 func (u *User) invalidateFlags() {
+	if len(u.BanFlags) > 0 {
+		u.BanFlags = nil
+	}
 	u.FlagTrolling = false
 	u.FlagSpam = false
 	u.FlagEvade = false

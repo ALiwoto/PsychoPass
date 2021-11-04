@@ -31,66 +31,68 @@ func AddBanHandler(c *gin.Context) {
 		return
 	}
 
-	if d.CanBan() {
-		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil || sv.IsInvalidID(id) {
-			entry.SendInvalidUserIdError(c, OriginAddBan)
-			return
-		}
-
-		by := hashing.GetIdFromToken(token)
-		if by == id {
-			entry.SendCannotBanYourselfError(c, OriginAddBan)
-			return
-		}
-
-		tu, err := database.GetTokenFromId(id)
-		if err == nil && tu != nil {
-			if !tu.CanBeBanned() {
-				entry.SendCannotBeBannedError(c, OriginAddBan)
-				return
-			}
-		}
-
-		if len(banReason) == 0 {
-			entry.SendNoReasonError(c, OriginAddBan)
-			return
-		}
-
-		u, err := database.GetUserFromId(id)
-		if u != nil && err == nil && u.Banned {
-			if u.Reason == banReason && u.Message == banMsg &&
-				u.BanSourceUrl == srcUrl {
-				entry.SendUserAlreadyBannedError(c, OriginAddBan)
-				return
-			}
-
-			// make a copy of the current struct value.
-			pre := *u
-			by := hashing.GetIdFromToken(token)
-			u.BannedBy = by
-			u.Message = banMsg
-			u.Date = time.Now()
-			u.BanSourceUrl = srcUrl
-			u.SetAsBanReason(banReason)
-			u.IncreaseCrimeCoefficientAuto()
-			database.UpdateBanparameter(u)
-			entry.SendResult(c, &BanResult{
-				PreviousBan: &pre,
-				CurrentBan:  u,
-			})
-			return
-		}
-
-		u = database.AddBan(id, by, banReason, banMsg, srcUrl)
-		entry.SendResult(c, &BanResult{
-			CurrentBan: u,
-		})
-		return
-	} else {
+	if !d.CanBan() {
 		entry.SendPermissionDenied(c, OriginAddBan)
 		return
 	}
+
+	id, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil || sv.IsInvalidID(id) {
+		entry.SendInvalidUserIdError(c, OriginAddBan)
+		return
+	}
+
+	by := hashing.GetIdFromToken(token)
+	if by == id {
+		entry.SendCannotBanYourselfError(c, OriginAddBan)
+		return
+	}
+
+	tu, err := database.GetTokenFromId(id)
+	if err == nil && tu != nil {
+		if !tu.CanBeBanned() {
+			entry.SendCannotBeBannedError(c, OriginAddBan)
+			return
+		}
+	}
+
+	if len(banReason) == 0 {
+		entry.SendNoReasonError(c, OriginAddBan)
+		return
+	}
+
+	u, err := database.GetUserFromId(id)
+	if u != nil && err == nil && u.Banned {
+		// in case user already exists in the database,
+		// we should check the parameters; if they are completely
+		// the same, we should send an error.
+		if u.Reason == banReason && u.Message == banMsg &&
+			u.BanSourceUrl == srcUrl {
+			entry.SendUserAlreadyBannedError(c, OriginAddBan)
+			return
+		}
+
+		// make a copy of the current struct value.
+		pre := *u
+		by := hashing.GetIdFromToken(token)
+		u.BannedBy = by
+		u.Message = banMsg
+		u.Date = time.Now()
+		u.BanSourceUrl = srcUrl
+		u.SetAsBanReason(banReason)
+		u.IncreaseCrimeCoefficientAuto()
+		database.UpdateBanparameter(u)
+		entry.SendResult(c, &BanResult{
+			PreviousBan: &pre,
+			CurrentBan:  u,
+		})
+		return
+	}
+
+	u = database.AddBan(id, by, banReason, banMsg, srcUrl)
+	entry.SendResult(c, &BanResult{
+		CurrentBan: u,
+	})
 }
 
 func RemoveBanHandler(c *gin.Context) {
@@ -107,29 +109,28 @@ func RemoveBanHandler(c *gin.Context) {
 		return
 	}
 
-	if d.CanBan() {
-		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil || sv.IsInvalidID(id) {
-			entry.SendInvalidUserIdError(c, OriginRemoveBan)
-			return
-		}
-
-		u, _ := database.GetUserFromId(id)
-		if u == nil {
-			entry.SendUserNotFoundError(c, OriginRemoveBan)
-			return
-		}
-
-		if !u.Banned {
-			entry.SendUserNotBannedError(c, OriginRemoveBan)
-			return
-		}
-
-		database.RemoveUserBan(u)
-		entry.SendResult(c, MessageUnbanned)
-		return
-	} else {
+	if !d.CanBan() {
 		entry.SendPermissionDenied(c, OriginRemoveBan)
 		return
 	}
+
+	id, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil || sv.IsInvalidID(id) {
+		entry.SendInvalidUserIdError(c, OriginRemoveBan)
+		return
+	}
+
+	u, _ := database.GetUserFromId(id)
+	if u == nil {
+		entry.SendUserNotFoundError(c, OriginRemoveBan)
+		return
+	}
+
+	if !u.Banned {
+		entry.SendUserNotBannedError(c, OriginRemoveBan)
+		return
+	}
+
+	database.RemoveUserBan(u)
+	entry.SendResult(c, MessageUnbanned)
 }
