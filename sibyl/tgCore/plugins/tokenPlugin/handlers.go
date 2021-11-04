@@ -281,7 +281,6 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			}
 
 			//pre := u.Permission
-			database.UpdateTokenPermission(u, perm)
 			mmd := mdparser.GetNormal("Running a cymatic scan....")
 			topMsg, _ = msg.Reply(b, mmd.ToString(), &gotgbot.SendMessageOpts{
 				ParseMode: sv.MarkDownV2,
@@ -368,7 +367,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 				targetUser = database.ForceInsert(targetId, perm)
 			}
 		}
-
+		database.UpdateTokenPermission(u, perm)
 		go showUserAssigned(b, ctx, &pm.Chat, perm.GetStringPermission(), topMsg, targetUser)
 		return ext.EndGroups
 	}
