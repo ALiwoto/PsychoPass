@@ -168,7 +168,8 @@ func RevokeTokenHandler(c *gin.Context) {
 	}
 }
 
-// GetTokenHandler function will revoke the specified token.
+// GetTokenHandler function will return the token information of the specified
+// user id.
 func GetTokenHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "userId", "id")
@@ -183,22 +184,53 @@ func GetTokenHandler(c *gin.Context) {
 		return
 	}
 
-	if d.CanGetToken() {
-		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil || sv.IsInvalidID(id) {
-			entry.SendInvalidUserIdError(c, OriginGetToken)
-			return
-		}
-
-		u, _ := database.GetTokenFromId(id)
-		if u == nil {
-			entry.SendUserNotFoundError(c, OriginGetToken)
-			return
-		}
-
-		entry.SendResult(c, u)
-		return
-	} else {
+	if !d.CanGetToken() {
 		entry.SendPermissionDenied(c, OriginGetToken)
+		return
 	}
+
+	id, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil || sv.IsInvalidID(id) {
+		entry.SendInvalidUserIdError(c, OriginGetToken)
+		return
+	}
+
+	u, _ := database.GetTokenFromId(id)
+	if u == nil {
+		entry.SendUserNotFoundError(c, OriginGetToken)
+		return
+	}
+
+	entry.SendResult(c, u)
+}
+
+func GetAllRegisteredUsersHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginGetRegisteredUsers)
+		return
+	}
+
+	d, err := database.GetTokenFromString(token)
+	if err != nil || d == nil {
+		entry.SendInvalidTokenError(c, OriginGetRegisteredUsers)
+		return
+	}
+
+	if !d.CanGetRegisteredList() {
+		entry.SendPermissionDenied(c, OriginGetRegisteredUsers)
+		return
+	}
+
+	registeredUsers, err := database.GetAllRegistered(d.IsOwner())
+	if err != nil {
+		// please don't check the length of `registeredUsers` variable
+		// here; because it may be actually empty.
+		entry.SendInternalServerError(c, OriginGetRegisteredUsers)
+		return
+	}
+
+	entry.SendResult(c, &GetRegisteredResult{
+		RegisteredUsers: registeredUsers,
+	})
 }

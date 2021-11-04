@@ -26,6 +26,10 @@ func LoadHandlers() {
 	// get token handlers
 	bindHandler(tokenHandlers.GetTokenHandler, "getToken")
 
+	// get all register handlers
+	bindHandler(tokenHandlers.GetAllRegisteredUsersHandler, "getRegistered",
+		"registeredUsers", "getAllregistered")
+
 	// addBan handlers
 	bindHandler(banHandlers.AddBanHandler, "addBan", "ban", "banUser")
 
@@ -76,6 +80,8 @@ func noRootHandler(c *gin.Context) {
 		tokenHandlers.ChangeTokenPermHandler(c)
 	case "gettoken":
 		banHandlers.AddBanHandler(c)
+	case "getRegistered", "registeredUsers", "getAllregistered":
+		tokenHandlers.GetAllRegisteredUsersHandler(c)
 	case "addban", "ban", "banuser":
 		banHandlers.AddBanHandler(c)
 	case "deleteban", "removeban", "revertban", "remban":

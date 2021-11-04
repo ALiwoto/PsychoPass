@@ -1,8 +1,9 @@
 package tokenHandlers
 
 const (
-	OriginCreateToken     = "CreateToken"
-	OriginChangeTokenPerm = "ChangeTokenPerm"
-	OriginRevokeToken     = "RevokeToken"
-	OriginGetToken        = "GetToken"
+	OriginCreateToken        = "CreateToken"
+	OriginChangeTokenPerm    = "ChangeTokenPerm"
+	OriginRevokeToken        = "RevokeToken"
+	OriginGetToken           = "GetToken"
+	OriginGetRegisteredUsers = "GetRegisteredUsers"
 )

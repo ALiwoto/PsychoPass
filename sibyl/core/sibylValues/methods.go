@@ -90,6 +90,12 @@ func (t *Token) CanGetAllBans() bool {
 	return t.Permission > NormalUser
 }
 
+// CanGetRegisteredList returns true if the token with its current
+// permission can get all the registered users.
+func (t *Token) CanGetRegisteredList() bool {
+	return t.Permission > NormalUser
+}
+
 // CanChangePermission returns true if the token with its current
 // permission can change permission of another tokens or not.
 func (t *Token) CanChangePermission(pre, target UserPermission) bool {

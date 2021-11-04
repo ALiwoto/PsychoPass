@@ -54,6 +54,24 @@ func GetTokenFromString(token string) (*sv.Token, error) {
 	return u, nil
 }
 
+func GetAllRegistered(includeOwners bool) ([]int64, error) {
+	if SESSION == nil {
+		return nil, ErrNoSession
+	}
+
+	var tokens []sv.Token
+	lockdb()
+	if includeOwners {
+		SESSION.Where("permission > ?", sv.NormalUser).Find(&tokens)
+	} else {
+		SESSION.Where("permission > ? AND permission != ",
+			sv.NormalUser, sv.Owner).Find(&tokens)
+	}
+	unlockdb()
+
+	return convertToIntArray(tokens), nil
+}
+
 func UpdateTokenLastUsageById(id int64) {
 	u, err := GetTokenFromId(id)
 	if err != nil || u == nil {
@@ -101,4 +119,15 @@ func NewToken(t *sv.Token) {
 	tx.Save(t)
 	tx.Commit()
 	unlockdb()
+}
+
+func convertToIntArray(tokens []sv.Token) []int64 {
+	if len(tokens) == 0 {
+		return nil
+	}
+	var ids []int64
+	for _, t := range tokens {
+		ids = append(ids, t.UserId)
+	}
+	return ids
 }
