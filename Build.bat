@@ -1,19 +1,7 @@
 @echo off
 TITLE Build latest version
 echo.
-echo Building from branch:
-git branch
-echo.
-echo Pulling latest version....
-git pull
-echo.
-echo Updating vendors ....
-go mod vendor
-echo.
-echo Building latest binary....
-go build
-echo.
-echo.
+cd.. && cd psychopass && git pull && powershell -command "Stop-service -Force -name "Psychopass" -ErrorAction SilentlyContinue; go build; Start-service -name "Psychopass""
 timeout 4
 exit
 :: Hail Hydra
