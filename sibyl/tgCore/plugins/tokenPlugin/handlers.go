@@ -259,7 +259,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	var md mdparser.WMarkDown
 	var topMsg *gotgbot.Message
 	u, _ := database.GetTokenFromId(targetId)
-	//isDemote := u.Permission > perm
+	isDemote := u.Permission > perm
 	if u != nil {
 		if u.IsOwner() {
 			md = mdparser.GetNormal("This decision is of Sibyl to make.\n")
@@ -335,8 +335,22 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			})
 		}
 		if err != nil || pm == nil {
-			sendShouldStart()
-			return ext.EndGroups
+			if !isDemote {
+				sendShouldStart()
+				return ext.EndGroups
+			}
+			// if we are going to demote the user, simply ignore the pm
+			// part and do your own thing.
+			chat, err := b.GetChat(targetId)
+			if err != nil || chat == nil {
+				chat = &gotgbot.Chat{
+					Id:        targetId,
+					FirstName: strconv.FormatInt(targetId, 10),
+				}
+			}
+			pm = &gotgbot.Message{
+				Chat: *chat,
+			}
 		}
 		if targetUser == nil {
 			targetUser, err = database.GetUserFromId(targetId)
