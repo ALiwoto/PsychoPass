@@ -129,7 +129,7 @@ func (t *Token) SetCacheDate() {
 func (p UserPermission) GetStringPermission() string {
 	switch p {
 	case NormalUser:
-		return "user"
+		return "civilian"
 	case Enforcer:
 		return "enforcer"
 	case Inspector:

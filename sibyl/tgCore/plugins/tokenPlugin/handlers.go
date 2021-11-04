@@ -329,11 +329,18 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			md = mdparser.GetUserMention("\u200D", targetId)
 			md.AppendMonoThis(strconv.FormatInt(targetId, 10))
 			md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
-			_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
-				ParseMode:                sv.MarkDownV2,
-				AllowSendingWithoutReply: false,
-				DisableWebPagePreview:    true,
-			})
+			if topMsg != nil {
+				_, _ = topMsg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+					ParseMode:             sv.MarkDownV2,
+					DisableWebPagePreview: true,
+				})
+			} else {
+				_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+					ParseMode:                sv.MarkDownV2,
+					AllowSendingWithoutReply: false,
+					DisableWebPagePreview:    true,
+				})
+			}
 		}
 		if err != nil || pm == nil {
 			if !isDemote {
