@@ -291,9 +291,6 @@ func (u *User) EstimateCrimeCoefficientSep() (string, string) {
 		str := strconv.Itoa(c)
 		return "over ", str[:len(str)-2] + "00"
 	}
-	if c < 10 {
-		return "under ", "10"
-	}
 	return "under ", "100"
 }
 
