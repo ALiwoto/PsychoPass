@@ -162,11 +162,25 @@ func (p UserPermission) IsOwner() bool {
 
 //---------------------------------------------------------
 
+func (r *Report) getNameById(id int64) string {
+	chat, err := HelperBot.GetChat(r.ReporterId)
+	if err != nil || chat == nil {
+		return ""
+	}
+	if len(chat.FirstName) > 0 {
+		return chat.FirstName
+	}
+	if len(chat.LastName) > 0 {
+		return chat.LastName
+	}
+	return chat.Title
+}
+
 func (r *Report) getReporterName() string {
-	return ""
+	return r.getNameById(r.ReporterId)
 }
 func (r *Report) getTargetName() string {
-	return ""
+	return r.getNameById(r.TargetUser)
 }
 
 func (r *Report) ParseAsMd() mdparser.WMarkDown {
@@ -197,7 +211,7 @@ func (r *Report) ParseAsMd() mdparser.WMarkDown {
 	md.AppendBoldThis("・Date: ")
 	md.AppendItalicThis(r.ReportDate)
 	md.AppendNormalThis("\n")
-	md.AppendBoldThis("Report Source: ")
+	md.AppendBoldThis("・Report Source: ")
 	md.AppendNormalThis(r.ScanSourceLink)
 	md.AppendNormalThis("\n")
 	md.AppendBoldThis("・Target Message: ")
