@@ -163,7 +163,7 @@ func (p UserPermission) IsOwner() bool {
 //---------------------------------------------------------
 
 func (r *Report) getNameById(id int64) string {
-	chat, err := HelperBot.GetChat(r.ReporterId)
+	chat, err := HelperBot.GetChat(id)
 	if err != nil || chat == nil {
 		return ""
 	}
@@ -198,7 +198,7 @@ func (r *Report) ParseAsMd() mdparser.WMarkDown {
 	md.AppendBoldThis("・By " + r.ReporterPermission + " ")
 
 	if len(agent) != 0 {
-		md.AppendMentionThis(target, r.ReporterId)
+		md.AppendMentionThis(agent, r.ReporterId)
 	} else {
 		md.AppendMentionThis("\u200D", r.ReporterId)
 		md.AppendMonoThis(strconv.FormatInt(r.ReporterId, 10))
