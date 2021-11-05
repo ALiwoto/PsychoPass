@@ -66,8 +66,7 @@ func AddBanHandler(c *gin.Context) {
 		// in case user already exists in the database,
 		// we should check the parameters; if they are completely
 		// the same, we should send an error.
-		if u.Reason == banReason && u.Message == banMsg &&
-			u.BanSourceUrl == srcUrl {
+		if areAllSame(u, banReason, banMsg, srcUrl) {
 			entry.SendUserAlreadyBannedError(c, OriginAddBan)
 			return
 		}
