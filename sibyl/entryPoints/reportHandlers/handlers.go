@@ -55,16 +55,6 @@ func ReportUserHandler(c *gin.Context) {
 		return
 	}
 
-	if len(msg) == 0 {
-		entry.SendNoMessageError(c, OriginReport)
-		return
-	}
-
-	if len(msgLink) == 0 {
-		entry.SendNoSourceError(c, OriginReport)
-		return
-	}
-
 	u, err := database.GetTokenFromId(id)
 	if err == nil && u != nil {
 		if !u.CanBeReported() {
