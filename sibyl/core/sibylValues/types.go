@@ -103,6 +103,7 @@ type Report struct {
 	ReportDate         string
 	ReportReason       string
 	ReportMessage      string
+	ScanSourceLink     string
 	ReporterPermission string
 }
 

@@ -28,7 +28,7 @@ func SendBadGateAway(c *gin.Context, message, origin string) {
 }
 
 func SendNoTokenError(c *gin.Context, origin string) {
-	c.JSON(http.StatusUnauthorized, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusUnauthorized,
@@ -52,7 +52,7 @@ func SendInvalidTokenError(c *gin.Context, origin string) {
 }
 
 func SendInternalServerError(c *gin.Context, origin string) {
-	c.JSON(http.StatusInternalServerError, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusInternalServerError,
@@ -172,7 +172,7 @@ func SendCannotBeBannedError(c *gin.Context, origin string) {
 }
 
 func SendUserNotFoundError(c *gin.Context, origin string) {
-	c.JSON(http.StatusNotFound, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusNotFound,
@@ -184,11 +184,35 @@ func SendUserNotFoundError(c *gin.Context, origin string) {
 }
 
 func SendUserNotBannedError(c *gin.Context, origin string) {
-	c.JSON(http.StatusConflict, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusConflict,
 			Message:   ErrUserNotBanned,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
+func SendNoMessageError(c *gin.Context, origin string) {
+	c.JSON(http.StatusOK, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusConflict,
+			Message:   ErrNoMessage,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
+func SendNoSourceError(c *gin.Context, origin string) {
+	c.JSON(http.StatusOK, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusConflict,
+			Message:   ErrNoSource,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
 		},
@@ -200,7 +224,7 @@ func SendUserAlreadyBannedError(c *gin.Context, origin string,
 	str := "reasons: [" + u.Reason + "-" + banReason + "] | "
 	str += "messages: [" + u.Message + "-" + banMsg + "] | "
 	str += "urls: [" + u.BanSourceUrl + "-" + srcUrl + "]"
-	c.JSON(http.StatusAccepted, &EndpointResponse{
+	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusAccepted,

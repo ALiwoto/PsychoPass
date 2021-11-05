@@ -162,21 +162,45 @@ func (p UserPermission) IsOwner() bool {
 
 //---------------------------------------------------------
 
+func (r *Report) getReporterName() string {
+	return ""
+}
+func (r *Report) getTargetName() string {
+	return ""
+}
+
 func (r *Report) ParseAsMd() mdparser.WMarkDown {
-	md := mdparser.GetNormal("\u200D#Report Event:\n")
-	md.AppendBoldThis("・User:").AppendNormalThis(" ")
-	md.AppendMentionThis(strconv.FormatInt(r.ReporterId, 10), r.ReporterId)
+	md := mdparser.GetNormal("\u200D#REPORT:\n")
+	md.AppendBoldThis("・User: ")
+	agent := r.getReporterName()
+	target := r.getTargetName()
+	if len(target) != 0 {
+		md.AppendMentionThis(target, r.TargetUser)
+	} else {
+		md.AppendMentionThis("\u200D", r.TargetUser)
+		md.AppendMonoThis(strconv.FormatInt(r.TargetUser, 10))
+	}
 	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・By " + r.ReporterPermission).AppendNormalThis(" ")
-	md.AppendMentionThis(strconv.FormatInt(r.ReporterId, 10), r.ReporterId)
+	md.AppendBoldThis("・By " + r.ReporterPermission + " ")
+
+	if len(agent) != 0 {
+		md.AppendMentionThis(target, r.ReporterId)
+	} else {
+		md.AppendMentionThis("\u200D", r.ReporterId)
+		md.AppendMonoThis(strconv.FormatInt(r.ReporterId, 10))
+	}
+
 	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・Reason:").AppendNormalThis(" ")
+	md.AppendBoldThis("・Reason: ")
 	md.AppendMonoThis(r.ReportReason)
 	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・Date:").AppendNormalThis(" ")
+	md.AppendBoldThis("・Date: ")
 	md.AppendItalicThis(r.ReportDate)
-	md.AppendNormalThis("\n\n")
-	md.AppendBoldThis("・Message:").AppendNormalThis(" ")
+	md.AppendNormalThis("\n")
+	md.AppendBoldThis("Report Source: ")
+	md.AppendNormalThis(r.ScanSourceLink)
+	md.AppendNormalThis("\n")
+	md.AppendBoldThis("・Target Message: ")
 	md.AppendNormalThis(r.ReportMessage)
 	return md
 }
