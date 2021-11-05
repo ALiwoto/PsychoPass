@@ -55,7 +55,7 @@ const (
 	// ErrUserAlreadyBanned is the error message that should be sent when
 	// the target's user id can be found in the sibyl database but
 	// it's already banned with the exact same parameters.
-	ErrUserAlreadyBanned = "User is already banned with the same parameters"
+	ErrUserAlreadyBanned = "User is already banned with the same parameters: "
 
 	// ErrInvalidToken is the error message that should be sent when the
 	// current user's token is invalid.

@@ -3,6 +3,7 @@ package entryPoints
 import (
 	"net/http"
 
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/timeUtils"
 	"github.com/gin-gonic/gin"
 )
@@ -194,12 +195,16 @@ func SendUserNotBannedError(c *gin.Context, origin string) {
 	})
 }
 
-func SendUserAlreadyBannedError(c *gin.Context, origin string) {
+func SendUserAlreadyBannedError(c *gin.Context, origin string,
+	u *sibylValues.User, banReason, banMsg, srcUrl string) {
+	str := "reasons: [" + u.Reason + "-" + banReason + "] | "
+	str += "messages: [" + u.Message + "-" + banMsg + "] | "
+	str += "urls: [" + u.BanSourceUrl + "-" + srcUrl + "]"
 	c.JSON(http.StatusAccepted, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusAccepted,
-			Message:   ErrUserAlreadyBanned,
+			Message:   ErrUserAlreadyBanned + str,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
 		},

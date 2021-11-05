@@ -67,7 +67,8 @@ func AddBanHandler(c *gin.Context) {
 		// we should check the parameters; if they are completely
 		// the same, we should send an error.
 		if areAllSame(u, banReason, banMsg, srcUrl) {
-			entry.SendUserAlreadyBannedError(c, OriginAddBan)
+			entry.SendUserAlreadyBannedError(c, OriginAddBan, u,
+				banReason, banMsg, srcUrl)
 			return
 		}
 
