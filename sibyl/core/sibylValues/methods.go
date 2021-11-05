@@ -282,9 +282,6 @@ func (u *User) EstimateCrimeCoefficient() string {
 		str := strconv.Itoa(c)
 		return "over " + str[:len(str)-2] + "00"
 	}
-	if c < 10 {
-		return "under 10"
-	}
 	return "under 100"
 }
 
@@ -366,11 +363,7 @@ func (u *User) IncreaseCrimeCoefficientByRanges(ranges ...*CrimeCoefficientRange
 		u.validateFlags(r)
 	}
 
-	if RangePastBanned.IsInRange(u.CrimeCoefficient) {
-		u.CrimeCoefficient += cc
-	} else {
-		u.CrimeCoefficient = cc
-	}
+	u.CrimeCoefficient = cc
 }
 
 func (u *User) validateFlags(r *CrimeCoefficientRange) {
