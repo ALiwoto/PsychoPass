@@ -113,7 +113,7 @@ func ChangeTokenPermHandler(c *gin.Context) {
 		return
 	}
 
-	if !u.CanChangePermission(u.Permission, perm) {
+	if !d.CanChangePermission(u.Permission, perm) {
 		entry.SendCannotChangePermError(c, OriginChangeTokenPerm)
 		return
 	}
