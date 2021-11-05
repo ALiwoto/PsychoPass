@@ -31,43 +31,50 @@ func CreateTokenHandler(c *gin.Context) {
 		return
 	}
 
-	go database.UpdateTokenLastUsage(d)
-	if d.CanCreateToken() {
-		id, err := strconv.ParseInt(userId, 10, 64)
-		if err != nil || sv.IsInvalidID(id) {
-			entry.SendInvalidUserIdError(c, OriginCreateToken)
-			return
-		}
-
-		perm := sv.UserPermission(permInt)
-		if !perm.IsValid() || perm.IsOwner() {
-			entry.SendInvalidPermError(c, OriginCreateToken)
-			return
-		}
-
-		u, _ := database.GetTokenFromId(id)
-		if u != nil {
-			if u.Permission != sv.UserPermission(perm) {
-				database.UpdateTokenPermission(u, sv.UserPermission(perm))
-			}
-			entry.SendResult(c, u)
-			return
-		}
-
-		t, err := utils.CreateToken(id, sv.UserPermission(perm))
-		if err != nil {
-			// this error is supposed to be unexpected;
-			// in our tests, I couldn't see any case where we reached here,
-			// but we should log it just in case.
-			entry.SendInternalServerError(c, OriginCreateToken)
-			logging.UnexpectedError(err)
-			return
-		}
-
-		entry.SendResult(c, t)
-	} else {
+	if !d.CanCreateToken() {
 		entry.SendPermissionDenied(c, OriginCreateToken)
+		return
 	}
+
+	database.UpdateTokenLastUsage(d)
+
+	id, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil || sv.IsInvalidID(id) {
+		entry.SendInvalidUserIdError(c, OriginCreateToken)
+		return
+	}
+
+	if sv.IsForbiddenID(id) {
+		entry.SendPermissionDenied(c, OriginCreateToken)
+		return
+	}
+
+	perm := sv.UserPermission(permInt)
+	if !perm.IsValid() || perm.IsOwner() {
+		entry.SendInvalidPermError(c, OriginCreateToken)
+		return
+	}
+
+	u, _ := database.GetTokenFromId(id)
+	if u != nil {
+		if u.Permission != sv.UserPermission(perm) {
+			database.UpdateTokenPermission(u, sv.UserPermission(perm))
+		}
+		entry.SendResult(c, u)
+		return
+	}
+
+	t, err := utils.CreateToken(id, sv.UserPermission(perm))
+	if err != nil {
+		// this error is supposed to be unexpected;
+		// in our tests, I couldn't see any case where we reached here,
+		// but we should log it just in case.
+		entry.SendInternalServerError(c, OriginCreateToken)
+		logging.UnexpectedError(err)
+		return
+	}
+
+	entry.SendResult(c, t)
 }
 
 // ChangeTokenPermHandler function will change the permission of the specified
@@ -94,12 +101,18 @@ func ChangeTokenPermHandler(c *gin.Context) {
 		return
 	}
 
-	go database.UpdateTokenLastUsage(d)
 	id, err := strconv.ParseInt(userId, 10, 64)
 	if err != nil || sv.IsInvalidID(id) {
 		entry.SendInvalidUserIdError(c, OriginChangeTokenPerm)
 		return
 	}
+
+	if sv.IsForbiddenID(id) {
+		entry.SendPermissionDenied(c, OriginChangeTokenPerm)
+		return
+	}
+
+	database.UpdateTokenLastUsage(d)
 
 	perm := sv.UserPermission(permInt)
 	if !perm.IsValid() || perm.IsOwner() {
@@ -159,6 +172,10 @@ func RevokeTokenHandler(c *gin.Context) {
 		return
 	}
 
+	// first condition checks if user has enough permission for
+	// revoking/creating tokens (AKA: owner);
+	// second one is checking if the user is trying to revoke their
+	// own token or not.
 	if d.CanRevokeToken() || token == u.Hash {
 		database.RevokeTokenHash(u, hashing.GetUserToken(id))
 		entry.SendResult(c, u)
@@ -192,6 +209,11 @@ func GetTokenHandler(c *gin.Context) {
 	id, err := strconv.ParseInt(userId, 10, 64)
 	if err != nil || sv.IsInvalidID(id) {
 		entry.SendInvalidUserIdError(c, OriginGetToken)
+		return
+	}
+
+	if sv.IsForbiddenID(id) {
+		entry.SendPermissionDenied(c, OriginGetToken)
 		return
 	}
 

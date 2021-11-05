@@ -45,6 +45,11 @@ func ReportUserHandler(c *gin.Context) {
 		return
 	}
 
+	if sv.IsForbiddenID(id) {
+		entry.SendPermissionDenied(c, OriginReport)
+		return
+	}
+
 	if by == id {
 		entry.SendCannotReportYourselfError(c, OriginReport)
 		return

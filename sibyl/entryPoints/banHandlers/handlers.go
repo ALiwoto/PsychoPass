@@ -45,6 +45,11 @@ func AddBanHandler(c *gin.Context) {
 		return
 	}
 
+	if sv.IsForbiddenID(id) {
+		entry.SendPermissionDenied(c, OriginAddBan)
+		return
+	}
+
 	by := hashing.GetIdFromToken(token)
 	if by == id {
 		entry.SendCannotBanYourselfError(c, OriginAddBan)
@@ -115,6 +120,11 @@ func RemoveBanHandler(c *gin.Context) {
 	id, err := strconv.ParseInt(userId, 10, 64)
 	if err != nil || sv.IsInvalidID(id) {
 		entry.SendInvalidUserIdError(c, OriginRemoveBan)
+		return
+	}
+
+	if sv.IsForbiddenID(id) {
+		entry.SendPermissionDenied(c, OriginRemoveBan)
 		return
 	}
 

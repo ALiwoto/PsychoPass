@@ -213,3 +213,14 @@ func canMatchStringArray(value string, array []string) bool {
 func GetPrettyUptime() string {
 	return timeUtils.GetPrettyTimeDuration(time.Since(ServerStartTime), true)
 }
+
+// IsForbiddenID function checks if the given ID is forbidden
+// or not. forbidden IDs cannot be looked up by any of the API endpoints.
+// If they try to interract with these IDs, they will get a 403 forbidden
+// response.
+func IsForbiddenID(id int64) bool {
+	if HelperBot != nil && HelperBot.Id == id {
+		return true
+	}
+	return false // TODO: Add new forbidden IDs here....
+}

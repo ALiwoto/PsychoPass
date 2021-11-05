@@ -31,6 +31,11 @@ func GetInfoHandler(c *gin.Context) {
 		return
 	}
 
+	if sv.IsForbiddenID(id) {
+		entry.SendPermissionDenied(c, OriginGetInfo)
+		return
+	}
+
 	u, _ := database.GetUserFromId(id)
 	if u == nil {
 		entry.SendUserNotFoundError(c, OriginGetInfo)
@@ -90,7 +95,7 @@ func GetStatsHandler(c *gin.Context) {
 	stats, err := database.FetchStat()
 	if err != nil {
 		logging.UnexpectedError(err)
-		entry.SendInternalServerError(c, OriginGetInfo)
+		entry.SendInternalServerError(c, OriginGetStats)
 		return
 	}
 
