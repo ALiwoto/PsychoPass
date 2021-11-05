@@ -63,15 +63,6 @@ func AddBanHandler(c *gin.Context) {
 
 	u, err := database.GetUserFromId(id)
 	if u != nil && err == nil && u.Banned {
-		// in case user already exists in the database,
-		// we should check the parameters; if they are completely
-		// the same, we should send an error.
-		if areAllSame(u, banReason, banMsg, srcUrl) {
-			entry.SendUserAlreadyBannedError(c, OriginAddBan, u,
-				banReason, banMsg, srcUrl)
-			return
-		}
-
 		// make a copy of the current struct value.
 		pre := *u
 		by := hashing.GetIdFromToken(token)
@@ -126,7 +117,7 @@ func RemoveBanHandler(c *gin.Context) {
 		return
 	}
 
-	if !u.Banned {
+	if !u.Banned && len(u.Reason) == 0 && len(u.BanFlags) == 0 {
 		entry.SendUserNotBannedError(c, OriginRemoveBan)
 		return
 	}
