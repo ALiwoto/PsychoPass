@@ -34,7 +34,7 @@ func StartDatabase() {
 		}
 	} else {
 		conf = &gorm.Config{
-			Logger: logger.Default.LogMode(logger.Error),
+			Logger: logger.Default.LogMode(logger.Silent),
 		}
 	}
 	if sibylConfig.SibylConfig.UseSqlite {
