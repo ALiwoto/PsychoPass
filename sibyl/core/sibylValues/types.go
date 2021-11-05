@@ -61,7 +61,7 @@ type User struct {
 	CrimeCoefficient int       `json:"crime_coefficient"`
 	BanDate          string    `json:"date" gorm:"-" sql:"-"`
 	BanFlags         []BanFlag `json:"ban_flags" gorm:"-" sql:"-"`
-	cacheDate        time.Time `json:"-"`
+	IsBot            bool      `json:"is_bot"`
 	FlagTrolling     bool      `json:"-"`
 	FlagSpam         bool      `json:"-"`
 	FlagEvade        bool      `json:"-"`
@@ -72,6 +72,7 @@ type User struct {
 	FlagRaid         bool      `json:"-"`
 	FlagSpamBot      bool      `json:"-"`
 	FlagMassAdd      bool      `json:"-"`
+	cacheDate        time.Time `json:"-"`
 }
 
 type Token struct {
@@ -100,6 +101,7 @@ type Token struct {
 type Report struct {
 	ReporterId         int64
 	TargetUser         int64
+	IsBot              bool
 	ReportDate         string
 	ReportReason       string
 	ReportMessage      string

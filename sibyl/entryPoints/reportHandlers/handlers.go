@@ -3,6 +3,7 @@ package reportHandlers
 import (
 	"strconv"
 
+	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	entry "github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints"
 
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
@@ -19,6 +20,8 @@ func ReportUserHandler(c *gin.Context) {
 	msg := utils.GetParam(c, "message", "msg", "reportMsg", "report-msg")
 	msgLink := utils.GetParam(c, "src", "source", "report-src",
 		"message-src", "msg-src")
+	isBot := strongStringGo.ToBool(utils.GetParam(c, "is-bot", "isBot", "bot"))
+
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginReport)
 		return
@@ -64,7 +67,7 @@ func ReportUserHandler(c *gin.Context) {
 	}
 
 	if sv.SendReportHandler != nil {
-		r := sv.NewReport(reason, msg, msgLink, id, by, d.Permission)
+		r := sv.NewReport(reason, msg, msgLink, id, by, d.Permission, isBot)
 		go sv.SendReportHandler(r)
 	}
 

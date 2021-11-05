@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"time"
 
+	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	entry "github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints"
 
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
@@ -20,6 +21,8 @@ func AddBanHandler(c *gin.Context) {
 	banMsg := utils.GetParam(c, "message", "msg", "banMsg", "ban-msg")
 	srcUrl := utils.GetParam(c, "srcUrl", "source",
 		"source-url", "ban-src", "src")
+	isBot := ws.ToBool(utils.GetParam(c, "is-bot", "isBot", "bot"))
+
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginAddBan)
 		return
@@ -66,6 +69,10 @@ func AddBanHandler(c *gin.Context) {
 		// make a copy of the current struct value.
 		pre := *u
 		by := hashing.GetIdFromToken(token)
+		if isBot != u.IsBot {
+			// check both conditions; if they don't match, update the field.
+			u.IsBot = isBot
+		}
 		u.BannedBy = by
 		u.Message = banMsg
 		u.Date = time.Now()
@@ -80,7 +87,7 @@ func AddBanHandler(c *gin.Context) {
 		return
 	}
 
-	u = database.AddBan(id, by, banReason, banMsg, srcUrl)
+	u = database.AddBan(id, by, banReason, banMsg, srcUrl, isBot)
 	entry.SendResult(c, &BanResult{
 		CurrentBan: u,
 	})

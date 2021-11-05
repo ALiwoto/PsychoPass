@@ -6,7 +6,7 @@ import (
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 )
 
-func AddBan(userID, adder int64, reason, message, src string) *sv.User {
+func AddBan(userID, adder int64, reason, message, src string, isBot bool) *sv.User {
 	user := &sv.User{
 		UserID:       userID,
 		Banned:       true,
@@ -14,6 +14,7 @@ func AddBan(userID, adder int64, reason, message, src string) *sv.User {
 		Message:      message,
 		BannedBy:     adder,
 		BanSourceUrl: src,
+		IsBot:        isBot,
 	}
 	user.SetAsBanReason(reason)
 	user.IncreaseCrimeCoefficientAuto()

@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
 )
 
@@ -209,7 +210,10 @@ func (r *Report) ParseAsMd() mdparser.WMarkDown {
 	md.AppendMonoThis(r.ReportReason)
 	md.AppendNormalThis("\n")
 	md.AppendBoldThis("・Date: ")
-	md.AppendItalicThis(r.ReportDate)
+	md.AppendMonoThis(r.ReportDate)
+	md.AppendNormalThis("\n")
+	md.AppendBoldThis("・Is bot: ")
+	md.AppendMonoThis(ws.YesOrNo(r.IsBot))
 	md.AppendNormalThis("\n")
 	md.AppendBoldThis("・Report Source: ")
 	md.AppendNormalThis(r.ScanSourceLink)
@@ -361,7 +365,12 @@ func (u *User) IncreaseCrimeCoefficientByRanges(ranges ...*CrimeCoefficientRange
 		cc += r.GetRandom()
 		u.validateFlags(r)
 	}
-	u.CrimeCoefficient = cc
+
+	if RangePastBanned.IsInRange(u.CrimeCoefficient) {
+		u.CrimeCoefficient += cc
+	} else {
+		u.CrimeCoefficient = cc
+	}
 }
 
 func (u *User) validateFlags(r *CrimeCoefficientRange) {
