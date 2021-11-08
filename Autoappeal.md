@@ -47,15 +47,16 @@ Just some basic details on how the auto appea system should function
                               | I get it, unban |             | Go to support |
                               |                 |             |               |
                               +-----------------+             +---------------+
-    
-    
-    
-    
-    
-               +-----------------+            +----------------------+
+                                |                                |
+                                |                                |
+                                |                                |
+                                |                                |
+                                |                                |
+                                |                                | 
+               +----------------v+            +------------------v---+
                |                 |            |                      |
                |                 |            |                      |
-               | unban user      |            |  Deny if high coef   |
+               |  unban user     |            |  Deny if high coef   |
                |                 |            |                      |
                |                 |            |                      |
                +-----------------+            +----------------------+
