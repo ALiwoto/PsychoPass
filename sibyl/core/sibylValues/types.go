@@ -33,21 +33,22 @@ type BanFlag string
 type ReportHandler func(r *Report)
 
 type StatValue struct {
-	BannedCount          int64 `json:"banned_count"`
-	TrollingBanCount     int64 `json:"trolling_ban_count"`
-	SpamBanCount         int64 `json:"spam_ban_count"`
-	EvadeBanCount        int64 `json:"evade_ban_count"`
-	CustomBanCount       int64 `json:"custom_ban_count"`
-	PsychoHazardBanCount int64 `json:"psycho_hazard_ban_count"`
-	MalImpBanCount       int64 `json:"mal_imp_ban_count"`
-	NSFWBanCount         int64 `json:"nsfw_ban_count"`
-	SpamBotBanCount      int64 `json:"spam_bot_ban_count"`
-	RaidBanCount         int64 `json:"raid_ban_count"`
-	MassAddBanCount      int64 `json:"mass_add_ban_count"`
-	CloudyCount          int64 `json:"cloudy_count"`
-	TokenCount           int64 `json:"token_count"`
-	InspectorsCount      int64 `json:"inspectors_count"`
-	EnforcesCount        int64 `json:"enforces_count"`
+	BannedCount          int64     `json:"banned_count"`
+	TrollingBanCount     int64     `json:"trolling_ban_count"`
+	SpamBanCount         int64     `json:"spam_ban_count"`
+	EvadeBanCount        int64     `json:"evade_ban_count"`
+	CustomBanCount       int64     `json:"custom_ban_count"`
+	PsychoHazardBanCount int64     `json:"psycho_hazard_ban_count"`
+	MalImpBanCount       int64     `json:"mal_imp_ban_count"`
+	NSFWBanCount         int64     `json:"nsfw_ban_count"`
+	SpamBotBanCount      int64     `json:"spam_bot_ban_count"`
+	RaidBanCount         int64     `json:"raid_ban_count"`
+	MassAddBanCount      int64     `json:"mass_add_ban_count"`
+	CloudyCount          int64     `json:"cloudy_count"`
+	TokenCount           int64     `json:"token_count"`
+	InspectorsCount      int64     `json:"inspectors_count"`
+	EnforcesCount        int64     `json:"enforces_count"`
+	cacheTime            time.Time `json:"-"`
 }
 
 type User struct {
@@ -62,6 +63,7 @@ type User struct {
 	BanDate          string    `json:"date" gorm:"-" sql:"-"`
 	BanFlags         []BanFlag `json:"ban_flags" gorm:"-" sql:"-"`
 	IsBot            bool      `json:"is_bot"`
+	BanCount         int       `json:"-"`
 	FlagTrolling     bool      `json:"-"`
 	FlagSpam         bool      `json:"-"`
 	FlagEvade        bool      `json:"-"`

@@ -246,6 +246,7 @@ func (u *User) SetAsPastBan() {
 	u.BannedBy = 0
 	u.Date = time.Now()
 	u.CrimeCoefficient = RangePastBanned.GetRandom()
+	u.BanCount++
 }
 
 func (u *User) IncreaseCrimeCoefficient(reason string) {
@@ -266,6 +267,10 @@ func (u *User) IncreaseCrimeCoefficientByPerm(p UserPermission) {
 	} else if p == NormalUser {
 		u.CrimeCoefficient = RangeCivilian.GetRandom() / 4
 	}
+}
+
+func (u *User) CanAppeal() bool {
+	return u.CrimeCoefficient >= MaxAppeal || u.BanCount > MaxAppealCount
 }
 
 func (u *User) SetAsBanReason(reason string) {
@@ -496,6 +501,13 @@ func (s *StatValue) GetInspectorsCountString() string {
 
 func (s *StatValue) GetEnforcesCountString() string {
 	return strconv.FormatInt(s.EnforcesCount, 10)
+}
+
+func (s *StatValue) IsExpired(max time.Duration) bool {
+	return time.Since(s.cacheTime) > max
+}
+func (s *StatValue) SetCachedTime() {
+	s.cacheTime = time.Now()
 }
 
 //---------------------------------------------------------

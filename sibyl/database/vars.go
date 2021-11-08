@@ -18,4 +18,7 @@ var (
 	userMapMutex  *sync.Mutex
 	tokenDbMap    map[int64]*sv.Token
 	userDbMap     map[int64]*sv.User
+	modelUser     *sv.User  = &sv.User{}
+	modelToken    *sv.Token = &sv.Token{}
+	lastStats     *sv.StatValue
 )

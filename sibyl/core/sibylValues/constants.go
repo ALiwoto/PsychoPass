@@ -18,8 +18,17 @@ const (
 
 // Factor constants
 const (
+	// LowerCloudyFactor is the minimum possible value for a
+	// user's crime coefficient to be counted as cloudy.
 	LowerCloudyFactor = 80
+	// UpperCloudyFactor is the maximum possible value for a
+	// user's crime coefficient to be counted as cloudy.
 	UpperCloudyFactor = 100
+	// MaxAppeal is the maximum possible value for a user's crime coefficient
+	// which makes the user able to appeal for unban.
+	MaxAppeal = 600
+	// MaxAppealCount is the maximum number of appeals a user can make.
+	MaxAppealCount = 1
 )
 
 /*

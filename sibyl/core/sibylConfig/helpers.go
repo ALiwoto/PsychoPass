@@ -9,9 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 
 	"github.com/bigkevmcd/go-configparser"
@@ -128,6 +127,11 @@ func LoadConfigFromFile(fileName string) error {
 		SibylConfig.UseSqlite = usesqlite == "yes" || usesqlite == "true"
 	}
 
+	SibylConfig.MaxCacheTime, err = configContent.GetInt64("database", "max_cache_time")
+	if err != nil {
+		SibylConfig.MaxCacheTime, _ = strconv.ParseInt(env("MAX_CACHE_TIME"), 10, 64)
+	}
+
 	SibylConfig.DbUrl, err = configContent.Get("database", "url")
 	if err != nil || len(SibylConfig.DbUrl) == 0 {
 		SibylConfig.DbUrl = env("DB_URL")
@@ -144,9 +148,9 @@ func LoadConfigFromFile(fileName string) error {
 		}
 	}
 
-	SibylConfig.MaxCacheTime, err = configContent.GetInt64("database", "max_cache_time")
+	SibylConfig.StatsCacheTime, err = configContent.GetInt64("database", "max_cache_time")
 	if err != nil {
-		SibylConfig.MaxCacheTime, _ = strconv.ParseInt(env("MAX_CACHE_TIME"), 10, 64)
+		SibylConfig.StatsCacheTime, _ = strconv.ParseInt(env("MAX_CACHE_TIME"), 10, 64)
 	}
 
 	// telegram section variables
@@ -233,8 +237,11 @@ func parseCmdPrefixes(value string) []rune {
 	value = strings.TrimSpace(value)
 	if strings.Contains(value, " ") {
 		var all []rune
-		mystrs := ws.FixSplitWhite(strings.Split(value, " "))
-		for _, str := range mystrs {
+		// comment for future cases: we can use `ws.Split` function as well,
+		// but since we absolutely need to split the commands by white spaces,
+		// it's better to use `strings.Fields` function from stdlib.
+		myStrs := ws.FixSplitWhite(strings.Fields(value))
+		for _, str := range myStrs {
 			all = append(all, rune(str[0]))
 		}
 		return all
@@ -256,15 +263,15 @@ func parseBaseStr(value string) []int64 {
 		return []int64{tmp}
 	}
 
-	mystrs := ws.Split(value, " ", ",")
-	if len(mystrs) == 0 {
+	myStrs := ws.Split(value, " ", ",")
+	if len(myStrs) == 0 {
 		return nil
 	}
 
 	var tmp int64
 	var err error
 	var all []int64
-	for _, str := range mystrs {
+	for _, str := range myStrs {
 		tmp, err = strconv.ParseInt(str, 10, 64)
 		if err != nil || tmp == 0 {
 			continue
@@ -284,6 +291,13 @@ func GetMaxCacheTime() time.Duration {
 		return d * time.Minute
 	}
 	return 40 * time.Minute
+}
+
+func GetStatsCacheTime() time.Duration {
+	if SibylConfig != nil {
+		return time.Duration(SibylConfig.StatsCacheTime) * time.Minute
+	}
+	return 0
 }
 
 func GetPort() string {

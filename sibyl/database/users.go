@@ -3,6 +3,7 @@ package database
 import (
 	"time"
 
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 )
 
@@ -64,60 +65,62 @@ func FetchStat() (*sv.StatValue, error) {
 		return nil, ErrNoSession
 	}
 
-	var stat = new(sv.StatValue)
+	if lastStats != nil && !lastStats.IsExpired(sibylConfig.GetStatsCacheTime()) {
+		return lastStats, nil
+	}
+
+	lastStats = new(sv.StatValue)
+	lastStats.SetCachedTime()
 	var tmp int64
 	lockdb()
 
-	u := &sv.User{}
-
 	// users related stats
-	SESSION.Model(u).Where("banned = ?", true).Count(&tmp)
-	stat.BannedCount = tmp
+	SESSION.Model(modelUser).Where("banned = ?", true).Count(&tmp)
+	lastStats.BannedCount = tmp
 
-	SESSION.Model(u).Where("flag_trolling = ?", true).Count(&tmp)
-	stat.TrollingBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_trolling = ?", true).Count(&tmp)
+	lastStats.TrollingBanCount = tmp
 
-	SESSION.Model(u).Where("flag_spam = ?", true).Count(&tmp)
-	stat.SpamBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_spam = ?", true).Count(&tmp)
+	lastStats.SpamBanCount = tmp
 
-	SESSION.Model(u).Where("flag_evade = ?", true).Count(&tmp)
-	stat.EvadeBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_evade = ?", true).Count(&tmp)
+	lastStats.EvadeBanCount = tmp
 
-	SESSION.Model(u).Where("flag_custom = ?", true).Count(&tmp)
-	stat.CustomBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_custom = ?", true).Count(&tmp)
+	lastStats.CustomBanCount = tmp
 
-	SESSION.Model(u).Where("flag_psycho_hazard = ?", true).Count(&tmp)
-	stat.PsychoHazardBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_psycho_hazard = ?", true).Count(&tmp)
+	lastStats.PsychoHazardBanCount = tmp
 
-	SESSION.Model(u).Where("flag_mal_imp = ?", true).Count(&tmp)
-	stat.MalImpBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_mal_imp = ?", true).Count(&tmp)
+	lastStats.MalImpBanCount = tmp
 
-	SESSION.Model(u).Where("flag_nsfw = ?", true).Count(&tmp)
-	stat.NSFWBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_nsfw = ?", true).Count(&tmp)
+	lastStats.NSFWBanCount = tmp
 
-	SESSION.Model(u).Where("flag_raid = ?", true).Count(&tmp)
-	stat.RaidBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_raid = ?", true).Count(&tmp)
+	lastStats.RaidBanCount = tmp
 
-	SESSION.Model(u).Where("flag_mass_add = ?", true).Count(&tmp)
-	stat.MassAddBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_mass_add = ?", true).Count(&tmp)
+	lastStats.MassAddBanCount = tmp
 
-	SESSION.Model(u).Where("flag_spam_bot = ?", true).Count(&tmp)
-	stat.SpamBotBanCount = tmp
+	SESSION.Model(modelUser).Where("flag_spam_bot = ?", true).Count(&tmp)
+	lastStats.SpamBotBanCount = tmp
 
-	SESSION.Model(u).Where("crime_coefficient < ? AND crime_coefficient > ? AND banned = ?",
+	SESSION.Model(modelUser).Where("crime_coefficient < ? AND crime_coefficient > ? AND banned = ?",
 		sv.UpperCloudyFactor, sv.LowerCloudyFactor, false).Count(&tmp)
-	stat.CloudyCount = tmp
+	lastStats.CloudyCount = tmp
 
 	// token related stats:
-	t := &sv.Token{}
-	SESSION.Model(t).Count(&tmp)
-	stat.TokenCount = tmp
+	SESSION.Model(modelToken).Count(&tmp)
+	lastStats.TokenCount = tmp
 
-	SESSION.Model(t).Where("permission = ?", sv.Inspector).Count(&tmp)
-	stat.InspectorsCount = tmp
+	SESSION.Model(modelToken).Where("permission = ?", sv.Inspector).Count(&tmp)
+	lastStats.InspectorsCount = tmp
 
-	SESSION.Model(t).Where("permission = ?", sv.Enforcer).Count(&tmp)
-	stat.EnforcesCount = tmp
+	SESSION.Model(modelToken).Where("permission = ?", sv.Enforcer).Count(&tmp)
+	lastStats.EnforcesCount = tmp
 
 	unlockdb()
 
@@ -125,7 +128,7 @@ func FetchStat() (*sv.StatValue, error) {
 		return nil, SESSION.Error
 	}
 
-	return stat, nil
+	return lastStats, nil
 }
 
 func NewUser(u *sv.User) {
