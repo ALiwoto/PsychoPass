@@ -118,10 +118,10 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 			ParseMode:   sv.MarkDownV2,
 			ReplyMarkup: markup,
 		})
-		sv.RateLimiter.RemoveCustomIgnore(user.Id)
 		return
 	}
 
+	sv.RateLimiter.RemoveCustomIgnore(user.Id)
 }
 
 func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
