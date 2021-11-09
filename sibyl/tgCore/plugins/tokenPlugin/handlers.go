@@ -6,7 +6,6 @@ import (
 	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
@@ -16,60 +15,12 @@ import (
 )
 
 func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
-	startCmd := handlers.NewCommand(StartCmd, startHandler)
-	createCmd := handlers.NewCommand(CreateCmd, startHandler)
-	newCmd := handlers.NewCommand(NewCmd, startHandler)
 	revokeCmd := handlers.NewCommand(RevokeCmd, revokeHandler)
 	assignCmd := handlers.NewCommand(AssignCmd, assignHandler)
-	startCmd.Triggers = t
-	createCmd.Triggers = t
-	newCmd.Triggers = t
 	revokeCmd.Triggers = t
 	assignCmd.Triggers = t
-	d.AddHandler(startCmd)
-	d.AddHandler(createCmd)
-	d.AddHandler(newCmd)
 	d.AddHandler(revokeCmd)
 	d.AddHandler(assignCmd)
-}
-
-// startHandler is the handler for the /start command.
-// It will send a message to the user with their token.
-func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
-	if ctx.EffectiveChat.Type != "private" {
-		return ext.EndGroups
-	}
-
-	user := ctx.EffectiveUser
-	t, err := database.GetTokenFromId(user.Id)
-	if err != nil {
-		logging.UnexpectedError(err)
-		return ext.EndGroups
-	}
-
-	if t == nil {
-		// should create a new token
-		t, err = utils.CreateToken(user.Id, sv.NormalUser)
-		if err != nil {
-			logging.UnexpectedError(err)
-			return ext.EndGroups
-		}
-	}
-
-	md := mdparser.GetNormal("Hi ").AppendMentionThis(user.FirstName, user.Id)
-	md.AppendNormalThis(" !\nHere is your token:\n")
-	md.AppendMonoThis(t.Hash).AppendNormalThis("\n\n")
-	md.AppendBoldThis("Please don't share this token with anyone!")
-	if t.HasRole() {
-		md.AppendItalicThis("\nYou are a valid").AppendNormalThis(" ")
-		md.AppendItalicThis(t.GetStringPermission()).AppendNormal(".")
-	}
-
-	b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
-		ParseMode: sv.MarkDownV2,
-	})
-
-	return ext.EndGroups
 }
 
 // revokeHandler is the handler for the /revoke command.
@@ -117,7 +68,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if len(args) < 2 {
 		// show help.
 		md := mdparser.GetNormal("Dear ").AppendMentionThis(user.FirstName, user.Id)
-		md.AppendNormalThis(", this command lets you authorise dominator access for ")
+		md.AppendNormalThis(", this command lets you authorize dominator access for ")
 		md.AppendHyperLinkThis("Sibyl", "http://t.me/SibylSystem")
 		md.AppendNormalThis("\nRun command again in the following format")
 		md.AppendBoldThis("\nYour options are:")
@@ -246,7 +197,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		})
 		return ext.EndGroups
 	} else if isBot || sv.IsInvalidID(targetId) {
-		md := mdparser.GetNormal("Dominator authorisation is only for humans.")
+		md := mdparser.GetNormal("Dominator authorization is only for humans.")
 		_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,

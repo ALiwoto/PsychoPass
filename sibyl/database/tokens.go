@@ -62,9 +62,9 @@ func GetAllRegistered(includeOwners bool) ([]int64, error) {
 	var tokens []sv.Token
 	lockdb()
 	if includeOwners {
-		SESSION.Where("permission > ?", sv.NormalUser).Find(&tokens)
+		SESSION.Model(modelToken).Where("permission > ?", sv.NormalUser).Find(&tokens)
 	} else {
-		SESSION.Where("permission > ? AND NOT permission = ?",
+		SESSION.Model(modelToken).Where("permission > ? AND NOT permission = ?",
 			sv.NormalUser, sv.Owner).Find(&tokens)
 	}
 	unlockdb()

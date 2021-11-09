@@ -5,6 +5,7 @@ import (
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/infoPlugin"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/reportPlugin"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/startPlugin"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/tokenPlugin"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gotgbot/ratelimiter/ratelimiter"
@@ -12,6 +13,7 @@ import (
 
 func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 	loadLimiter(d)
+	startPlugin.LoadAllHandlers(d, triggers)
 	infoPlugin.LoadAllHandlers(d, triggers)
 	reportPlugin.LoadAllHandlers(d, triggers)
 	tokenPlugin.LoadAllHandlers(d, triggers)

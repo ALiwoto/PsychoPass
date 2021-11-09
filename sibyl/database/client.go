@@ -52,7 +52,7 @@ func StartDatabase() {
 	logging.Info("Database connected")
 
 	// Create tables if they don't exist
-	err = SESSION.AutoMigrate(&sv.User{}, &sv.Token{})
+	err = SESSION.AutoMigrate(modelUser, modelToken)
 	if err != nil {
 		logging.Fatal(err)
 	}
@@ -100,5 +100,5 @@ func cleanMaps() {
 }
 
 func IsFirstTime() bool {
-	return SESSION.Find(&sv.Token{}).RowsAffected == 0
+	return SESSION.Find(modelToken).RowsAffected == 0
 }
