@@ -83,7 +83,9 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	user := ctx.EffectiveUser
 	welcomeMd := mdparser.GetNormal("Welcome to Sibyl System!\n")
 	md := welcomeMd.AppendNormal("Please wait while we finish your cymatic scan...")
-	msg, err := message.Reply(b, md.ToString(), nil)
+	msg, err := message.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+		ParseMode: sv.MarkDownV2,
+	})
 	if err != nil {
 		// most probably the user has deleted their message.
 		// we don't need to do anything.
