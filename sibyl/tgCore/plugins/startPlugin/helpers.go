@@ -39,7 +39,7 @@ func makeSingleAppealButtons() [][]gotgbot.InlineKeyboardButton {
 		return singleButtonsRows
 	}
 	rows := make([][]gotgbot.InlineKeyboardButton, 1)
-	rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
+	rows[0] = append(rows[0], gotgbot.InlineKeyboardButton{
 		Text: "Appeal ban",
 		Url:  "https://t.me/PublicSafetyBureau",
 	})
