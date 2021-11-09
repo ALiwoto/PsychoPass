@@ -269,8 +269,19 @@ func (u *User) IncreaseCrimeCoefficientByPerm(p UserPermission) {
 	}
 }
 
+func (u *User) CanTryAppealing() bool {
+	return u.BanCount < MaxAppealCount
+}
+
 func (u *User) CanAppeal() bool {
-	return u.CrimeCoefficient >= MaxAppeal || u.BanCount > MaxAppealCount
+	return u.CrimeCoefficient >= MaxAppealCoefficient || u.HasCustomFlag()
+}
+
+func (u *User) HasCustomFlag() bool {
+	if len(u.BanFlags) == 0 {
+		return false
+	}
+	return u.BanFlags[0x0] == BanFlagCustom
 }
 
 func (u *User) SetAsBanReason(reason string) {
@@ -301,7 +312,7 @@ func (u *User) FormatFlags() mdparser.WMarkDown {
 	}
 
 	for i, current := range u.BanFlags {
-		if i != 0 && i != len(u.BanFlags)-1 {
+		if i != 0 {
 			md.AppendNormalThis(", ")
 		}
 		md.AppendMonoThis(string(current))

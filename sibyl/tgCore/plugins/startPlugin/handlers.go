@@ -96,7 +96,7 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	time.Sleep(3 * time.Second)
 	md = welcomeMd.AppendNormalThis("Cymatic Scan results:")
 	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
-	md.AppendMentionThis(user.FirstName+"\n", user.Id)
+	md.AppendMentionThis(user.FirstName, user.Id)
 	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
 	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
 	md.AppendBoldThis("\n • Is banned").AppendNormalThis(": ")
@@ -109,15 +109,19 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	md.AppendThis(u.FormatFlags())
 	md.AppendBoldThis("\n • Description").AppendNormalThis(": ")
 	md.AppendMonoThis(u.Reason)
-	msg, err = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
-		ParseMode: sv.MarkDownV2,
-	})
-	if err != nil || msg == nil {
-		// most probably the user has deleted our message.
-		// we don't need to do anything.
+
+	var markup gotgbot.InlineKeyboardMarkup
+
+	if !u.CanTryAppealing() {
+		markup.InlineKeyboard = makeSingleAppealButtons()
+		_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+			ParseMode:   sv.MarkDownV2,
+			ReplyMarkup: markup,
+		})
+		sv.RateLimiter.RemoveCustomIgnore(user.Id)
 		return
 	}
-	sv.RateLimiter.RemoveCustomIgnore(user.Id)
+
 }
 
 func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
@@ -160,27 +164,4 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 		return
 	}
 	sv.RateLimiter.RemoveCustomIgnore(user.Id)
-}
-
-func makeNormalButtons() [][]gotgbot.InlineKeyboardButton {
-	rows := make([][]gotgbot.InlineKeyboardButton, 3)
-	rows[0] = append(rows[0], gotgbot.InlineKeyboardButton{
-		Text: "What is PsychoPass?",
-		Url:  "https://t.me/PsychoPass",
-	})
-
-	rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
-		Text: "Support group",
-		Url:  "https://t.me/PublicSafetyBureau",
-	})
-	rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
-		Text: "Report Spam",
-		Url:  "https://t.me/PublicSafetyBureau",
-	})
-
-	rows[2] = append(rows[2], gotgbot.InlineKeyboardButton{
-		Text:         "Get API token",
-		CallbackData: "get_token",
-	})
-	return rows
 }

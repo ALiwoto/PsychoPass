@@ -1,9 +1,51 @@
 package startPlugin
 
 import (
+	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
 )
+
+func makeNormalButtons() [][]gotgbot.InlineKeyboardButton {
+	if len(normalButtonsRows) != 0 {
+		return normalButtonsRows
+	}
+	rows := make([][]gotgbot.InlineKeyboardButton, 3)
+	rows[0] = append(rows[0], gotgbot.InlineKeyboardButton{
+		Text: "What is PsychoPass?",
+		Url:  "https://t.me/PsychoPass",
+	})
+
+	rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
+		Text: "Support group",
+		Url:  "https://t.me/PublicSafetyBureau",
+	})
+	rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
+		Text: "Report Spam",
+		Url:  "https://t.me/PublicSafetyBureau",
+	})
+
+	rows[2] = append(rows[2], gotgbot.InlineKeyboardButton{
+		Text:         "Get API token",
+		CallbackData: "get_token",
+	})
+
+	normalButtonsRows = rows
+	return normalButtonsRows
+}
+
+func makeSingleAppealButtons() [][]gotgbot.InlineKeyboardButton {
+	if len(singleButtonsRows) != 0 {
+		return singleButtonsRows
+	}
+	rows := make([][]gotgbot.InlineKeyboardButton, 1)
+	rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
+		Text: "Appeal ban",
+		Url:  "https://t.me/PublicSafetyBureau",
+	})
+	singleButtonsRows = rows
+	return singleButtonsRows
+}
 
 func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 	startCmd := handlers.NewCommand(StartCmd, startHandler)
