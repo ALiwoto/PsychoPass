@@ -94,18 +94,21 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 		return
 	}
 	time.Sleep(3 * time.Second)
-	md = welcomeMd.AppendNormalThis("Cymatic Scan results:\n")
-	md.AppendBoldThis(" • User").AppendNormalThis(": ")
+	md = welcomeMd.AppendNormalThis("Cymatic Scan results:")
+	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
 	md.AppendMentionThis(user.FirstName+"\n", user.Id)
-	md.AppendBoldThis(" • ID").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10)).ElThis()
-	md.AppendBoldThis(" • Is banned").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10)).ElThis()
-	md.AppendBoldThis(" • Status").AppendNormalThis(": ")
-	md.AppendBoldThis(" • Status").AppendNormalThis(": ")
-	md.AppendMonoThis(t.GetTitleStringPermission()).ElThis()
-	md.AppendBoldThis(" • Crime Coefficient").AppendNormalThis(": ")
-	md.AppendMonoThis(u.EstimateCrimeCoefficient()).ElThis()
+	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
+	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
+	md.AppendBoldThis("\n • Is banned").AppendNormalThis(": ")
+	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
+	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
+	md.AppendMonoThis(t.GetTitleStringPermission())
+	md.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
+	md.AppendMonoThis(u.GetStringCrimeCoefficient())
+	md.AppendBoldThis("\n • Ban Reason(s)").AppendNormalThis(": ")
+	md.AppendThis(u.FormatFlags())
+	md.AppendBoldThis("\n • Description").AppendNormalThis(": ")
+	md.AppendMonoThis(u.Reason)
 	msg, err = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode: sv.MarkDownV2,
 	})
@@ -136,16 +139,16 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 	markup := &gotgbot.InlineKeyboardMarkup{
 		InlineKeyboard: makeNormalButtons(),
 	}
-	md = welcomeMd.AppendNormalThis("Cymatic Scan results:\n")
-	md.AppendBoldThis(" • User").AppendNormalThis(": ")
+	md = welcomeMd.AppendNormalThis("Cymatic Scan results:")
+	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
 	md.AppendMentionThis(user.FirstName+"\n", user.Id)
-	md.AppendBoldThis(" • ID").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10)).ElThis()
-	md.AppendBoldThis(" • Is banned").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10)).ElThis()
-	md.AppendBoldThis(" • Status").AppendNormalThis(": ")
-	md.AppendMonoThis(t.GetTitleStringPermission()).ElThis()
-	md.AppendBoldThis(" • Crime Coefficient").AppendNormalThis(": ")
+	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
+	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
+	md.AppendBoldThis("\n • Is banned").AppendNormalThis(": ")
+	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
+	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
+	md.AppendMonoThis(t.GetTitleStringPermission())
+	md.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
 	md.AppendMonoThis(u.EstimateCrimeCoefficient()).ElThis()
 	msg, err = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:   sv.MarkDownV2,

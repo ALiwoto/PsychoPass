@@ -290,6 +290,26 @@ func (u *User) EstimateCrimeCoefficient() string {
 	return "under 100"
 }
 
+func (u *User) GetStringCrimeCoefficient() string {
+	return strconv.Itoa(u.CrimeCoefficient)
+}
+
+func (u *User) FormatFlags() mdparser.WMarkDown {
+	md := mdparser.GetEmpty()
+	if len(u.BanFlags) == 0 {
+		return md
+	}
+
+	for i, current := range u.BanFlags {
+		if i != 0 && i != len(u.BanFlags)-1 {
+			md.AppendNormalThis(", ")
+		}
+		md.AppendMonoThis(string(current))
+	}
+
+	return md
+}
+
 func (u *User) EstimateCrimeCoefficientSep() (string, string) {
 	c := u.CrimeCoefficient
 	if c > 100 {
