@@ -73,6 +73,8 @@ github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
 github.com/gotgbot/ratelimiter v1.0.2 h1:Z9LYtMr0kt8ffDVGPwBF2xzP3pBnvHMO7xwL43h4x7w=
 github.com/gotgbot/ratelimiter v1.0.2/go.mod h1:YUfD/iZi1LiqUxq0n8xI7s83KpuBK5QahmEXVSzYVZE=
+github.com/gotgbot/ratelimiter v1.0.3 h1:5EQiuijORXnE4hek995nc9FJayGZ7typPZXYFI5YdFw=
+github.com/gotgbot/ratelimiter v1.0.3/go.mod h1:YUfD/iZi1LiqUxq0n8xI7s83KpuBK5QahmEXVSzYVZE=
 github.com/jackc/chunkreader v1.0.0 h1:4s39bBR8ByfqH+DKm8rQA3E1LHZWB9XWcrz8fqaZbe0=
 github.com/jackc/chunkreader v1.0.0/go.mod h1:RT6O25fNZIuasFJRyZ4R/Y2BbhasbmZXF9QQ7T3kePo=
 github.com/jackc/chunkreader/v2 v2.0.0/go.mod h1:odVSm741yZoC3dpHEUXIqA9tQRhFrgOHwnPIn9lDKlk=

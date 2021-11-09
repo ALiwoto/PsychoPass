@@ -51,6 +51,7 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return err
 	}
 
+	sv.RateLimiter.AddCustomIgnore(user.Id, 5*time.Minute, true)
 	// user is already in the database
 	if theUser.Banned {
 		go startForBanned(b, ctx, theUser, t)
@@ -113,7 +114,7 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 		// we don't need to do anything.
 		return
 	}
-
+	sv.RateLimiter.RemoveCustomIgnore(user.Id)
 }
 
 func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
@@ -155,6 +156,7 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 		// we don't need to do anything.
 		return
 	}
+	sv.RateLimiter.RemoveCustomIgnore(user.Id)
 }
 
 func makeNormalButtons() [][]gotgbot.InlineKeyboardButton {
