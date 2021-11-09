@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/ALiwoto/StrongStringGo v1.0.5
 	github.com/ALiwoto/mdparser v1.0.7
-	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.2
+	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.1
 	github.com/bigkevmcd/go-configparser v0.0.0-20210106142102-909504547ead
 	github.com/gin-gonic/gin v1.7.4
 	github.com/gotgbot/ratelimiter v1.0.2

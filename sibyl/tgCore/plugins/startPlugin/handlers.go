@@ -24,16 +24,6 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	var theUser *sv.User
 	var err error
 	user := ctx.EffectiveUser
-	theUser, err = database.GetUserFromId(user.Id)
-	if theUser == nil && err == nil {
-		// err is nil and user is nil as well: user not found.
-		// save it to db and send the cymatic scan result.
-		database.ForceInsert(user.Id, sv.NormalUser)
-	} else if err != nil {
-		// internal database error?
-		logging.UnexpectedError(err)
-		return err
-	}
 
 	t, err = database.GetTokenFromId(user.Id)
 	if err != nil {
@@ -48,6 +38,17 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			logging.UnexpectedError(err)
 			return ext.EndGroups
 		}
+	}
+
+	theUser, err = database.GetUserFromId(user.Id)
+	if theUser == nil && err == nil {
+		// err is nil and user is nil as well: user not found.
+		// save it to db and send the cymatic scan result.
+		theUser = database.ForceInsert(user.Id, t.Permission)
+	} else if err != nil {
+		// internal database error?
+		logging.UnexpectedError(err)
+		return err
 	}
 
 	// user is already in the database
@@ -92,7 +93,7 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 		return
 	}
 	time.Sleep(3 * time.Second)
-	md = welcomeMd.AppendNormalThis("Cymatic Scan results:")
+	md = welcomeMd.AppendNormalThis("Cymatic Scan results:\n")
 	md.AppendBoldThis(" • User").AppendNormalThis(": ")
 	md.AppendMentionThis(user.FirstName+"\n", user.Id)
 	md.AppendBoldThis(" • ID").AppendNormalThis(": ")
@@ -120,7 +121,9 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 	user := ctx.EffectiveUser
 	welcomeMd := mdparser.GetNormal("Welcome to Sibyl System!\n")
 	md := welcomeMd.AppendNormal("Please wait while we finish your cymatic scan...")
-	msg, err := message.Reply(b, md.ToString(), nil)
+	msg, err := message.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
+		ParseMode: sv.MarkDownV2,
+	})
 	if err != nil || msg == nil {
 		// most probably the user has deleted their message.
 		// we don't need to do anything.
@@ -129,7 +132,10 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 
 	time.Sleep(3 * time.Second)
 
-	md = welcomeMd.AppendNormalThis("Cymatic Scan results:")
+	markup := &gotgbot.InlineKeyboardMarkup{
+		InlineKeyboard: makeNormalButtons(),
+	}
+	md = welcomeMd.AppendNormalThis("Cymatic Scan results:\n")
 	md.AppendBoldThis(" • User").AppendNormalThis(": ")
 	md.AppendMentionThis(user.FirstName+"\n", user.Id)
 	md.AppendBoldThis(" • ID").AppendNormalThis(": ")
@@ -141,11 +147,35 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 	md.AppendBoldThis(" • Crime Coefficient").AppendNormalThis(": ")
 	md.AppendMonoThis(u.EstimateCrimeCoefficient()).ElThis()
 	msg, err = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
-		ParseMode: sv.MarkDownV2,
+		ParseMode:   sv.MarkDownV2,
+		ReplyMarkup: *markup,
 	})
 	if err != nil || msg == nil {
 		// most probably the user has deleted our message.
 		// we don't need to do anything.
 		return
 	}
+}
+
+func makeNormalButtons() [][]gotgbot.InlineKeyboardButton {
+	rows := make([][]gotgbot.InlineKeyboardButton, 3)
+	rows[0] = append(rows[0], gotgbot.InlineKeyboardButton{
+		Text: "What is PsychoPass?",
+		Url:  "https://t.me/PsychoPass",
+	})
+
+	rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
+		Text: "Support group",
+		Url:  "https://t.me/PublicSafetyBureau",
+	})
+	rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
+		Text: "Report Spam",
+		Url:  "https://t.me/PublicSafetyBureau",
+	})
+
+	rows[2] = append(rows[2], gotgbot.InlineKeyboardButton{
+		Text:         "Get API token",
+		CallbackData: "get_token",
+	})
+	return rows
 }
