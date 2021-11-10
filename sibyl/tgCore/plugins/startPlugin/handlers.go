@@ -160,9 +160,11 @@ func showAppealDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	user := ctx.EffectiveUser
 	msg := ctx.EffectiveMessage
 	md := mdparser.GetUserMention(user.FirstName, user.Id)
-	md.AppendNormalThis(", you were blacklisted on Sibyl for ")
+	md.AppendNormalThis(", you were blacklisted on ")
+	md.AppendHyperLinkThis("Sibyl System ", "https://t.me/SibylSystem")
+	md.AppendNormalThis(" for ")
 	md.AppendThis(u.FormatCuteFlags())
-	md.AppendThis(u.FormatDetailStrings())
+	md.AppendThis(u.FormatDetailStrings(true))
 	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,

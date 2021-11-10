@@ -354,13 +354,16 @@ func (u *User) FormatCuteFlags() mdparser.WMarkDown {
 	return md
 }
 
-func (u *User) FormatDetailStrings() mdparser.WMarkDown {
+func (u *User) FormatDetailStrings(showPrefixes bool) mdparser.WMarkDown {
 	md := mdparser.GetEmpty()
 	if len(u.BanFlags) == 0 {
 		return md
 	}
 
 	var details string
+	if showPrefixes {
+		md.AppendNormalThis(".\n\n")
+	}
 
 	for _, current := range u.BanFlags {
 		details = _detailsString[current]
