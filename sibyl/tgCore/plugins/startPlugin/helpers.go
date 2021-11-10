@@ -47,6 +47,23 @@ func makeSingleAppealButtons() [][]gotgbot.InlineKeyboardButton {
 	return singleButtonsRows
 }
 
+func makeFirstPageAppealButtons() [][]gotgbot.InlineKeyboardButton {
+	if len(FirstPageButtonsRows) != 0 {
+		return FirstPageButtonsRows
+	}
+	rows := make([][]gotgbot.InlineKeyboardButton, 2)
+	rows[0] = append(rows[0], gotgbot.InlineKeyboardButton{
+		Text:         "I will not do this again!",
+		CallbackData: AutoAppealCbPrefix + AcceptCbData,
+	})
+	rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
+		Text:         "Close this message",
+		CallbackData: AutoAppealCbPrefix + CloseCbData,
+	})
+	FirstPageButtonsRows = rows
+	return FirstPageButtonsRows
+}
+
 func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 	startCmd := handlers.NewCommand(StartCmd, startHandler)
 	createCmd := handlers.NewCommand(CreateCmd, startHandler)

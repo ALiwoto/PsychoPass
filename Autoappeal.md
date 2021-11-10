@@ -108,7 +108,7 @@ Welcome to Sibyl System! \
 Cymatic Scan results:
  - **User**: Dank
  - **ID**: 2039641378
- - **Is banned**: No
+ - **Is banned**: Yes
  - **Status**: Civilian
  - **Crime Coefficient**: 650
  - **Ban short reason**: `MASSADD`

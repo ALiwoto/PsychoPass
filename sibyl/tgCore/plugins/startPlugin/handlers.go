@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"time"
 
+	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
@@ -100,7 +101,7 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
 	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
 	md.AppendBoldThis("\n • Is banned").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
+	md.AppendMonoThis(ws.YesOrNo(u.Banned))
 	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
 	md.AppendMonoThis(t.GetTitleStringPermission())
 	md.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
@@ -118,9 +119,18 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 			ParseMode:   sv.MarkDownV2,
 			ReplyMarkup: markup,
 		})
+		sv.RateLimiter.RemoveCustomIgnore(user.Id)
 		return
 	}
 
+	md.AppendNormalThis("\n\nSince this is your first time we can allow you")
+	md.AppendNormalThis(" an one time exception provided that you will not")
+	md.AppendNormalThis(" repeat this ever again.")
+	markup.InlineKeyboard = makeFirstPageAppealButtons()
+	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+		ParseMode:   sv.MarkDownV2,
+		ReplyMarkup: markup,
+	})
 	sv.RateLimiter.RemoveCustomIgnore(user.Id)
 }
 
@@ -149,7 +159,7 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
 	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
 	md.AppendBoldThis("\n • Is banned").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
+	md.AppendMonoThis(ws.YesOrNo(u.Banned))
 	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
 	md.AppendMonoThis(t.GetTitleStringPermission())
 	md.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
