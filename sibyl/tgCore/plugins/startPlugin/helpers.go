@@ -69,7 +69,6 @@ func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 	createCmd := handlers.NewCommand(CreateCmd, startHandler)
 	newCmd := handlers.NewCommand(NewCmd, startHandler)
 	autoAppealCb := handlers.NewCallback(appealCallBackQuery, appealCallBackResponse)
-	closeCb := handlers.NewCallback(closeCallBackQuery, closeCallBackResponse)
 	startCmd.Triggers = t
 	createCmd.Triggers = t
 	newCmd.Triggers = t
@@ -77,5 +76,4 @@ func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 	d.AddHandler(createCmd)
 	d.AddHandler(newCmd)
 	d.AddHandler(autoAppealCb)
-	d.AddHandler(closeCb)
 }

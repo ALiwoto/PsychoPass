@@ -160,17 +160,13 @@ func appealCallBackQuery(cq *gotgbot.CallbackQuery) bool {
 	return strings.HasPrefix(cq.Data, AutoAppealCbPrefix)
 }
 
-func closeCallBackQuery(cq *gotgbot.CallbackQuery) bool {
-	return cq.Data == CloseCbData
-}
-
 func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
-	//action := strings.TrimPrefix(ctx.CallbackQuery.Data, AutoAppealCbPrefix)
-
-	return nil
-}
-
-func closeCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
-	_, _ = ctx.EffectiveMessage.Delete(b)
+	action := strings.TrimPrefix(ctx.CallbackQuery.Data, AutoAppealCbPrefix)
+	switch action {
+	case CloseCbData:
+		_, _ = ctx.EffectiveMessage.Delete(b)
+	case firstAcceptCbData:
+		//TODO
+	}
 	return ext.EndGroups
 }
