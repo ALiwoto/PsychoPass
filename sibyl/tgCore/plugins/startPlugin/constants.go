@@ -8,6 +8,6 @@ const (
 
 const (
 	AutoAppealCbPrefix = "ap_"
-	AcceptCbData       = "accept"
+	firstAcceptCbData  = "fAccept"
 	CloseCbData        = "close"
 )

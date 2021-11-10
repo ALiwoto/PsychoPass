@@ -2,6 +2,7 @@ package startPlugin
 
 import (
 	"strconv"
+	"strings"
 	"time"
 
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
@@ -61,24 +62,6 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		go startForNotBanned(b, ctx, theUser, t)
 		return ext.EndGroups
 	}
-	/*
-
-
-		md := mdparser.GetNormal("Hi ").AppendMentionThis(user.FirstName, user.Id)
-		md.AppendNormalThis(" !\nHere is your token:\n")
-		md.AppendMonoThis(t.Hash).AppendNormalThis("\n\n")
-		md.AppendBoldThis("Please don't share this token with anyone!")
-		if t.HasRole() {
-			md.AppendItalicThis("\nYou are a valid").AppendNormalThis(" ")
-			md.AppendItalicThis(t.GetStringPermission()).AppendNormal(".")
-		}
-
-		b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
-			ParseMode: sv.MarkDownV2,
-		})
-
-		return ext.EndGroups
-	*/
 }
 
 func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
@@ -94,7 +77,9 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 		// we don't need to do anything.
 		return
 	}
+
 	time.Sleep(3 * time.Second)
+
 	md = welcomeMd.AppendNormalThis("Cymatic Scan results:")
 	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
 	md.AppendMentionThis(user.FirstName, user.Id)
@@ -155,7 +140,7 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 	}
 	md = welcomeMd.AppendNormalThis("Cymatic Scan results:")
 	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
-	md.AppendMentionThis(user.FirstName+"\n", user.Id)
+	md.AppendMentionThis(user.FirstName, user.Id)
 	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
 	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
 	md.AppendBoldThis("\n • Is banned").AppendNormalThis(": ")
@@ -164,14 +149,28 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 	md.AppendMonoThis(t.GetTitleStringPermission())
 	md.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
 	md.AppendMonoThis(u.EstimateCrimeCoefficient()).ElThis()
-	msg, err = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:   sv.MarkDownV2,
 		ReplyMarkup: *markup,
 	})
-	if err != nil || msg == nil {
-		// most probably the user has deleted our message.
-		// we don't need to do anything.
-		return
-	}
 	sv.RateLimiter.RemoveCustomIgnore(user.Id)
+}
+
+func appealCallBackQuery(cq *gotgbot.CallbackQuery) bool {
+	return strings.HasPrefix(cq.Data, AutoAppealCbPrefix)
+}
+
+func closeCallBackQuery(cq *gotgbot.CallbackQuery) bool {
+	return cq.Data == CloseCbData
+}
+
+func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
+	//action := strings.TrimPrefix(ctx.CallbackQuery.Data, AutoAppealCbPrefix)
+
+	return nil
+}
+
+func closeCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
+	_, _ = ctx.EffectiveMessage.Delete(b)
+	return ext.EndGroups
 }
