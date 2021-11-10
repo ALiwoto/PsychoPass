@@ -165,6 +165,13 @@ func showAppealDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	md.AppendNormalThis(" for ")
 	md.AppendThis(u.FormatCuteFlags())
 	md.AppendThis(u.FormatDetailStrings(true))
+	md.AppendNormalThis("\n\n")
+	md.AppendNormalThis("Such type of actions are often unwanted and unwelcome around Sibyl.")
+	md.AppendNormalThis("Please do note that should this ever happen again your ban will be")
+	md.AppendNormalThis("swift and its damage, measurable on the richter scale!\n")
+	md.AppendNormalThis("Click the button below to confirm that you understand this")
+	md.AppendNormalThis(" and if you have questions please click the Support button")
+	md.AppendNormalThis("to take your query to the bureau.")
 	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
