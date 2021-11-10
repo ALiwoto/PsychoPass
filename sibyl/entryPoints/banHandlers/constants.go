@@ -6,5 +6,6 @@ const (
 )
 
 const (
-	MessageUnbanned = "User was unbanned"
+	MessageUnbanned       = "User was unbanned"
+	MessageHistoryCleared = "User's history has been cleared"
 )

@@ -63,7 +63,7 @@ type User struct {
 	BanDate          string    `json:"date" gorm:"-" sql:"-"`
 	BanFlags         []BanFlag `json:"ban_flags" gorm:"-" sql:"-"`
 	IsBot            bool      `json:"is_bot"`
-	BanCount         int       `json:"-"`
+	BanCount         int       `json:"-"` // internal usage only; not meant to be seen by users.
 	FlagTrolling     bool      `json:"-"`
 	FlagSpam         bool      `json:"-"`
 	FlagEvade        bool      `json:"-"`

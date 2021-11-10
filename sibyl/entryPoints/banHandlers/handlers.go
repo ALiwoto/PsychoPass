@@ -70,29 +70,34 @@ func AddBanHandler(c *gin.Context) {
 	}
 
 	u, err := database.GetUserFromId(id)
-	if u != nil && err == nil && u.Banned {
-		// make a copy of the current struct value.
-		pre := *u
-		by := hashing.GetIdFromToken(token)
-		if isBot != u.IsBot {
-			// check both conditions; if they don't match, update the field.
-			u.IsBot = isBot
+	var count int
+	if u != nil && err == nil {
+		if u.Banned {
+
+			// make a copy of the current struct value.
+			pre := *u
+			by := hashing.GetIdFromToken(token)
+			if isBot != u.IsBot {
+				// check both conditions; if they don't match, update the field.
+				u.IsBot = isBot
+			}
+			u.BannedBy = by
+			u.Message = banMsg
+			u.Date = time.Now()
+			u.BanSourceUrl = srcUrl
+			u.SetAsBanReason(banReason)
+			u.IncreaseCrimeCoefficientAuto()
+			database.UpdateBanparameter(u)
+			entry.SendResult(c, &BanResult{
+				PreviousBan: &pre,
+				CurrentBan:  u,
+			})
+			return
 		}
-		u.BannedBy = by
-		u.Message = banMsg
-		u.Date = time.Now()
-		u.BanSourceUrl = srcUrl
-		u.SetAsBanReason(banReason)
-		u.IncreaseCrimeCoefficientAuto()
-		database.UpdateBanparameter(u)
-		entry.SendResult(c, &BanResult{
-			PreviousBan: &pre,
-			CurrentBan:  u,
-		})
-		return
+		count = u.BanCount
 	}
 
-	u = database.AddBan(id, by, banReason, banMsg, srcUrl, isBot)
+	u = database.AddBan(id, by, banReason, banMsg, srcUrl, isBot, count)
 	entry.SendResult(c, &BanResult{
 		CurrentBan: u,
 	})
@@ -101,6 +106,7 @@ func AddBanHandler(c *gin.Context) {
 func RemoveBanHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "userId", "id")
+	clearHistory := ws.ToBool(utils.GetParam(c, "clear-history"))
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginRemoveBan)
 		return
@@ -135,10 +141,15 @@ func RemoveBanHandler(c *gin.Context) {
 	}
 
 	if !u.Banned && len(u.Reason) == 0 && len(u.BanFlags) == 0 {
+		if clearHistory {
+			database.ClearHistory(u)
+			entry.SendResult(c, MessageHistoryCleared)
+			return
+		}
 		entry.SendUserNotBannedError(c, OriginRemoveBan)
 		return
 	}
 
-	database.RemoveUserBan(u)
+	database.RemoveUserBan(u, clearHistory)
 	entry.SendResult(c, MessageUnbanned)
 }

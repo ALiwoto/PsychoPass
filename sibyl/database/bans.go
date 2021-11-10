@@ -6,7 +6,7 @@ import (
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 )
 
-func AddBan(userID, adder int64, reason, message, src string, isBot bool) *sv.User {
+func AddBan(userID, adder int64, reason, message, src string, isBot bool, count int) *sv.User {
 	user := &sv.User{
 		UserID:       userID,
 		Banned:       true,
@@ -15,6 +15,7 @@ func AddBan(userID, adder int64, reason, message, src string, isBot bool) *sv.Us
 		BannedBy:     adder,
 		BanSourceUrl: src,
 		IsBot:        isBot,
+		BanCount:     count,
 	}
 	user.SetAsBanReason(reason)
 	user.IncreaseCrimeCoefficientAuto()
@@ -35,14 +36,26 @@ func DeleteUser(userID int64) {
 }
 
 // RemoveUserBan will unban a user from the sibyl database.
-func RemoveUserBan(user *sv.User) {
-	if user.Banned {
-		user.FormatBanDate()
-		user.SetAsPastBan()
-	} else {
-		// user is not banned
+func RemoveUserBan(user *sv.User, clearHistory bool) {
+	if !user.Banned {
+		// don't send any query to database if user is not banned.
 		return
 	}
+	user.FormatBanDate()
+	user.SetAsPastBan(clearHistory)
+	lockdb()
+	tx := SESSION.Begin()
+	tx.Save(user)
+	tx.Commit()
+	unlockdb()
+}
+
+// ClearHistory will unban a user from the sibyl database.
+func ClearHistory(user *sv.User) {
+	if user.Banned {
+		return
+	}
+	user.ClearHistory()
 	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(user)
