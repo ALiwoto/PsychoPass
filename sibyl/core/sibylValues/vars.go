@@ -102,5 +102,5 @@ var _detailsString = map[BanFlag]string{
 	BanFlagNSFW:         "You were found posting pornographic or suggestively pornographic content in groups that do not welcome such content.",
 	BanFlagRaid:         "You and your pals were engaged in raining a group/bot with the attempt to vandalize, this ban is unappealable and you are never welcome around our communities.",
 	BanFlagSpamBot:      "You were behaving like a scam bot that attempts to ensnare users with falsified data in attempt to scam them.",
-	BanFlagMassAdd:      "You were spam adding members from other groups to your own, not only this not welcome as platform terms of service this is also unwelcome around Sibyl, your ban will not be appealable.",
+	BanFlagMassAdd:      "You were spam adding members from other groups to your own, not only this isn't welcome as platform terms of service this is also unwelcome around Sibyl, your ban will not be appealable.",
 }

@@ -289,7 +289,7 @@ func (u *User) CanTryAppealing() bool {
 }
 
 func (u *User) CanAppeal() bool {
-	return u.CrimeCoefficient >= MaxAppealCoefficient || u.HasCustomFlag()
+	return u.CrimeCoefficient <= MaxAppealCoefficient && !u.HasCustomFlag()
 }
 
 func (u *User) HasCustomFlag() bool {

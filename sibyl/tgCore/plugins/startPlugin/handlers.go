@@ -168,14 +168,31 @@ func showAppealDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	md.AppendNormalThis("\n")
 	md.AppendNormalThis("Such type of actions are often unwanted and unwelcome around Sibyl.")
 	md.AppendNormalThis(" Please do note that should this ever happen again your ban will be")
-	md.AppendNormalThis("swift and its damage, measurable on the richter scale!\n")
+	md.AppendNormalThis(" swift and its damage, measurable on the richter scale!\n")
 	md.AppendNormalThis("Click the button below to confirm that you understand this")
 	md.AppendNormalThis(" and if you have questions please click the Support button")
-	md.AppendNormalThis("to take your query to the bureau.")
+	md.AppendNormalThis(" to take your query to the bureau.")
 	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 		ReplyMarkup:           makeDetailsPageAppealButtons(true),
+	})
+	return ext.EndGroups
+}
+
+func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
+	user := ctx.EffectiveUser
+	msg := ctx.EffectiveMessage
+	md := mdparser.GetUserMention(user.FirstName, user.Id)
+	md.AppendNormalThis(", appeal request has been sent to Sibyl System.")
+	markup := gotgbot.InlineKeyboardMarkup{
+		InlineKeyboard: makeNormalButtons(),
+	}
+
+	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+		ParseMode:             sv.MarkDownV2,
+		DisableWebPagePreview: true,
+		ReplyMarkup:           markup,
 	})
 	return ext.EndGroups
 }
@@ -221,6 +238,38 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 			return ext.EndGroups
 		}
 		return showAppealDetails(b, ctx, u)
+	case detailsAcceptCbData:
+		date := time.Unix(ctx.CallbackQuery.Message.Date, 0)
+		if time.Since(date) > time.Minute*5 {
+			_, _ = ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
+				Text:      "You took too long to respond. Please try again.",
+				ShowAlert: true,
+			})
+			_, _ = ctx.EffectiveMessage.Delete(b)
+			return ext.EndGroups
+		}
+		u, err := database.GetUserFromId(ctx.CallbackQuery.From.Id)
+		if u == nil || err != nil || !u.Banned {
+			_, _ = ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
+				Text:      "You are not banned.",
+				ShowAlert: true,
+			})
+			_, _ = ctx.EffectiveMessage.Delete(b)
+			return ext.EndGroups
+		}
+		if !u.CanTryAppealing() || !u.CanAppeal() {
+			user := ctx.EffectiveUser
+			md := mdparser.GetUserMention(user.FirstName, user.Id)
+			md.AppendNormalThis(", you are no longer able to use auto appeal system.\n")
+			md.AppendNormalThis("Please take your questions to @PublicSafetyBureau if you want an unban.")
+			_, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+				ParseMode:             sv.MarkDownV2,
+				DisableWebPagePreview: true,
+				ReplyMarkup:           makeDetailsPageAppealButtons(false),
+			})
+			return ext.EndGroups
+		}
+		return showAppealDoneDetails(b, ctx, u)
 	}
 	return ext.EndGroups
 }
