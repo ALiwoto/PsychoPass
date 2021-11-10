@@ -166,6 +166,15 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	case CloseCbData:
 		_, _ = ctx.EffectiveMessage.Delete(b)
 	case firstAcceptCbData:
+		date := time.Unix(ctx.CallbackQuery.Message.Date, 0)
+		if time.Since(date) > time.Minute*5 {
+			_, _ = ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
+				Text:      "You took too long to respond. Please try again.",
+				ShowAlert: true,
+			})
+			_, _ = ctx.EffectiveMessage.Delete(b)
+			return ext.EndGroups
+		}
 		//TODO
 	}
 	return ext.EndGroups
