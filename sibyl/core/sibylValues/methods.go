@@ -340,6 +340,8 @@ func (u *User) FormatCuteFlags() mdparser.WMarkDown {
 	md := mdparser.GetEmpty()
 	if len(u.BanFlags) == 0 {
 		return md
+	} else if len(u.BanFlags) == 1 {
+		return md.AppendNormalThis(strings.ToLower(string(u.BanFlags[0x0])))
 	}
 
 	for i, current := range u.BanFlags {
