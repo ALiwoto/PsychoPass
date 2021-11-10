@@ -79,7 +79,7 @@ func makeDetailsPageAppealButtons(canAppeal bool) gotgbot.InlineKeyboardMarkup {
 		})
 	} else {
 		rows = make([][]gotgbot.InlineKeyboardButton, 1)
-		rows[0] = append(rows[1], gotgbot.InlineKeyboardButton{
+		rows[0] = append(rows[0], gotgbot.InlineKeyboardButton{
 			Text: "Take me to support group",
 			Url:  "https://t.me/PublicSafetyBureau",
 		})
