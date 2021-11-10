@@ -336,6 +336,43 @@ func (u *User) FormatFlags() mdparser.WMarkDown {
 	return md
 }
 
+func (u *User) FormatCuteFlags() mdparser.WMarkDown {
+	md := mdparser.GetEmpty()
+	if len(u.BanFlags) == 0 {
+		return md
+	}
+
+	for i, current := range u.BanFlags {
+		if i != 0 && i != len(u.BanFlags)-1 {
+			md.AppendNormalThis(", ")
+		} else if i == len(u.BanFlags)-1 {
+			md.AppendNormalThis(" and ")
+		}
+		md.AppendNormalThis(strings.ToLower(string(current)))
+	}
+
+	return md
+}
+
+func (u *User) FormatDetailStrings() mdparser.WMarkDown {
+	md := mdparser.GetEmpty()
+	if len(u.BanFlags) == 0 {
+		return md
+	}
+
+	var details string
+
+	for _, current := range u.BanFlags {
+		details = _detailsString[current]
+		if len(details) == 0 {
+			continue
+		}
+		md.AppendNormalThis("  " + details + "\n\n")
+	}
+
+	return md
+}
+
 func (u *User) EstimateCrimeCoefficientSep() (string, string) {
 	c := u.CrimeCoefficient
 	if c > 100 {

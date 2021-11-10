@@ -120,7 +120,7 @@ Cymatic Scan results:
    But on telegram, in the bot, this '•' character should be used.
 -->
 
-Since this is your first time we can allow you an one time exception provided that you will not repeat this ever again. \
+Since this is your first time we can allow you a one time exception provided that you will not repeat this ever again. \
 [I will not do this again! ] \
 [Close this message]
 ### Step 3

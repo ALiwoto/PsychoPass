@@ -64,6 +64,31 @@ func makeFirstPageAppealButtons() [][]gotgbot.InlineKeyboardButton {
 	return FirstPageButtonsRows
 }
 
+func makeDetailsPageAppealButtons(canAppeal bool) gotgbot.InlineKeyboardMarkup {
+	var markup gotgbot.InlineKeyboardMarkup
+	var rows [][]gotgbot.InlineKeyboardButton
+	if canAppeal {
+		rows = make([][]gotgbot.InlineKeyboardButton, 2)
+		rows[0] = append(rows[0], gotgbot.InlineKeyboardButton{
+			Text:         "I read and understand, unban me!",
+			CallbackData: AutoAppealCbPrefix + detailsAcceptCbData,
+		})
+		rows[1] = append(rows[1], gotgbot.InlineKeyboardButton{
+			Text: "Take me to support group",
+			Url:  "https://t.me/PublicSafetyBureau",
+		})
+	} else {
+		rows = make([][]gotgbot.InlineKeyboardButton, 1)
+		rows[0] = append(rows[1], gotgbot.InlineKeyboardButton{
+			Text: "Take me to support group",
+			Url:  "https://t.me/PublicSafetyBureau",
+		})
+	}
+
+	markup.InlineKeyboard = rows
+	return markup
+}
+
 func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 	startCmd := handlers.NewCommand(StartCmd, startHandler)
 	createCmd := handlers.NewCommand(CreateCmd, startHandler)

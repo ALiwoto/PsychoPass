@@ -93,7 +93,7 @@ var (
 
 // _detailsString is the internal map for loading details string.
 // as we are not using any mutex for this map, it should be read-only.
-var _detailsString = map[string]string{
+var _detailsString = map[BanFlag]string{
 	BanFlagTrolling:     "Trolls aren't welcome on sane groups, when you go to groups just to annoy the admins to show much you are in control of mayhem, sibyl steps in. We do not welcome trolls and misbehavers.",
 	BanFlagSpam:         "Users who post unwanted content with the aim to promote their own products or links aren't welcome around the communities we protect.",
 	BanFlagEvade:        "Users that create more accounts to then evade a previously assigned ban are simply just as guilty, changing your account does not remove your previously caused drama from telegram.",

@@ -7,7 +7,8 @@ const (
 )
 
 const (
-	AutoAppealCbPrefix = "ap_"
-	firstAcceptCbData  = "fAccept"
-	CloseCbData        = "close"
+	AutoAppealCbPrefix  = "ap_"
+	firstAcceptCbData   = "fAccept"
+	detailsAcceptCbData = "dAccept"
+	CloseCbData         = "close"
 )

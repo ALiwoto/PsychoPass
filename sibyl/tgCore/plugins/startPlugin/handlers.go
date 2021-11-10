@@ -109,7 +109,7 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	}
 
 	md.AppendNormalThis("\n\nSince this is your first time we can allow you")
-	md.AppendNormalThis(" an one time exception provided that you will not")
+	md.AppendNormalThis(" a one time exception provided that you will not")
 	md.AppendNormalThis(" repeat this ever again.")
 	markup.InlineKeyboard = makeFirstPageAppealButtons()
 	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
@@ -156,6 +156,21 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 	sv.RateLimiter.RemoveCustomIgnore(user.Id)
 }
 
+func showAppealDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
+	user := ctx.EffectiveUser
+	msg := ctx.EffectiveMessage
+	md := mdparser.GetUserMention(user.FirstName, user.Id)
+	md.AppendNormalThis(", you were blacklisted on Sibyl for ")
+	md.AppendThis(u.FormatCuteFlags())
+	md.AppendThis(u.FormatDetailStrings())
+	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+		ParseMode:             sv.MarkDownV2,
+		DisableWebPagePreview: true,
+		ReplyMarkup:           makeDetailsPageAppealButtons(true),
+	})
+	return ext.EndGroups
+}
+
 func appealCallBackQuery(cq *gotgbot.CallbackQuery) bool {
 	return strings.HasPrefix(cq.Data, AutoAppealCbPrefix)
 }
@@ -175,7 +190,28 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 			_, _ = ctx.EffectiveMessage.Delete(b)
 			return ext.EndGroups
 		}
-		//TODO
+		u, err := database.GetUserFromId(ctx.CallbackQuery.From.Id)
+		if u == nil || err != nil || !u.Banned {
+			_, _ = ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
+				Text:      "You are not banned.",
+				ShowAlert: true,
+			})
+			_, _ = ctx.EffectiveMessage.Delete(b)
+			return ext.EndGroups
+		}
+		if !u.CanTryAppealing() || !u.CanAppeal() {
+			user := ctx.EffectiveUser
+			md := mdparser.GetUserMention(user.FirstName, user.Id)
+			md.AppendNormalThis(", you are no longer able to use auto appeal system.\n")
+			md.AppendNormalThis("Please take your questions to @PublicSafetyBureau if you want an unban.")
+			_, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+				ParseMode:             sv.MarkDownV2,
+				DisableWebPagePreview: true,
+				ReplyMarkup:           makeDetailsPageAppealButtons(false),
+			})
+			return ext.EndGroups
+		}
+		return showAppealDetails(b, ctx, u)
 	}
 	return ext.EndGroups
 }
