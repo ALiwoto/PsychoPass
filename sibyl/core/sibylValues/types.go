@@ -1,6 +1,8 @@
 package sibylValues
 
-import "time"
+import (
+	"time"
+)
 
 /*
 Coefficients and Flags

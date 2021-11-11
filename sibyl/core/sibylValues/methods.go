@@ -307,6 +307,10 @@ func (u *User) FormatBanDate() {
 	u.BanDate = time.Now().Format("2006-01-02 at 15:04:05")
 }
 
+func (u *User) GetDateAsShort() string {
+	return u.Date.Format(AppealLogDateFormat)
+}
+
 func (u *User) EstimateCrimeCoefficient() string {
 	c := u.CrimeCoefficient
 	if c > 100 {
@@ -372,7 +376,7 @@ func (u *User) FormatDetailStrings(showPrefixes bool) mdparser.WMarkDown {
 		if len(details) == 0 {
 			continue
 		}
-		md.AppendNormalThis("  " + details + "\n\n")
+		md.AppendNormalThis("• " + details + "\n\n")
 	}
 
 	return md

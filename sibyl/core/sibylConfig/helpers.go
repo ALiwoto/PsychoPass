@@ -177,6 +177,12 @@ func LoadConfigFromFile(fileName string) error {
 	}
 	SibylConfig.BaseChats = parseBaseStr(strings.TrimSpace(baseStr))
 
+	appealLogsStr, err := configContent.Get("telegram", "appeal_logs")
+	if err != nil || len(baseStr) == 0 {
+		appealLogsStr = env("APPEAL_LOGS")
+	}
+	SibylConfig.AppealLogs = parseBaseStr(strings.TrimSpace(appealLogsStr))
+
 	preStr, err := configContent.Get("telegram", "cmd_prefixes")
 	if err != nil || len(preStr) == 0 {
 		preStr = env("CMD_PREFIXES")
@@ -352,6 +358,13 @@ func GetOwnersID() []int64 {
 func GetBaseChatIds() []int64 {
 	if SibylConfig != nil {
 		return SibylConfig.BaseChats
+	}
+	return nil
+}
+
+func GetAppealLogChatIds() []int64 {
+	if SibylConfig != nil {
+		return SibylConfig.AppealLogs
 	}
 	return nil
 }

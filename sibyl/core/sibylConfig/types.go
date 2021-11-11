@@ -40,6 +40,7 @@ type SibylSystemConfig struct {
 	// BaseChats is the base group's IDs. separate them using " " or ",".
 	// values in base chats can be anything: a user's pm, a channel or a group.
 	BaseChats                 []int64 `json:"base_chats"`
+	AppealLogs                []int64 `json:"appeal_logs"`
 	RateLimiterPunishmentTime int64   `json:"rate_limiter_punishment_time"`
 	RateLimiterTimeout        int64   `json:"rate_limiter_timeout"`
 	RateLimiterMaxMessages    int64   `json:"rate_limiter_max_messages"`

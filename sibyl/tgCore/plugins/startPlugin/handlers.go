@@ -7,6 +7,7 @@ import (
 
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
@@ -160,12 +161,11 @@ func showAppealDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	user := ctx.EffectiveUser
 	msg := ctx.EffectiveMessage
 	md := mdparser.GetUserMention(user.FirstName, user.Id)
-	md.AppendNormalThis(", you were blacklisted on ")
+	md.AppendNormalThis("! You were blacklisted on ")
 	md.AppendHyperLinkThis("Sibyl System", "https://t.me/SibylSystem")
 	md.AppendNormalThis(" for ")
 	md.AppendThis(u.FormatCuteFlags())
 	md.AppendThis(u.FormatDetailStrings(true))
-	md.AppendNormalThis("\n")
 	md.AppendNormalThis("Such type of actions are often unwanted and unwelcome around Sibyl.")
 	md.AppendNormalThis(" Please do note that should this ever happen again your ban will be")
 	md.AppendNormalThis(" swift and its damage, measurable on the richter scale!\n")
@@ -184,11 +184,43 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	user := ctx.EffectiveUser
 	msg := ctx.EffectiveMessage
 	md := mdparser.GetUserMention(user.FirstName, user.Id)
-	md.AppendNormalThis(", appeal request has been sent to Sibyl System.")
+	md.AppendNormalThis("! You have been unbanned!")
+	md.AppendBoldThis("Note: ").AppendNormalThis("You will ")
+	md.AppendBoldThis("not ").AppendNormalThis("be able to appeal this ban again.")
 	markup := gotgbot.InlineKeyboardMarkup{
 		InlineKeyboard: makeNormalButtons(),
 	}
+
+	// lift the ban.
 	database.RemoveUserBan(u, false)
+
+	// send the log message to the log channel(s).
+	chats := sibylConfig.GetAppealLogChatIds()
+	if len(chats) > 0 {
+		logMd := mdparser.GetNormal("#AutoAppeal")
+		logMd.AppendBoldThis("\n • User").AppendNormalThis(": ")
+		logMd.AppendMentionThis(user.FirstName, user.Id)
+		logMd.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
+		logMd.AppendMonoThis(u.GetStringCrimeCoefficient())
+		logMd.AppendBoldThis("\n • Reason(s)").AppendNormalThis(": ")
+		logMd.AppendThis(u.FormatFlags())
+		logMd.AppendBoldThis("\n • Description").AppendNormalThis(": ")
+		logMd.AppendThis(u.FormatFlags())
+		logMd.AppendBoldThis("\n • Scan Date").AppendNormalThis(": ")
+		logMd.AppendMonoThis(u.GetDateAsShort())
+		logMd.AppendBoldThis("\n • Appeal Date").AppendNormalThis(": ")
+		logMd.AppendMonoThis(time.Now().Format(sv.AppealLogDateFormat))
+
+		go func() {
+			for _, chatId := range chats {
+				_, _ = b.SendMessage(chatId, logMd.ToString(), &gotgbot.SendMessageOpts{
+					ParseMode:   sv.MarkDownV2,
+					ReplyMarkup: markup,
+				})
+			}
+		}()
+	}
+
 	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
