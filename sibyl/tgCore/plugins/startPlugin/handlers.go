@@ -214,8 +214,7 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 		go func() {
 			for _, chatId := range chats {
 				_, _ = b.SendMessage(chatId, logMd.ToString(), &gotgbot.SendMessageOpts{
-					ParseMode:   sv.MarkDownV2,
-					ReplyMarkup: markup,
+					ParseMode: sv.MarkDownV2,
 				})
 			}
 		}()
