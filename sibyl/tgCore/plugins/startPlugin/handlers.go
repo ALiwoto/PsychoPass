@@ -68,8 +68,8 @@ func startHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	message := ctx.EffectiveMessage
 	user := ctx.EffectiveUser
-	welcomeMd := mdparser.GetNormal("Welcome to Sibyl System!\n")
-	md := welcomeMd.AppendNormal("Please wait while we finish your cymatic scan...")
+	welcomeMd := mdparser.GetNormal("Welcome to Sibyl System!")
+	md := welcomeMd.AppendNormal("\nPlease wait while we finish your cymatic scan...")
 	msg, err := message.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode: sv.MarkDownV2,
 	})
@@ -185,7 +185,7 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	msg := ctx.EffectiveMessage
 	md := mdparser.GetUserMention(user.FirstName, user.Id)
 	md.AppendNormalThis("! You have been unbanned!")
-	md.AppendBoldThis("Note: ").AppendNormalThis("You will ")
+	md.AppendBoldThis("\nNote: ").AppendNormalThis("You will ")
 	md.AppendBoldThis("not ").AppendNormalThis("be able to appeal this ban again.")
 	markup := gotgbot.InlineKeyboardMarkup{
 		InlineKeyboard: makeNormalButtons(),
