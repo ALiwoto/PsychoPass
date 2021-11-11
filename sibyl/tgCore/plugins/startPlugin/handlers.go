@@ -188,7 +188,7 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	markup := gotgbot.InlineKeyboardMarkup{
 		InlineKeyboard: makeNormalButtons(),
 	}
-
+	database.RemoveUserBan(u, false)
 	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
