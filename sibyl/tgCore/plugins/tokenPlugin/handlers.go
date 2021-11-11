@@ -110,7 +110,6 @@ func revokeTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 			kb.InlineKeyboard[2][0].Text = "Close"
 			kb.InlineKeyboard[2][0].CallbackData = "ap_close" // let start package handle close button xD
 			_, _ = ctx.EffectiveMessage.EditText(b, msg.Text, &gotgbot.EditMessageTextOpts{
-				ParseMode:   sv.MarkDownV2,
 				Entities:    msg.Entities,
 				ReplyMarkup: *kb,
 			})
