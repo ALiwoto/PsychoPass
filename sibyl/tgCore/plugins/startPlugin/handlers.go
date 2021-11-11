@@ -191,23 +191,27 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 		InlineKeyboard: makeNormalButtons(),
 	}
 
+	// copy the banned user's info, so database package doesn't change it in future.
+	pre := *u
+
 	// lift the ban.
 	database.RemoveUserBan(u, false)
 
 	// send the log message to the log channel(s).
 	chats := sibylConfig.GetAppealLogChatIds()
 	if len(chats) > 0 {
+		uPre := &pre
 		logMd := mdparser.GetNormal("#AutoAppeal")
 		logMd.AppendBoldThis("\n • User").AppendNormalThis(": ")
 		logMd.AppendMentionThis(user.FirstName, user.Id)
 		logMd.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
-		logMd.AppendMonoThis(u.GetStringCrimeCoefficient())
+		logMd.AppendMonoThis(uPre.GetStringCrimeCoefficient())
 		logMd.AppendBoldThis("\n • Reason(s)").AppendNormalThis(": ")
-		logMd.AppendThis(u.FormatFlags())
+		logMd.AppendThis(uPre.FormatFlags())
 		logMd.AppendBoldThis("\n • Description").AppendNormalThis(": ")
-		logMd.AppendThis(u.FormatFlags())
+		logMd.AppendThis(uPre.FormatFlags())
 		logMd.AppendBoldThis("\n • Scan Date").AppendNormalThis(": ")
-		logMd.AppendMonoThis(u.GetDateAsShort())
+		logMd.AppendMonoThis(uPre.GetDateAsShort())
 		logMd.AppendBoldThis("\n • Appeal Date").AppendNormalThis(": ")
 		logMd.AppendMonoThis(time.Now().Format(sv.AppealLogDateFormat))
 
