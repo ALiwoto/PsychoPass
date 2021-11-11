@@ -6,21 +6,64 @@ import (
 	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
-	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
 )
 
-func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
-	revokeCmd := handlers.NewCommand(RevokeCmd, revokeHandler)
-	assignCmd := handlers.NewCommand(AssignCmd, assignHandler)
-	revokeCmd.Triggers = t
-	assignCmd.Triggers = t
-	d.AddHandler(revokeCmd)
-	d.AddHandler(assignCmd)
+func getTokenCallBackQuery(cq *gotgbot.CallbackQuery) bool {
+	return cq.Data == GetTokenCbValue
+}
+
+func getTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
+	var t *sv.Token
+	var err error
+	user := ctx.EffectiveUser
+	kb := ctx.EffectiveMessage.ReplyMarkup
+	if kb == nil || len(kb.InlineKeyboard) < 3 {
+		// message doesn't have any reply markup; special situation which is
+		// unlikely to happen, added this checker just in-case to prevent
+		// from panic.
+		return ext.EndGroups
+	}
+
+	t, err = database.GetTokenFromId(user.Id)
+	if err != nil {
+		logging.UnexpectedError(err)
+		return ext.EndGroups
+	}
+
+	if t == nil {
+		// should create a new token
+		t, err = utils.CreateToken(user.Id, sv.NormalUser)
+		if err != nil {
+			logging.UnexpectedError(err)
+			return ext.EndGroups
+		}
+	}
+
+	md := mdparser.GetNormal("Information:")
+	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
+	md.AppendMentionThis(user.FirstName, user.Id)
+	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
+	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
+	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
+	md.AppendMonoThis(t.GetTitleStringPermission())
+	md.AppendBoldThis("\n\nToken").AppendNormalThis(": ")
+	md.AppendMonoThis(t.Hash)
+	md.AppendNormalThis("\n\nPlease don't share your token with anyone else!")
+
+	kb.InlineKeyboard[2][0].Text = "Revoke API token"
+	kb.InlineKeyboard[2][0].CallbackData = RevokeTokenCbValue
+
+	_, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+		ParseMode:   sv.MarkDownV2,
+		ReplyMarkup: *kb,
+	})
+	return ext.EndGroups
 }
 
 // revokeHandler is the handler for the /revoke command.
@@ -223,7 +266,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
 		} else if !t.CanChangePermission(u.Permission, perm) {
 			md = mdparser.GetNormal("Seems like you don't have enough privileges to ")
-			md.AppendNormalThis("do this action.\nPlease try another user ID.")
+			md.AppendNormalThis("take this action.\nPlease try another user ID.")
 		} else {
 			targetUser, err = database.GetUserFromId(targetId)
 			if err == nil && targetUser != nil && targetUser.Banned {

@@ -10,7 +10,19 @@ import (
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
 )
+
+func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
+	revokeCmd := handlers.NewCommand(RevokeCmd, revokeHandler)
+	assignCmd := handlers.NewCommand(AssignCmd, assignHandler)
+	getTokenCb := handlers.NewCallback(getTokenCallBackQuery, getTokenCallBackResponse)
+	revokeCmd.Triggers = t
+	assignCmd.Triggers = t
+	d.AddHandler(revokeCmd)
+	d.AddHandler(assignCmd)
+	d.AddHandler(getTokenCb)
+}
 
 func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p string, replied bool) {
 	var err error
