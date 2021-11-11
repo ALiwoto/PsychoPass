@@ -209,7 +209,7 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 		logMd.AppendBoldThis("\n • Reason(s)").AppendNormalThis(": ")
 		logMd.AppendThis(uPre.FormatFlags())
 		logMd.AppendBoldThis("\n • Description").AppendNormalThis(": ")
-		logMd.AppendThis(uPre.FormatFlags())
+		logMd.AppendNormalThis(uPre.Reason)
 		logMd.AppendBoldThis("\n • Scan Date").AppendNormalThis(": ")
 		logMd.AppendMonoThis(uPre.GetDateAsShort())
 		logMd.AppendBoldThis("\n • Appeal Date").AppendNormalThis(": ")
