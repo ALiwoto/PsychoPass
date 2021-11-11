@@ -8,8 +8,6 @@ import (
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/reportHandlers"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/tokenHandlers"
 	"github.com/gin-gonic/gin"
-	swaggerfiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func LoadHandlers() {
@@ -33,9 +31,12 @@ func LoadHandlers() {
 	// addBan handlers
 	bindHandler(banHandlers.AddBanHandler, "addBan", "ban", "banUser")
 
+	// addBan handlers
+	bindPostHandler(banHandlers.MultiBanHandler, "multiBan", "addMultiBan")
+
 	// deleteBan handlers
 	bindHandler(banHandlers.RemoveBanHandler, "deleteBan", "removeBan",
-		"revertBan", "remBan")
+		"revertBan", "remBan", "rmBan")
 
 	// getInfo handlers
 	bindHandler(infoHandlers.GetInfoHandler, "getInfo", "fetchInfo")
@@ -52,13 +53,18 @@ func LoadHandlers() {
 	// report handlers
 	bindHandler(reportHandlers.ReportUserHandler, "report", "reportUser")
 
-	ServerEngine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	bindNoRoot()
 }
 
 func bindHandler(handler gin.HandlerFunc, paths ...string) {
 	for _, path := range paths {
 		ServerEngine.GET(path, handler)
+		ServerEngine.POST(path, handler)
+	}
+}
+
+func bindPostHandler(handler gin.HandlerFunc, paths ...string) {
+	for _, path := range paths {
 		ServerEngine.POST(path, handler)
 	}
 }
@@ -84,6 +90,8 @@ func noRootHandler(c *gin.Context) {
 		tokenHandlers.GetAllRegisteredUsersHandler(c)
 	case "addban", "ban", "banuser":
 		banHandlers.AddBanHandler(c)
+	case "multiban", "addmultiban":
+		banHandlers.MultiBanHandler(c)
 	case "deleteban", "removeban", "revertban", "remban":
 		banHandlers.RemoveBanHandler(c)
 	case "getinfo", "fetchinfo":

@@ -177,6 +177,10 @@ func RevokeTokenHandler(c *gin.Context) {
 	// second one is checking if the user is trying to revoke their
 	// own token or not.
 	if d.CanRevokeToken() || token == u.Hash {
+		if !u.CanBeRevoked() {
+			entry.SendCannotBeRevokedError(c, OriginRevokeToken)
+			return
+		}
 		database.RevokeTokenHash(u, hashing.GetUserToken(id))
 		entry.SendResult(c, u)
 		return

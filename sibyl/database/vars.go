@@ -8,8 +8,9 @@ import (
 )
 
 var (
-	ErrInvalidToken = errors.New("token is invalid")
-	ErrNoSession    = errors.New("database session is not initialized")
+	ErrInvalidToken   = errors.New("token is invalid")
+	ErrNoSession      = errors.New("database session is not initialized")
+	ErrTooManyRevokes = errors.New("token has been revoked too many times")
 )
 
 var (

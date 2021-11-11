@@ -23,11 +23,15 @@ func AddBan(userID, adder int64, reason, message, src string, isBot bool, count 
 	return user
 }
 
+func AddBanByInfo(info *sv.MultiBanUserInfo, adder int64, count int) *sv.User {
+	return AddBan(info.UserId, adder, info.Reason, info.Message, info.Source, info.IsBot, count)
+}
+
 // DeleteUser will delete a user from the sibyl database.
 func DeleteUser(userID int64) {
 	lockdb()
 	tx := SESSION.Begin()
-	u := tx.Where("user_id = ?", userID)
+	u := tx.Model(modelUser).Where("user_id = ?", userID)
 	if u != nil {
 		u.Delete(&sv.User{})
 	}

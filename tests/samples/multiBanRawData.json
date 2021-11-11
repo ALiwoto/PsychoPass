@@ -1,0 +1,74 @@
+{
+    "users": [
+        {
+            "user_id": 100,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": true
+        },
+        {
+            "user_id": 101,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": false
+        },
+        {
+            "user_id": 102,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": true
+        },
+        {
+            "user_id": 103,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": false
+        },
+        {
+            "user_id": 104,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": true
+        },
+        {
+            "user_id": 105,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": false
+        },
+        {
+            "user_id": 106,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": true
+        },
+        {
+            "user_id": 107,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": false
+        },
+        {
+            "user_id": 108,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": true
+        },
+        {
+            "user_id": 109,
+            "reason": "spam and raid",
+            "message": "https://t.me/telegram/505050",
+            "source": "https://t.me/src/5123",
+            "is_bot": false
+        }
+    ]
+}

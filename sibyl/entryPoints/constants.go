@@ -32,6 +32,18 @@ const (
 	// it's already unbanned (or never banned).
 	ErrUserNotBanned = "User is not banned"
 
+	// ErrNoData is the error message that should be sent when the
+	// inspector hasn't provided any data for us.
+	ErrNoData = "No raw data provided"
+
+	// ErrBadData is the error message that should be sent when the
+	// inspector has provided malformatted data.
+	ErrBadData = "Raw data should be in JSON format"
+
+	// ErrCannotBeRevoked is the error message that should be sent when the
+	// target token has been revoked too many times.
+	ErrCannotBeRevoked = "Token cannot be revoked anymore"
+
 	// ErrNoReason is the error message that should be sent when the user
 	// has sent a request without providing any reason.
 	ErrNoReason = "Reason is required for this action"

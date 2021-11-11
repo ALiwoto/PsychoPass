@@ -195,6 +195,42 @@ func SendUserNotBannedError(c *gin.Context, origin string) {
 	})
 }
 
+func SendNoDataError(c *gin.Context, origin string) {
+	c.JSON(http.StatusOK, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusBadRequest,
+			Message:   ErrNoData,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
+func SendBadDataError(c *gin.Context, origin string) {
+	c.JSON(http.StatusOK, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusBadRequest,
+			Message:   ErrBadData,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
+func SendCannotBeRevokedError(c *gin.Context, origin string) {
+	c.JSON(http.StatusOK, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusTooManyRequests,
+			Message:   ErrCannotBeRevoked,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
 func SendNoMessageError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,

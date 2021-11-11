@@ -49,7 +49,7 @@ func decideToRun() {
 	b := getBaseUrl()
 	if strings.Contains(b, "localhost") ||
 		strings.Contains(b, "0.0.0.0") {
-		// run the app in anoter goroutine
+		// run the app in another goroutine
 		go runApp()
 
 		time.Sleep(time.Millisecond * 600)
@@ -74,7 +74,10 @@ func runApp() {
 	if err != nil {
 		logging.Fatal(err)
 	}
-
+	err = sibylConfig.LoadTriggers()
+	if err != nil {
+		logging.Fatal(err)
+	}
 	database.StartDatabase()
 	prepareOwnerToken()
 	tgCore.StartTelegramBot()
@@ -83,7 +86,12 @@ func runApp() {
 
 // getOwnerToken returns the owner's token from owner.token file
 func getOwnerToken() string {
-	return string(utils.ReadFile("owner.token"))
+	t := utils.ReadOneFile("owner.token", "owners.token")
+	if strings.Contains(t, "\n") {
+		strs := strings.Split(t, "\n")
+		return strs[0]
+	}
+	return t
 }
 
 func prepareOwnerToken() {

@@ -104,13 +104,20 @@ func UpdateTokenPermission(t *sv.Token, perm sv.UserPermission) {
 	unlockdb()
 }
 
-func RevokeTokenHash(t *sv.Token, hash string) {
+func RevokeTokenHash(t *sv.Token, hash string) error {
+	if !t.CanBeRevoked() {
+		return ErrTooManyRevokes
+	}
+	t.LastRevokeDate = time.Now()
+	t.RevokeCount++
 	t.Hash = hash
 	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(t)
 	tx.Commit()
 	unlockdb()
+
+	return nil
 }
 
 func NewToken(t *sv.Token) {

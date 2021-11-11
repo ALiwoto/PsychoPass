@@ -1,6 +1,7 @@
 package banHandlers
 
 import (
+	"encoding/json"
 	"strconv"
 	"time"
 
@@ -73,7 +74,6 @@ func AddBanHandler(c *gin.Context) {
 	var count int
 	if u != nil && err == nil {
 		if u.Banned {
-
 			// make a copy of the current struct value.
 			pre := *u
 			by := hashing.GetIdFromToken(token)
@@ -101,6 +101,47 @@ func AddBanHandler(c *gin.Context) {
 	entry.SendResult(c, &BanResult{
 		CurrentBan: u,
 	})
+}
+
+func MultiBanHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginMultiBan)
+		return
+	}
+
+	d, err := database.GetTokenFromString(token)
+	if err != nil || d == nil {
+		entry.SendInvalidTokenError(c, OriginMultiBan)
+		return
+	}
+
+	if !d.CanBan() {
+		entry.SendPermissionDenied(c, OriginMultiBan)
+		return
+	}
+
+	by := hashing.GetIdFromToken(token)
+
+	var rawData []byte
+	multiBanData := new(sv.MultiBanRawData)
+
+	rawData, err = c.GetRawData()
+	if err != nil || len(rawData) < 2 {
+		entry.SendNoDataError(c, OriginMultiBan)
+		return
+	}
+
+	err = json.Unmarshal(rawData, multiBanData)
+	if err != nil {
+		entry.SendBadDataError(c, OriginMultiBan)
+		return
+	}
+
+	go applyMultiBan(multiBanData, by)
+
+	entry.SendResult(c, MessageApplyingMultiBan)
 }
 
 func RemoveBanHandler(c *gin.Context) {

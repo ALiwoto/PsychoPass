@@ -65,3 +65,28 @@ func ReadFile(path string) string {
 	}
 	return string(b)
 }
+
+// ReadOneFile attempts to read one file from the specified paths. if file
+// doesn't exist or it contains empty data, it will try to read next path.
+// it will continue doing so until it reaches a file which exists and contains
+// valid data. it will return empty string if none of the files are valid.
+func ReadOneFile(paths ...string) string {
+	if len(paths) == 0 {
+		return ""
+	}
+
+	var str string
+
+	for _, current := range paths {
+		if len(current) == 0 {
+			return ""
+		}
+
+		str = ReadFile(current)
+		if len(str) != 0 {
+			return str
+		}
+	}
+
+	return ""
+}

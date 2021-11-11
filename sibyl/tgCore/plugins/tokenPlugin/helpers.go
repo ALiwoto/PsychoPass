@@ -17,11 +17,13 @@ func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 	revokeCmd := handlers.NewCommand(RevokeCmd, revokeHandler)
 	assignCmd := handlers.NewCommand(AssignCmd, assignHandler)
 	getTokenCb := handlers.NewCallback(getTokenCallBackQuery, getTokenCallBackResponse)
+	revokeTokenCb := handlers.NewCallback(revokeTokenCallBackQuery, revokeTokenCallBackResponse)
 	revokeCmd.Triggers = t
 	assignCmd.Triggers = t
 	d.AddHandler(revokeCmd)
 	d.AddHandler(assignCmd)
 	d.AddHandler(getTokenCb)
+	d.AddHandler(revokeTokenCb)
 }
 
 func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p string, replied bool) {

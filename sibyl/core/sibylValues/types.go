@@ -80,25 +80,35 @@ type User struct {
 }
 
 type Token struct {
-	// the user id
+	// UserId is the user id
 	UserId int64 `json:"user_id" gorm:"primaryKey"`
 
-	// the user hash
+	// Hash is the user's token hash
 	Hash string `json:"hash"`
 
 	// the user's permissions
 	Permission UserPermission `json:"permission"`
 
-	// the user's last usage time
+	// LastUsage is the user's last usage time
 	LastUsage time.Time `json:"-"`
 
-	// Creation time
+	// CreatedAt is the creation time of the token.
 	CreatedAt time.Time `json:"created_at"`
 
+	// LastRevokeDate is the last time this user has revoked the token.
+	LastRevokeDate time.Time `json:"-"`
+
+	// RevokeCount is the amount of token being revoked by this user since
+	// `LastRevokeDate` field.
+	RevokeCount int `json:"-"`
+
+	// AcceptedReports is the count of accepted reports.
 	AcceptedReports int `json:"accepted_reports"`
 
+	// DeniedReports is the count of denied reports.
 	DeniedReports int `json:"denied_reports"`
 
+	// cacheDate is the starting date of value being cached in the memory.
 	cacheDate time.Time `json:"-"`
 }
 
@@ -117,6 +127,18 @@ type Report struct {
 type CrimeCoefficientRange struct {
 	start int
 	end   int
+}
+
+type MultiBanUserInfo struct {
+	UserId  int64  `json:"user_id"`
+	Reason  string `json:"reason"`
+	Message string `json:"message"`
+	Source  string `json:"source"`
+	IsBot   bool   `json:"is_bot"`
+}
+
+type MultiBanRawData struct {
+	Users []MultiBanUserInfo `json:"users"`
 }
 
 type Triggers struct {

@@ -30,6 +30,10 @@ const (
 	MaxAppealCoefficient = 600
 	// MaxAppealCount is the maximum number of appeals a user can make.
 	MaxAppealCount = 1
+
+	// MaxTokenRevokeCount is the maximum possible times of a token being revoked
+	// by a user per day.
+	MaxTokenRevokeCount = 3
 )
 
 /*

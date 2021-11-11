@@ -97,6 +97,17 @@ func (t *Token) CanGetRegisteredList() bool {
 	return t.Permission > NormalUser
 }
 
+// CanBeRevoked returns true if this token can be revoked; otherwise false.
+func (t *Token) CanBeRevoked() bool {
+	if time.Since(t.LastRevokeDate) < 24*time.Hour {
+		if t.RevokeCount >= MaxTokenRevokeCount {
+			return false
+		}
+	}
+
+	return true
+}
+
 // CanChangePermission returns true if the token with its current
 // permission can change permission of another tokens or not.
 func (t *Token) CanChangePermission(pre, target UserPermission) bool {
@@ -600,6 +611,13 @@ func (s *StatValue) IsExpired(max time.Duration) bool {
 }
 func (s *StatValue) SetCachedTime() {
 	s.cacheTime = time.Now()
+}
+
+//---------------------------------------------------------
+
+func (m *MultiBanUserInfo) IsInvalid(by int64) bool {
+	return m.UserId == by || IsInvalidID(m.UserId) ||
+		len(m.Reason) == 0
 }
 
 //---------------------------------------------------------

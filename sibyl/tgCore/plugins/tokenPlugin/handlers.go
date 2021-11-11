@@ -45,7 +45,7 @@ func getTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		}
 	}
 
-	md := mdparser.GetNormal("Information:")
+	md := mdparser.GetNormal("\u200DInformation:")
 	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
 	md.AppendMentionThis(user.FirstName, user.Id)
 	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
@@ -58,6 +58,81 @@ func getTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	kb.InlineKeyboard[2][0].Text = "Revoke API token"
 	kb.InlineKeyboard[2][0].CallbackData = RevokeTokenCbValue
+
+	_, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+		ParseMode:   sv.MarkDownV2,
+		ReplyMarkup: *kb,
+	})
+	return ext.EndGroups
+}
+
+func revokeTokenCallBackQuery(cq *gotgbot.CallbackQuery) bool {
+	return cq.Data == RevokeTokenCbValue
+}
+
+func revokeTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
+	var t *sv.Token
+	var err error
+	user := ctx.EffectiveUser
+	msg := ctx.EffectiveMessage
+	kb := ctx.EffectiveMessage.ReplyMarkup
+	if kb == nil || len(kb.InlineKeyboard) < 3 {
+		// message doesn't have any reply markup; special situation which is
+		// unlikely to happen, added this checker just in-case to prevent
+		// from panic.
+		return ext.EndGroups
+	}
+
+	t, err = database.GetTokenFromId(user.Id)
+	if err != nil {
+		logging.UnexpectedError(err)
+		return ext.EndGroups
+	}
+
+	if t == nil {
+		// is user trying to invoke a token which doesn't even exist in the database?
+		// seems impossible, unless someone who has direct access to database deleted it.
+		// should create a new token
+		t, err = utils.CreateToken(user.Id, sv.NormalUser)
+		if err != nil {
+			logging.UnexpectedError(err)
+			return ext.EndGroups
+		}
+	} else {
+		if !t.CanBeRevoked() {
+			if ctx.CallbackQuery != nil {
+				_, _ = ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
+					Text:      "You have revoked your token too many times!",
+					ShowAlert: true,
+					CacheTime: 5,
+				})
+			}
+			kb.InlineKeyboard[2][0].Text = "Close"
+			kb.InlineKeyboard[2][0].CallbackData = "ap_close" // let start package handle close button xD
+			_, _ = ctx.EffectiveMessage.EditText(b, msg.Text, &gotgbot.EditMessageTextOpts{
+				ParseMode:   sv.MarkDownV2,
+				Entities:    msg.Entities,
+				ReplyMarkup: *kb,
+			})
+			return ext.EndGroups
+		}
+		_ = database.RevokeTokenHash(t, hashing.GetUserToken(user.Id))
+	}
+
+	md := mdparser.GetNormal("\u200DYour token has been revoked successfully!")
+	md.AppendNormalThis("\nInformation:")
+	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
+	md.AppendMentionThis(user.FirstName, user.Id)
+	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
+	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
+	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
+	md.AppendMonoThis(t.GetTitleStringPermission())
+	md.AppendBoldThis("\n\nToken").AppendNormalThis(": ")
+	md.AppendMonoThis(t.Hash)
+	md.AppendNormalThis("\n\nPlease don't share your token with anyone else!")
+
+	kb.InlineKeyboard[2][0].Text = "Close"
+	kb.InlineKeyboard[2][0].CallbackData = "ap_close" // let start package handle close button xD
 
 	_, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:   sv.MarkDownV2,
