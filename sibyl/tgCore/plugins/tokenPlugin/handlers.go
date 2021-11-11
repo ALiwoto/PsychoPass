@@ -52,7 +52,7 @@ func getTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
 	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
 	md.AppendMonoThis(t.GetTitleStringPermission())
-	md.AppendBoldThis("\n\nToken").AppendNormalThis(": ")
+	md.AppendBoldThis("\n\nToken").AppendNormalThis(":\n")
 	md.AppendMonoThis(t.Hash)
 	md.AppendNormalThis("\n\nPlease don't share your token with anyone else!")
 
@@ -74,7 +74,6 @@ func revokeTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	var t *sv.Token
 	var err error
 	user := ctx.EffectiveUser
-	msg := ctx.EffectiveMessage
 	kb := ctx.EffectiveMessage.ReplyMarkup
 	if kb == nil || len(kb.InlineKeyboard) < 3 {
 		// message doesn't have any reply markup; special situation which is
@@ -107,12 +106,6 @@ func revokeTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 					CacheTime: 5,
 				})
 			}
-			kb.InlineKeyboard[2][0].Text = "Close"
-			kb.InlineKeyboard[2][0].CallbackData = "ap_close" // let start package handle close button xD
-			_, _ = ctx.EffectiveMessage.EditText(b, msg.Text, &gotgbot.EditMessageTextOpts{
-				Entities:    msg.Entities,
-				ReplyMarkup: *kb,
-			})
 			return ext.EndGroups
 		}
 		_ = database.RevokeTokenHash(t, hashing.GetUserToken(user.Id))
@@ -126,7 +119,7 @@ func revokeTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
 	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
 	md.AppendMonoThis(t.GetTitleStringPermission())
-	md.AppendBoldThis("\n\nToken").AppendNormalThis(": ")
+	md.AppendBoldThis("\n\nToken").AppendNormalThis(":\n")
 	md.AppendMonoThis(t.Hash)
 	md.AppendNormalThis("\n\nPlease don't share your token with anyone else!")
 
