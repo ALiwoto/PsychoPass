@@ -100,6 +100,7 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	var markup gotgbot.InlineKeyboardMarkup
 
 	if !u.CanTryAppealing() {
+		md.AppendNormalThis("\n\nYour ban is not appealable.")
 		markup.InlineKeyboard = makeSingleAppealButtons()
 		_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 			ParseMode:   sv.MarkDownV2,
