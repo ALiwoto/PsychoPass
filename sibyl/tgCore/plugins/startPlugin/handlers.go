@@ -162,7 +162,7 @@ func showAppealDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	msg := ctx.EffectiveMessage
 	md := mdparser.GetUserMention(user.FirstName, user.Id)
 	md.AppendNormalThis("! You were blacklisted on ")
-	md.AppendHyperLinkThis("Sibyl System", "https://t.me/SibylSystem")
+	md.AppendHyperLinkThis("Sibyl System", "https://t.me/SibylSystem/13")
 	md.AppendNormalThis(" for ")
 	md.AppendThis(u.FormatCuteFlags())
 	md.AppendThis(u.FormatDetailStrings(true))
