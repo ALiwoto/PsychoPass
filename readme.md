@@ -7,7 +7,7 @@ A world where a human's state of mind and the criminal potential of their person
 ## Flags
 ### Range 0-100 (No bans) (Dominator Locked)
 - `Civilian`     - 0-80
-- `Past Banned`  - 81-100
+- `Restored`  - 81-100
 
 <hr/>
 

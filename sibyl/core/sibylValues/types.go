@@ -10,7 +10,7 @@ Coefficients and Flags
 ==== Flags     -  ========
 Range 0-100 (No bans) (Dominator Locked)
 • Civilian     - 0-80
-• Past Banned  - 81-100
+• Restored  - 81-100
 ==============
 Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
 • TROLLING     - 101-125 - Trolling
@@ -26,6 +26,7 @@ Range 300+ (Ban on Sight) (Lethal Eliminator)
 • MALIMP       - 351-400 - Malicious Impersonation
 • NSFW         - 401-450 - Sending NSFW Content in SFW
 • RAID         - 451-500 - Bulk join raid to vandalize
+• SPAMBOT       - 501-550 - SpamBot, crypto, btc, forex trading scams
 • MASSADD      - 501-600 - Mass adding to group/channel
 ==============
 */

@@ -32,7 +32,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	   ==== Flags     -  ========
 	   Range 0-100 (No bans) (Dominator Locked)
 	   • Civilian     - 0-80
-	   • Past Banned  - 81-100
+	   • Restored  - 81-100
 	   ==============
 	   Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
 	   • TROLLING     - 101-125 - Trolling
@@ -57,7 +57,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	fetchGitStats(md)
 
-	md.AppendBoldThis("📊 Current stats of ")
+	md.AppendBoldThis("📊 Current census of ")
 	nme := func() mdparser.WMarkDown {
 		return md.AppendNormalThis("\n• ")
 	}
@@ -73,7 +73,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return md.AppendNormalThis(" banned due to ").AppendMonoThis(r)
 	}
 
-	md.AppendHyperLinkThis("Sibyl System:", "http://t.me/SibylSystem")
+	md.AppendHyperLinkThis("Sibyl System:", "https://t.me/SibylSystem/13")
 	nme().AppendNormalThis("Total ban count: ")
 	md.AppendMonoThis(stat.GetBannedCountString())
 

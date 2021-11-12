@@ -248,7 +248,7 @@ func (u *User) GetCrimeCoefficientRange() *CrimeCoefficientRange {
 	return GetCrimeCoefficientRange(u.CrimeCoefficient)
 }
 
-func (u *User) SetAsPastBan(clearHistory bool) {
+func (u *User) SetAsRestored(clearHistory bool) {
 	u.invalidateFlags()
 	u.Banned = false
 	u.Reason = ""
@@ -256,7 +256,7 @@ func (u *User) SetAsPastBan(clearHistory bool) {
 	u.BanSourceUrl = ""
 	u.BannedBy = 0
 	u.Date = time.Now()
-	u.CrimeCoefficient = RangePastBanned.GetRandom()
+	u.CrimeCoefficient = RangeRestored.GetRandom()
 	if !clearHistory {
 		// internal usage only; not meant to be seen by users.
 		// this field is for auto-appeal system; please don't use it as seeing
@@ -264,7 +264,7 @@ func (u *User) SetAsPastBan(clearHistory bool) {
 		// the current status.
 		// when a user becomes banned, this field will be 0, so there is a chance
 		// for auto-appeal system to work.
-		// this ban count will increase each this user is marked as past ban.
+		// this ban count will increase each this user is marked as `restored`.
 		u.BanCount++
 	} else {
 		u.BanCount = 0x0

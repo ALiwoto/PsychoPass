@@ -63,7 +63,7 @@ func IsAnon(id int64) bool {
 func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {
 	/*
 		RangeCivilian     = &CrimeCoefficientRange{0, 80}
-		RangePastBanned   = &CrimeCoefficientRange{81, 100}
+		RangeRestored   = &CrimeCoefficientRange{81, 100}
 		RangeTrolling     = &CrimeCoefficientRange{101, 125}
 		RangeSpam         = &CrimeCoefficientRange{126, 200}
 		RangeEvade        = &CrimeCoefficientRange{201, 250}
@@ -72,31 +72,36 @@ func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {
 		RangeMalImp       = &CrimeCoefficientRange{351, 400}
 		RangeNSFW         = &CrimeCoefficientRange{401, 450}
 		RangeRaid         = &CrimeCoefficientRange{451, 500}
-		RangeMassAdd      = &CrimeCoefficientRange{501, 600}
+		RangeSpamBot      = &CrimeCoefficientRange{501, 550}
+		RangeMassAdd      = &CrimeCoefficientRange{551, 600}
 	*/
-	if value < 0 {
+
+	switch {
+	case value < 0:
 		return nil
-	} else if RangeCivilian.IsInRange(value) {
+	case RangeCivilian.IsInRange(value):
 		return RangeCivilian
-	} else if RangePastBanned.IsInRange(value) {
-		return RangePastBanned
-	} else if RangeTrolling.IsInRange(value) {
+	case RangeRestored.IsInRange(value):
+		return RangeRestored
+	case RangeTrolling.IsInRange(value):
 		return RangeTrolling
-	} else if RangeSpam.IsInRange(value) {
+	case RangeSpam.IsInRange(value):
 		return RangeSpam
-	} else if RangeEvade.IsInRange(value) {
+	case RangeEvade.IsInRange(value):
 		return RangeEvade
-	} else if RangeCustom.IsInRange(value) {
+	case RangeCustom.IsInRange(value):
 		return RangeCustom
-	} else if RangePsychoHazard.IsInRange(value) {
+	case RangePsychoHazard.IsInRange(value):
 		return RangePsychoHazard
-	} else if RangeMalImp.IsInRange(value) {
+	case RangeMalImp.IsInRange(value):
 		return RangeMalImp
-	} else if RangeNSFW.IsInRange(value) {
+	case RangeNSFW.IsInRange(value):
 		return RangeNSFW
-	} else if RangeRaid.IsInRange(value) {
+	case RangeRaid.IsInRange(value):
 		return RangeRaid
-	} else if RangeMassAdd.IsInRange(value) {
+	case RangeSpamBot.IsInRange(value):
+		return RangeSpamBot
+	case RangeMassAdd.IsInRange(value):
 		return RangeMassAdd
 	}
 
@@ -139,36 +144,38 @@ func getCCRangeByString(value string) *CrimeCoefficientRange {
 	/*
 		// Range 0-100 (No bans) (Dominator Locked)
 		// Civilian     - 0-80
-		// Past Banned  - 81-100
+		// Restored  - 81-100
 		// Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
-		ReasonTrolling = "trolling"
-		ReasonSpam     = "spam"
-		ReasonEvade    = "evade"
-		ReasonCustom   = "evade"
+		ReasonTrolling
+		ReasonSpam
+		ReasonEvade
+		ReasonCustom
 		// Range 300+ (Ban on Sight) (Lethal Eliminator)
-		ReasonMalimp       = "malimp"
-		ReasonPsychoHazard = "psychohazard"
-		ReasonNSFW         = "nsfw"
-		ReasonRaid         = "raid"
-		ReasonMassAdd      = "massadd"
+		ReasonMalimp
+		ReasonPsychoHazard
+		ReasonNSFW
+		ReasonRaid
+		ReasonSpamBot
+		ReasonMassAdd
 	*/
-	if canMatchStringArray(value, ReasonTrolling) {
+	switch {
+	case canMatchStringArray(value, ReasonTrolling):
 		return RangeTrolling
-	} else if canMatchStringArray(value, ReasonSpam) {
+	case canMatchStringArray(value, ReasonSpam):
 		return RangeSpam
-	} else if canMatchStringArray(value, ReasonEvade) {
+	case canMatchStringArray(value, ReasonEvade):
 		return RangeEvade
-	} else if canMatchStringArray(value, ReasonMalImp) {
+	case canMatchStringArray(value, ReasonMalImp):
 		return RangeMalImp
-	} else if canMatchStringArray(value, ReasonPsychoHazard) {
+	case canMatchStringArray(value, ReasonPsychoHazard):
 		return RangePsychoHazard
-	} else if canMatchStringArray(value, ReasonNSFW) {
+	case canMatchStringArray(value, ReasonNSFW):
 		return RangeNSFW
-	} else if canMatchStringArray(value, ReasonRaid) {
+	case canMatchStringArray(value, ReasonRaid):
 		return RangeRaid
-	} else if canMatchStringArray(value, ReasonSpamBot) {
+	case canMatchStringArray(value, ReasonSpamBot):
 		return RangeSpamBot
-	} else if canMatchStringArray(value, ReasonMassAdd) {
+	case canMatchStringArray(value, ReasonMassAdd):
 		return RangeMassAdd
 	}
 
@@ -184,20 +191,32 @@ func fixReasonString(value string) string {
 		Crypto  - btc, crypto, forex, trading, binary
 		MASSADD - spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding
 	*/
-	value = strings.ReplaceAll(value, "mass add", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "mass-add", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "member scrap", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "member add", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "spam add", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "bulk add", ReasonMassAdd[0])
-	value = strings.ReplaceAll(value, "n.s.f.w", ReasonNSFW[0])
-	value = strings.ReplaceAll(value, "psycho hazard", ReasonPsychoHazard[0])
-	value = strings.ReplaceAll(value, "psycho-hazard", ReasonPsychoHazard[0])
-	value = strings.ReplaceAll(value, "fake profile", ReasonMalImp[0])
-	value = strings.ReplaceAll(value, "fake name", ReasonMalImp[0])
-	value = strings.ReplaceAll(value, "fake username", ReasonMalImp[0])
-	value = strings.ReplaceAll(value, "fake alt", ReasonMalImp[0])
-	value = strings.ReplaceAll(value, "fake id", ReasonMalImp[0])
+	if len(ReasonMassAdd) > 0 {
+		value = strings.ReplaceAll(value, "mass add", ReasonMassAdd[0])
+		value = strings.ReplaceAll(value, "mass-add", ReasonMassAdd[0])
+		value = strings.ReplaceAll(value, "member scrap", ReasonMassAdd[0])
+		value = strings.ReplaceAll(value, "member add", ReasonMassAdd[0])
+		value = strings.ReplaceAll(value, "spam add", ReasonMassAdd[0])
+		value = strings.ReplaceAll(value, "bulk add", ReasonMassAdd[0])
+	}
+
+	if len(ReasonNSFW) > 0 {
+		value = strings.ReplaceAll(value, "n.s.f.w", ReasonNSFW[0])
+	}
+
+	if len(ReasonPsychoHazard) > 0 {
+		value = strings.ReplaceAll(value, "psycho hazard", ReasonPsychoHazard[0])
+		value = strings.ReplaceAll(value, "psycho-hazard", ReasonPsychoHazard[0])
+	}
+
+	if len(ReasonMalImp) > 0 {
+		value = strings.ReplaceAll(value, "fake profile", ReasonMalImp[0])
+		value = strings.ReplaceAll(value, "fake name", ReasonMalImp[0])
+		value = strings.ReplaceAll(value, "fake username", ReasonMalImp[0])
+		value = strings.ReplaceAll(value, "fake alt", ReasonMalImp[0])
+		value = strings.ReplaceAll(value, "fake id", ReasonMalImp[0])
+	}
+
 	return value
 }
 

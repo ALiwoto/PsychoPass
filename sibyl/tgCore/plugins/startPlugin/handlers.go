@@ -216,8 +216,9 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 		logMd.AppendMonoThis(time.Now().Format(sv.AppealLogDateFormat))
 
 		go func() {
+			text := logMd.ToString()
 			for _, chatId := range chats {
-				_, _ = b.SendMessage(chatId, logMd.ToString(), &gotgbot.SendMessageOpts{
+				_, _ = b.SendMessage(chatId, text, &gotgbot.SendMessageOpts{
 					ParseMode: sv.MarkDownV2,
 				})
 			}

@@ -17,7 +17,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | FLAG  |Coefficient Range   | Recommended action  |
 | ------------ | ------------ | ------------ |
 | Civilian  | 0-80  |  None |
-| PastBanned  | 81-100  | None, but user has a history of past ban  |
+| Restored  | 81-100  | None, but user has a history of past ban  |
 
 #### Actionable Flags
 
@@ -49,7 +49,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | Crypto  |  btc, crypto, forex, trading, binary| 
 | MASSADD |  spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding| 
 
-### Forumla ideas needed for civilian bs 
+### Formula ideas needed for civilian bs 
 We can use a weight formula that starts from 80 and deducts points for every good thing done. This same logic can also be given to the server itself but not saved into the DB, just for the assign command beautification.
 
 **Weights - Start from 80, decrease for every thing user has done by some weight 

@@ -27,7 +27,7 @@ Coefficients and Flags
 ==== Flags     -  ========
 Range 0-100 (No bans) (Dominator Locked)
 • Civilian     - 0-80
-• PastBanned  - 81-100
+• Restored  - 81-100
 ==============
 Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
 • TROLLING     - 101-125 - Trolling
@@ -58,7 +58,7 @@ MASSADD - spam add, kidnapping, member scraping, member adding, mass adding, spa
 // crime coefficient increasement ranges
 var (
 	RangeCivilian     = &CrimeCoefficientRange{0, 80}
-	RangePastBanned   = &CrimeCoefficientRange{81, 100}
+	RangeRestored     = &CrimeCoefficientRange{81, 100}
 	RangeTrolling     = &CrimeCoefficientRange{101, 125}
 	RangeSpam         = &CrimeCoefficientRange{126, 200}
 	RangeEvade        = &CrimeCoefficientRange{201, 250}
@@ -74,7 +74,7 @@ var (
 var (
 	// Range 0-100 (No bans) (Dominator Locked)
 	// Civilian     - 0-80
-	// Past Banned  - 81-100
+	// Restored  - 81-100
 	// Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
 	ReasonTrolling []string
 	ReasonSpam     []string // - 126-200 - Spam/Unwanted Promotion

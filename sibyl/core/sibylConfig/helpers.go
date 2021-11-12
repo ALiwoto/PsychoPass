@@ -260,8 +260,10 @@ func parseCmdPrefixes(value string) []rune {
 }
 
 func parseBaseStr(value string) []int64 {
+	//value = strings.TrimSpace(value)
+	// we don't use trim space here because we have already used it
+	// before calling this function.
 	if !strings.Contains(value, " ") && !strings.Contains(value, ",") {
-		value = strings.TrimSpace(value)
 		tmp, err := strconv.ParseInt(value, 10, 64)
 		if err != nil || tmp == 0 {
 			return nil

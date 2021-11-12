@@ -46,7 +46,7 @@ func RemoveUserBan(user *sv.User, clearHistory bool) {
 		return
 	}
 	user.FormatBanDate()
-	user.SetAsPastBan(clearHistory)
+	user.SetAsRestored(clearHistory)
 	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(user)

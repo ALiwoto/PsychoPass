@@ -1,6 +1,6 @@
 package infoPlugin
 
 const (
-	StatsCmd   = "stats"
+	StatsCmd   = "census"
 	gitBaseUrl = "https://github.com/AnimeKaizoku/PsychoPass"
 )
