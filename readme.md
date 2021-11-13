@@ -28,6 +28,7 @@ A world where a human's state of mind and the criminal potential of their person
 - `PSYCHOHAZARD` - 351-400 - Bulk banned due to some bad users
 - `NSFW`         - 401-450 - Sending NSFW Content in SFW
 - `RAID`         - 451-500 - Bulk join raid to vandalize 
+- `SPAMBOT`      - 501-550 - Crypto, btc, forex trading scams, thotbot
 - `MASSADD`      - 501-600 - Mass adding to group/channel
 
 <hr/>
