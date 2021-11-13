@@ -31,8 +31,11 @@ func LoadHandlers() {
 	// addBan handlers
 	bindHandler(banHandlers.AddBanHandler, "addBan", "ban", "banUser")
 
-	// addBan handlers
+	// multiBan handlers
 	bindPostHandler(banHandlers.MultiBanHandler, "multiBan", "addMultiBan")
+
+	// multiUnBan handlers
+	bindPostHandler(banHandlers.MultiUnBanHandler, "multiUnBan", "removeMultiBan")
 
 	// deleteBan handlers
 	bindHandler(banHandlers.RemoveBanHandler, "deleteBan", "removeBan",
@@ -92,6 +95,8 @@ func noRootHandler(c *gin.Context) {
 		banHandlers.AddBanHandler(c)
 	case "multiban", "addmultiban":
 		banHandlers.MultiBanHandler(c)
+	case "multiunban", "removemultiban":
+		banHandlers.MultiUnBanHandler(c)
 	case "deleteban", "removeban", "revertban", "remban":
 		banHandlers.RemoveBanHandler(c)
 	case "getinfo", "fetchinfo":

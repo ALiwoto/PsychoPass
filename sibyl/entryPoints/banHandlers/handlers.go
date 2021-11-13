@@ -141,7 +141,9 @@ func MultiBanHandler(c *gin.Context) {
 		return
 	}
 
-	go applyMultiBan(multiBanData, by)
+	if multiBanData != nil && len(multiBanData.Users) > 0 {
+		go applyMultiBan(multiBanData, by)
+	}
 
 	entry.SendResult(c, MessageApplyingMultiBan)
 }
@@ -150,6 +152,7 @@ func RemoveBanHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "userId", "id")
 	clearHistory := ws.ToBool(utils.GetParam(c, "clear-history"))
+
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginRemoveBan)
 		return
@@ -195,4 +198,47 @@ func RemoveBanHandler(c *gin.Context) {
 
 	database.RemoveUserBan(u, clearHistory)
 	entry.SendResult(c, MessageUnbanned)
+}
+
+func MultiUnBanHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginMultiBan)
+		return
+	}
+
+	d, err := database.GetTokenFromString(token)
+	if err != nil || d == nil {
+		entry.SendInvalidTokenError(c, OriginMultiBan)
+		return
+	}
+
+	if !d.CanBan() {
+		entry.SendPermissionDenied(c, OriginMultiBan)
+		return
+	}
+
+	by := hashing.GetIdFromToken(token)
+
+	var rawData []byte
+	multiUnBanData := new(sv.MultiUnBanRawData)
+
+	rawData, err = c.GetRawData()
+	if err != nil || len(rawData) < 2 {
+		entry.SendNoDataError(c, OriginMultiBan)
+		return
+	}
+
+	err = json.Unmarshal(rawData, multiUnBanData)
+	if err != nil {
+		entry.SendBadDataError(c, OriginMultiBan)
+		return
+	}
+
+	if multiUnBanData != nil && len(multiUnBanData.Users) > 0 {
+		go applyMultiUnBan(multiUnBanData, by)
+	}
+
+	entry.SendResult(c, MessageApplyingMultiUnBan)
 }

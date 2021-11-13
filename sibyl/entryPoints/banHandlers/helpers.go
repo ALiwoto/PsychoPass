@@ -12,10 +12,6 @@ import (
 // be called in different goroutine than our http request goroutine.
 // it uses a mutex to control the huge payload on database.
 func applyMultiBan(data *sv.MultiBanRawData, by int64) {
-	if data == nil || len(data.Users) == 0 {
-		return
-	}
-
 	if multiBanMutex == nil {
 		multiBanMutex = new(sync.Mutex)
 	}
@@ -60,4 +56,35 @@ func applyMultiBan(data *sv.MultiBanRawData, by int64) {
 	}
 
 	multiBanMutex.Unlock()
+}
+
+// applyMultiUnBan will apply the multi unban request. this function should
+// be called in different goroutine than our http request goroutine.
+// it uses a mutex to control the huge payload on database.
+func applyMultiUnBan(data *sv.MultiUnBanRawData, by int64) {
+	if multiUnBanMutex == nil {
+		multiUnBanMutex = new(sync.Mutex)
+	}
+
+	var tmpUser *sv.User
+	var err error
+
+	multiUnBanMutex.Lock()
+
+	for _, current := range data.Users {
+		tmpUser, err = database.GetUserFromId(current)
+		if tmpUser == nil || err != nil {
+			// user not found or there is an issue in database package.
+			continue
+		}
+
+		if !tmpUser.Banned && len(tmpUser.Reason) == 0 && len(tmpUser.BanFlags) == 0 {
+			// user is not banned at all.
+			continue
+		}
+
+		database.RemoveUserBan(tmpUser, false)
+	}
+
+	multiUnBanMutex.Unlock()
 }

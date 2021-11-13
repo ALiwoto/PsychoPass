@@ -144,6 +144,10 @@ type MultiBanRawData struct {
 	Users []MultiBanUserInfo `json:"users"`
 }
 
+type MultiUnBanRawData struct {
+	Users []int64 `json:"users"`
+}
+
 type Triggers struct {
 	Spam             []string `json:"spam"`
 	Trolling         []string `json:"trolling"`
