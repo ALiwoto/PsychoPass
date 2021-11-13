@@ -80,7 +80,7 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 
 	time.Sleep(3 * time.Second)
 
-	md = welcomeMd.AppendNormalThis("Cymatic Scan results:")
+	md = welcomeMd.AppendNormalThis("\nCymatic Scan results:")
 	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
 	md.AppendMentionThis(user.FirstName, user.Id)
 	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
@@ -100,10 +100,8 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 
 	if !u.CanTryAppealing() {
 		md.AppendNormalThis("\n\nYour ban is not appealable.")
-		markup.InlineKeyboard = makeSingleAppealButtons()
 		_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
-			ParseMode:   sv.MarkDownV2,
-			ReplyMarkup: markup,
+			ParseMode: sv.MarkDownV2,
 		})
 		sv.RateLimiter.RemoveCustomIgnore(user.Id)
 		return

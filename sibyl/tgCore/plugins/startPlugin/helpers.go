@@ -34,19 +34,6 @@ func makeNormalButtons() [][]gotgbot.InlineKeyboardButton {
 	return normalButtonsRows
 }
 
-func makeSingleAppealButtons() [][]gotgbot.InlineKeyboardButton {
-	if len(singleButtonsRows) != 0 {
-		return singleButtonsRows
-	}
-	rows := make([][]gotgbot.InlineKeyboardButton, 1)
-	rows[0] = append(rows[0], gotgbot.InlineKeyboardButton{
-		Text: "Appeal ban",
-		Url:  "https://t.me/PublicSafetyBureau",
-	})
-	singleButtonsRows = rows
-	return singleButtonsRows
-}
-
 func makeFirstPageAppealButtons() [][]gotgbot.InlineKeyboardButton {
 	if len(FirstPageButtonsRows) != 0 {
 		return FirstPageButtonsRows
