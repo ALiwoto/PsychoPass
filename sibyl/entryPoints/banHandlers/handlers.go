@@ -22,6 +22,7 @@ func AddBanHandler(c *gin.Context) {
 	banMsg := utils.GetParam(c, "message", "msg", "banMsg", "ban-msg")
 	srcUrl := utils.GetParam(c, "srcUrl", "source",
 		"source-url", "ban-src", "src")
+	srcGroup := utils.GetParam(c, "source-group", "src-group")
 	isBot := ws.ToBool(utils.GetParam(c, "is-bot", "isBot", "bot"))
 
 	if len(token) == 0 {
@@ -85,6 +86,7 @@ func AddBanHandler(c *gin.Context) {
 			u.Message = banMsg
 			u.Date = time.Now()
 			u.BanSourceUrl = srcUrl
+			u.SourceGroup = srcGroup
 			u.SetAsBanReason(banReason)
 			u.IncreaseCrimeCoefficientAuto()
 			database.UpdateBanparameter(u)
@@ -97,7 +99,7 @@ func AddBanHandler(c *gin.Context) {
 		count = u.BanCount
 	}
 
-	u = database.AddBan(id, by, banReason, banMsg, srcUrl, isBot, count)
+	u = database.AddBan(id, by, banReason, srcGroup, banMsg, srcUrl, isBot, count)
 	entry.SendResult(c, &BanResult{
 		CurrentBan: u,
 	})

@@ -6,7 +6,7 @@ import (
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 )
 
-func AddBan(userID, adder int64, reason, message, src string, isBot bool, count int) *sv.User {
+func AddBan(userID, adder int64, reason, srcGroup, message, src string, isBot bool, count int) *sv.User {
 	user := &sv.User{
 		UserID:       userID,
 		Banned:       true,
@@ -14,6 +14,7 @@ func AddBan(userID, adder int64, reason, message, src string, isBot bool, count 
 		Message:      message,
 		BannedBy:     adder,
 		BanSourceUrl: src,
+		SourceGroup:  srcGroup,
 		IsBot:        isBot,
 		BanCount:     count,
 	}
@@ -24,7 +25,15 @@ func AddBan(userID, adder int64, reason, message, src string, isBot bool, count 
 }
 
 func AddBanByInfo(info *sv.MultiBanUserInfo, adder int64, count int) *sv.User {
-	return AddBan(info.UserId, adder, info.Reason, info.Message, info.Source, info.IsBot, count)
+	return AddBan(
+		info.UserId,
+		adder,
+		info.Reason,
+		info.SourceGroup,
+		info.Message,
+		info.Source,
+		info.IsBot, count,
+	)
 }
 
 // DeleteUser will delete a user from the sibyl database.

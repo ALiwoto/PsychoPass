@@ -64,6 +64,7 @@ type User struct {
 	BannedBy         int64     `json:"banned_by"`
 	CrimeCoefficient int       `json:"crime_coefficient"`
 	BanDate          string    `json:"date" gorm:"-" sql:"-"`
+	SourceGroup      string    `json:"source_group"`
 	BanFlags         []BanFlag `json:"ban_flags" gorm:"-" sql:"-"`
 	IsBot            bool      `json:"is_bot"`
 	BanCount         int       `json:"-"` // internal usage only; not meant to be seen by users.
@@ -131,11 +132,12 @@ type CrimeCoefficientRange struct {
 }
 
 type MultiBanUserInfo struct {
-	UserId  int64  `json:"user_id"`
-	Reason  string `json:"reason"`
-	Message string `json:"message"`
-	Source  string `json:"source"`
-	IsBot   bool   `json:"is_bot"`
+	UserId      int64  `json:"user_id"`
+	Reason      string `json:"reason"`
+	SourceGroup string `json:"source_group"`
+	Message     string `json:"message"`
+	Source      string `json:"source"`
+	IsBot       bool   `json:"is_bot"`
 }
 
 type MultiBanRawData struct {
