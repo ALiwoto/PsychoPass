@@ -50,6 +50,14 @@ func getParam(c *gin.Context, key string) string {
 	v := c.GetHeader(key)
 	if len(v) == 0 {
 		v = c.Request.URL.Query().Get(key)
+		if len(v) == 0 {
+			for i, j := range c.Request.URL.Query() {
+				if strings.EqualFold(i, key) && len(j) > 0 {
+					v = j[0]
+					break
+				}
+			}
+		}
 	}
 	return v
 }
