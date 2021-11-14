@@ -148,9 +148,9 @@ func LoadConfigFromFile(fileName string) error {
 		}
 	}
 
-	SibylConfig.StatsCacheTime, err = configContent.GetInt64("database", "max_cache_time")
+	SibylConfig.StatsCacheTime, err = configContent.GetInt64("database", "stats_cache_time")
 	if err != nil {
-		SibylConfig.StatsCacheTime, _ = strconv.ParseInt(env("MAX_CACHE_TIME"), 10, 64)
+		SibylConfig.StatsCacheTime, _ = strconv.ParseInt(env("STATS_CACHE_TIME"), 10, 64)
 	}
 
 	// telegram section variables
