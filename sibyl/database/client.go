@@ -65,6 +65,9 @@ func StartDatabase() {
 	userMapMutex = &sync.Mutex{}
 	userDbMap = make(map[int64]*sv.User)
 	go cleanMaps()
+
+	migrateOwners(sibylConfig.GetOwnersID())
+
 	logging.Info("Auto-migrated database schema")
 }
 

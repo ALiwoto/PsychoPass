@@ -33,10 +33,12 @@ func runApp() {
 	if err != nil {
 		logging.Fatal(err)
 	}
+
 	err = sibylConfig.LoadTriggers()
 	if err != nil {
 		logging.Fatal(err)
 	}
+
 	database.StartDatabase()
 	prepareOwnerTokens()
 	tgCore.StartTelegramBot()
