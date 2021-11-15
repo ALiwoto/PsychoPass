@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="referrer" content="no-referrer" />
+        <meta http-equiv="content-security-policy" content="default-src 'none'; style-src 'self'" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- <link rel="canonical" href="https://blankx.gitlab.io/methods/bans.html" /> -->
+        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content="#15A4E9" />
+        <title>Ban Methods</title>
+        <link rel="stylesheet" href="/style.css" crossorigin="anonymous" />
+    </head>
+    <body>
+        <h1>Ban Methods</h1>
+        <div class="head"><a href="/">home</a> | <a href="/methods/">methods</a></div>
+
+        <h3>Table of Contents:</h3>
+        <ul>
+            <li><a href="#ban">/ban</a></li>
+            <li><a href="#multiban">/multiban</a></li>
+            <li><a href="#multiunban">/multiunban</a></li>
+            <li><a href="#removeban">/removeBan</a></li>
+        </ul>
+
+        <h2 id="ban"><code>/ban</code> <a href="#ban" class="permalink">¶</a></h2>
+        <p>Bans a user</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An inspector or owner token to authorize this request</td></tr>
+            <tr><td>userid</td><td>User ID of the user to ban</td></tr>
+            <tr><td>reason</td><td>The ban reason</td></tr>
+            <tr><td>message</td><td>Optional contents of a message accompanying the ban</td></tr>
+            <tr><td>source</td><td>Optional link (to a message?) accompanying the ban</td></tr>
+            <tr><td>source-group</td><td>Optional link to a group accompanying the ban</td></tr>
+            <tr><td>bot</td><td>Optional parameter to specify if the user being banned is a bot</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "previous_ban": null,
+        "current_ban": {
+            "user_id": 792109647,
+            "banned": true,
+            "reason": "Keeps slapping misery's ass",
+            "message": "/slap Misery's ass",
+            "ban_source_url": "https://t.me/AnimeKaizoku/6168557",
+            "banned_by": 516124792,
+            "crime_coefficient": 286,
+            "date": "2021-11-14 at 17:54:17",
+            "ban_flags": [
+                "CUSTOM"
+            ],
+            "is_bot": false
+        }
+    },
+    "error": null
+}</code></pre>
+        <h2 id="multiban"><code>/multiban</code> <a href="#multiban" class="permalink">¶</a></h2>
+        <p>Bans multiple users at once. Unline other methods, JSON must also be streamed via the request body</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An inspector or owner token to authorize this request</td></tr>
+        </table>
+        <h3>Request JSON</h3>
+        <table>
+            <tr><th>Key</th><th>Type</th><th>Info</th></tr>
+            <tr><td>users</td><td><code>MultiBanUserInfo[]</code></td><td>List of users and data of each ban</td></tr>
+        </table>
+        <h3>MultiBanUserInfo</h3>
+        <table>
+            <tr><th>Key</th><th>Type</th><th>Info</th></tr>
+            <tr><td>user_id</td><td><code>int</code></td><td>User ID of the user to be banned</td></tr>
+            <tr><td>reason</td><td><code>str</code></td><td>Reason for ban</td></tr>
+            <tr><td>message</td><td><code>str | null</code></td><td>Optional contents of a message accompanying the ban</td></tr>
+            <tr><td>source</td><td><code>str | null</code></td><td>Optional link (to a message?) accompanying the ban</td></tr>
+            <tr><td>source_group</td><td><code>str | null</code></td><td>Optional link to a group accompanying the ban</td></tr>
+            <tr><td>bot</td><td><code>bool | null</code></td><td>Optional parameter to specify if the user being banned is a bot</td></tr>
+        </table>
+        <h3>Example request</h3>
+        <pre><code>POST /multiban?token=516124792:Q2xvc2UgeW91ciBleWVzLCB5b3UnbGwgYmUgaGVyZSBzb29uCkljaGkga25lZSBzYW4gY2hpIGdvIGZ1bgpbLi4uXQpPWUFTVU1JIE9ZQVNVTUkKKHNyeSk
+
+{
+    "users": [
+        {
+            "user_id": 558772678,
+            "reason": "Fulfilling sawada's request to make slap take in arguments",
+            "source_group": "https://t.me/OnePunchDev",
+            "source": "https://t.me/OnePunchDev/94226",
+            "message": "/slap deez nuts",
+            "bot": false
+        },
+        {
+            "user_id": 570787098,
+            "reason": "Keeps destroying servers"
+        }
+    ]
+}</code></pre>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": "Applying your multi-ban request in background",
+    "error": null
+}</code></pre>
+        <h2 id="multiunban"><code>/multiunban</code> <a href="#multiunban" class="permalink">¶</a></h2>
+        <p>Unbans multiple users at once. Unline other methods, JSON must also be streamed via the request body</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An inspector or owner token to authorize this request</td></tr>
+        </table>
+        <h3>Request JSON</h3>
+        <table>
+            <tr><th>Key</th><th>Type</th><th>Info</th></tr>
+            <tr><td>users</td><td><code>int[]</code></td><td>List of user IDs to unban</td></tr>
+        </table>
+        <h3>Example request</h3>
+        <pre><code>POST /multiunban?token=558772678:d29uZGVyIGlmIGFueW9uZSBpcyByZWFkaW5nIHRoZXNlIGJsdXJicy4gYnR3LCBkb24ndCBjb3VudCBvbiB0b2tlbnMgYmVpbmcgZW5jb2RlZCB3IGI2NAo
+
+{
+    "users": [
+        214416808,
+        570787098,
+    ]
+}</code></pre>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": "Applying your multi-unban request in background",
+    "error": null
+}</code></pre>
+        <h2 id="removeban"><code>/removeBan</code> <a href="#removeban" class="permalink">¶</a></h2>
+        <p>Unbans a user</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An inspector or owner token to authorize this request</td></tr>
+            <tr><td>userid</td><td>User ID of the user to unban</td></tr>
+            <tr><td>clear-history</td><td>Optional parameter to unlock auto-appeal (recognized positive values: yes, on, true)</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": "User was unbanned",
+    "error": null
+}</code></pre>
+    </body>
+</html>

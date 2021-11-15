@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="referrer" content="no-referrer" />
+        <meta http-equiv="content-security-policy" content="default-src 'none'; style-src 'self'" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- <link rel="canonical" href="https://blankx.gitlab.io/methods/info.html" /> -->
+        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content="#15A4E9" />
+        <title>Info Methods</title>
+        <link rel="stylesheet" href="/style.css" crossorigin="anonymous" />
+    </head>
+    <body>
+        <h1>Info Methods</h1>
+        <div class="head"><a href="/">home</a> | <a href="/methods/">methods</a></div>
+
+        <h3>Table of Contents:</h3>
+        <ul>
+            <li><a href="#getinfo">/getInfo</a></li>
+            <li><a href="#getstats">/getStats</a></li>
+            <li><a href="#getallbans">/getAllBans</a></li>
+            <li><a href="#checktoken">/checkToken</a></li>
+        </ul>
+
+        <h2 id="getinfo"><code>/getInfo</code> <a href="#getinfo" class="permalink">¶</a></h2>
+        <p>Gets information about a user</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>Any token to authorize this request</td></tr>
+            <tr><td>userid</td><td>User ID of the user to get info of</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "user_id": 570787098,
+        "banned": false,
+        "reason": "",
+        "message": "",
+        "ban_source_url": "",
+        "banned_by": 0,
+        "crime_coefficient": 93,
+        "date": "2021-11-15 at 14:50:24",
+        "source_group": "",
+        "ban_flags": null,
+        "is_bot": false
+    },
+    "error": null
+}</code></pre>
+        <h2 id="getstats"><code>/getStats</code> <a href="#getstats" class="permalink">¶</a></h2>
+        <p>Gets stats</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An inspector or owner token to authorize this request</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "banned_count": 16,
+        "trolling_ban_count": 2,
+        "spam_ban_count": 3,
+        "evade_ban_count": 0,
+        "custom_ban_count": 4,
+        "psycho_hazard_ban_count": 1,
+        "mal_imp_ban_count": 0,
+        "nsfw_ban_count": 1,
+        "spam_bot_ban_count": 1,
+        "raid_ban_count": 1,
+        "mass_add_ban_count": 1,
+        "cloudy_count": 2,
+        "token_count": 11,
+        "inspectors_count": 3,
+        "enforces_count": 0
+    },
+    "error": null
+}</code></pre>
+        <h2 id="getallbans"><code>/getAllBans</code> <a href="#getallbans" class="permalink">¶</a></h2>
+        <p>Gets all bans</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An enforcer, inspector or owner token to authorize this request</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "users": [
+            {
+                "user_id": 792109647,
+                "banned": true,
+                "reason": "Keeps slapping misery's ass",
+                "message": "/slap Misery's ass",
+                "ban_source_url": "https://t.me/AnimeKaizoku/6168557",
+                "banned_by": 516124792,
+                "crime_coefficient": 286,
+                "date": "2021-11-14 at 17:54:17",
+                "ban_flags": [
+                    "CUSTOM"
+                ],
+                "is_bot": false
+            },
+            {
+                "user_id": 558772678,
+                "banned": true,
+                "reason": "Fulfilling sawada's request to make slap take in arguments",
+                "message": "/slap deez nuts",
+                "ban_source_url": "https://t.me/OnePunchDev/94226",
+                "banned_by": 516124792,
+                "crime_coefficient": 273,
+                "date": "2021-11-15 at 14:47:47",
+                "ban_flags": [
+                    "CUSTOM"
+                ],
+                "is_bot": false
+            }
+        ]
+    },
+    "error": null
+}</code></pre>
+        <h2 id="checktoken"><code>/checkToken</code> <a href="#checktoken" class="permalink">¶</a></h2>
+        <p>Checks if a token is valid</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>A token to check if valid</td></tr>
+        </table>
+        <h3>Example response with a valid token</h3>
+        <pre><code>{
+    "success": true,
+    "result": true,
+    "error": null
+}</code></pre>
+        <h3>Example response with an invalid token</h3>
+        <pre><code>{
+    "success": true,
+    "result": false,
+    "error": null
+}</code></pre>
+    </body>
+</html>

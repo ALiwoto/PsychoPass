@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="referrer" content="no-referrer" />
+        <meta http-equiv="content-security-policy" content="default-src 'none'; style-src 'self'" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- <link rel="canonical" href="https://blankx.gitlab.io/methods/" /> -->
+        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content="#15A4E9" />
+        <title>Methods</title>
+        <link rel="stylesheet" href="/style.css" crossorigin="anonymous" />
+    </head>
+    <body>
+        <h1>Methods</h1>
+        <div class="head"><a href="/">home</a> | <a href="/methods/">methods</a></div>
+
+        <p>Example of a successful response:</p>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "previous_perm": 1,
+        "current_perm": 2
+    },
+    "error": null
+}</code></pre>
+        <p>Example of an unsuccessful response:</p>
+        <pre><code>{
+    "success": false,
+    "result": null,
+    "error": {
+        "code": 500,
+        "message": "Can't slap misery's ass",
+        "origin": "Slap",
+        "date": "14/11/2021 20:27:15"
+    }
+}</code></pre>
+        <p>List of method groups:</p>
+        <ul>
+            <li><a href="tokens.html">tokens</a></li>
+            <li><a href="bans.html">bans</a></li>
+            <li><a href="info.html">info</a></li>
+            <li><a href="report.html">report</a></li>
+        </ul>
+    </body>
+</html>

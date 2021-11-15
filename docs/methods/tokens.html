@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="referrer" content="no-referrer" />
+        <meta http-equiv="content-security-policy" content="default-src 'none'; style-src 'self'" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- <link rel="canonical" href="https://blankx.gitlab.io/methods/tokens.html" /> -->
+        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content="#15A4E9" />
+        <title>Token Methods</title>
+        <link rel="stylesheet" href="/style.css" crossorigin="anonymous" />
+    </head>
+    <body>
+        <h1>Token Methods</h1>
+        <div class="head"><a href="/">home</a> | <a href="/methods/">methods</a></div>
+
+        <h3>Table of Contents:</h3>
+        <ul>
+            <li><a href="#create">/create</a></li>
+            <li><a href="#changeperm">/changePerm</a></li>
+            <li><a href="#revoke">/revoke</a></li>
+            <li><a href="#gettoken">/getToken</a></li>
+            <li><a href="#registeredusers">/registeredUsers</a></li>
+        </ul>
+
+        <h2 id="create"><code>/create</code> <a href="#create" class="permalink">¶</a></h2>
+        <p>Returns a token for a user (and creates one if it doesn't exist)</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An owner token to authorize this request</td></tr>
+            <tr><td>userid</td><td>User ID of the user to generate a token for</td></tr>
+            <tr><td>permission</td><td>Permission to give the token (if it exists it will alter the permission)</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "permission": 1,
+        "user_id": 516124792,
+        "hash": "516124792:TmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXAKTmV2ZXIgZ29ubmEgbGV0IHlvdSBkb3duCk5ldmVyIGdvbm5hIHJ1biBhcm91bmQgYW5kIGRlc2VydCB5b3UgCg"
+    },
+    "error": null
+}</code></pre>
+        <h2 id="changeperm"><code>/changePerm</code> <a href="#changeperm" class="permalink">¶</a></h2>
+        <p>Change a token's permission level</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An inspector or owner token to authorize this request</td></tr>
+            <tr><td>userid</td><td>User ID of the user to update the permission level of</td></tr>
+            <tr><td>permission</td><td>Permission to give the token</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "previous_perm": 1,
+        "current_perm": 2
+    },
+    "error": null
+}</code></pre>
+        <h2 id="revoke"><code>/revoke</code> <a href="#revoke" class="permalink">¶</a></h2>
+        <p>Revokes a token and returns the new token and its data</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An owner token to authorize this request</td></tr>
+            <tr><td>userid</td><td>User ID of the user to revoke</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "user_id": 516124792,
+        "hash": "516124792:aW4gYSBwYXJhbGxlbCB1bml2ZXJzZSwgL3NsYXAgZG9lc24ndCB0YWtlIGluIGFuIGFyZ3VtZW50IGFuZCBubyBvbmUgc2xhcHMgbWlzZXJ5J3MgYXNzIA",
+        "permission": 0,
+        "created_at": "2021-11-14T14:14:51.931979457Z",
+        "accepted_reports": 0,
+        "denied_reports": 0
+    },
+    "error": null
+}</code></pre>
+        <h2 id="gettoken"><code>/getToken</code> <a href="#gettoken" class="permalink">¶</a></h2>
+        <p>Gets the token and data of a user</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An owner token to authorize this request</td></tr>
+            <tr><td>userid</td><td>User ID of the user to get the token and data of</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "user_id": 516124792,
+        "hash": "516124792:aW4gYW5vdGhlciBwYXJhbGxlbCB1bml2ZXJzZSwgL3NsYXAgdGFrZXMgaW4gYW4gYXJndW1lbnQgYW5kIG5vIG9uZSBzbGFwcyBtaXNlcnkncyBhc3MgIA",
+        "permission": 0,
+        "created_at": "2021-11-14T14:14:51.931979457Z",
+        "accepted_reports": 0,
+        "denied_reports": 0
+    },
+    "error": null
+}</code></pre>
+        <h2 id="registeredusers"><code>/registeredUsers</code> <a href="#registeredusers" class="permalink">¶</a></h2>
+        <p>Gets a list of all registered users. If the token passed doesn't belong to an owner, owners won't be included in the list</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An enforcer, inspecter or owner token to authorize this request</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <pre><code>{
+    "success": true,
+    "result": {
+        "registered_users": [
+            25,
+            777000,
+            214416808,
+            516124792,
+            558772678,
+            792109647,
+            895373440,
+            1341091260
+        ]
+    },
+    "error": null
+}</code></pre>
+    </body>
+</html>

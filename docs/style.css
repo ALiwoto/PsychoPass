@@ -1,0 +1,35 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: sans-serif;
+    padding: 2em;
+}
+
+.head {
+    margin-top: -1em;
+}
+
+th {
+    text-align: left;
+}
+
+a.permalink {
+    text-decoration: none;
+    font-size: 75%;
+}
+
+pre {
+    font-size: 110%;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+a {
+    color: #15A4E9;
+}
+
+table, th, td {
+    border: .2em solid #1C347F;
+    border-collapse: collapse;
+    padding: .3em;
+}
