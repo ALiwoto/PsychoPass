@@ -46,8 +46,6 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Purple](https://img.shields.io/static/v1?label=&message=Purple&color=800080&style=for-the-badge)  | Purple | 800080 |  |
 | ![DarkMagenta](https://img.shields.io/static/v1?label=&message=DarkMagenta&color=8B008B&style=for-the-badge)  | DarkMagenta | 8B008B |  |
 | ![DarkViolet](https://img.shields.io/static/v1?label=&message=DarkViolet&color=9400D3&style=for-the-badge)  | DarkViolet | 9400D3 |  |
-| ![DarkOrchid](https://img.shields.io/static/v1?label=&message=DarkOrchid&color=9932CC&style=for-the-badge)  | DarkOrchid | 9932CC |  |
-| ![BlueViolet](https://img.shields.io/static/v1?label=&message=BlueViolet&color=8A2BE2&style=for-the-badge)  | BlueViolet | 8A2BE2 |  |
 | ![Magenta](https://img.shields.io/static/v1?label=&message=Magenta&color=FF00FF&style=for-the-badge)  | Magenta | FF00FF |  |
 | ![Violet](https://img.shields.io/static/v1?label=&message=Violet&color=EE82EE&style=for-the-badge)  | Violet | EE82EE |  |
 | ![SlateBlue](https://img.shields.io/static/v1?label=&message=SlateBlue&color=6A5ACD&style=for-the-badge)  | SlateBlue | 6A5ACD |  |
@@ -60,7 +58,6 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![LightBlue](https://img.shields.io/static/v1?label=&message=LightBlue&color=ADD8E6&style=for-the-badge)  | LightBlue | ADD8E6 |  |
 | ![SkyBlue](https://img.shields.io/static/v1?label=&message=SkyBlue&color=87CEEB&style=for-the-badge)  | SkyBlue | 87CEEB |  |
 | ![LightSkyBlue](https://img.shields.io/static/v1?label=&message=LightSkyBlue&color=87CEFA&style=for-the-badge)  | LightSkyBlue | 87CEFA |  |
-| ![RoyalBlue](https://img.shields.io/static/v1?label=&message=RoyalBlue&color=4169E1&style=for-the-badge)  | RoyalBlue | 4169E1 |  |
 | ![Turquoise](https://img.shields.io/static/v1?label=&message=Turquoise&color=40E0D0&style=for-the-badge)  | Turquoise | 40E0D0 |  |
 | ![Aquamarine](https://img.shields.io/static/v1?label=&message=Aquamarine&color=7FFFD4&style=for-the-badge)  | Aquamarine | 7FFFD4 |  |
 | ![Aqua](https://img.shields.io/static/v1?label=&message=Aqua&color=00FFFF&style=for-the-badge)  | Aqua | 00FFFF |  |
