@@ -3,10 +3,11 @@
 Hue is a color representation of a user's crime coefficient - because #WhatColorAreYou
 
 ## Color
+These are in darkest first order but some of them may require sorting them a bit. 
+Crime coefficient is undecided until possible doubles are pruned and the listing is sorted in darkest first per color. 
 
 | Color  | Name  | Hex Code | Coefficient |
 | ------------ | ------------ | ------------ | ------------ |
-| These are in darkest first order |
 | ![IndianRed](https://img.shields.io/static/v1?label=&message=IndianRed&color=CD5C5C&style=for-the-badge)  | IndianRed | CD5C5C |  |
 | ![LightCoral](https://img.shields.io/static/v1?label=&message=LightCoral&color=F08080&style=for-the-badge)  | LightCoral | F08080 |  |
 | ![Salmon](https://img.shields.io/static/v1?label=&message=Salmon&color=FA8072&style=for-the-badge)  | Salmon | FA8072 |  |
