@@ -6,6 +6,9 @@ Hue is a color representation of a user's crime coefficient - because #WhatColor
 These are in darkest first order but some of them may require sorting them a bit. 
 Crime coefficient is undecided until possible doubles are pruned and the listing is sorted in darkest first per color. 
 
+
+Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed breakdown.
+
 | Color  | Name  | Hex Code | Coefficient |
 | ------------ | ------------ | ------------ | ------------ |
 | ![IndianRed](https://img.shields.io/static/v1?label=&message=IndianRed&color=CD5C5C&style=for-the-badge)  | IndianRed | CD5C5C |  |
