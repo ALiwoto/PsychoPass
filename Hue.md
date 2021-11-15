@@ -11,8 +11,8 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 
 | Color  | Name  | Hex Code | Coefficient |
 | ------------ | ------------ | ------------ | ------------ |
-| ![DarkGreen](https://img.shields.io/static/v1?label=&message=DarkGreen&color=006400&style=for-the-badge)  | DarkGreen | 006400 |  |
-| ![Green](https://img.shields.io/static/v1?label=&message=Green&color=008000&style=for-the-badge)  | Green | 008000 |  |
+| ![DarkGreen](https://img.shields.io/static/v1?label=&message=DarkGreen&color=006400&style=for-the-badge)  | DarkGreen | 006400 | 451 |
+| ![Green](https://img.shields.io/static/v1?label=&message=Green&color=008000&style=for-the-badge)  | Green | 008000 | 401 |
 | ![GreenYellow](https://img.shields.io/static/v1?label=&message=GreenYellow&color=ADFF2F&style=for-the-badge)  | GreenYellow | ADFF2F |  |
 | ![Chartreuse](https://img.shields.io/static/v1?label=&message=Chartreuse&color=7FFF00&style=for-the-badge)  | Chartreuse | 7FFF00 |  |
 | ![LawnGreen](https://img.shields.io/static/v1?label=&message=LawnGreen&color=7CFC00&style=for-the-badge)  | LawnGreen | 7CFC00 |  |
@@ -23,7 +23,7 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![DarkCyan](https://img.shields.io/static/v1?label=&message=DarkCyan&color=008B8B&style=for-the-badge)  | DarkCyan | 008B8B |  |
 | ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 |  |
 | ------------ | ------------ | ------------ | ------------ |
-| ![MediumVioletRed](https://img.shields.io/static/v1?label=&message=MediumVioletRed&color=C71585&style=for-the-badge)  | MediumVioletRed | C71585 |  |
+| ![MediumVioletRed](https://img.shields.io/static/v1?label=&message=MediumVioletRed&color=C71585&style=for-the-badge)  | MediumVioletRed | C71585 | 351 |
 | ![DeepPink](https://img.shields.io/static/v1?label=&message=DeepPink&color=FF1493&style=for-the-badge)  | DeepPink | FF1493 |  |
 | ![HotPink](https://img.shields.io/static/v1?label=&message=HotPink&color=FF69B4&style=for-the-badge)  | HotPink | FF69B4 |  |
 | ![Pink](https://img.shields.io/static/v1?label=&message=Pink&color=FFC0CB&style=for-the-badge)  | Pink | FFC0CB |  |
@@ -36,23 +36,22 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Coral](https://img.shields.io/static/v1?label=&message=Coral&color=FF7F50&style=for-the-badge)  | Coral | FF7F50 |  |
 | ![LightSalmon](https://img.shields.io/static/v1?label=&message=LightSalmon&color=FFA07A&style=for-the-badge)  | LightSalmon | FFA07A |  |
 | ------------ | ------------ | ------------ | ------------ |
-| ![Gold](https://img.shields.io/static/v1?label=&message=Gold&color=FFD700&style=for-the-badge)  | Gold | FFD700 |  |
 | ![Yellow](https://img.shields.io/static/v1?label=&message=Yellow&color=FFFF00&style=for-the-badge)  | Yellow | FFFF00 |  |
 | ![LightYellow](https://img.shields.io/static/v1?label=&message=LightYellow&color=FFFFE0&style=for-the-badge)  | LightYellow | FFFFE0 |  |
 | ![DarkKhaki](https://img.shields.io/static/v1?label=&message=DarkKhaki&color=BDB76B&style=for-the-badge)  | DarkKhaki | BDB76B |  |
 | ![Khaki](https://img.shields.io/static/v1?label=&message=Khaki&color=F0E68C&style=for-the-badge)  | Khaki | F0E68C |  |
 | ------------ | ------------ | ------------ | ------------ |
-| ![Indigo](https://img.shields.io/static/v1?label=&message=Indigo&color=4B0082&style=for-the-badge)  | Indigo | 4B0082 |  |
-| ![Purple](https://img.shields.io/static/v1?label=&message=Purple&color=800080&style=for-the-badge)  | Purple | 800080 |  |
-| ![DarkMagenta](https://img.shields.io/static/v1?label=&message=DarkMagenta&color=8B008B&style=for-the-badge)  | DarkMagenta | 8B008B |  |
-| ![DarkViolet](https://img.shields.io/static/v1?label=&message=DarkViolet&color=9400D3&style=for-the-badge)  | DarkViolet | 9400D3 |  |
-| ![Magenta](https://img.shields.io/static/v1?label=&message=Magenta&color=FF00FF&style=for-the-badge)  | Magenta | FF00FF |  |
-| ![Violet](https://img.shields.io/static/v1?label=&message=Violet&color=EE82EE&style=for-the-badge)  | Violet | EE82EE |  |
+| ![Indigo](https://img.shields.io/static/v1?label=&message=Indigo&color=4B0082&style=for-the-badge)  | Indigo | 4B0082 | 501 |
+| ![Purple](https://img.shields.io/static/v1?label=&message=Purple&color=800080&style=for-the-badge)  | Purple | 800080 | 301 |
+| ![DarkMagenta](https://img.shields.io/static/v1?label=&message=DarkMagenta&color=8B008B&style=for-the-badge)  | DarkMagenta | 8B008B | 251 |
+| ![DarkViolet](https://img.shields.io/static/v1?label=&message=DarkViolet&color=9400D3&style=for-the-badge)  | DarkViolet | 9400D3 | 201 |
+| ![Magenta](https://img.shields.io/static/v1?label=&message=Magenta&color=FF00FF&style=for-the-badge)  | Magenta | FF00FF | 126 |
+| ![Violet](https://img.shields.io/static/v1?label=&message=Violet&color=EE82EE&style=for-the-badge)  | Violet | EE82EE | 101 |
 | ![SlateBlue](https://img.shields.io/static/v1?label=&message=SlateBlue&color=6A5ACD&style=for-the-badge)  | SlateBlue | 6A5ACD |  |
 | ![DarkSlateBlue](https://img.shields.io/static/v1?label=&message=DarkSlateBlue&color=483D8B&style=for-the-badge)  | DarkSlateBlue | 483D8B |  |
 | ![Lavender](https://img.shields.io/static/v1?label=&message=Lavender&color=E6E6FA&style=for-the-badge)  | Lavender | E6E6FA |  |
 | ------------ | ------------ | ------------ | ------------ |
-| ![DarkBlue](https://img.shields.io/static/v1?label=&message=DarkBlue&color=00008B&style=for-the-badge)  | DarkBlue | 00008B |  |
+| ![DarkBlue](https://img.shields.io/static/v1?label=&message=DarkBlue&color=00008B&style=for-the-badge)  | DarkBlue | 00008B | 551 |
 | ![Navy](https://img.shields.io/static/v1?label=&message=Navy&color=000080&style=for-the-badge)  | Navy | 000080 |  |
 | ![Blue](https://img.shields.io/static/v1?label=&message=Blue&color=0000FF&style=for-the-badge)  | Blue | 0000FF |  |
 | ![LightBlue](https://img.shields.io/static/v1?label=&message=LightBlue&color=ADD8E6&style=for-the-badge)  | LightBlue | ADD8E6 |  |
@@ -64,7 +63,7 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Cyan](https://img.shields.io/static/v1?label=&message=Cyan&color=00FFFF&style=for-the-badge)  | Cyan | 00FFFF |  |
 | ![LightCyan](https://img.shields.io/static/v1?label=&message=LightCyan&color=E0FFFF&style=for-the-badge)  | LightCyan | E0FFFF |  |
 | ------------ | ------------ | ------------ | ------------ |
-| ![DarkRed](https://img.shields.io/static/v1?label=&message=DarkRed&color=8B0000&style=for-the-badge)  | DarkRed | 8B0000 |  |
+| ![DarkRed](https://img.shields.io/static/v1?label=&message=DarkRed&color=8B0000&style=for-the-badge)  | DarkRed | 8B0000 | 800 |
 | ![Red](https://img.shields.io/static/v1?label=&message=Red&color=FF0000&style=for-the-badge)  | Red | FF0000 |  |
 | ![FireBrick](https://img.shields.io/static/v1?label=&message=FireBrick&color=B22222&style=for-the-badge)  | FireBrick | B22222 |  |
 | ![Crimson](https://img.shields.io/static/v1?label=&message=Crimson&color=DC143C&style=for-the-badge)  | Crimson | DC143C |  |
