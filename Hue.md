@@ -13,8 +13,6 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ------------ | ------------ | ------------ | ------------ |
 | ![DarkGreen](https://img.shields.io/static/v1?label=&message=DarkGreen&color=006400&style=for-the-badge)  | DarkGreen | 006400 | 451-500 |
 | ![Green](https://img.shields.io/static/v1?label=&message=Green&color=008000&style=for-the-badge)  | Green | 008000 | 401-450 |
-| ![MediumAquamarine](https://img.shields.io/static/v1?label=&message=MediumAquamarine&color=66CDAA&style=for-the-badge)  | MediumAquamarine | 66CDAA |  |
-| ![DarkCyan](https://img.shields.io/static/v1?label=&message=DarkCyan&color=008B8B&style=for-the-badge)  | DarkCyan | 008B8B |  |
 | ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 |  |
 | ------------ | ------------ | ------------ | ------------ |
 | ![HotPink](https://img.shields.io/static/v1?label=&message=HotPink&color=FF69B4&style=for-the-badge)  | HotPink | FF69B4 |  |
