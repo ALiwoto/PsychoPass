@@ -48,6 +48,5 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Red](https://img.shields.io/static/v1?label=&message=Red&color=FF0000&style=for-the-badge)  | Red | FF0000 | 351-400 |
 | ![FireBrick](https://img.shields.io/static/v1?label=&message=FireBrick&color=B22222&style=for-the-badge)  | FireBrick | B22222 | 96-100 |
 | ![Crimson](https://img.shields.io/static/v1?label=&message=Crimson&color=DC143C&style=for-the-badge)  | Crimson | DC143C | 91-95 |
-| ![IndianRed](https://img.shields.io/static/v1?label=&message=IndianRed&color=CD5C5C&style=for-the-badge)  | IndianRed | CD5C5C |  |
 | ![Salmon](https://img.shields.io/static/v1?label=&message=Salmon&color=FA8072&style=for-the-badge)  | Salmon | FA8072 | 86-90 |
 | ------------ | ------------ | ------------ | ------------ |
