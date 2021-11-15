@@ -30,8 +30,8 @@ Range 0-100 (No bans) (Dominator Locked)
 • Restored  - 81-100
 ==============
 Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
-• TROLLING     - 101-125 - Trolling
-• SPAM         - 126-200 - Spam/Unwanted Promotion
+• TROLLING     - 101-150 - Trolling
+• SPAM         - 151-200 - Spam/Unwanted Promotion
 • EVADE        - 201-250 - Ban Evade using alts
 x-------x
 Manual Revert
@@ -59,8 +59,8 @@ MASSADD - spam add, kidnapping, member scraping, member adding, mass adding, spa
 var (
 	RangeCivilian     = &CrimeCoefficientRange{0, 80}
 	RangeRestored     = &CrimeCoefficientRange{81, 100}
-	RangeTrolling     = &CrimeCoefficientRange{101, 125}
-	RangeSpam         = &CrimeCoefficientRange{126, 200}
+	RangeTrolling     = &CrimeCoefficientRange{101, 150}
+	RangeSpam         = &CrimeCoefficientRange{151, 200}
 	RangeEvade        = &CrimeCoefficientRange{201, 250}
 	RangeCustom       = &CrimeCoefficientRange{251, 300}
 	RangePsychoHazard = &CrimeCoefficientRange{301, 350}
@@ -77,7 +77,7 @@ var (
 	// Restored  - 81-100
 	// Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
 	ReasonTrolling []string
-	ReasonSpam     []string // - 126-200 - Spam/Unwanted Promotion
+	ReasonSpam     []string // - 151-200 - Spam/Unwanted Promotion
 	ReasonEvade    []string // - 201-250 - Ban Evade using alts
 	//ReasonCustom   = "custom" - 251-300 - Any Custom reason
 

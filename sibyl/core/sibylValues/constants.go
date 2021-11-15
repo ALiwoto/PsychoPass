@@ -39,8 +39,8 @@ const (
 /*
 	RangeCivilian     = &CrimeCoefficientRange{0, 80}
 	RangeRestored   = &CrimeCoefficientRange{81, 100}
-	RangeTrolling     = &CrimeCoefficientRange{101, 125}
-	RangeSpam         = &CrimeCoefficientRange{126, 200}
+	RangeTrolling     = &CrimeCoefficientRange{101, 150}
+	RangeSpam         = &CrimeCoefficientRange{151, 200}
 	RangeEvade        = &CrimeCoefficientRange{201, 250}
 	RangeCustom       = &CrimeCoefficientRange{251, 300}
 	RangePsychoHazard = &CrimeCoefficientRange{301, 350}
