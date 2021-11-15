@@ -17,8 +17,6 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![DarkCyan](https://img.shields.io/static/v1?label=&message=DarkCyan&color=008B8B&style=for-the-badge)  | DarkCyan | 008B8B |  |
 | ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 |  |
 | ------------ | ------------ | ------------ | ------------ |
-| ![MediumVioletRed](https://img.shields.io/static/v1?label=&message=MediumVioletRed&color=C71585&style=for-the-badge)  | MediumVioletRed | C71585 | |
-| ![DeepPink](https://img.shields.io/static/v1?label=&message=DeepPink&color=FF1493&style=for-the-badge)  | DeepPink | FF1493 |  |
 | ![HotPink](https://img.shields.io/static/v1?label=&message=HotPink&color=FF69B4&style=for-the-badge)  | HotPink | FF69B4 |  |
 | ![Pink](https://img.shields.io/static/v1?label=&message=Pink&color=FFC0CB&style=for-the-badge)  | Pink | FFC0CB |  |
 | ![LightPink](https://img.shields.io/static/v1?label=&message=LightPink&color=FFB6C1&style=for-the-badge)  | LightPink | FFB6C1 |  |
