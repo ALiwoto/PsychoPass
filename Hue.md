@@ -11,24 +11,12 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 
 | Color  | Name  | Hex Code | Coefficient |
 | ------------ | ------------ | ------------ | ------------ |
+| ![DarkGreen](https://img.shields.io/static/v1?label=&message=DarkGreen&color=006400&style=for-the-badge)  | DarkGreen | 006400 |  |
+| ![Green](https://img.shields.io/static/v1?label=&message=Green&color=008000&style=for-the-badge)  | Green | 008000 |  |
 | ![GreenYellow](https://img.shields.io/static/v1?label=&message=GreenYellow&color=ADFF2F&style=for-the-badge)  | GreenYellow | ADFF2F |  |
 | ![Chartreuse](https://img.shields.io/static/v1?label=&message=Chartreuse&color=7FFF00&style=for-the-badge)  | Chartreuse | 7FFF00 |  |
 | ![LawnGreen](https://img.shields.io/static/v1?label=&message=LawnGreen&color=7CFC00&style=for-the-badge)  | LawnGreen | 7CFC00 |  |
 | ![Lime](https://img.shields.io/static/v1?label=&message=Lime&color=00FF00&style=for-the-badge)  | Lime | 00FF00 |  |
-| ![LimeGreen](https://img.shields.io/static/v1?label=&message=LimeGreen&color=32CD32&style=for-the-badge)  | LimeGreen | 32CD32 |  |
-| ![PaleGreen](https://img.shields.io/static/v1?label=&message=PaleGreen&color=98FB98&style=for-the-badge)  | PaleGreen | 98FB98 |  |
-| ![LightGreen](https://img.shields.io/static/v1?label=&message=LightGreen&color=90EE90&style=for-the-badge)  | LightGreen | 90EE90 |  |
-| ![MediumSpringGreen](https://img.shields.io/static/v1?label=&message=MediumSpringGreen&color=00FA9A&style=for-the-badge)  | MediumSpringGreen | 00FA9A |  |
-| ![SpringGreen](https://img.shields.io/static/v1?label=&message=SpringGreen&color=00FF7F&style=for-the-badge)  | SpringGreen | 00FF7F |  |
-| ![MediumSeaGreen](https://img.shields.io/static/v1?label=&message=MediumSeaGreen&color=3CB371&style=for-the-badge)  | MediumSeaGreen | 3CB371 |  |
-| ![SeaGreen](https://img.shields.io/static/v1?label=&message=SeaGreen&color=2E8B57&style=for-the-badge)  | SeaGreen | 2E8B57 |  |
-| ![ForestGreen](https://img.shields.io/static/v1?label=&message=ForestGreen&color=228B22&style=for-the-badge)  | ForestGreen | 228B22 |  |
-| ![Green](https://img.shields.io/static/v1?label=&message=Green&color=008000&style=for-the-badge)  | Green | 008000 |  |
-| ![DarkGreen](https://img.shields.io/static/v1?label=&message=DarkGreen&color=006400&style=for-the-badge)  | DarkGreen | 006400 |  |
-| ![YellowGreen](https://img.shields.io/static/v1?label=&message=YellowGreen&color=9ACD32&style=for-the-badge)  | YellowGreen | 9ACD32 |  |
-| ![OliveDrab](https://img.shields.io/static/v1?label=&message=OliveDrab&color=6B8E23&style=for-the-badge)  | OliveDrab | 6B8E23 |  |
-| ![Olive](https://img.shields.io/static/v1?label=&message=Olive&color=808000&style=for-the-badge)  | Olive | 808000 |  |
-| ![DarkOliveGreen](https://img.shields.io/static/v1?label=&message=DarkOliveGreen&color=556B2F&style=for-the-badge)  | DarkOliveGreen | 556B2F |  |
 | ![MediumAquamarine](https://img.shields.io/static/v1?label=&message=MediumAquamarine&color=66CDAA&style=for-the-badge)  | MediumAquamarine | 66CDAA |  |
 | ![DarkSeaGreen](https://img.shields.io/static/v1?label=&message=DarkSeaGreen&color=8FBC8B&style=for-the-badge)  | DarkSeaGreen | 8FBC8B |  |
 | ![LightSeaGreen](https://img.shields.io/static/v1?label=&message=LightSeaGreen&color=20B2AA&style=for-the-badge)  | LightSeaGreen | 20B2AA |  |
