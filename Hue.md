@@ -26,16 +26,16 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Crimson](https://img.shields.io/static/v1?label=&message=Crimson&color=DC143C&style=for-the-badge)  | Crimson | DC143C | 91-95 |
 | ![Salmon](https://img.shields.io/static/v1?label=&message=Salmon&color=FA8072&style=for-the-badge)  | Salmon | FA8072 | 86-90 |
 | ![SlateBlue](https://img.shields.io/static/v1?label=&message=SlateBlue&color=6A5ACD&style=for-the-badge)  | SlateBlue | 6A5ACD | 81-85 |
-| ------------ | ------------ | ------------ | ------------ |
-| ------------ Below 80 Range begins ------------ |
-| ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 |  |
-| ![HotPink](https://img.shields.io/static/v1?label=&message=HotPink&color=FF69B4&style=for-the-badge)  | HotPink | FF69B4 |  |
-| ![Pink](https://img.shields.io/static/v1?label=&message=Pink&color=FFC0CB&style=for-the-badge)  | Pink | FFC0CB |  |
-| ![LightPink](https://img.shields.io/static/v1?label=&message=LightPink&color=FFB6C1&style=for-the-badge)  | LightPink | FFB6C1 |  |
-| ![Lavender](https://img.shields.io/static/v1?label=&message=Lavender&color=E6E6FA&style=for-the-badge)  | Lavender | E6E6FA |  |
-| ![LightBlue](https://img.shields.io/static/v1?label=&message=LightBlue&color=ADD8E6&style=for-the-badge)  | LightBlue | ADD8E6 |  |
-| ![SkyBlue](https://img.shields.io/static/v1?label=&message=SkyBlue&color=87CEEB&style=for-the-badge)  | SkyBlue | 87CEEB |  |
-| ![Aquamarine](https://img.shields.io/static/v1?label=&message=Aquamarine&color=7FFFD4&style=for-the-badge)  | Aquamarine | 7FFFD4 |  |
-| ![Aqua](https://img.shields.io/static/v1?label=&message=Aqua&color=00FFFF&style=for-the-badge)  | Aqua | 00FFFF |  |
-| ![Cyan](https://img.shields.io/static/v1?label=&message=Cyan&color=00FFFF&style=for-the-badge)  | Cyan | 00FFFF |  |
+| Below 80 Range begins  | ------------ | ------------ | ------------ |
+| ![Lime](https://img.shields.io/static/v1?label=&message=Lime&color=00FF00&style=for-the-badge)  | Lime | 00FF00 | 75-80 |
+| ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 | 71-75 |
+| ![LightPink](https://img.shields.io/static/v1?label=&message=LightPink&color=FFB6C1&style=for-the-badge)  | LightPink | FFB6C1 | 66-70 |
+| ![Cyan](https://img.shields.io/static/v1?label=&message=Cyan&color=00FFFF&style=for-the-badge)  | Cyan | 00FFFF | 61-65 |
+| ![Lavender](https://img.shields.io/static/v1?label=&message=Lavender&color=E6E6FA&style=for-the-badge)  | Lavender | E6E6FA | 56-60 |
+| ![LightBlue](https://img.shields.io/static/v1?label=&message=LightBlue&color=ADD8E6&style=for-the-badge)  | LightBlue | ADD8E6 | 51-55 |
+| ![SkyBlue](https://img.shields.io/static/v1?label=&message=SkyBlue&color=87CEEB&style=for-the-badge)  | SkyBlue | 87CEEB | 46-50 |
+| ![Aquamarine](https://img.shields.io/static/v1?label=&message=Aquamarine&color=7FFFD4&style=for-the-badge)  | Aquamarine | 7FFFD4 | 41-45 |
+| ![HotPink](https://img.shields.io/static/v1?label=&message=HotPink&color=FF69B4&style=for-the-badge)  | HotPink | FF69B4 | 36-40 |
+| ![Aqua](https://img.shields.io/static/v1?label=&message=Aqua&color=00FFFF&style=for-the-badge)  | Aqua | 00FFFF | 31-35 |
+| ![Pink](https://img.shields.io/static/v1?label=&message=Pink&color=FFC0CB&style=for-the-badge)  | Pink | FFC0CB | 25-30 |
 | ------------ | ------------ | ------------ | ------------ |
