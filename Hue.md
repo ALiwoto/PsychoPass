@@ -23,7 +23,7 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![DarkCyan](https://img.shields.io/static/v1?label=&message=DarkCyan&color=008B8B&style=for-the-badge)  | DarkCyan | 008B8B |  |
 | ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 |  |
 | ------------ | ------------ | ------------ | ------------ |
-| ![MediumVioletRed](https://img.shields.io/static/v1?label=&message=MediumVioletRed&color=C71585&style=for-the-badge)  | MediumVioletRed | C71585 | 351 |
+| ![MediumVioletRed](https://img.shields.io/static/v1?label=&message=MediumVioletRed&color=C71585&style=for-the-badge)  | MediumVioletRed | C71585 | |
 | ![DeepPink](https://img.shields.io/static/v1?label=&message=DeepPink&color=FF1493&style=for-the-badge)  | DeepPink | FF1493 |  |
 | ![HotPink](https://img.shields.io/static/v1?label=&message=HotPink&color=FF69B4&style=for-the-badge)  | HotPink | FF69B4 |  |
 | ![Pink](https://img.shields.io/static/v1?label=&message=Pink&color=FFC0CB&style=for-the-badge)  | Pink | FFC0CB |  |
@@ -64,7 +64,7 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![LightCyan](https://img.shields.io/static/v1?label=&message=LightCyan&color=E0FFFF&style=for-the-badge)  | LightCyan | E0FFFF |  |
 | ------------ | ------------ | ------------ | ------------ |
 | ![DarkRed](https://img.shields.io/static/v1?label=&message=DarkRed&color=8B0000&style=for-the-badge)  | DarkRed | 8B0000 | 800 |
-| ![Red](https://img.shields.io/static/v1?label=&message=Red&color=FF0000&style=for-the-badge)  | Red | FF0000 |  |
+| ![Red](https://img.shields.io/static/v1?label=&message=Red&color=FF0000&style=for-the-badge)  | Red | FF0000 | 351 |
 | ![FireBrick](https://img.shields.io/static/v1?label=&message=FireBrick&color=B22222&style=for-the-badge)  | FireBrick | B22222 |  |
 | ![Crimson](https://img.shields.io/static/v1?label=&message=Crimson&color=DC143C&style=for-the-badge)  | Crimson | DC143C |  |
 | ![IndianRed](https://img.shields.io/static/v1?label=&message=IndianRed&color=CD5C5C&style=for-the-badge)  | IndianRed | CD5C5C |  |
