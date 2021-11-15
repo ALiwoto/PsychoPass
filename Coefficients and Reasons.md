@@ -24,8 +24,8 @@ This readme contains the basics and understanding of Coefficients and ban levels
 ##### Suggested Action is auto mute the user
 | FLAG  | Coefficient Range | Explanation  |
 | ------------ | ------------ | ------------ |
-| TROLLING  | 101-125  | Trolling  |
-|  SPAM | 126-200  | Spam/Unwanted Promotion  |
+| TROLLING  | 101-150  | Trolling  |
+|  SPAM | 151-200  | Spam/Unwanted Promotion  |
 | EVADE  | 201-250  | Ban Evade using alts  |
 | CUSTOM  | 251-300  |  Any Custom reason |
 
