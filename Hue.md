@@ -11,13 +11,29 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 
 | Color  | Name  | Hex Code | Coefficient |
 | ------------ | ------------ | ------------ | ------------ |
-| ![DarkRed](https://img.shields.io/static/v1?label=&message=DarkRed&color=8B0000&style=for-the-badge)  | DarkRed | 8B0000 |  |
-| ![Red](https://img.shields.io/static/v1?label=&message=Red&color=FF0000&style=for-the-badge)  | Red | FF0000 |  |
-| ![FireBrick](https://img.shields.io/static/v1?label=&message=FireBrick&color=B22222&style=for-the-badge)  | FireBrick | B22222 |  |
-| ![Crimson](https://img.shields.io/static/v1?label=&message=Crimson&color=DC143C&style=for-the-badge)  | Crimson | DC143C |  |
-| ![IndianRed](https://img.shields.io/static/v1?label=&message=IndianRed&color=CD5C5C&style=for-the-badge)  | IndianRed | CD5C5C |  |
-| ![LightCoral](https://img.shields.io/static/v1?label=&message=LightCoral&color=F08080&style=for-the-badge)  | LightCoral | F08080 |  |
-| ![Salmon](https://img.shields.io/static/v1?label=&message=Salmon&color=FA8072&style=for-the-badge)  | Salmon | FA8072 |  |
+| ![GreenYellow](https://img.shields.io/static/v1?label=&message=GreenYellow&color=ADFF2F&style=for-the-badge)  | GreenYellow | ADFF2F |  |
+| ![Chartreuse](https://img.shields.io/static/v1?label=&message=Chartreuse&color=7FFF00&style=for-the-badge)  | Chartreuse | 7FFF00 |  |
+| ![LawnGreen](https://img.shields.io/static/v1?label=&message=LawnGreen&color=7CFC00&style=for-the-badge)  | LawnGreen | 7CFC00 |  |
+| ![Lime](https://img.shields.io/static/v1?label=&message=Lime&color=00FF00&style=for-the-badge)  | Lime | 00FF00 |  |
+| ![LimeGreen](https://img.shields.io/static/v1?label=&message=LimeGreen&color=32CD32&style=for-the-badge)  | LimeGreen | 32CD32 |  |
+| ![PaleGreen](https://img.shields.io/static/v1?label=&message=PaleGreen&color=98FB98&style=for-the-badge)  | PaleGreen | 98FB98 |  |
+| ![LightGreen](https://img.shields.io/static/v1?label=&message=LightGreen&color=90EE90&style=for-the-badge)  | LightGreen | 90EE90 |  |
+| ![MediumSpringGreen](https://img.shields.io/static/v1?label=&message=MediumSpringGreen&color=00FA9A&style=for-the-badge)  | MediumSpringGreen | 00FA9A |  |
+| ![SpringGreen](https://img.shields.io/static/v1?label=&message=SpringGreen&color=00FF7F&style=for-the-badge)  | SpringGreen | 00FF7F |  |
+| ![MediumSeaGreen](https://img.shields.io/static/v1?label=&message=MediumSeaGreen&color=3CB371&style=for-the-badge)  | MediumSeaGreen | 3CB371 |  |
+| ![SeaGreen](https://img.shields.io/static/v1?label=&message=SeaGreen&color=2E8B57&style=for-the-badge)  | SeaGreen | 2E8B57 |  |
+| ![ForestGreen](https://img.shields.io/static/v1?label=&message=ForestGreen&color=228B22&style=for-the-badge)  | ForestGreen | 228B22 |  |
+| ![Green](https://img.shields.io/static/v1?label=&message=Green&color=008000&style=for-the-badge)  | Green | 008000 |  |
+| ![DarkGreen](https://img.shields.io/static/v1?label=&message=DarkGreen&color=006400&style=for-the-badge)  | DarkGreen | 006400 |  |
+| ![YellowGreen](https://img.shields.io/static/v1?label=&message=YellowGreen&color=9ACD32&style=for-the-badge)  | YellowGreen | 9ACD32 |  |
+| ![OliveDrab](https://img.shields.io/static/v1?label=&message=OliveDrab&color=6B8E23&style=for-the-badge)  | OliveDrab | 6B8E23 |  |
+| ![Olive](https://img.shields.io/static/v1?label=&message=Olive&color=808000&style=for-the-badge)  | Olive | 808000 |  |
+| ![DarkOliveGreen](https://img.shields.io/static/v1?label=&message=DarkOliveGreen&color=556B2F&style=for-the-badge)  | DarkOliveGreen | 556B2F |  |
+| ![MediumAquamarine](https://img.shields.io/static/v1?label=&message=MediumAquamarine&color=66CDAA&style=for-the-badge)  | MediumAquamarine | 66CDAA |  |
+| ![DarkSeaGreen](https://img.shields.io/static/v1?label=&message=DarkSeaGreen&color=8FBC8B&style=for-the-badge)  | DarkSeaGreen | 8FBC8B |  |
+| ![LightSeaGreen](https://img.shields.io/static/v1?label=&message=LightSeaGreen&color=20B2AA&style=for-the-badge)  | LightSeaGreen | 20B2AA |  |
+| ![DarkCyan](https://img.shields.io/static/v1?label=&message=DarkCyan&color=008B8B&style=for-the-badge)  | DarkCyan | 008B8B |  |
+| ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 |  |
 | ------------ | ------------ | ------------ | ------------ |
 | ![MediumVioletRed](https://img.shields.io/static/v1?label=&message=MediumVioletRed&color=C71585&style=for-the-badge)  | MediumVioletRed | C71585 |  |
 | ![DeepPink](https://img.shields.io/static/v1?label=&message=DeepPink&color=FF1493&style=for-the-badge)  | DeepPink | FF1493 |  |
@@ -50,30 +66,6 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![DarkSlateBlue](https://img.shields.io/static/v1?label=&message=DarkSlateBlue&color=483D8B&style=for-the-badge)  | DarkSlateBlue | 483D8B |  |
 | ![Lavender](https://img.shields.io/static/v1?label=&message=Lavender&color=E6E6FA&style=for-the-badge)  | Lavender | E6E6FA |  |
 | ------------ | ------------ | ------------ | ------------ |
-| ![GreenYellow](https://img.shields.io/static/v1?label=&message=GreenYellow&color=ADFF2F&style=for-the-badge)  | GreenYellow | ADFF2F |  |
-| ![Chartreuse](https://img.shields.io/static/v1?label=&message=Chartreuse&color=7FFF00&style=for-the-badge)  | Chartreuse | 7FFF00 |  |
-| ![LawnGreen](https://img.shields.io/static/v1?label=&message=LawnGreen&color=7CFC00&style=for-the-badge)  | LawnGreen | 7CFC00 |  |
-| ![Lime](https://img.shields.io/static/v1?label=&message=Lime&color=00FF00&style=for-the-badge)  | Lime | 00FF00 |  |
-| ![LimeGreen](https://img.shields.io/static/v1?label=&message=LimeGreen&color=32CD32&style=for-the-badge)  | LimeGreen | 32CD32 |  |
-| ![PaleGreen](https://img.shields.io/static/v1?label=&message=PaleGreen&color=98FB98&style=for-the-badge)  | PaleGreen | 98FB98 |  |
-| ![LightGreen](https://img.shields.io/static/v1?label=&message=LightGreen&color=90EE90&style=for-the-badge)  | LightGreen | 90EE90 |  |
-| ![MediumSpringGreen](https://img.shields.io/static/v1?label=&message=MediumSpringGreen&color=00FA9A&style=for-the-badge)  | MediumSpringGreen | 00FA9A |  |
-| ![SpringGreen](https://img.shields.io/static/v1?label=&message=SpringGreen&color=00FF7F&style=for-the-badge)  | SpringGreen | 00FF7F |  |
-| ![MediumSeaGreen](https://img.shields.io/static/v1?label=&message=MediumSeaGreen&color=3CB371&style=for-the-badge)  | MediumSeaGreen | 3CB371 |  |
-| ![SeaGreen](https://img.shields.io/static/v1?label=&message=SeaGreen&color=2E8B57&style=for-the-badge)  | SeaGreen | 2E8B57 |  |
-| ![ForestGreen](https://img.shields.io/static/v1?label=&message=ForestGreen&color=228B22&style=for-the-badge)  | ForestGreen | 228B22 |  |
-| ![Green](https://img.shields.io/static/v1?label=&message=Green&color=008000&style=for-the-badge)  | Green | 008000 |  |
-| ![DarkGreen](https://img.shields.io/static/v1?label=&message=DarkGreen&color=006400&style=for-the-badge)  | DarkGreen | 006400 |  |
-| ![YellowGreen](https://img.shields.io/static/v1?label=&message=YellowGreen&color=9ACD32&style=for-the-badge)  | YellowGreen | 9ACD32 |  |
-| ![OliveDrab](https://img.shields.io/static/v1?label=&message=OliveDrab&color=6B8E23&style=for-the-badge)  | OliveDrab | 6B8E23 |  |
-| ![Olive](https://img.shields.io/static/v1?label=&message=Olive&color=808000&style=for-the-badge)  | Olive | 808000 |  |
-| ![DarkOliveGreen](https://img.shields.io/static/v1?label=&message=DarkOliveGreen&color=556B2F&style=for-the-badge)  | DarkOliveGreen | 556B2F |  |
-| ![MediumAquamarine](https://img.shields.io/static/v1?label=&message=MediumAquamarine&color=66CDAA&style=for-the-badge)  | MediumAquamarine | 66CDAA |  |
-| ![DarkSeaGreen](https://img.shields.io/static/v1?label=&message=DarkSeaGreen&color=8FBC8B&style=for-the-badge)  | DarkSeaGreen | 8FBC8B |  |
-| ![LightSeaGreen](https://img.shields.io/static/v1?label=&message=LightSeaGreen&color=20B2AA&style=for-the-badge)  | LightSeaGreen | 20B2AA |  |
-| ![DarkCyan](https://img.shields.io/static/v1?label=&message=DarkCyan&color=008B8B&style=for-the-badge)  | DarkCyan | 008B8B |  |
-| ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 |  |
-| ------------ | ------------ | ------------ | ------------ |
 | ![Aqua](https://img.shields.io/static/v1?label=&message=Aqua&color=00FFFF&style=for-the-badge)  | Aqua | 00FFFF |  |
 | ![Cyan](https://img.shields.io/static/v1?label=&message=Cyan&color=00FFFF&style=for-the-badge)  | Cyan | 00FFFF |  |
 | ![LightCyan](https://img.shields.io/static/v1?label=&message=LightCyan&color=E0FFFF&style=for-the-badge)  | LightCyan | E0FFFF |  |
@@ -100,6 +92,13 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Navy](https://img.shields.io/static/v1?label=&message=Navy&color=000080&style=for-the-badge)  | Navy | 000080 |  |
 | ![MidnightBlue](https://img.shields.io/static/v1?label=&message=MidnightBlue&color=191970&style=for-the-badge)  | MidnightBlue | 191970 |  |
 | ------------ | ------------ | ------------ | ------------ |
+| ![DarkRed](https://img.shields.io/static/v1?label=&message=DarkRed&color=8B0000&style=for-the-badge)  | DarkRed | 8B0000 |  |
+| ![Red](https://img.shields.io/static/v1?label=&message=Red&color=FF0000&style=for-the-badge)  | Red | FF0000 |  |
+| ![FireBrick](https://img.shields.io/static/v1?label=&message=FireBrick&color=B22222&style=for-the-badge)  | FireBrick | B22222 |  |
+| ![Crimson](https://img.shields.io/static/v1?label=&message=Crimson&color=DC143C&style=for-the-badge)  | Crimson | DC143C |  |
+| ![IndianRed](https://img.shields.io/static/v1?label=&message=IndianRed&color=CD5C5C&style=for-the-badge)  | IndianRed | CD5C5C |  |
+| ![Salmon](https://img.shields.io/static/v1?label=&message=Salmon&color=FA8072&style=for-the-badge)  | Salmon | FA8072 |  |
+| ------------ | ------------ | ------------ | ------------ |
 | ![Gainsboro](https://img.shields.io/static/v1?label=&message=Gainsboro&color=DCDCDC&style=for-the-badge)  | Gainsboro | DCDCDC |  |
 | ![LightGray](https://img.shields.io/static/v1?label=&message=LightGray&color=D3D3D3&style=for-the-badge)  | LightGray | D3D3D3 |  |
 | ![Silver](https://img.shields.io/static/v1?label=&message=Silver&color=C0C0C0&style=for-the-badge)  | Silver | C0C0C0 |  |
@@ -109,4 +108,4 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![LightSlateGray](https://img.shields.io/static/v1?label=&message=LightSlateGray&color=778899&style=for-the-badge)  | LightSlateGray | 778899 |  |
 | ![SlateGray](https://img.shields.io/static/v1?label=&message=SlateGray&color=708090&style=for-the-badge)  | SlateGray | 708090 |  |
 | ![DarkSlateGray](https://img.shields.io/static/v1?label=&message=DarkSlateGray&color=2F4F4F&style=for-the-badge)  | DarkSlateGray | 2F4F4F |  |
-| ![DarkSlateGray](https://img.shields.io/static/v1?label=&message=BlackBlack&color=000000&style=for-the-badge)  | DarkSlateGray | 000000 |  |
+| ![Black](https://img.shields.io/static/v1?label=&message=Black&color=000000&style=for-the-badge)  | DarkSlateGray | 000000 |  |
