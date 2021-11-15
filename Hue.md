@@ -14,8 +14,6 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![DarkGreen](https://img.shields.io/static/v1?label=&message=DarkGreen&color=006400&style=for-the-badge)  | DarkGreen | 006400 | 451-500 |
 | ![Green](https://img.shields.io/static/v1?label=&message=Green&color=008000&style=for-the-badge)  | Green | 008000 | 401-450 |
 | ![MediumAquamarine](https://img.shields.io/static/v1?label=&message=MediumAquamarine&color=66CDAA&style=for-the-badge)  | MediumAquamarine | 66CDAA |  |
-| ![DarkSeaGreen](https://img.shields.io/static/v1?label=&message=DarkSeaGreen&color=8FBC8B&style=for-the-badge)  | DarkSeaGreen | 8FBC8B |  |
-| ![LightSeaGreen](https://img.shields.io/static/v1?label=&message=LightSeaGreen&color=20B2AA&style=for-the-badge)  | LightSeaGreen | 20B2AA |  |
 | ![DarkCyan](https://img.shields.io/static/v1?label=&message=DarkCyan&color=008B8B&style=for-the-badge)  | DarkCyan | 008B8B |  |
 | ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 |  |
 | ------------ | ------------ | ------------ | ------------ |
@@ -37,12 +35,9 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Blue](https://img.shields.io/static/v1?label=&message=Blue&color=0000FF&style=for-the-badge)  | Blue | 0000FF | 201-250 |
 | ![LightBlue](https://img.shields.io/static/v1?label=&message=LightBlue&color=ADD8E6&style=for-the-badge)  | LightBlue | ADD8E6 |  |
 | ![SkyBlue](https://img.shields.io/static/v1?label=&message=SkyBlue&color=87CEEB&style=for-the-badge)  | SkyBlue | 87CEEB |  |
-| ![LightSkyBlue](https://img.shields.io/static/v1?label=&message=LightSkyBlue&color=87CEFA&style=for-the-badge)  | LightSkyBlue | 87CEFA |  |
-| ![Turquoise](https://img.shields.io/static/v1?label=&message=Turquoise&color=40E0D0&style=for-the-badge)  | Turquoise | 40E0D0 |  |
 | ![Aquamarine](https://img.shields.io/static/v1?label=&message=Aquamarine&color=7FFFD4&style=for-the-badge)  | Aquamarine | 7FFFD4 |  |
 | ![Aqua](https://img.shields.io/static/v1?label=&message=Aqua&color=00FFFF&style=for-the-badge)  | Aqua | 00FFFF |  |
 | ![Cyan](https://img.shields.io/static/v1?label=&message=Cyan&color=00FFFF&style=for-the-badge)  | Cyan | 00FFFF |  |
-| ![LightCyan](https://img.shields.io/static/v1?label=&message=LightCyan&color=E0FFFF&style=for-the-badge)  | LightCyan | E0FFFF |  |
 | ------------ | ------------ | ------------ | ------------ |
 | ![DarkRed](https://img.shields.io/static/v1?label=&message=DarkRed&color=8B0000&style=for-the-badge)  | DarkRed | 8B0000 | 600+ |
 | ![Red](https://img.shields.io/static/v1?label=&message=Red&color=FF0000&style=for-the-badge)  | Red | FF0000 | 351-400 |
