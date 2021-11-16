@@ -142,6 +142,10 @@ func MultiBanHandler(c *gin.Context) {
 	}
 
 	if multiBanData != nil && len(multiBanData.Users) > 0 {
+		if len(multiBanData.Users) > MaxMultiUsers {
+			entry.SendTooManyError(c, OriginMultiBan)
+			return
+		}
 		go applyMultiBan(multiBanData, by)
 	}
 
@@ -237,6 +241,10 @@ func MultiUnBanHandler(c *gin.Context) {
 	}
 
 	if multiUnBanData != nil && len(multiUnBanData.Users) > 0 {
+		if len(multiUnBanData.Users) > MaxMultiUsers {
+			entry.SendTooManyError(c, OriginMultiBan)
+			return
+		}
 		go applyMultiUnBan(multiUnBanData, by)
 	}
 

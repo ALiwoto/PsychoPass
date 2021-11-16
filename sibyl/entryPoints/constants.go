@@ -44,6 +44,10 @@ const (
 	// target token has been revoked too many times.
 	ErrCannotBeRevoked = "Token cannot be revoked anymore"
 
+	// ErrTooManyUsers is the error message that should be sent when the
+	// amount of users in multi* endpoints are too many.
+	ErrTooManyUsers = "Token cannot be revoked anymore"
+
 	// ErrNoReason is the error message that should be sent when the user
 	// has sent a request without providing any reason.
 	ErrNoReason = "Reason is required for this action"
