@@ -10,6 +10,7 @@
         <meta name="theme-color" content="#15A4E9" />
         <title>Token Methods</title>
         <link rel="stylesheet" href="/style.css" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/pygments.css" crossorigin="anonymous" />
     </head>
     <body>
         <h1>Token Methods</h1>
@@ -34,7 +35,7 @@
             <tr><td>permission</td><td>Permission to give the token (if it exists it will alter the permission)</td></tr>
         </table>
         <h3>Example response</h3>
-        <pre><code>{
+        <div class="highlightjson">{
     "success": true,
     "result": {
         "permission": 1,
@@ -42,7 +43,7 @@
         "hash": "516124792:TmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXAKTmV2ZXIgZ29ubmEgbGV0IHlvdSBkb3duCk5ldmVyIGdvbm5hIHJ1biBhcm91bmQgYW5kIGRlc2VydCB5b3UgCg"
     },
     "error": null
-}</code></pre>
+}</div>
         <h2 id="changeperm"><code>/changePerm</code> <a href="#changeperm" class="permalink">¶</a></h2>
         <p>Change a token's permission level</p>
         <h3>URL Query Parameters</h3>
@@ -53,14 +54,14 @@
             <tr><td>permission</td><td>Permission to give the token</td></tr>
         </table>
         <h3>Example response</h3>
-        <pre><code>{
+        <div class="highlightjson">{
     "success": true,
     "result": {
         "previous_perm": 1,
         "current_perm": 2
     },
     "error": null
-}</code></pre>
+}</div>
         <h2 id="revoke"><code>/revoke</code> <a href="#revoke" class="permalink">¶</a></h2>
         <p>Revokes a token and returns the new token and its data</p>
         <h3>URL Query Parameters</h3>
@@ -70,7 +71,7 @@
             <tr><td>userid</td><td>User ID of the user to revoke</td></tr>
         </table>
         <h3>Example response</h3>
-        <pre><code>{
+        <div class="highlightjson">{
     "success": true,
     "result": {
         "user_id": 516124792,
@@ -81,7 +82,7 @@
         "denied_reports": 0
     },
     "error": null
-}</code></pre>
+}</div>
         <h2 id="gettoken"><code>/getToken</code> <a href="#gettoken" class="permalink">¶</a></h2>
         <p>Gets the token and data of a user</p>
         <h3>URL Query Parameters</h3>
@@ -91,7 +92,7 @@
             <tr><td>userid</td><td>User ID of the user to get the token and data of</td></tr>
         </table>
         <h3>Example response</h3>
-        <pre><code>{
+        <div class="highlightjson">{
     "success": true,
     "result": {
         "user_id": 516124792,
@@ -102,7 +103,7 @@
         "denied_reports": 0
     },
     "error": null
-}</code></pre>
+}</div>
         <h2 id="registeredusers"><code>/registeredUsers</code> <a href="#registeredusers" class="permalink">¶</a></h2>
         <p>Gets a list of all registered users. If the token passed doesn't belong to an owner, owners won't be included in the list</p>
         <h3>URL Query Parameters</h3>
@@ -111,7 +112,7 @@
             <tr><td>token</td><td>An enforcer, inspecter or owner token to authorize this request</td></tr>
         </table>
         <h3>Example response</h3>
-        <pre><code>{
+        <div class="highlightjson">{
     "success": true,
     "result": {
         "registered_users": [
@@ -126,6 +127,6 @@
         ]
     },
     "error": null
-}</code></pre>
+}</div>
     </body>
 </html>
