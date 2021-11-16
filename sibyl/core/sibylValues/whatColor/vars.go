@@ -36,62 +36,40 @@ package whatColor
 */
 
 var (
-	DarkRedRange    = &HueRange{600, unlimited}
-	DarkBlueRange   = &HueRange{551, 600}
-	IndigoRange     = &HueRange{501, 550}
-	DarkGreenRange  = &HueRange{451, 500}
-	GreenRange      = &HueRange{401, 450}
-	RedRange        = &HueRange{351, 400}
-	PurpleRange     = &HueRange{301, 350}
-	NavyRange       = &HueRange{251, 300}
-	BlueRange       = &HueRange{201, 250}
-	MagentaRange    = &HueRange{151, 200}
-	FireBrickRange  = &HueRange{101, 150}
-	VioletRange     = &HueRange{96, 100}
-	CrimsonRange    = &HueRange{91, 95}
-	SalmonRange     = &HueRange{86, 90}
-	SlateBlueRange  = &HueRange{81, 85}
-	LimeRange       = &HueRange{75, 80}
-	TealRange       = &HueRange{71, 75}
-	LightPinkRange  = &HueRange{66, 70}
-	CyanRange       = &HueRange{61, 65}
-	LavenderRange   = &HueRange{56, 60}
-	LightBlueRange  = &HueRange{51, 55}
-	SkyBlueRange    = &HueRange{46, 50}
-	AquamarineRange = &HueRange{41, 45}
-	HotPinkRange    = &HueRange{36, 40}
-	AquaRange       = &HueRange{31, 35}
-	PinkRange       = &HueRange{25, 30}
+	DarkRedRange   = &HueRange{600, unlimited}
+	DarkBlueRange  = &HueRange{551, 600}
+	IndigoRange    = &HueRange{501, 550}
+	DarkGreenRange = &HueRange{451, 500}
+	GreenRange     = &HueRange{401, 450}
+	RedRange       = &HueRange{351, 400}
+	PurpleRange    = &HueRange{301, 350}
+	NavyRange      = &HueRange{251, 300}
+	BlueRange      = &HueRange{201, 250}
+	MagentaRange   = &HueRange{151, 200}
+	FireBrickRange = &HueRange{101, 150}
+	VioletRange    = &HueRange{96, 100}
+	CrimsonRange   = &HueRange{91, 95}
+	SalmonRange    = &HueRange{86, 90}
+	SlateBlueRange = &HueRange{81, 85}
 )
 
 // read-only map for converting ranges to string, do NOT edit.
 var (
 	hueRangeMap = map[*HueRange]HueColor{
-		DarkRedRange:    "DarkRed",
-		DarkBlueRange:   "DarkBlue",
-		IndigoRange:     "Indigo",
-		DarkGreenRange:  "DarkGreen",
-		GreenRange:      "Green",
-		RedRange:        "Red",
-		PurpleRange:     "Purple",
-		NavyRange:       "Navy",
-		BlueRange:       "Blue",
-		MagentaRange:    "Magenta",
-		FireBrickRange:  "FireBrick",
-		VioletRange:     "Violet",
-		CrimsonRange:    "Crimson",
-		SalmonRange:     "Salmon",
-		SlateBlueRange:  "SlateBlue",
-		LimeRange:       "Lime",
-		TealRange:       "Teal",
-		LightPinkRange:  "LightPink",
-		CyanRange:       "Cyan",
-		LavenderRange:   "Lavender",
-		LightBlueRange:  "LightBlue",
-		SkyBlueRange:    "SkyBlue",
-		AquamarineRange: "Aquamarine",
-		HotPinkRange:    "HotPink",
-		AquaRange:       "Aqua",
-		PinkRange:       "Pink",
+		DarkRedRange:   "DarkRed",
+		DarkBlueRange:  "DarkBlue",
+		IndigoRange:    "Indigo",
+		DarkGreenRange: "DarkGreen",
+		GreenRange:     "Green",
+		RedRange:       "Red",
+		PurpleRange:    "Purple",
+		NavyRange:      "Navy",
+		BlueRange:      "Blue",
+		MagentaRange:   "Magenta",
+		FireBrickRange: "FireBrick",
+		VioletRange:    "Violet",
+		CrimsonRange:   "Crimson",
+		SalmonRange:    "Salmon",
+		SlateBlueRange: "SlateBlue",
 	}
 )

@@ -2,6 +2,8 @@ package sibylValues
 
 import (
 	"time"
+
+	wc "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues/whatColor"
 )
 
 /*
@@ -55,30 +57,31 @@ type StatValue struct {
 }
 
 type User struct {
-	UserID           int64     `json:"user_id" gorm:"primaryKey"`
-	Banned           bool      `json:"banned"`
-	Reason           string    `json:"reason"`
-	Message          string    `json:"message"`
-	BanSourceUrl     string    `json:"ban_source_url"`
-	Date             time.Time `json:"-"`
-	BannedBy         int64     `json:"banned_by"`
-	CrimeCoefficient int       `json:"crime_coefficient"`
-	BanDate          string    `json:"date" gorm:"-" sql:"-"`
-	SourceGroup      string    `json:"source_group"`
-	BanFlags         []BanFlag `json:"ban_flags" gorm:"-" sql:"-"`
-	IsBot            bool      `json:"is_bot"`
-	BanCount         int       `json:"-"` // internal usage only; not meant to be seen by users.
-	FlagTrolling     bool      `json:"-"`
-	FlagSpam         bool      `json:"-"`
-	FlagEvade        bool      `json:"-"`
-	FlagCustom       bool      `json:"-"`
-	FlagPsychoHazard bool      `json:"-"`
-	FlagMalImp       bool      `json:"-"`
-	FlagNsfw         bool      `json:"-"`
-	FlagRaid         bool      `json:"-"`
-	FlagSpamBot      bool      `json:"-"`
-	FlagMassAdd      bool      `json:"-"`
-	cacheDate        time.Time `json:"-"`
+	UserID           int64       `json:"user_id" gorm:"primaryKey"`
+	Banned           bool        `json:"banned"`
+	Reason           string      `json:"reason"`
+	Message          string      `json:"message"`
+	BanSourceUrl     string      `json:"ban_source_url"`
+	Date             time.Time   `json:"-"`
+	BannedBy         int64       `json:"banned_by"`
+	CrimeCoefficient int         `json:"crime_coefficient"`
+	BanDate          string      `json:"date" gorm:"-" sql:"-"`
+	SourceGroup      string      `json:"source_group"`
+	HueColor         wc.HueColor `json:"hue_color" gorm:"-" sql:"-"`
+	BanFlags         []BanFlag   `json:"ban_flags" gorm:"-" sql:"-"`
+	IsBot            bool        `json:"is_bot"`
+	BanCount         int         `json:"-"` // internal usage only; not meant to be seen by users.
+	FlagTrolling     bool        `json:"-"`
+	FlagSpam         bool        `json:"-"`
+	FlagEvade        bool        `json:"-"`
+	FlagCustom       bool        `json:"-"`
+	FlagPsychoHazard bool        `json:"-"`
+	FlagMalImp       bool        `json:"-"`
+	FlagNsfw         bool        `json:"-"`
+	FlagRaid         bool        `json:"-"`
+	FlagSpamBot      bool        `json:"-"`
+	FlagMassAdd      bool        `json:"-"`
+	cacheDate        time.Time   `json:"-"`
 }
 
 type Token struct {

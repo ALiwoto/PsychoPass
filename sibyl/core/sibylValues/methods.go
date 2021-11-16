@@ -8,6 +8,7 @@ import (
 
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
+	wc "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues/whatColor"
 )
 
 //---------------------------------------------------------
@@ -244,6 +245,10 @@ func (u *User) SetCacheDate() {
 	u.cacheDate = time.Now()
 }
 
+func (u *User) setHueColor() {
+	u.HueColor = wc.GetHueColor(u.CrimeCoefficient)
+}
+
 func (u *User) GetCrimeCoefficientRange() *CrimeCoefficientRange {
 	return GetCrimeCoefficientRange(u.CrimeCoefficient)
 }
@@ -419,6 +424,8 @@ func (u *User) SetBanFlags() {
 	if !u.Banned {
 		return
 	}
+
+	u.setHueColor()
 
 	if u.FlagTrolling {
 		u.BanFlags = append(u.BanFlags, BanFlagTrolling)
