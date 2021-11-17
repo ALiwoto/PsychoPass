@@ -1,6 +1,10 @@
 package banHandlers
 
 const (
+	MaxMultiUsers = 50_000
+)
+
+const (
 	OriginAddBan    = "AddBan"
 	OriginMultiBan  = "MultiBan"
 	OriginRemoveBan = "RemoveBan"

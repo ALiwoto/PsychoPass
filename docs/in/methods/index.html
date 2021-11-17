@@ -10,22 +10,23 @@
         <meta name="theme-color" content="#15A4E9" />
         <title>Methods</title>
         <link rel="stylesheet" href="/style.css" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/pygments.css" crossorigin="anonymous" />
     </head>
     <body>
         <h1>Methods</h1>
         <div class="head"><a href="/">home</a> | <a href="/methods/">methods</a></div>
 
         <p>Example of a successful response:</p>
-        <pre><code>{
+        <div class="highlightjson">{
     "success": true,
     "result": {
         "previous_perm": 1,
         "current_perm": 2
     },
     "error": null
-}</code></pre>
+}</div>
         <p>Example of an unsuccessful response:</p>
-        <pre><code>{
+        <div class="highlightjson">{
     "success": false,
     "result": null,
     "error": {
@@ -34,7 +35,7 @@
         "origin": "Slap",
         "date": "14/11/2021 20:27:15"
     }
-}</code></pre>
+}</div>
         <p>List of method groups:</p>
         <ul>
             <li><a href="tokens.html">tokens</a></li>

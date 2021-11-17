@@ -13,6 +13,7 @@ labs/
 *.old.go
 *.db
 *.log
+docs/out/
 
 # ignore debug binary file
 __debug_bin

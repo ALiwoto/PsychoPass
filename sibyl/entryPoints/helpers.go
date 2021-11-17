@@ -223,8 +223,20 @@ func SendCannotBeRevokedError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusTooManyRequests,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrCannotBeRevoked,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
+func SendTooManyError(c *gin.Context, origin string) {
+	c.JSON(http.StatusOK, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusBadRequest,
+			Message:   ErrTooManyUsers,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
 		},
