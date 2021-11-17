@@ -329,7 +329,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		} else if u.Permission == perm {
 			md = mdparser.GetNormal("The user ")
 			md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
-			md.AppendNormalThis(" is already assigned ")
+			md.AppendNormalThis(" is already assigned as ")
 			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
 		} else if !t.CanChangePermission(u.Permission, perm) {
 			md = mdparser.GetNormal("Seems like you don't have enough privileges to ")
@@ -369,6 +369,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		})
 		if err != nil {
 			logging.UnexpectedError(err)
+			return ext.EndGroups
 		}
 
 		return ext.EndGroups
@@ -377,7 +378,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if !invalid {
 		var pm *gotgbot.Message
 		mdback := mdparser.GetNormal("Your permission has been changed to ")
-		mdback.AppendMonoThis(u.GetStringPermission())
+		mdback.AppendMonoThis(perm.GetStringPermission())
 		mdback.AppendNormalThis("!\n\nHere is your token:\n")
 		mdback.AppendMonoThis(u.Hash).AppendNormalThis("\n\n")
 		mdback.AppendBoldThis("Please don't share this token with anyone!")
