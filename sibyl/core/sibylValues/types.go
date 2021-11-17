@@ -13,7 +13,7 @@ Range 0-100 (No bans) (Dominator Locked)
 • Restored  - 81-100
 ==============
 Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
-• TROLLING     - 101-150 - Trolling
+• TROLLING     - 126-150 - Trolling
 • SPAM         - 151-200 - Spam/Unwanted Promotion
 • EVADE        - 201-250 - Ban Evade using alts
 x-------x

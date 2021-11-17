@@ -21,13 +21,15 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Navy](https://img.shields.io/static/v1?label=&message=Navy&color=000080&style=for-the-badge)  | Navy | 000080 | 251-300 |
 | ![Blue](https://img.shields.io/static/v1?label=&message=Blue&color=0000FF&style=for-the-badge)  | Blue | 0000FF | 201-250 |
 | ![Magenta](https://img.shields.io/static/v1?label=&message=Magenta&color=FF00FF&style=for-the-badge)  | Magenta | FF00FF | 151-200 |
-| ![FireBrick](https://img.shields.io/static/v1?label=&message=FireBrick&color=B22222&style=for-the-badge)  | FireBrick | B22222 | 101-150 |
-| Restored user range  | ------------ | ------------ | ------------ |
+| ![FireBrick](https://img.shields.io/static/v1?label=&message=FireBrick&color=B22222&style=for-the-badge)  | FireBrick | B22222 | 126-150 |
+| Enforcer Hue | ------------ | ------------ | ------------ |
+| ![Yellow](https://img.shields.io/static/v1?label=&message=Yellow&color=FFFF00&style=for-the-badge)  | Yellow | FFFF00 | 101-125 |
+| Restored user range | ------------ | ------------ | ------------ |
 | ![Violet](https://img.shields.io/static/v1?label=&message=Violet&color=EE82EE&style=for-the-badge)  | Violet | EE82EE | 96-100 |
 | ![Crimson](https://img.shields.io/static/v1?label=&message=Crimson&color=DC143C&style=for-the-badge)  | Crimson | DC143C | 91-95 |
 | ![Salmon](https://img.shields.io/static/v1?label=&message=Salmon&color=FA8072&style=for-the-badge)  | Salmon | FA8072 | 86-90 |
 | ![SlateBlue](https://img.shields.io/static/v1?label=&message=SlateBlue&color=6A5ACD&style=for-the-badge)  | SlateBlue | 6A5ACD | 81-85 |
-| Below 80 Range begins  | ------------ | ------------ | ------------ |
+| Below 80 Range begins | ------------ | ------------ | ------------ |
 | ![Lime](https://img.shields.io/static/v1?label=&message=Lime&color=00FF00&style=for-the-badge)  | Lime | 00FF00 | 75-80 |
 | ![Teal](https://img.shields.io/static/v1?label=&message=Teal&color=008080&style=for-the-badge)  | Teal | 008080 | 71-75 |
 | ![LightPink](https://img.shields.io/static/v1?label=&message=LightPink&color=FFB6C1&style=for-the-badge)  | LightPink | FFB6C1 | 66-70 |

@@ -18,13 +18,14 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | ------------ | ------------ | ------------ |
 | Civilian  | 0-80  |  None |
 | Restored  | 81-100  | None, but user has a history of past ban  |
+| Enforcer  | 101-125  | None, but can be scanned by an inspector  |
 
 #### Actionable Flags
 
 ##### Suggested Action is auto mute the user
 | FLAG  | Coefficient Range | Explanation  |
 | ------------ | ------------ | ------------ |
-| TROLLING  | 101-150  | Trolling  |
+| TROLLING  | 126-150  | Trolling  |
 |  SPAM | 151-200  | Spam/Unwanted Promotion  |
 | EVADE  | 201-250  | Ban Evade using alts  |
 | CUSTOM  | 251-300  |  Any Custom reason |
