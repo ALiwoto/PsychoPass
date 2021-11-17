@@ -14,6 +14,7 @@ import (
 )
 
 func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
+	loadButtons(d)
 	revokeCmd := handlers.NewCommand(RevokeCmd, revokeHandler)
 	assignCmd := handlers.NewCommand(AssignCmd, assignHandler)
 	getTokenCb := handlers.NewCallback(getTokenCallBackQuery, getTokenCallBackResponse)
@@ -24,6 +25,21 @@ func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 	d.AddHandler(assignCmd)
 	d.AddHandler(getTokenCb)
 	d.AddHandler(revokeTokenCb)
+}
+
+func loadButtons(d *ext.Dispatcher) {
+	if startCymaticScanButton == nil {
+		kb := &gotgbot.InlineKeyboardMarkup{
+			InlineKeyboard: make([][]gotgbot.InlineKeyboardButton, 1),
+		}
+
+		kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
+			Text: "Start Cymatic Scan",
+			Url:  "https://t.me/" + sv.HelperBot.Username + "?start",
+		})
+
+		startCymaticScanButton = kb
+	}
 }
 
 func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p string, replied bool) {

@@ -364,6 +364,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
 		_, err = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
+			ReplyMarkup:              *startCymaticScanButton,
 			AllowSendingWithoutReply: true,
 			DisableWebPagePreview:    true,
 		})
@@ -393,6 +394,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			if topMsg != nil {
 				_, _ = topMsg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 					ParseMode:             sv.MarkDownV2,
+					ReplyMarkup:           *startCymaticScanButton,
 					DisableWebPagePreview: true,
 				})
 			} else {
