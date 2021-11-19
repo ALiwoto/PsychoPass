@@ -1,8 +1,15 @@
 package tokenPlugin
 
-import "github.com/ALiwoto/mdparser/mdparser"
+import (
+	"strconv"
 
-func (a *AssignValue) ParseToMd() mdparser.WMarkDown {
-	md := mdparser.GetNormal("\u200D#Assignment request")
+	"github.com/ALiwoto/mdparser/mdparser"
+)
+
+func (a *AssignValue) ParseToMd(info mdparser.WMarkDown) mdparser.WMarkDown {
+	by := strconv.FormatInt(a.agent.UserId, 10)
+	md := mdparser.GetNormal("\u200D#Assignment request\n")
+	md.AppendBoldThis(" ・ By: ").AppendMonoThis(by).ElThis()
+	md.Append(info)
 	return md
 }

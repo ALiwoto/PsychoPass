@@ -201,7 +201,7 @@ func (r *Report) getTargetName() string {
 }
 
 func (r *Report) ParseAsMd() mdparser.WMarkDown {
-	md := mdparser.GetNormal("\u200D#REPORT:\n")
+	md := mdparser.GetNormal("\u200D#SCAN:\n")
 	md.AppendBoldThis("・User: ")
 	agent := r.getReporterName()
 	target := r.getTargetName()

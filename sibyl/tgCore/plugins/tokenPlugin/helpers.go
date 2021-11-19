@@ -117,7 +117,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 	strId := strconv.FormatInt(aValue.targetChat.Id, 10)
 	md = mdparser.GetBold("\u200D • User: ").AppendThis(uMd).ElThis()
 	md.AppendBoldThis(" • ID: ").AppendMonoThis(strId).ElThis()
-	md.AppendBoldThis(" • Is banned: ").AppendMonoThis("false").ElThis()
+	md.AppendBoldThis(" • Is banned: ").AppendMonoThis("No").ElThis()
 	md.AppendBoldThis(" • Crime Coefficient: ")
 	md.AppendMonoThis(aValue.targer.EstimateCrimeCoefficient())
 	md.ElThis()
@@ -133,9 +133,10 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 	}
 
 	time.Sleep(3 * time.Second)
+	mdBack := md.El()
 
 	if aValue.agent.CanTryChangePermission(true) {
-		md = mdparser.GetBold("Assigned Successfully! ").ElThis().AppendThis(md).ElThis()
+		md = mdparser.GetBold("Assigned Successfully! ").ElThis().AppendThis(md)
 		md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" has now been assigned as ")
 		md.AppendBoldThis(aValue.perm)
 		md.AppendNormalThis("!\nTheir dominator and token have been sent to their ")
@@ -145,8 +146,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 			DisableWebPagePreview: true,
 		})
 	} else {
-		mdBack := md.El()
-		md = mdparser.GetBold("Assignment request has been sent to Sibyl System Successfully! \n")
+		md = mdparser.GetBold("Assignment request has been sent to Sibyl System! \n")
 		md.AppendThis(mdBack)
 		md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" will be assigned as ")
 		md.AppendBoldThis(aValue.perm).AppendNormalThis(" After verification.")
@@ -162,7 +162,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 			return
 		}
 
-		text := aValue.ParseToMd().ToString()
+		text := aValue.ParseToMd(mdBack).ToString()
 		opts := &gotgbot.SendMessageOpts{
 			ParseMode: sv.MarkDownV2,
 		}
