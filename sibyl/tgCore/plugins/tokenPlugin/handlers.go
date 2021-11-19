@@ -349,14 +349,6 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			if topMsg == nil {
 				return ext.EndGroups
 			}
-			/*
-				md = mdparser.GetNormal("The user ")
-				md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
-				md.AppendNormalThis(" has been assigned the permission ")
-				md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
-				md.AppendItalicThis("\n\nThe previous permission was ")
-				md.AppendMonoThis(pre.GetStringPermission()).AppendNormal(".")
-			*/
 			invalid = false
 		}
 	} else {
@@ -443,7 +435,11 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 				}
 			}
 		}
-		database.UpdateTokenPermission(u, perm)
+
+		if t.CanTryChangePermission(true) {
+			database.UpdateTokenPermission(u, perm)
+		}
+
 		assignValue := &AssignValue{
 			targetChat: &pm.Chat,
 			perm:       perm.GetStringPermission(),
