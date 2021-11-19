@@ -145,8 +145,9 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 			DisableWebPagePreview: true,
 		})
 	} else {
+		mdBack := md.El()
 		md = mdparser.GetBold("Assignment request has been sent to Sibyl System Successfully! \n")
-		md.AppendThis(md).ElThis()
+		md.AppendThis(mdBack)
 		md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" will be assigned as ")
 		md.AppendBoldThis(aValue.perm).AppendNormalThis(" After verification.")
 		_, _ = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
