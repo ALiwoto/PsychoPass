@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
@@ -83,9 +84,8 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 
 	time.Sleep(2 * time.Second)
 
-	md = suMd.AppendBoldThis("\n• ID: ").AppendMonoThis(strNameId).ElThis()
-	md.AppendBoldThis("• Is banned: ")
-	md.AppendMonoThis(strconv.FormatBool(targetUser.Banned)).ElThis()
+	md = md.AppendBoldThis("• Is banned: ")
+	md.AppendMonoThis(ws.YesOrNo(targetUser.Banned)).ElThis()
 	md.AppendBoldThis("• Crime Coefficient: ")
 	md.AppendMonoThis(strconv.Itoa(targetUser.CrimeCoefficient)).ElThis()
 
