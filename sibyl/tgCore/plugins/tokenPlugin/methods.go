@@ -10,6 +10,6 @@ func (a *AssignValue) ParseToMd(info mdparser.WMarkDown) mdparser.WMarkDown {
 	by := strconv.FormatInt(a.agent.UserId, 10)
 	md := mdparser.GetNormal("\u200D#Assignment request\n")
 	md.AppendBoldThis(" ・ By: ").AppendMonoThis(by).ElThis()
-	md.Append(info)
+	md.AppendThis(info)
 	return md
 }
