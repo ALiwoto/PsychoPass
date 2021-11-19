@@ -118,7 +118,11 @@ func (t *Token) CanChangePermission(pre, target UserPermission) bool {
 
 // CanTryChangePermission returns true if the token with its current
 // permission can try to change permission of another tokens or not.
-func (t *Token) CanTryChangePermission() bool {
+func (t *Token) CanTryChangePermission(direct bool) bool {
+	if direct {
+		return t.Permission > Inspector
+	}
+
 	return t.Permission > Enforcer
 }
 
@@ -293,10 +297,13 @@ func (u *User) IncreaseCrimeCoefficientAuto() {
 func (u *User) IncreaseCrimeCoefficientByPerm(p UserPermission) {
 	if p == Owner || p == Inspector || u.Banned {
 		return
-	} else if p == Enforcer {
-		u.CrimeCoefficient = rand.Intn(10)
-	} else if p == NormalUser {
-		u.CrimeCoefficient = RangeCivilian.GetRandom() / 4
+	}
+
+	switch p {
+	case Enforcer:
+		u.CrimeCoefficient = RangeEnforcer.GetRandom()
+	case NormalUser:
+		u.CrimeCoefficient = RangeCivilian.GetRandom()
 	}
 }
 

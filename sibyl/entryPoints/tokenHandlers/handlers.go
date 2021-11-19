@@ -96,7 +96,9 @@ func ChangeTokenPermHandler(c *gin.Context) {
 		return
 	}
 
-	if !d.CanTryChangePermission() {
+	if !d.CanTryChangePermission(true) {
+		// only owners can change someone's permission directly;
+		// inspectors need to use helper bot.
 		entry.SendPermissionDenied(c, OriginChangeTokenPerm)
 		return
 	}

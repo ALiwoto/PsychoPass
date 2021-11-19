@@ -64,6 +64,7 @@ func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {
 	/*
 		RangeCivilian     = &CrimeCoefficientRange{0, 80}
 		RangeRestored   = &CrimeCoefficientRange{81, 100}
+		RangeEnforcer   = &CrimeCoefficientRange{101, 125}
 		RangeTrolling     = &CrimeCoefficientRange{126, 150}
 		RangeSpam         = &CrimeCoefficientRange{151, 200}
 		RangeEvade        = &CrimeCoefficientRange{201, 250}
@@ -83,6 +84,8 @@ func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {
 		return RangeCivilian
 	case RangeRestored.IsInRange(value):
 		return RangeRestored
+	case RangeEnforcer.IsInRange(value):
+		return RangeEnforcer
 	case RangeTrolling.IsInRange(value):
 		return RangeTrolling
 	case RangeSpam.IsInRange(value):
@@ -145,7 +148,8 @@ func getCCRangeByString(value string) *CrimeCoefficientRange {
 		// Range 0-100 (No bans) (Dominator Locked)
 		// Civilian     - 0-80
 		// Restored  - 81-100
-		// Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
+		// Enforcer  - 101-125
+		// Range 126-300 (Auto-mute) (Non-lethal Paralyzer)
 		ReasonTrolling
 		ReasonSpam
 		ReasonEvade

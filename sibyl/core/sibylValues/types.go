@@ -13,8 +13,9 @@ Coefficients and Flags
 Range 0-100 (No bans) (Dominator Locked)
 • Civilian     - 0-80
 • Restored  - 81-100
+• Enforcer  - 101-125
 ==============
-Range 100-300 (Auto-mute) (Non-lethal Paralyzer)
+Range 126-300 (Auto-mute) (Non-lethal Paralyzer)
 • TROLLING     - 126-150 - Trolling
 • SPAM         - 151-200 - Spam/Unwanted Promotion
 • EVADE        - 201-250 - Ban Evade using alts

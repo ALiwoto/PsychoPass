@@ -76,8 +76,24 @@ func ClearHistory(user *sv.User) {
 	unlockdb()
 }
 
-// RemoveUserBan will unban a user from the sibyl database.
+// UpdateBanparameter will update a user's ban parameter into the database.
 func UpdateBanparameter(user *sv.User) {
+	lockdb()
+	tx := SESSION.Begin()
+	tx.Save(user)
+	tx.Commit()
+	unlockdb()
+}
+
+func UpdateUserCrimeCoefficientByPerm(user *sv.User, perm sv.UserPermission) {
+	pre := user.CrimeCoefficient
+	user.IncreaseCrimeCoefficientByPerm(perm)
+	if pre == user.CrimeCoefficient {
+		// don't send any query to database if user's crime coefficient
+		// is not changed.
+		return
+	}
+
 	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(user)

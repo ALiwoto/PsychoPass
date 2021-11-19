@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/ALiwoto/mdparser/mdparser"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 	"github.com/PaulSonOfLars/gotgbot/v2"
@@ -108,21 +109,21 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 	})
 }
 
-func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context,
-	targetChat *gotgbot.Chat, perm string, msg *gotgbot.Message, targer *sv.User) {
+func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 	var err error
 	var md, uMd mdparser.WMarkDown
-	namae := targetChat.FirstName
-	uMd = mdparser.GetUserMention(namae, targetChat.Id)
-	strId := strconv.FormatInt(targetChat.Id, 10)
+	namae := aValue.targetChat.FirstName
+	uMd = mdparser.GetUserMention(namae, aValue.targetChat.Id)
+	strId := strconv.FormatInt(aValue.targetChat.Id, 10)
 	md = mdparser.GetBold("\u200D • User: ").AppendThis(uMd).ElThis()
 	md.AppendBoldThis(" • ID: ").AppendMonoThis(strId).ElThis()
 	md.AppendBoldThis(" • Is banned: ").AppendMonoThis("false").ElThis()
-	md.AppendBoldThis(" • Crime Coefficient: ").AppendMonoThis(targer.EstimateCrimeCoefficient())
+	md.AppendBoldThis(" • Crime Coefficient: ")
+	md.AppendMonoThis(aValue.targer.EstimateCrimeCoefficient())
 	md.ElThis()
 	// let the goroutine sleep for 1 second
-	time.Sleep(time.Second)
-	msg, err = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+	time.Sleep(2 * time.Second)
+	aValue.msg, err = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 	})
@@ -131,15 +132,49 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context,
 		return
 	}
 
-	time.Sleep(2 * time.Second)
+	time.Sleep(3 * time.Second)
 
-	md = mdparser.GetBold("Assigned Successfully! ").ElThis().AppendThis(md).ElThis()
-	md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" has now been assigned as ")
-	md.AppendBoldThis(perm)
-	md.AppendNormalThis("!\nTheir dominator and token have been sent to their ")
-	md.AppendHyperLinkThis("PM", "http://t.me/"+b.Username).AppendNormalThis(".")
-	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
-		ParseMode:             sv.MarkDownV2,
-		DisableWebPagePreview: true,
-	})
+	if aValue.agent.CanTryChangePermission(true) {
+		md = mdparser.GetBold("Assigned Successfully! ").ElThis().AppendThis(md).ElThis()
+		md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" has now been assigned as ")
+		md.AppendBoldThis(aValue.perm)
+		md.AppendNormalThis("!\nTheir dominator and token have been sent to their ")
+		md.AppendHyperLinkThis("PM", "http://t.me/"+b.Username).AppendNormalThis(".")
+		_, _ = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+			ParseMode:             sv.MarkDownV2,
+			DisableWebPagePreview: true,
+		})
+	} else {
+		md = mdparser.GetBold("Assignment request has been sent to Sibyl System Successfully! \n")
+		md.AppendThis(md).ElThis()
+		md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" will be assigned as ")
+		md.AppendBoldThis(aValue.perm).AppendNormalThis(" After verification.")
+		_, _ = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+			ParseMode:             sv.MarkDownV2,
+			DisableWebPagePreview: true,
+		})
+
+		bases := sibylConfig.GetBaseChatIds()
+		if len(bases) == 0 {
+			// there is no chat to send the assignment request to...
+			// ignore the request...
+			return
+		}
+
+		text := aValue.ParseToMd().ToString()
+		opts := &gotgbot.SendMessageOpts{
+			ParseMode: sv.MarkDownV2,
+		}
+
+		for _, chat := range bases {
+			sendRequestMessage(chat, text, opts)
+		}
+	}
+}
+
+func sendRequestMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) {
+	_, err := sv.HelperBot.SendMessage(chat, text, opts)
+	if err != nil {
+		logging.Debug("Tried to send message to ", chat, err)
+	}
 }

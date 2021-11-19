@@ -170,7 +170,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	t, err := database.GetTokenFromId(user.Id)
-	if err != nil || t == nil || !t.CanTryChangePermission() {
+	if err != nil || t == nil || !t.CanTryChangePermission(false) {
 		return ext.EndGroups
 	}
 
@@ -423,16 +423,35 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 				Chat: *chat,
 			}
 		}
+
 		if targetUser == nil {
 			targetUser, err = database.GetUserFromId(targetId)
 			if err != nil || targetUser == nil {
 				// means user is not found in the database;
 				// so insert it by force.
-				targetUser = database.ForceInsert(targetId, perm)
+				if t.CanTryChangePermission(true) {
+					targetUser = database.ForceInsert(targetId, perm)
+				} else {
+					targetUser = database.ForceInsert(targetId, sv.NormalUser)
+				}
+			} else {
+				if t.CanTryChangePermission(true) {
+					// as database.ForceInsert will already set the crime coefficient
+					// of the user by their perm, we should use else here, so it prevents
+					// from sending useless queries to database.
+					database.UpdateUserCrimeCoefficientByPerm(targetUser, perm)
+				}
 			}
 		}
 		database.UpdateTokenPermission(u, perm)
-		go showUserAssigned(b, ctx, &pm.Chat, perm.GetStringPermission(), topMsg, targetUser)
+		assignValue := &AssignValue{
+			targetChat: &pm.Chat,
+			perm:       perm.GetStringPermission(),
+			msg:        topMsg,
+			targer:     targetUser,
+			agent:      t,
+		}
+		go showUserAssigned(b, ctx, assignValue)
 		return ext.EndGroups
 	}
 
