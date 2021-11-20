@@ -441,11 +441,12 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		}
 
 		assignValue := &AssignValue{
-			targetChat: &pm.Chat,
-			perm:       perm.GetStringPermission(),
-			msg:        topMsg,
-			targer:     targetUser,
-			agent:      t,
+			targetChat:   &pm.Chat,
+			perm:         perm.GetStringPermission(),
+			msg:          topMsg,
+			targer:       targetUser,
+			agentProfile: user,
+			agent:        t,
 		}
 		go showUserAssigned(b, ctx, assignValue)
 		return ext.EndGroups
