@@ -149,7 +149,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 		md = mdparser.GetBold("Assignment request has been sent to Sibyl System! \n")
 		md.AppendThis(mdBack)
 		md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" will be assigned as ")
-		md.AppendBoldThis(aValue.perm).AppendNormalThis(" After verification.")
+		md.AppendBoldThis(aValue.perm).AppendNormalThis(" after verification.")
 		_, _ = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 			ParseMode:             sv.MarkDownV2,
 			DisableWebPagePreview: true,
@@ -164,13 +164,35 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 
 		text := aValue.ParseToMd(mdBack).ToString()
 		opts := &gotgbot.SendMessageOpts{
-			ParseMode: sv.MarkDownV2,
+			ParseMode:   sv.MarkDownV2,
+			ReplyMarkup: getAssignMentButton(),
 		}
 
 		for _, chat := range bases {
 			sendRequestMessage(chat, text, opts)
 		}
 	}
+}
+
+func getAssignMentButton() *gotgbot.InlineKeyboardMarkup {
+	kb := &gotgbot.InlineKeyboardMarkup{}
+	kb.InlineKeyboard = make([][]gotgbot.InlineKeyboardButton, 3)
+
+	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
+		Text:         "✅ Accept",
+		CallbackData: AssignCbData + "_" + "123456789" + "2",
+	})
+	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
+		Text:         "❌ Reject",
+		CallbackData: AssignCbData + "_" + "123456789" + "2",
+	})
+
+	kb.InlineKeyboard[1] = append(kb.InlineKeyboard[1], gotgbot.InlineKeyboardButton{
+		Text:         "Close",
+		CallbackData: CloseCbData,
+	})
+
+	return kb
 }
 
 func sendRequestMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) {
