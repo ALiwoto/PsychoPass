@@ -165,7 +165,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 		text := aValue.ParseToMd(mdBack).ToString()
 		opts := &gotgbot.SendMessageOpts{
 			ParseMode:   sv.MarkDownV2,
-			ReplyMarkup: getAssignMentButton(),
+			ReplyMarkup: getAssignmentButton(),
 		}
 
 		for _, chat := range bases {
@@ -174,9 +174,9 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 	}
 }
 
-func getAssignMentButton() *gotgbot.InlineKeyboardMarkup {
+func getAssignmentButton() *gotgbot.InlineKeyboardMarkup {
 	kb := &gotgbot.InlineKeyboardMarkup{}
-	kb.InlineKeyboard = make([][]gotgbot.InlineKeyboardButton, 3)
+	kb.InlineKeyboard = make([][]gotgbot.InlineKeyboardButton, 2)
 
 	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
 		Text:         "✅ Accept",
