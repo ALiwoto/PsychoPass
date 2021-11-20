@@ -7,6 +7,7 @@ import (
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
+	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/gin-gonic/gin"
 )
 
@@ -97,4 +98,27 @@ func ReadOneFile(paths ...string) string {
 	}
 
 	return ""
+}
+
+func GetNameFromUser(u *gotgbot.User, replacement string) string {
+	if u == nil {
+		return replacement
+	}
+
+	name := strings.TrimSpace(u.FirstName)
+	if len(name) > 0 {
+		return name
+	}
+
+	name = strings.TrimSpace(u.LastName)
+	if len(name) > 0 {
+		return name
+	}
+
+	name = strings.TrimSpace(u.Username)
+	if len(name) > 0 {
+		return name
+	}
+
+	return replacement
 }

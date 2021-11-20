@@ -7,4 +7,5 @@ const (
 	RevokeTokenCbValue = "revoke_token"
 	AssignCbData       = "ag"
 	CloseCbData        = "close"
+	CbSep              = "_"
 )

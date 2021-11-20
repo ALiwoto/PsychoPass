@@ -6,9 +6,10 @@ import (
 )
 
 type AssignValue struct {
-	targetChat *gotgbot.Chat
-	perm       string
-	msg        *gotgbot.Message
-	targer     *sv.User
-	agent      *sv.Token
+	targetChat   *gotgbot.Chat
+	perm         string
+	msg          *gotgbot.Message
+	targer       *sv.User
+	agentProfile *gotgbot.User
+	agent        *sv.Token
 }

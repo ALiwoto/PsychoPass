@@ -180,11 +180,11 @@ func getAssignmentButton() *gotgbot.InlineKeyboardMarkup {
 
 	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
 		Text:         "✅ Accept",
-		CallbackData: AssignCbData + "_" + "123456789" + "2",
+		CallbackData: AssignCbData + CbSep + "123456789" + CbSep + "2",
 	})
 	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
 		Text:         "❌ Reject",
-		CallbackData: AssignCbData + "_" + "123456789" + "2",
+		CallbackData: AssignCbData + CbSep + "123456789" + CbSep + "2",
 	})
 
 	kb.InlineKeyboard[1] = append(kb.InlineKeyboard[1], gotgbot.InlineKeyboardButton{
