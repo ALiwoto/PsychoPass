@@ -20,12 +20,14 @@ func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 	revokeCmd := handlers.NewCommand(RevokeCmd, revokeHandler)
 	assignCmd := handlers.NewCommand(AssignCmd, assignHandler)
 	getTokenCb := handlers.NewCallback(getTokenCallBackQuery, getTokenCallBackResponse)
+	assignCb := handlers.NewCallback(assignCallBackQuery, assignCallBackResponse)
 	revokeTokenCb := handlers.NewCallback(revokeTokenCallBackQuery, revokeTokenCallBackResponse)
 	revokeCmd.Triggers = t
 	assignCmd.Triggers = t
 	d.AddHandler(revokeCmd)
 	d.AddHandler(assignCmd)
 	d.AddHandler(getTokenCb)
+	d.AddHandler(assignCb)
 	d.AddHandler(revokeTokenCb)
 }
 
@@ -113,12 +115,12 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 	var err error
 	var md, uMd mdparser.WMarkDown
 	namae := aValue.targetChat.FirstName
-	uMd = mdparser.GetUserMention(namae, aValue.targetChat.Id)
+	uMd = mdparser.GetUserMention(namae+SpecialChar, aValue.targetChat.Id)
 	strId := strconv.FormatInt(aValue.targetChat.Id, 10)
-	md = mdparser.GetBold("\u200D • User: ").AppendThis(uMd).ElThis()
-	md.AppendBoldThis(" • ID: ").AppendMonoThis(strId).ElThis()
-	md.AppendBoldThis(" • Is banned: ").AppendMonoThis("No").ElThis()
-	md.AppendBoldThis(" • Crime Coefficient: ")
+	md = mdparser.GetBold(SpecialChar + " • User: ").AppendThis(uMd).ElThis()
+	md.AppendBoldThis(SpecialChar + " • ID: ").AppendMonoThis(strId).ElThis()
+	md.AppendBoldThis(SpecialChar + " • Is banned: ").AppendMonoThis("No").ElThis()
+	md.AppendBoldThis(SpecialChar + " • Crime Coefficient: ")
 	md.AppendMonoThis(aValue.targer.EstimateCrimeCoefficient())
 	md.ElThis()
 	// let the goroutine sleep for 1 second

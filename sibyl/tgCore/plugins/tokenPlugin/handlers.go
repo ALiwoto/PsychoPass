@@ -2,6 +2,7 @@ package tokenPlugin
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
@@ -460,6 +461,40 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			DisableWebPagePreview:    true,
 		})
 	}
+
+	return ext.EndGroups
+}
+
+func assignCallBackQuery(cq *gotgbot.CallbackQuery) bool {
+	return strings.HasPrefix(cq.Data, AssignCbPrefix)
+}
+
+func assignCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
+	tgUser := ctx.EffectiveUser
+	token, err := database.GetTokenFromId(tgUser.Id)
+	if err != nil || token == nil || !token.CanTryChangePermission(true) {
+		_, _ = ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
+			Text:      "This is not for you...",
+			ShowAlert: true,
+			CacheTime: 5,
+		})
+		return ext.EndGroups
+	}
+	data := strings.TrimPrefix(ctx.CallbackQuery.Data, AssignCbPrefix)
+	switch data {
+	case RejectCbData:
+		_, _ = ctx.EffectiveMessage.EditText(b, ctx.EffectiveMessage.Text, &gotgbot.EditMessageTextOpts{
+			Entities:              ctx.EffectiveMessage.Entities,
+			DisableWebPagePreview: true,
+		})
+
+		return ext.EndGroups
+	case CloseCbData:
+		_, _ = ctx.EffectiveMessage.Delete(b)
+		return ext.EndGroups
+	}
+
+	//myStrs := strings.Split(data, CbSep)
 
 	return ext.EndGroups
 }

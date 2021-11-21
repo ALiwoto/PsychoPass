@@ -2,6 +2,7 @@ package tokenPlugin
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/ALiwoto/mdparser/mdparser"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
@@ -10,12 +11,13 @@ import (
 
 func (a *AssignValue) ParseToMd(info mdparser.WMarkDown) mdparser.WMarkDown {
 	by := strconv.FormatInt(a.agent.UserId, 10)
-	md := mdparser.GetNormal("\u200D#Assignment request\n")
+	md := mdparser.GetNormal(SpecialChar + "#Assignment request\n")
 	if a.agentProfile != nil {
 		name := utils.GetNameFromUser(a.agentProfile, a.agent.GetStringPermission())
-		md.AppendBoldThis(" • By: ").AppendMentionThis(name, a.agentProfile.Id)
+		name = strings.ReplaceAll(name, SpecialChar, "")
+		md.AppendBoldThis(SpecialChar+" • By: ").AppendMentionThis(name+SpecialChar, a.agentProfile.Id)
 	} else {
-		md.AppendBoldThis(" • By: ").AppendMonoThis(by)
+		md.AppendBoldThis(SpecialChar + " • By: ").AppendMonoThis(by + SpecialChar)
 	}
 	md.ElThis().AppendThis(info)
 	return md
