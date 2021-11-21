@@ -5,6 +5,7 @@ import (
 
 	"github.com/ALiwoto/mdparser/mdparser"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
+	"github.com/PaulSonOfLars/gotgbot/v2"
 )
 
 func (a *AssignValue) ParseToMd(info mdparser.WMarkDown) mdparser.WMarkDown {
@@ -18,4 +19,25 @@ func (a *AssignValue) ParseToMd(info mdparser.WMarkDown) mdparser.WMarkDown {
 	}
 	md.ElThis().AppendThis(info)
 	return md
+}
+
+func (a *AssignValue) getAssignmentButton() *gotgbot.InlineKeyboardMarkup {
+	kb := &gotgbot.InlineKeyboardMarkup{}
+	kb.InlineKeyboard = make([][]gotgbot.InlineKeyboardButton, 2)
+
+	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
+		Text:         AcceptButtonText,
+		CallbackData: AssignCbData + CbSep + strconv.FormatInt(a.targetChat.Id, 10) + CbSep + "2",
+	})
+	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
+		Text:         RejectButtonText,
+		CallbackData: AssignCbData + CbSep,
+	})
+
+	kb.InlineKeyboard[1] = append(kb.InlineKeyboard[1], gotgbot.InlineKeyboardButton{
+		Text:         "Close",
+		CallbackData: CloseCbData,
+	})
+
+	return kb
 }

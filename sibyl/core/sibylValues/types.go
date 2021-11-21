@@ -95,6 +95,10 @@ type Token struct {
 	// the user's permissions
 	Permission UserPermission `json:"permission"`
 
+	AssignedBy     int64  `json:"assigned_by"`
+	DivisionNum    int    `json:"division_num"`
+	AssignedReason string `json:"assigned_reason"`
+
 	// LastUsage is the user's last usage time
 	LastUsage time.Time `json:"-"`
 

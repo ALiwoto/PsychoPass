@@ -165,34 +165,13 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 		text := aValue.ParseToMd(mdBack).ToString()
 		opts := &gotgbot.SendMessageOpts{
 			ParseMode:   sv.MarkDownV2,
-			ReplyMarkup: getAssignmentButton(),
+			ReplyMarkup: aValue.getAssignmentButton(),
 		}
 
 		for _, chat := range bases {
 			sendRequestMessage(chat, text, opts)
 		}
 	}
-}
-
-func getAssignmentButton() *gotgbot.InlineKeyboardMarkup {
-	kb := &gotgbot.InlineKeyboardMarkup{}
-	kb.InlineKeyboard = make([][]gotgbot.InlineKeyboardButton, 2)
-
-	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
-		Text:         "✅ Accept",
-		CallbackData: AssignCbData + CbSep + "123456789" + CbSep + "2",
-	})
-	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
-		Text:         "❌ Reject",
-		CallbackData: AssignCbData + CbSep + "123456789" + CbSep + "2",
-	})
-
-	kb.InlineKeyboard[1] = append(kb.InlineKeyboard[1], gotgbot.InlineKeyboardButton{
-		Text:         "Close",
-		CallbackData: CloseCbData,
-	})
-
-	return kb
 }
 
 func sendRequestMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) {
