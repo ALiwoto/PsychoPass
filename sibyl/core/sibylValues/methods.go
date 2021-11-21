@@ -177,6 +177,10 @@ func (p UserPermission) IsOwner() bool {
 	return p == Owner
 }
 
+func (p UserPermission) ToString() string {
+	return strconv.Itoa(int(p))
+}
+
 //---------------------------------------------------------
 
 func (r *Report) getNameById(id int64) string {

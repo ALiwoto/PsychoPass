@@ -8,6 +8,7 @@ import (
 type AssignValue struct {
 	targetChat   *gotgbot.Chat
 	perm         string
+	permValue    sv.UserPermission
 	msg          *gotgbot.Message
 	targer       *sv.User
 	agentProfile *gotgbot.User

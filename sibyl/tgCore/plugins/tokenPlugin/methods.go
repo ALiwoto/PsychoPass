@@ -21,22 +21,26 @@ func (a *AssignValue) ParseToMd(info mdparser.WMarkDown) mdparser.WMarkDown {
 	return md
 }
 
+func (a *AssignValue) getAcceptCbData() string {
+	return strconv.FormatInt(a.targetChat.Id, 10) + CbSep + a.permValue.ToString()
+}
+
 func (a *AssignValue) getAssignmentButton() *gotgbot.InlineKeyboardMarkup {
 	kb := &gotgbot.InlineKeyboardMarkup{}
 	kb.InlineKeyboard = make([][]gotgbot.InlineKeyboardButton, 2)
 
 	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
-		Text:         AcceptButtonText,
-		CallbackData: AssignCbData + CbSep + strconv.FormatInt(a.targetChat.Id, 10) + CbSep + "2",
+		Text:         "✅ Accept",
+		CallbackData: AssignCbData + CbSep + a.getAcceptCbData(),
 	})
 	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
-		Text:         RejectButtonText,
-		CallbackData: AssignCbData + CbSep,
+		Text:         "❌ Reject",
+		CallbackData: AssignCbData + CbSep + RejectCbData,
 	})
 
 	kb.InlineKeyboard[1] = append(kb.InlineKeyboard[1], gotgbot.InlineKeyboardButton{
 		Text:         "Close",
-		CallbackData: CloseCbData,
+		CallbackData: AssignCbData + CbSep + CloseCbData,
 	})
 
 	return kb

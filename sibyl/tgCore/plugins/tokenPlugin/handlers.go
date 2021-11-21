@@ -443,6 +443,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		assignValue := &AssignValue{
 			targetChat:   &pm.Chat,
 			perm:         perm.GetStringPermission(),
+			permValue:    perm,
 			msg:          topMsg,
 			targer:       targetUser,
 			agentProfile: user,
