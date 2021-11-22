@@ -46,7 +46,8 @@ const (
 
 	// ErrTooManyUsers is the error message that should be sent when the
 	// amount of users in multi* endpoints are too many.
-	ErrTooManyUsers = "Token cannot be revoked anymore"
+	// Edit sibyl/entryPoints/banHandlers/constants.go if this is edited
+	ErrTooManyUsers = "Too many users, only 50000 users are permitted"
 
 	// ErrNoReason is the error message that should be sent when the user
 	// has sent a request without providing any reason.

@@ -1,5 +1,6 @@
 package banHandlers
 
+// Update ErrTooManyUsers in sibyl/entryPoints/constants.go if this is edited
 const (
 	MaxMultiUsers = 50_000
 )
