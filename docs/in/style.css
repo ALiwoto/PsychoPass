@@ -1,8 +1,28 @@
 body {
-    background-color: black;
-    color: white;
     font-family: sans-serif;
     padding: 2em;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: black;
+        color: white;
+    }
+
+    table, th, td {
+        border: .2em solid #1C347F;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    table, th, td {
+        border: .2em solid #15A4E9;
+    }
 }
 
 .head {
@@ -29,7 +49,6 @@ a {
 }
 
 table, th, td {
-    border: .2em solid #1C347F;
     border-collapse: collapse;
     padding: .3em;
 }
