@@ -16,7 +16,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | :-----------: | :---------------: | :-------------------------------: | :----------------: |
 | Civilian      |      000-080      | Standard, clean user              |        NONE        |
 | Restored      |      081-100      | User has a history of past ban    |        NONE        |
-| Enforcer      |      101-150      | Has scan power & scan be scanned  |   SCENARIO BASED   |
+| Enforcer      |      101-150      | Has scan power & can be scanned   |   SCENARIO BASED   |
 | TROLLING      |      151-200      | Trolling                          |        MUTE        |
 | SPAM          |      201-250      | Spam/Unwanted Promotion           |        MUTE        |
 | EVADE         |      250-300      | Ban Evade using alts              |        MUTE        |
