@@ -14,36 +14,24 @@ This readme contains the basics and understanding of Coefficients and ban levels
 
 ==== Flags     -  ========
 
-| FLAG  |Coefficient Range   | Recommended action  |
-| ------------ | ------------ | ------------ |
-| Civilian  | 0-80  |  None |
-| Restored  | 81-100  | None, but user has a history of past ban  |
-| Enforcer  | 101-150  | None, but can be scanned by an inspector  |
-
-#### Actionable Flags
-
-##### Suggested Action is auto mute the user
-
-|     FLAG      | Coefficient Range |          Explanation              |
-| :------------ | :---------------: | --------------------------------: |
-| TROLLING      |     151-200       | Trolling                          |
-| SPAM          |     201-250       | Spam/Unwanted Promotion           |
-| EVADE         |     250-300       | Ban Evade using alts              |
-| PSYCHOHAZARD  |     301-350       | Bulk banned due to some bad users |
-
-
-|         Suggested action is ban and delete service message            |
-|     FLAG      | Coefficient Range |          Explanation              |
-| SPAMBOT       |                   | Crypto, trading scams, thotbot    |
-| ------------- | ----------------- | --------------------------------- |
-
-|                 Suggested Action is ban the user                      |
-|     FLAG      | Coefficient Range |          Explanation              |
-| CUSTOM   | 300-350  | Any Custom reason        |
-| NSFW     | 401-450  |  Sending NSFW Content in SFW |
-| MALIMP   | 351-400  | Malicious Impersonation  |
-| RAID     | 501-550  | Bulk join raid to vandalize   |
-| MASSADD  | 551-600  |  Mass adding to group/channel |
+|     FLAG      | Coefficient Range |          Explanation              |       Action       |
+| :-----------: | :---------------: | :-------------------------------: | :----------------: |
+| Civilian      |      000-080      | Standard, clean user              |        NONE        |
+| Restored      |      081-100      | User has a history of past ban    |        NONE        |
+| Enforcer      |      101-150      | Has scan power & scan be scanned  |    SCENARIO BASED  |
+|     FLAG      | Coefficient Range |          Explanation              |       Action       |
+| :-----------: | :---------------: | :-------------------------------: | :----------------: |
+| TROLLING      |      151-200      | Trolling                          |        MUTE        |
+| SPAM          |      201-250      | Spam/Unwanted Promotion           |        MUTE        |
+| EVADE         |      250-300      | Ban Evade using alts              |        MUTE        |
+| PSYCHOHAZARD  |      301-350      | Bulk banned due to some bad users |        MUTE        |        
+| SPAMBOT       |      351-400      | Crypto, trading scams, thotbot    | BAN + DEL Join MSG |
+| CUSTOM        |      401-450      | Any Custom reason                 |        BAN         |
+| NSFW          |      451-500      | Sending NSFW Content in SFW       |        BAN         |
+| MALIMP        |      501-550      | Malicious Impersonation           |        BAN         |
+| RAID          |      551-600      | Bulk join raid to vandalize       |        BAN         |
+| MASSADD       |      601-650      | Mass adding to group/channel      |        BAN         |
+| :-----------: | :---------------: | :-------------------------------: | :----------------: |
 
 ### Trigger word aliases
 
