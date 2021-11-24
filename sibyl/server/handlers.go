@@ -1,9 +1,11 @@
 package server
 
 import (
+	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 
-	"github.com/AnimeKaizoku/PsychoPass/docs/in"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/banHandlers"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/infoHandlers"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/reportHandlers"
@@ -13,7 +15,10 @@ import (
 
 func LoadHandlers() {
 	// documentation
-	in.LoadDocs(ServerEngine)
+	p, _ := os.Getwd()
+	p = filepath.Join(p, "docs", "in")
+	ServerEngine.Static("/docs", p)
+
 	// create token handlers
 	bindHandler(tokenHandlers.CreateTokenHandler, "create",
 		"createToken", "generate")
@@ -113,7 +118,7 @@ func noRootHandler(c *gin.Context) {
 	case "report", "reportuser":
 		reportHandlers.ReportUserHandler(c)
 	default:
-		// TODO: send docs or redirect to docs or something else.
+		c.Redirect(http.StatusPermanentRedirect, "/docs")
 		return
 	}
 }
