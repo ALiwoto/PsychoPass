@@ -24,20 +24,21 @@ This readme contains the basics and understanding of Coefficients and ban levels
 
 ##### Suggested Action is auto mute the user
 
-| :------------- | :-----------------: | ---------------------------------: |
 |     FLAG      | Coefficient Range |          Explanation              |
-| ------------- | ----------------- | --------------------------------- |
+| :------------ | :---------------: | --------------------------------: |
 | TROLLING      |     151-200       | Trolling                          |
 | SPAM          |     201-250       | Spam/Unwanted Promotion           |
 | EVADE         |     250-300       | Ban Evade using alts              |
 | PSYCHOHAZARD  |     301-350       | Bulk banned due to some bad users |
-| ------------- | ----------------- | --------------------------------- |
+
+
 |         Suggested action is ban and delete service message            |
-| ------------- | ----------------- | --------------------------------- |
+|     FLAG      | Coefficient Range |          Explanation              |
 | SPAMBOT       |                   | Crypto, trading scams, thotbot    |
 | ------------- | ----------------- | --------------------------------- |
+
 |                 Suggested Action is ban the user                      |
-| ------------- | ----------------- | --------------------------------- |
+|     FLAG      | Coefficient Range |          Explanation              |
 | CUSTOM   | 300-350  | Any Custom reason        |
 | NSFW     | 401-450  |  Sending NSFW Content in SFW |
 | MALIMP   | 351-400  | Malicious Impersonation  |
