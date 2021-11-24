@@ -16,7 +16,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | :-----------: | :---------------: | :-------------------------------: | :----------------: |
 | Civilian      |      000-080      | Standard, clean user              |        NONE        |
 | Restored      |      081-100      | User has a history of past ban    |        NONE        |
-| Enforcer      |      101-150      | Has scan power & scan be scanned  |    SCENARIO BASED  |
+| Enforcer      |      101-150      | Has scan power & scan be scanned  |   SCENARIO BASED   |
 | TROLLING      |      151-200      | Trolling                          |        MUTE        |
 | SPAM          |      201-250      | Spam/Unwanted Promotion           |        MUTE        |
 | EVADE         |      250-300      | Ban Evade using alts              |        MUTE        |
@@ -30,13 +30,13 @@ This readme contains the basics and understanding of Coefficients and ban levels
 
 ### Trigger word aliases
 
-| FLAG  | Associated words list  |
-| ------------ | ------------ |
-| EVADE   |  evade, banevade| 
-| MALIMP  |  impersonation, malimp, fake profile| 
-| NSFW    |  porn, pornography, nsfw, cp| 
-| Crypto  |  btc, crypto, forex, trading, binary| 
-| MASSADD |  spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding| 
+| FLAG    |                                Associated words list                                        |
+| :-----: | :-----------------------------------------------------------------------------------------: |
+| EVADE   | evade, banevade                                                                             | 
+| MALIMP  | impersonation, malimp, fake profile                                                         | 
+| NSFW    | porn, pornography, nsfw, cp                                                                 | 
+| Crypto  | btc, crypto, forex, trading, binary                                                         | 
+| MASSADD | spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding | 
 
 ### Formula ideas needed for civilian bs 
 We can use a weight formula that starts from 80 and deducts points for every good thing done. This same logic can also be given to the server itself but not saved into the DB, just for the assign command beautification.
