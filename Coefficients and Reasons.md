@@ -12,15 +12,11 @@ This readme contains the basics and understanding of Coefficients and ban levels
 
 ### Coefficients and Flags
 
-==== Flags     -  ========
-
 |     FLAG      | Coefficient Range |          Explanation              |       Action       |
 | :-----------: | :---------------: | :-------------------------------: | :----------------: |
 | Civilian      |      000-080      | Standard, clean user              |        NONE        |
 | Restored      |      081-100      | User has a history of past ban    |        NONE        |
 | Enforcer      |      101-150      | Has scan power & scan be scanned  |    SCENARIO BASED  |
-|     FLAG      | Coefficient Range |          Explanation              |       Action       |
-| :-----------: | :---------------: | :-------------------------------: | :----------------: |
 | TROLLING      |      151-200      | Trolling                          |        MUTE        |
 | SPAM          |      201-250      | Spam/Unwanted Promotion           |        MUTE        |
 | EVADE         |      250-300      | Ban Evade using alts              |        MUTE        |
@@ -31,7 +27,6 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | MALIMP        |      501-550      | Malicious Impersonation           |        BAN         |
 | RAID          |      551-600      | Bulk join raid to vandalize       |        BAN         |
 | MASSADD       |      601-650      | Mass adding to group/channel      |        BAN         |
-| :-----------: | :---------------: | :-------------------------------: | :----------------: |
 
 ### Trigger word aliases
 
