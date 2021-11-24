@@ -12,7 +12,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 
 ### Coefficients and Flags
 
-|     FLAG      | Coefficient Range |          Explanation              |       Action       |
+|     FLAG      | Coefficient Range |            Explanation            |       Action       |
 | :-----------: | :---------------: | :-------------------------------: | :----------------: |
 | Civilian      |      000-080      | Standard, clean user              |        NONE        |
 | Restored      |      081-100      | User has a history of past ban    |        NONE        |
