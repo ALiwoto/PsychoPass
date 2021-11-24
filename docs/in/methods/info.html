@@ -15,7 +15,9 @@
     <body>
         <h1>Info Methods</h1>
         <div class="head"><a href="../">home</a> | <a href="./">methods</a></div>
-
+        
+        <hr/>
+        
         <h3>Table of Contents:</h3>
         <ul>
             <li><a href="#getinfo">/getInfo</a></li>
@@ -24,6 +26,8 @@
             <li><a href="#checktoken">/checkToken</a></li>
         </ul>
 
+        <hr/>
+        
         <h2 id="getinfo"><code>/getInfo</code> <a href="#getinfo" class="permalink">¶</a></h2>
         <p>Gets information about a user</p>
         <h3>URL Query Parameters</h3>
@@ -33,7 +37,8 @@
             <tr><td>userid</td><td>User ID of the user to get info of</td></tr>
         </table>
         <h3>Example response</h3>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
     "result": {
         "user_id": 570787098,
@@ -49,7 +54,11 @@
         "is_bot": false
     },
     "error": null
-}</div>
+}
+        </div>
+
+        <hr/>
+        
         <h2 id="getstats"><code>/getStats</code> <a href="#getstats" class="permalink">¶</a></h2>
         <p>Gets stats</p>
         <h3>URL Query Parameters</h3>
@@ -58,7 +67,8 @@
             <tr><td>token</td><td>An inspector or owner token to authorize this request</td></tr>
         </table>
         <h3>Example response</h3>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
     "result": {
         "banned_count": 16,
@@ -78,7 +88,11 @@
         "enforces_count": 0
     },
     "error": null
-}</div>
+}
+        </div>
+
+        <hr/>
+        
         <h2 id="getallbans"><code>/getAllBans</code> <a href="#getallbans" class="permalink">¶</a></h2>
         <p>Gets all bans</p>
         <h3>URL Query Parameters</h3>
@@ -87,7 +101,8 @@
             <tr><td>token</td><td>An enforcer, inspector or owner token to authorize this request</td></tr>
         </table>
         <h3>Example response</h3>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
     "result": {
         "users": [
@@ -122,7 +137,11 @@
         ]
     },
     "error": null
-}</div>
+}
+        </div>
+
+        <hr/>
+        
         <h2 id="checktoken"><code>/checkToken</code> <a href="#checktoken" class="permalink">¶</a></h2>
         <p>Checks if a token is valid</p>
         <h3>URL Query Parameters</h3>
@@ -131,16 +150,20 @@
             <tr><td>token</td><td>A token to check if valid</td></tr>
         </table>
         <h3>Example response with a valid token</h3>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
     "result": true,
     "error": null
-}</div>
+}
+        </div>
         <h3>Example response with an invalid token</h3>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
     "result": false,
     "error": null
-}</div>
+}
+        </div>
     </body>
 </html>

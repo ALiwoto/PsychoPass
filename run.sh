@@ -4,6 +4,10 @@ buildApp()
 	# clear the screen (the terminal)
 	clear
 
+	cd docs/
+	docs/build.sh
+	cd ..
+
 	echo -e "building Sibyl System, please wait a bit..."
 
 	go build -o sibylSystem

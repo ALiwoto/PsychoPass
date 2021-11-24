@@ -16,26 +16,38 @@
         <h1>Methods</h1>
         <div class="head"><a href="../">home</a> | <a href="./">methods</a></div>
 
+        <hr/>
+
         <p>Example of a successful response:</p>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
-    "result": {
+    "result": 
+    {
         "previous_perm": 1,
         "current_perm": 2
     },
     "error": null
-}</div>
+}       
+        </div>
+
+        <hr/>
+
         <p>Example of an unsuccessful response:</p>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": false,
     "result": null,
-    "error": {
+    "error": 
+    {
         "code": 500,
         "message": "Can't slap misery's ass",
         "origin": "Slap",
         "date": "14/11/2021 20:27:15"
     }
-}</div>
+}
+        </div>
+        <hr/>
         <p>List of method groups:</p>
         <ul>
             <li><a href="tokens.html">tokens</a></li>

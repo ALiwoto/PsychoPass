@@ -16,6 +16,8 @@
         <h1>Ban Methods</h1>
         <div class="head"><a href="../">home</a> | <a href="./">methods</a></div>
 
+        <hr/>
+
         <h3>Table of Contents:</h3>
         <ul>
             <li><a href="#ban">/ban</a></li>
@@ -23,6 +25,8 @@
             <li><a href="#multiunban">/multiunban</a></li>
             <li><a href="#removeban">/removeBan</a></li>
         </ul>
+
+        <hr/>
 
         <h2 id="ban"><code>/ban</code> <a href="#ban" class="permalink">¶</a></h2>
         <p>Bans a user</p>
@@ -38,11 +42,14 @@
             <tr><td>bot</td><td>Optional parameter to specify if the user being banned is a bot</td></tr>
         </table>
         <h3>Example response</h3>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
-    "result": {
+    "result": 
+    {
         "previous_ban": null,
-        "current_ban": {
+        "current_ban": 
+        {
             "user_id": 792109647,
             "banned": true,
             "reason": "Keeps slapping misery's ass",
@@ -58,7 +65,9 @@
         }
     },
     "error": null
-}</div>
+}
+        </div>
+        <hr/>
         <h2 id="multiban"><code>/multiban</code> <a href="#multiban" class="permalink">¶</a></h2>
         <p>Bans up to 50,000 users at once. Unlike other methods, JSON must also be streamed via the request body</p>
         <h3>URL Query Parameters</h3>
@@ -83,7 +92,8 @@
         </table>
         <h3>Example request</h3>
         <pre><code>POST /multiban?token=516124792:Q2xvc2UgeW91ciBleWVzLCB5b3UnbGwgYmUgaGVyZSBzb29uCkljaGkga25lZSBzYW4gY2hpIGdvIGZ1bgpbLi4uXQpPWUFTVU1JIE9ZQVNVTUkKKHNyeSk
-</pre></code><div class="highlightjson">{
+</pre></code><div class="highlightjson">
+{
     "users": [
         {
             "user_id": 558772678,
@@ -98,13 +108,17 @@
             "reason": "Keeps destroying servers"
         }
     ]
-}</div>
+}
+        </div>
         <h3>Example response</h3>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
     "result": "Applying your multi-ban request in background",
     "error": null
-}</div>
+}
+        </div>
+        <hr/>
         <h2 id="multiunban"><code>/multiunban</code> <a href="#multiunban" class="permalink">¶</a></h2>
         <p>Unbans up to 50,000 users at once. Unlike other methods, JSON must also be streamed via the request body</p>
         <h3>URL Query Parameters</h3>
@@ -119,18 +133,23 @@
         </table>
         <h3>Example request</h3>
         <pre><code>POST /multiunban?token=558772678:d29uZGVyIGlmIGFueW9uZSBpcyByZWFkaW5nIHRoZXNlIGJsdXJicy4gYnR3LCBkb24ndCBjb3VudCBvbiB0b2tlbnMgYmVpbmcgZW5jb2RlZCB3IGI2NAo
-</pre></code><div class="highlightjson">{
+</pre></code><div class="highlightjson">
+{
     "users": [
         214416808,
         570787098,
     ]
-}</div>
+}
+        </div>
         <h3>Example response</h3>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
     "result": "Applying your multi-unban request in background",
     "error": null
-}</div>
+}
+        </div>
+        <hr/>
         <h2 id="removeban"><code>/removeBan</code> <a href="#removeban" class="permalink">¶</a></h2>
         <p>Unbans a user</p>
         <h3>URL Query Parameters</h3>
@@ -141,10 +160,12 @@
             <tr><td>clear-history</td><td>Optional parameter to unlock auto-appeal (recognized positive values: yes, on, true)</td></tr>
         </table>
         <h3>Example response</h3>
-        <div class="highlightjson">{
+        <div class="highlightjson">
+{
     "success": true,
     "result": "User was unbanned",
     "error": null
-}</div>
+}
+    </div>
     </body>
 </html>
