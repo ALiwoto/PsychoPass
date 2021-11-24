@@ -3,6 +3,7 @@ package server
 import (
 	"strings"
 
+	"github.com/AnimeKaizoku/PsychoPass/docs/in"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/banHandlers"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/infoHandlers"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/reportHandlers"
@@ -11,6 +12,8 @@ import (
 )
 
 func LoadHandlers() {
+	// documentation
+	in.LoadDocs(ServerEngine)
 	// create token handlers
 	bindHandler(tokenHandlers.CreateTokenHandler, "create",
 		"createToken", "generate")
