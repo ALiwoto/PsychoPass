@@ -25,7 +25,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | CUSTOM        |      401-450      | Any Custom reason                 |        BAN         |
 | NSFW          |      451-500      | Sending NSFW Content in SFW       |        BAN         |
 | MALIMP        |      501-550      | Malicious Impersonation           |        BAN         |
-| RAID          |      551-600      | Bulk join raid to vandalize       |        BAN         |
+| RAID          |      551-600      | Bulk join raid to vandalize       | BAN + DEL Join MSG |
 | MASSADD       |      601-650      | Mass adding to group/channel      |        BAN         |
 
 ### Trigger word aliases
