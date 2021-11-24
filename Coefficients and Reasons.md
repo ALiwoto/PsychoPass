@@ -18,26 +18,29 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | ------------ | ------------ | ------------ |
 | Civilian  | 0-80  |  None |
 | Restored  | 81-100  | None, but user has a history of past ban  |
-| Enforcer  | 101-125  | None, but can be scanned by an inspector  |
+| Enforcer  | 101-150  | None, but can be scanned by an inspector  |
 
 #### Actionable Flags
 
 ##### Suggested Action is auto mute the user
-| FLAG  | Coefficient Range | Explanation  |
-| ------------ | ------------ | ------------ |
-| TROLLING  | 126-150  | Trolling  |
-|  SPAM | 151-200  | Spam/Unwanted Promotion  |
-| EVADE  | 201-250  | Ban Evade using alts  |
-| CUSTOM  | 251-300  |  Any Custom reason |
-
-##### Suggested Action is ban the user
-| FLAG  | Coefficient Range | Explanation  |
-| ------------ | ------------ | ------------ |
-| PSYCHOHAZARD  |  301-350 |  Bulk banned due to some bad users |
-| MALIMP  | 351-400  | Malicious Impersonation  |
-| NSFW | 401-450  |  Sending NSFW Content in SFW |
-| RAID | 451-500  | Bulk join raid to vandalize   |
-| SPAMBOT  | 501-550  |  Crypto, btc, forex trading scams, thotbot |
+| ------------- | ----------------- | --------------------------------- |
+|     FLAG      | Coefficient Range |          Explanation              |
+| ------------- | ----------------- | --------------------------------- |
+| TROLLING      |     151-200       | Trolling                          |
+| SPAM          |     201-250       | Spam/Unwanted Promotion           |
+| EVADE         |     250-300       | Ban Evade using alts              |
+| PSYCHOHAZARD  |     301-350       | Bulk banned due to some bad users |
+| ------------- | ----------------- | --------------------------------- |
+|         Suggested action is ban and delete service message            |
+| ------------- | ----------------- | --------------------------------- |
+| SPAMBOT       |                   | Crypto, trading scams, thotbot    |
+| ------------- | ----------------- | --------------------------------- |
+|                 Suggested Action is ban the user                      |
+| ------------- | ----------------- | --------------------------------- |
+| CUSTOM   | 300-350  | Any Custom reason        |
+| NSFW     | 401-450  |  Sending NSFW Content in SFW |
+| MALIMP   | 351-400  | Malicious Impersonation  |
+| RAID     | 501-550  | Bulk join raid to vandalize   |
 | MASSADD  | 551-600  |  Mass adding to group/channel |
 
 ### Trigger word aliases
