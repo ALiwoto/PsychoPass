@@ -3,7 +3,6 @@ package server
 import (
 	"net/http"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/banHandlers"
@@ -14,10 +13,8 @@ import (
 )
 
 func LoadHandlers() {
-	// documentation
-	p, _ := os.Getwd()
-	p = filepath.Join(p, "docs", "out")
-	ServerEngine.Static("/docs", p)
+	// documentations handlers
+	loadDocs()
 
 	// create token handlers
 	bindHandler(tokenHandlers.CreateTokenHandler, "create",
@@ -82,6 +79,10 @@ func bindPostHandler(handler gin.HandlerFunc, paths ...string) {
 
 func bindNoRoot() {
 	ServerEngine.NoRoute(noRootHandler)
+}
+
+func loadDocs() {
+	ServerEngine.Static("/docs", "docs"+string(os.PathSeparator)+"out")
 }
 
 func noRootHandler(c *gin.Context) {
