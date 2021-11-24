@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="no-referrer" name="referrer"/>
+  <meta content="default-src 'none'; style-src 'self'" http-equiv="content-security-policy"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- <link rel="canonical" href="https://blankx.gitlab.io/methods/info.html" /> -->
+  <meta content="dark" name="color-scheme"/>
+  <meta content="#15A4E9" name="theme-color"/>
+  <title>
+   Info Methods
+  </title>
+  <link crossorigin="anonymous" href="../style.css" rel="stylesheet"/>
+  <link crossorigin="anonymous" href="../pygments.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <h1>
+   Info Methods
+  </h1>
+  <div class="head">
+   <a href="../">
+    home
+   </a>
+   |
+   <a href="./">
+    methods
+   </a>
+  </div>
+  <h3>
+   Table of Contents:
+  </h3>
+  <ul>
+   <li>
+    <a href="#getinfo">
+     /getInfo
+    </a>
+   </li>
+   <li>
+    <a href="#getstats">
+     /getStats
+    </a>
+   </li>
+   <li>
+    <a href="#getallbans">
+     /getAllBans
+    </a>
+   </li>
+   <li>
+    <a href="#checktoken">
+     /checkToken
+    </a>
+   </li>
+  </ul>
+  <h2 id="getinfo">
+   <code>
+    /getInfo
+   </code>
+   <a class="permalink" href="#getinfo">
+    ¶
+   </a>
+  </h2>
+  <p>
+   Gets information about a user
+  </p>
+  <h3>
+   URL Query Parameters
+  </h3>
+  <table>
+   <tr>
+    <th>
+     Key
+    </th>
+    <th>
+     Value
+    </th>
+   </tr>
+   <tr>
+    <td>
+     token
+    </td>
+    <td>
+     Any token to authorize this request
+    </td>
+   </tr>
+   <tr>
+    <td>
+     userid
+    </td>
+    <td>
+     User ID of the user to get info of
+    </td>
+   </tr>
+  </table>
+  <h3>
+   Example response
+  </h3>
+  <div class="highlight">
+   <pre><span></span><code><span class="p">{</span>
+    <span class="nt">"success"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"result"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"user_id"</span><span class="p">:</span> <span class="mi">570787098</span><span class="p">,</span>
+        <span class="nt">"banned"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">"reason"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="nt">"message"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="nt">"ban_source_url"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="nt">"banned_by"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">"crime_coefficient"</span><span class="p">:</span> <span class="mi">93</span><span class="p">,</span>
+        <span class="nt">"date"</span><span class="p">:</span> <span class="s2">"2021-11-15 at 14:50:24"</span><span class="p">,</span>
+        <span class="nt">"source_group"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="nt">"ban_flags"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">"is_bot"</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">},</span>
+    <span class="nt">"error"</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre>
+  </div>
+  <h2 id="getstats">
+   <code>
+    /getStats
+   </code>
+   <a class="permalink" href="#getstats">
+    ¶
+   </a>
+  </h2>
+  <p>
+   Gets stats
+  </p>
+  <h3>
+   URL Query Parameters
+  </h3>
+  <table>
+   <tr>
+    <th>
+     Key
+    </th>
+    <th>
+     Value
+    </th>
+   </tr>
+   <tr>
+    <td>
+     token
+    </td>
+    <td>
+     An inspector or owner token to authorize this request
+    </td>
+   </tr>
+  </table>
+  <h3>
+   Example response
+  </h3>
+  <div class="highlight">
+   <pre><span></span><code><span class="p">{</span>
+    <span class="nt">"success"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"result"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"banned_count"</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="nt">"trolling_ban_count"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="nt">"spam_ban_count"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">"evade_ban_count"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">"custom_ban_count"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="nt">"psycho_hazard_ban_count"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">"mal_imp_ban_count"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">"nsfw_ban_count"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">"spam_bot_ban_count"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">"raid_ban_count"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">"mass_add_ban_count"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">"cloudy_count"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="nt">"token_count"</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+        <span class="nt">"inspectors_count"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">"enforces_count"</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="nt">"error"</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre>
+  </div>
+  <h2 id="getallbans">
+   <code>
+    /getAllBans
+   </code>
+   <a class="permalink" href="#getallbans">
+    ¶
+   </a>
+  </h2>
+  <p>
+   Gets all bans
+  </p>
+  <h3>
+   URL Query Parameters
+  </h3>
+  <table>
+   <tr>
+    <th>
+     Key
+    </th>
+    <th>
+     Value
+    </th>
+   </tr>
+   <tr>
+    <td>
+     token
+    </td>
+    <td>
+     An enforcer, inspector or owner token to authorize this request
+    </td>
+   </tr>
+  </table>
+  <h3>
+   Example response
+  </h3>
+  <div class="highlight">
+   <pre><span></span><code><span class="p">{</span>
+    <span class="nt">"success"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"result"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"users"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">"user_id"</span><span class="p">:</span> <span class="mi">792109647</span><span class="p">,</span>
+                <span class="nt">"banned"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="nt">"reason"</span><span class="p">:</span> <span class="s2">"Keeps slapping misery's ass"</span><span class="p">,</span>
+                <span class="nt">"message"</span><span class="p">:</span> <span class="s2">"/slap Misery's ass"</span><span class="p">,</span>
+                <span class="nt">"ban_source_url"</span><span class="p">:</span> <span class="s2">"https://t.me/AnimeKaizoku/6168557"</span><span class="p">,</span>
+                <span class="nt">"banned_by"</span><span class="p">:</span> <span class="mi">516124792</span><span class="p">,</span>
+                <span class="nt">"crime_coefficient"</span><span class="p">:</span> <span class="mi">286</span><span class="p">,</span>
+                <span class="nt">"date"</span><span class="p">:</span> <span class="s2">"2021-11-14 at 17:54:17"</span><span class="p">,</span>
+                <span class="nt">"ban_flags"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">"CUSTOM"</span>
+                <span class="p">],</span>
+                <span class="nt">"is_bot"</span><span class="p">:</span> <span class="kc">false</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="nt">"user_id"</span><span class="p">:</span> <span class="mi">558772678</span><span class="p">,</span>
+                <span class="nt">"banned"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="nt">"reason"</span><span class="p">:</span> <span class="s2">"Fulfilling sawada's request to make slap take in arguments"</span><span class="p">,</span>
+                <span class="nt">"message"</span><span class="p">:</span> <span class="s2">"/slap deez nuts"</span><span class="p">,</span>
+                <span class="nt">"ban_source_url"</span><span class="p">:</span> <span class="s2">"https://t.me/OnePunchDev/94226"</span><span class="p">,</span>
+                <span class="nt">"banned_by"</span><span class="p">:</span> <span class="mi">516124792</span><span class="p">,</span>
+                <span class="nt">"crime_coefficient"</span><span class="p">:</span> <span class="mi">273</span><span class="p">,</span>
+                <span class="nt">"date"</span><span class="p">:</span> <span class="s2">"2021-11-15 at 14:47:47"</span><span class="p">,</span>
+                <span class="nt">"ban_flags"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">"CUSTOM"</span>
+                <span class="p">],</span>
+                <span class="nt">"is_bot"</span><span class="p">:</span> <span class="kc">false</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">"error"</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre>
+  </div>
+  <h2 id="checktoken">
+   <code>
+    /checkToken
+   </code>
+   <a class="permalink" href="#checktoken">
+    ¶
+   </a>
+  </h2>
+  <p>
+   Checks if a token is valid
+  </p>
+  <h3>
+   URL Query Parameters
+  </h3>
+  <table>
+   <tr>
+    <th>
+     Key
+    </th>
+    <th>
+     Value
+    </th>
+   </tr>
+   <tr>
+    <td>
+     token
+    </td>
+    <td>
+     A token to check if valid
+    </td>
+   </tr>
+  </table>
+  <h3>
+   Example response with a valid token
+  </h3>
+  <div class="highlight">
+   <pre><span></span><code><span class="p">{</span>
+    <span class="nt">"success"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"result"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"error"</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre>
+  </div>
+  <h3>
+   Example response with an invalid token
+  </h3>
+  <div class="highlight">
+   <pre><span></span><code><span class="p">{</span>
+    <span class="nt">"success"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"result"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">"error"</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre>
+  </div>
+ </body>
+</html>
