@@ -23,7 +23,8 @@ This readme contains the basics and understanding of Coefficients and ban levels
 #### Actionable Flags
 
 ##### Suggested Action is auto mute the user
-| ------------- | ----------------- | --------------------------------- |
+
+| :------------- | :-----------------: | ---------------------------------: |
 |     FLAG      | Coefficient Range |          Explanation              |
 | ------------- | ----------------- | --------------------------------- |
 | TROLLING      |     151-200       | Trolling                          |
