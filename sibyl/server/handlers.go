@@ -16,7 +16,7 @@ import (
 func LoadHandlers() {
 	// documentation
 	p, _ := os.Getwd()
-	p = filepath.Join(p, "docs", "in")
+	p = filepath.Join(p, "docs", "out")
 	ServerEngine.Static("/docs", p)
 
 	// create token handlers
