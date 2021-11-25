@@ -133,7 +133,7 @@ func noRootHandler(c *gin.Context) {
 	case "report", "reportuser":
 		reportHandlers.ReportUserHandler(c)
 	default:
-		c.Redirect(http.StatusPermanentRedirect, "/docs")
+		c.Redirect(http.StatusPermanentRedirect, "/docs/")
 		return
 	}
 }
