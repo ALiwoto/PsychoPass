@@ -13,6 +13,9 @@ import (
 )
 
 func LoadHandlers() {
+	// add content-security-policy header to all responses
+	addCspMiddleware()
+
 	// documentations handlers
 	loadDocs()
 
@@ -86,6 +89,12 @@ func bindNoRoot() {
 
 func loadDocs() {
 	ServerEngine.Static("/docs", "docs"+string(os.PathSeparator)+"out")
+}
+
+func addCspMiddleware() {
+	ServerEngine.Use(gin.HandlerFunc(func (ctx *gin.Context) {
+		ctx.Header("Content-Security-Policy", "default-src 'none'; style-src 'self'")
+	}))
 }
 
 func noRootHandler(c *gin.Context) {
