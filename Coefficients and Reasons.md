@@ -19,11 +19,11 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | Enforcer      |      101-150      | Has scan power & can be scanned   |   SCENARIO BASED   |
 | TROLLING      |      151-200      | Trolling                          |        MUTE        |
 | SPAM          |      201-250      | Spam/Unwanted Promotion           |        MUTE        |
-| EVADE         |      250-300      | Ban Evade using alts              |        MUTE        |
-| PSYCHOHAZARD  |      301-350      | Bulk banned due to some bad users |        MUTE        |        
-| SPAMBOT       |      351-400      | Crypto, trading scams, thotbot    | BAN + DEL Join MSG |
-| CUSTOM        |      401-450      | Any Custom reason                 |        BAN         |
-| NSFW          |      451-500      | Sending NSFW Content in SFW       |        BAN         |
+| PSYCHOHAZARD  |      251-300      | Bulk banned due to some bad users |        MUTE        |        
+| SPAMBOT       |      301-350      | Crypto, trading scams, thotbot    | BAN + DEL Join MSG |
+| CUSTOM        |      351-400      | Any Custom reason                 |        BAN         |
+| NSFW          |      401-450      | Sending NSFW Content in SFW       |        BAN         |
+| EVADE         |      451-500      | Ban Evade using alts              |        MUTE        |
 | MALIMP        |      501-550      | Malicious Impersonation           |        BAN         |
 | RAID          |      551-600      | Bulk join raid to vandalize       | BAN + DEL Join MSG |
 | MASSADD       |      601-650      | Mass adding to group/channel      |        BAN         |

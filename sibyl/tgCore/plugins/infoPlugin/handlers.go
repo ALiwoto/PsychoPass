@@ -26,34 +26,6 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	/*
-	   Coefficients and Flags
-
-	   ==== Flags     -  ========
-	   Range 0-100 (No bans) (Dominator Locked)
-	   • Civilian     - 0-80
-	   • Restored  - 81-100
-	   • Enforcer  - 101-125
-	   ==============
-	   Range 126-300 (Auto-mute) (Non-lethal Paralyzer)
-	   • TROLLING     - 126-150 - Trolling
-	   • SPAM         - 151-200 - Spam/Unwanted Promotion
-	   • EVADE        - 201-250 - Ban Evade using alts
-	   x-------x
-	   Manual Revert
-	   • CUSTOM       - 251-300 - Any Custom reason
-	   x-------x
-	   ==============
-	   Range 300+ (Ban on Sight) (Lethal Eliminator)
-	   • PSYCHOHAZARD - 301-350 - Bulk banned due to some bad users
-	   • MALIMP       - 351-400 - Malicious Impersonation
-	   • NSFW         - 401-450 - Sending NSFW Content in SFW
-	   • RAID         - 451-500 - Bulk join raid to vandalize
-	   • SPAMBOT       - 501-550 - SpamBot, crypto, btc, forex trading scams
-	   • MASSADD      - 501-600 - Mass adding to group/channel
-	   ==============
-	*/
-
 	md := mdparser.GetEmpty()
 
 	fetchGitStats(md)
