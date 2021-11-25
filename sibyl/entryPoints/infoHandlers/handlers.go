@@ -117,3 +117,42 @@ func CheckTokenHandler(c *gin.Context) {
 
 	entry.SendResult(c, true)
 }
+
+func GeneralInfoHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	userId := utils.GetParam(c, "user-id", "userId", "id")
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginGeneralInfo)
+		return
+	}
+
+	d, err := database.GetTokenFromString(token)
+	if err != nil || d == nil {
+		entry.SendInvalidTokenError(c, OriginGeneralInfo)
+		return
+	}
+
+	if !d.CanGetGeneralInfo() {
+		entry.SendPermissionDenied(c, OriginGeneralInfo)
+		return
+	}
+
+	id, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil || sv.IsInvalidID(id) {
+		entry.SendInvalidUserIdError(c, OriginGeneralInfo)
+		return
+	}
+
+	if sv.IsForbiddenID(id) {
+		entry.SendPermissionDenied(c, OriginGeneralInfo)
+		return
+	}
+
+	u, err := database.GetTokenFromId(id)
+	if u == nil || err != nil {
+		entry.SendUserNotFoundError(c, OriginGeneralInfo)
+		return
+	}
+
+	entry.SendResult(c, toGeneralInfoResult(u))
+}

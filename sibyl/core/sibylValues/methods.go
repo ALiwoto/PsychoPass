@@ -86,6 +86,13 @@ func (t *Token) CanGetToken() bool {
 	return t.Permission == Owner
 }
 
+// CanGetGeneralInfo returns true if the token with its current
+// permission can get general info of a registered user using their id
+// or not.
+func (t *Token) CanGetGeneralInfo() bool {
+	return t.Permission > NormalUser
+}
+
 // CanGetAllBans returns true if the token with its current
 // permission can get all the banned users.
 func (t *Token) CanGetAllBans() bool {

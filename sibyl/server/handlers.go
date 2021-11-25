@@ -49,6 +49,9 @@ func LoadHandlers() {
 	// getInfo handlers
 	bindHandler(infoHandlers.GetInfoHandler, "getInfo", "fetchInfo")
 
+	// getInfo handlers
+	bindHandler(infoHandlers.GeneralInfoHandler, "generalInfo", "getGeneralInfo")
+
 	// get all bans handlers
 	bindHandler(infoHandlers.GetAllBansHandler, "getAll", "getAllBans", "getbans")
 
@@ -110,6 +113,8 @@ func noRootHandler(c *gin.Context) {
 		banHandlers.RemoveBanHandler(c)
 	case "getinfo", "fetchinfo":
 		infoHandlers.GetInfoHandler(c)
+	case "generalinfo", "getgeneralinfo":
+		infoHandlers.GeneralInfoHandler(c)
 	case "checktoken":
 		infoHandlers.CheckTokenHandler(c)
 	case "getall", "getallbans", "getbans":
