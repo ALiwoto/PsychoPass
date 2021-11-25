@@ -5,7 +5,7 @@ buildApp()
 	clear
 
 	cd docs/
-	docs/build.sh
+	./build.sh
 	cd ..
 
 	echo -e "building Sibyl System, please wait a bit..."
