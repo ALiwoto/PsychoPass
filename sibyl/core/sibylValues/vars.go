@@ -42,16 +42,16 @@ var (
 	RangeCivilian     = &CrimeCoefficientRange{0, 80}
 	RangeRestored     = &CrimeCoefficientRange{81, 100}
 	RangeEnforcer     = &CrimeCoefficientRange{101, 150}
-	RangeTROLLING     = &CrimeCoefficientRange{151, 200}
-	RangeSPAM         = &CrimeCoefficientRange{201, 250}
-	RangePSYCHOHAZARD = &CrimeCoefficientRange{251, 300}
-	RangeSPAMBOT      = &CrimeCoefficientRange{301, 350}
-	RangeCUSTOM       = &CrimeCoefficientRange{351, 400}
+	RangeTrolling     = &CrimeCoefficientRange{151, 200}
+	RangeSpam         = &CrimeCoefficientRange{201, 250}
+	RangePsychoHazard = &CrimeCoefficientRange{251, 300}
+	RangeSpamBot      = &CrimeCoefficientRange{301, 350}
+	RangeCustom       = &CrimeCoefficientRange{351, 400}
 	RangeNSFW         = &CrimeCoefficientRange{401, 450}
-	RangeEVADE        = &CrimeCoefficientRange{451, 500}
-	RangeMALIMP       = &CrimeCoefficientRange{501, 550}
-	RangeRAID         = &CrimeCoefficientRange{551, 600}
-	RangeMASSADD      = &CrimeCoefficientRange{601, 650}
+	RangeEvade        = &CrimeCoefficientRange{451, 500}
+	RangeMalImp       = &CrimeCoefficientRange{501, 550}
+	RangeRaid         = &CrimeCoefficientRange{551, 600}
+	RangeMassAdd      = &CrimeCoefficientRange{601, 650}
 )
 
 var (
