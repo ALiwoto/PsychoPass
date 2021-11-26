@@ -10,7 +10,10 @@ type AssignValue struct {
 	perm         string
 	permValue    sv.UserPermission
 	msg          *gotgbot.Message
-	targer       *sv.User
+	target       *sv.User // before accepting
+	targetId     int64    // after accepting
 	agentProfile *gotgbot.User
-	agent        *sv.Token
+	agent        *sv.Token // before accepting
+	agentId      int64     // after accepting
+	src          string
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/ALiwoto/mdparser/mdparser"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
@@ -24,6 +25,7 @@ func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
 	revokeTokenCb := handlers.NewCallback(revokeTokenCallBackQuery, revokeTokenCallBackResponse)
 	revokeCmd.Triggers = t
 	assignCmd.Triggers = t
+	assignCb.AllowChannel = true
 	d.AddHandler(revokeCmd)
 	d.AddHandler(assignCmd)
 	d.AddHandler(getTokenCb)
@@ -121,9 +123,9 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 	md.AppendBoldThis(SpecialChar + " • ID: ").AppendMonoThis(strId).ElThis()
 	md.AppendBoldThis(SpecialChar + " • Is banned: ").AppendMonoThis("No").ElThis()
 	md.AppendBoldThis(SpecialChar + " • Crime Coefficient: ")
-	md.AppendMonoThis(aValue.targer.EstimateCrimeCoefficient())
+	md.AppendMonoThis(aValue.target.EstimateCrimeCoefficient())
 	md.ElThis()
-	// let the goroutine sleep for 1 second
+	// let the goroutine sleep for 2 seconds
 	time.Sleep(2 * time.Second)
 	aValue.msg, err = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
@@ -166,8 +168,9 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 
 		text := aValue.ParseToMd(mdBack).ToString()
 		opts := &gotgbot.SendMessageOpts{
-			ParseMode:   sv.MarkDownV2,
-			ReplyMarkup: aValue.getAssignmentButton(),
+			ParseMode:             sv.MarkDownV2,
+			ReplyMarkup:           aValue.getAssignmentButton(),
+			DisableWebPagePreview: true,
 		}
 
 		for _, chat := range bases {
@@ -181,4 +184,41 @@ func sendRequestMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) 
 	if err != nil {
 		logging.Debug("Tried to send message to ", chat, err)
 	}
+}
+
+func toAssignValue(msg *gotgbot.Message) *AssignValue {
+	text := msg.Text
+	myStrs := ws.Split(text, SpecialChar)
+	a := &AssignValue{
+		permValue: sv.Enforcer, // for now, since it's impossible for another values
+		src:       utils.GetLinkFromMessage(msg),
+	}
+	print(myStrs)
+
+	/*
+		How to parse?
+		1- first text_mention is always the person who tried to assign.
+		2 - for finding the target, we should look for "• ID: ".
+	*/
+
+	for _, current := range msg.Entities {
+		if current.Type == "text_mention" {
+			a.agentId = current.User.Id
+			break
+		}
+	}
+
+	for _, current := range myStrs {
+		if strings.Contains(current, "• ID: ") {
+			idStr := strings.TrimPrefix(current, " • ID: ")
+			idStr = strings.TrimSpace(idStr)
+			id, err := strconv.ParseInt(idStr, 10, 64)
+			if err == nil {
+				a.targetId = id
+			}
+			break
+		}
+	}
+
+	return a
 }

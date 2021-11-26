@@ -1,15 +1,52 @@
 package utils
 
 import (
+	"fmt"
 	"io/ioutil"
+	"strconv"
 	"strings"
 
 	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
 	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
+	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gin-gonic/gin"
 )
+
+func GetLink(ctx *ext.Context) string {
+	if ctx.EffectiveMessage == nil || ctx.EffectiveChat == nil {
+		return ""
+	}
+
+	id := ctx.EffectiveMessage.MessageId
+
+	var identifier string
+	if ctx.EffectiveChat.Username != "" {
+		identifier = ctx.EffectiveChat.Username
+	} else {
+		identifier = "c/" + strconv.FormatInt(ctx.EffectiveChat.Id, 10)[4:]
+	}
+
+	return fmt.Sprintf("https://t.me/%s/%d", identifier, id)
+}
+
+func GetLinkFromMessage(msg *gotgbot.Message) string {
+	if msg == nil || msg.Chat.Id == 0 {
+		return ""
+	}
+
+	id := msg.MessageId
+
+	var identifier string
+	if msg.Chat.Username != "" {
+		identifier = msg.Chat.Username
+	} else {
+		identifier = "c/" + strconv.FormatInt(msg.Chat.Id, 10)[4:]
+	}
+
+	return fmt.Sprintf("https://t.me/%s/%d", identifier, id)
+}
 
 // CreateToken creates a token for the given user.
 func CreateToken(id int64, permission sv.UserPermission) (*sv.Token, error) {

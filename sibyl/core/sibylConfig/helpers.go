@@ -22,13 +22,13 @@ func LoadConfig() error {
 
 func LoadTriggers() error {
 	var t *sibylValues.Triggers
-	logging.Info("Loading triggers from triggers.json")
 	f, err := ioutil.ReadFile("triggers.json")
 	if err == nil {
 		err = json.Unmarshal(f, &t)
 		if err != nil {
 			return err
 		}
+
 		sibylValues.ReasonEvade = t.Evade
 		sibylValues.ReasonMalImp = t.MalImpersonation
 		sibylValues.ReasonNSFW = t.Nsfw
@@ -39,16 +39,17 @@ func LoadTriggers() error {
 		sibylValues.ReasonSpamBot = t.SpamBot
 		sibylValues.ReasonRaid = t.Raid
 	} else {
-		logging.Info("Failed to load from triggers.json")
-		logging.Info("Loading triggers from sample_triggers.json")
+		logging.Info("Loading triggers from sample file")
 		f, err := ioutil.ReadFile("sample_triggers.json")
 		if err != nil {
 			return err
 		}
+
 		err = json.Unmarshal(f, &t)
 		if err != nil {
 			return err
 		}
+
 		sibylValues.ReasonEvade = t.Evade
 		sibylValues.ReasonMalImp = t.MalImpersonation
 		sibylValues.ReasonNSFW = t.Nsfw

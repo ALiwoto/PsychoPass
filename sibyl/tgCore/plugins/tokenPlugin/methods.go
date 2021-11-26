@@ -20,6 +20,7 @@ func (a *AssignValue) ParseToMd(info mdparser.WMarkDown) mdparser.WMarkDown {
 		md.AppendBoldThis(SpecialChar + " • By: ").AppendMonoThis(by + SpecialChar)
 	}
 	md.ElThis().AppendThis(info)
+	md.AppendBoldThis(SpecialChar+" • Source: ").AppendHyperLinkThis("here", a.src)
 	return md
 }
 

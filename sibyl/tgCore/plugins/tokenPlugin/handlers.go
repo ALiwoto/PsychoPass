@@ -446,9 +446,10 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			perm:         perm.GetStringPermission(),
 			permValue:    perm,
 			msg:          topMsg,
-			targer:       targetUser,
+			target:       targetUser,
 			agentProfile: user,
 			agent:        t,
+			src:          utils.GetLink(ctx),
 		}
 		go showUserAssigned(b, ctx, assignValue)
 		return ext.EndGroups
@@ -495,7 +496,8 @@ func assignCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	//myStrs := strings.Split(data, CbSep)
+	assignValue := toAssignValue(ctx.EffectiveMessage)
+	print(assignValue)
 
 	return ext.EndGroups
 }
