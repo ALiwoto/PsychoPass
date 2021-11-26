@@ -496,7 +496,17 @@ func assignCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	assignValue := toAssignValue(ctx.EffectiveMessage)
+	myStrs := strings.Split(data, CbSep)
+	if len(myStrs) != 3 {
+		return ext.EndGroups
+	}
+
+	perm, err := sv.ConvertToPermission(myStrs[2])
+	if err != nil {
+		return ext.EndGroups
+	}
+
+	assignValue := toAssignValue(ctx.EffectiveMessage, perm)
 	print(assignValue)
 
 	return ext.EndGroups

@@ -186,11 +186,11 @@ func sendRequestMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) 
 	}
 }
 
-func toAssignValue(msg *gotgbot.Message) *AssignValue {
+func toAssignValue(msg *gotgbot.Message, perm sv.UserPermission) *AssignValue {
 	text := msg.Text
 	myStrs := ws.Split(text, SpecialChar)
 	a := &AssignValue{
-		permValue: sv.Enforcer, // for now, since it's impossible for another values
+		permValue: perm, // for now, since it's impossible for another values
 		src:       utils.GetLinkFromMessage(msg),
 	}
 	print(myStrs)
