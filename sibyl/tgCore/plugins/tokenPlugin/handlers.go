@@ -483,7 +483,8 @@ func assignCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	data := strings.TrimPrefix(ctx.CallbackQuery.Data, AssignCbPrefix)
 	switch data {
 	case RejectCbData:
-		_, _ = ctx.EffectiveMessage.EditText(b, ctx.EffectiveMessage.Text, &gotgbot.EditMessageTextOpts{
+		txt := ctx.EffectiveMessage.Text + "\n\nRequest has been rejected."
+		_, _ = ctx.EffectiveMessage.EditText(b, txt, &gotgbot.EditMessageTextOpts{
 			Entities:              ctx.EffectiveMessage.Entities,
 			DisableWebPagePreview: true,
 		})
