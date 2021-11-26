@@ -183,6 +183,18 @@ func SendUserNotFoundError(c *gin.Context, origin string) {
 	})
 }
 
+func SendUserNotRegisteredError(c *gin.Context, origin string) {
+	c.JSON(http.StatusOK, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusMethodNotAllowed,
+			Message:   ErrUserNotRegistered,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
 func SendUserNotBannedError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,

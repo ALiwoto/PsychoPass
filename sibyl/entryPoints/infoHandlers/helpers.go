@@ -1,18 +1,25 @@
 package infoHandlers
 
 import (
-	"time"
-
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
 )
 
-func toGeneralInfoResult(t *sibylValues.Token) *GeneralInfoResult {
-	return &GeneralInfoResult{
+func toGeneralInfoResult(t, agent *sv.Token) *GeneralInfoResult {
+	i := &GeneralInfoResult{
 		UserId:         t.UserId,
 		Division:       t.DivisionNum,
 		AssignedBy:     t.AssignedBy,
 		AssignedReason: t.AssignedReason,
-		AssignedAt:     t.CreatedAt.Format(time.RFC3339),
-		Permission:     t.Permission,
+		AssignedAt:     t.GetFormatedCreatedDate(),
 	}
+
+	if t.IsOwner() {
+		if agent.IsOwner() {
+			i.Permission = t.Permission
+		} else {
+			i.Permission = sv.Inspector
+		}
+	}
+
+	return i
 }

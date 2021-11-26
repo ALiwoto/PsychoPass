@@ -31,6 +31,12 @@ func (t *Token) IsEnforcer() bool {
 	return t.Permission == Enforcer
 }
 
+// IsRegistered returns true if the owner of this token is considered as
+// a valid registered user in the system.
+func (t *Token) IsRegistered() bool {
+	return t.Permission > NormalUser
+}
+
 // CanReport returns true if the token with its current
 // permission can report a user to sibyl system or not.
 func (t *Token) CanReport() bool {
@@ -149,6 +155,10 @@ func (t *Token) GetTitleStringPermission() string {
 
 func (t *Token) GetCacheDate() time.Time {
 	return t.cacheDate
+}
+
+func (t *Token) GetFormatedCreatedDate() string {
+	return t.CreatedAt.Format("2006-01-02 at 15:04:05")
 }
 
 func (t *Token) SetCacheDate() {

@@ -154,5 +154,10 @@ func GeneralInfoHandler(c *gin.Context) {
 		return
 	}
 
-	entry.SendResult(c, toGeneralInfoResult(u))
+	if !u.IsRegistered() {
+		entry.SendUserNotRegisteredError(c, OriginGeneralInfo)
+		return
+	}
+
+	entry.SendResult(c, toGeneralInfoResult(u, d))
 }

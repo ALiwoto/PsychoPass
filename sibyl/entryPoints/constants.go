@@ -27,6 +27,10 @@ const (
 	// target's user id cannot be found in the sibyl database.
 	ErrUserNotFound = "User not found"
 
+	// ErrUserNotRegistered is the error message that should be sent when the
+	// target's user is not considered as a registered user.
+	ErrUserNotRegistered = "User not registered"
+
 	// ErrUserNotBanned is the error message that should be sent when the
 	// target's user id can be found in the sibyl database but
 	// it's already unbanned (or never banned).
