@@ -13,8 +13,8 @@ import (
 )
 
 func LoadHandlers() {
-	// add content-security-policy header to all responses
-	addCspMiddleware()
+	// add csp and access-control-allow-origin to all responses
+	addHeaders()
 
 	// documentations handlers
 	loadDocs()
@@ -91,9 +91,10 @@ func loadDocs() {
 	ServerEngine.Static("/docs", "docs"+string(os.PathSeparator)+"out")
 }
 
-func addCspMiddleware() {
+func addHeaders() {
 	ServerEngine.Use(gin.HandlerFunc(func (ctx *gin.Context) {
 		ctx.Header("Content-Security-Policy", "default-src 'none'; style-src 'self'")
+		ctx.Header("Access-Control-Allow-Origin", "*")
 	}))
 }
 
