@@ -41,18 +41,24 @@ This readme contains the basics and understanding of Coefficients and ban levels
 ### Formula ideas needed for civilian bs 
 We can use a weight formula that starts from 80 and deducts points for every good thing done. This same logic can also be given to the server itself but not saved into the DB, just for the assign command beautification.
 
-**Weights - Start from 80, decrease for every thing user has done by some weight 
-**
-Common groups (int)
-USER ID (int)
-Username (bool) 10
-Profile pic visibility (bool)10
-setbio (bool)15
-set me (bool)15
-has a first name (bool)10
-has a last name (bool)5
-[========|=]
-80-5-10-15-10-10=30
-xxxxxx=================================
+=======================================
+Start with a value of 80, assign a minus mark for every condition fulfilled 
+Take user ID
+ID: 993734499
 
-??????
+Take first 2 and last 2 digits of the ID (in this case its 9 and 9)
+If  ID is less than 2 digits then take the same digit 4 times 
+If its less than 3 digits then take the number twice
+
+
+80-((9+9+9+9)+(7+10+9+8))=10
+
+now assign a weight to conditions 
+
+============
+7 - pfp
+10 - username
+9 - first name
+8 - last name 
+=============
+====================================
