@@ -10,8 +10,8 @@ import (
 	"time"
 
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
 
 	"github.com/bigkevmcd/go-configparser"
 )

@@ -3,7 +3,7 @@ package sibylValues
 import (
 	"time"
 
-	wc "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues/whatColor"
+	wc "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
 )
 
 /*

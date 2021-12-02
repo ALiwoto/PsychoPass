@@ -7,11 +7,11 @@ import (
 
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 )

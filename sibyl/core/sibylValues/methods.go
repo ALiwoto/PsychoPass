@@ -8,7 +8,7 @@ import (
 
 	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
-	wc "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues/whatColor"
+	wc "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
 )
 
 //---------------------------------------------------------

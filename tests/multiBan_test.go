@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
 
 func TestGetRawMultiBanSampleData(t *testing.T) {

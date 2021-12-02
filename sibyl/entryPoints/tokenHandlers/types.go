@@ -1,6 +1,6 @@
 package tokenHandlers
 
-import sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+import sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 
 type ChangePermResult struct {
 	PreviousPerm sv.UserPermission `json:"previous_perm"`

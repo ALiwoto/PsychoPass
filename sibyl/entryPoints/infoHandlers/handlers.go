@@ -3,11 +3,11 @@ package infoHandlers
 import (
 	"strconv"
 
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
-	entry "github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
+	entry "github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints"
 	"github.com/gin-gonic/gin"
 )
 

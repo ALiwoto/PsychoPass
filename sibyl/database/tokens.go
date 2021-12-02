@@ -3,8 +3,8 @@ package database
 import (
 	"time"
 
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/hashing"
 )
 
 func GetTokenFromId(id int64) (*sv.Token, error) {

@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"strings"
 
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/hashing"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gin-gonic/gin"

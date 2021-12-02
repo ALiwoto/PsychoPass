@@ -5,9 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"

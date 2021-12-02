@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/ALiwoto/StrongStringGo/strongStringGo"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/timeUtils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/timeUtils"
 )
 
 func NewReport(reason, message, link string, target, reporter int64,

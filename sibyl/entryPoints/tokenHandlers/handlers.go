@@ -3,13 +3,13 @@ package tokenHandlers
 import (
 	"strconv"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
-	entry "github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
+	entry "github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints"
 
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/hashing"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	"github.com/gin-gonic/gin"
 )
 

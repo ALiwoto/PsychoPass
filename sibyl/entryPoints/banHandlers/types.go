@@ -1,6 +1,6 @@
 package banHandlers
 
-import sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+import sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 
 type BanResult struct {
 	PreviousBan *sv.User `json:"previous_ban"`

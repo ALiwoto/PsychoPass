@@ -5,7 +5,7 @@ import (
 
 	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/shellUtils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/shellUtils"
 )
 
 func fetchGitStats(md mdparser.WMarkDown) {

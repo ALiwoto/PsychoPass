@@ -1,7 +1,7 @@
 package infoHandlers
 
 import (
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
 
 func toGeneralInfoResult(t, agent *sv.Token) *GeneralInfoResult {

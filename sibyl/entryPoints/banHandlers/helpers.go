@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 )
 
 // applyMultiBan will apply the multi ban request. this function should

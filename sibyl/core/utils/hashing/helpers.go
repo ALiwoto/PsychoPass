@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
 )
 
 func init() {

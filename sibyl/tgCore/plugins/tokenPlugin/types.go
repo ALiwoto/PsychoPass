@@ -1,7 +1,7 @@
 package tokenPlugin
 
 import (
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 )
 

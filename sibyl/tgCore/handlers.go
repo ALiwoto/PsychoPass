@@ -1,12 +1,12 @@
 package tgCore
 
 import (
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/infoPlugin"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/reportPlugin"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/startPlugin"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore/plugins/tokenPlugin"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/tgCore/plugins/infoPlugin"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/tgCore/plugins/reportPlugin"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/tgCore/plugins/startPlugin"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/tgCore/plugins/tokenPlugin"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gotgbot/ratelimiter/ratelimiter"
 )

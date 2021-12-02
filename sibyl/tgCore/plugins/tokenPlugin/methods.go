@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/ALiwoto/mdparser/mdparser"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 )
 

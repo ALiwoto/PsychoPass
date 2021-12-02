@@ -7,14 +7,14 @@ import (
 	"runtime/debug"
 	"time"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/server"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/tgCore"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/server"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/tgCore"
 )
 
 func main() {

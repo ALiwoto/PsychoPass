@@ -6,11 +6,11 @@ import (
 
 	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/hashing"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/database"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/hashing"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 )

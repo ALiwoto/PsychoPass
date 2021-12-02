@@ -5,10 +5,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/banHandlers"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/infoHandlers"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/reportHandlers"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/entryPoints/tokenHandlers"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/banHandlers"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/infoHandlers"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/reportHandlers"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/tokenHandlers"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/logging"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
 	"github.com/gin-gonic/gin"
 )
 

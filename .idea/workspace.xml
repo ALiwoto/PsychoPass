@@ -58,11 +58,11 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <configuration name="go build github.com/AnimeKaizoku/PsychoPass" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+    <configuration name="go build github.com/MinistryOfWelfare/PsychoPass" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="SibylAPI-Go" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="github.com/AnimeKaizoku/PsychoPass" />
+      <package value="github.com/MinistryOfWelfare/PsychoPass" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/main.go" />
       <method v="2" />
@@ -78,7 +78,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build github.com/AnimeKaizoku/PsychoPass" />
+        <item itemvalue="Go Build.go build github.com/MinistryOfWelfare/PsychoPass" />
       </list>
     </recent_temporary>
   </component>

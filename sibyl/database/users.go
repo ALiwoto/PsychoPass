@@ -3,8 +3,8 @@ package database
 import (
 	"time"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylConfig"
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
 
 func GetUserFromId(id int64) (*sv.User, error) {

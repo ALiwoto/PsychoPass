@@ -1,6 +1,6 @@
 package infoHandlers
 
-import sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+import sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 
 type GeneralInfoResult struct {
 	UserId         int64             `json:"user_id"`

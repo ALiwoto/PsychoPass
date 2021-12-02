@@ -3,8 +3,8 @@ package entryPoints
 import (
 	"net/http"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/timeUtils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/timeUtils"
 	"github.com/gin-gonic/gin"
 )
 

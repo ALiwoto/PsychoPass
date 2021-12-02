@@ -1,4 +1,4 @@
-module github.com/AnimeKaizoku/PsychoPass
+module github.com/MinistryOfWelfare/PsychoPass
 
 go 1.17
 

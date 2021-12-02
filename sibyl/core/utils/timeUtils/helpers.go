@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/AnimeKaizoku/PsychoPass/sibyl/core/utils/stringUtils"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/stringUtils"
 )
 
 // GenerateCurrentDateTime format of the date time will be dd/MM/yyyy HH:mm:ss

@@ -3,7 +3,7 @@ package database
 import (
 	"time"
 
-	sv "github.com/AnimeKaizoku/PsychoPass/sibyl/core/sibylValues"
+	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
 
 func AddBan(userID, adder int64, reason, srcGroup, message, src string, isBot bool, count int) *sv.User {
