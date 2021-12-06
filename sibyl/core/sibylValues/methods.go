@@ -188,7 +188,7 @@ func (p UserPermission) GetNormString() string {
 	switch p {
 	case Enforcer:
 		return "Enforcer"
-	case Inspector:
+	case Inspector, Owner:
 		return "Inspector"
 	default:
 		return "Not registered"
@@ -264,9 +264,9 @@ func (r *Report) ParseAsMd() mdparser.WMarkDown {
 	}
 
 	var theScanMessage string
-	if len(r.ReportMessage) > 256 {
+	if len(r.ReportMessage) > 512 {
 		// truncate the message if it's just too long
-		theScanMessage = r.ReportMessage[:256] + "..."
+		theScanMessage = r.ReportMessage[:512] + "..."
 	} else {
 		theScanMessage = r.ReportMessage
 	}
