@@ -73,6 +73,7 @@ func ReportUserHandler(c *gin.Context) {
 
 	if sv.SendReportHandler != nil {
 		r := sv.NewReport(reason, msg, msgLink, id, by, d.Permission, isBot)
+		database.AddScan(r)
 		go sv.SendReportHandler(r)
 	}
 
