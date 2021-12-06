@@ -70,7 +70,7 @@ type User struct {
 	FlagRaid         bool        `json:"-"`
 	FlagSpamBot      bool        `json:"-"`
 	FlagMassAdd      bool        `json:"-"`
-	cacheDate        time.Time   `json:"-"`
+	cacheDate        time.Time   `json:"-" gorm:"-" sql:"-"`
 }
 
 type Token struct {
@@ -111,14 +111,16 @@ type Token struct {
 }
 
 type Report struct {
-	ReporterId         int64
-	TargetUser         int64
-	IsBot              bool
-	ReportDate         string
-	ReportReason       string
-	ReportMessage      string
-	ScanSourceLink     string
-	ReporterPermission string
+	UniqueId           string         `json:"unique_id" gorm:"primaryKey"`
+	ReporterId         int64          `json:"reporter_id"`
+	TargetUser         int64          `json:"target_user"`
+	IsBot              bool           `json:"is_bot"`
+	ReportDate         string         `json:"report_date"`
+	ReportReason       string         `json:"report_reason"`
+	ReportMessage      string         `json:"report_message"`
+	ScanSourceLink     string         `json:"scan_source_link"`
+	ReporterPermission UserPermission `json:"reporter_permission"`
+	cacheDate          time.Time      `json:"-" gorm:"-" sql:"-"`
 }
 
 // CrimeCoefficientRange is the range of crime coefficients.

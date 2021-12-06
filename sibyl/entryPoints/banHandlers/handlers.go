@@ -99,7 +99,18 @@ func AddBanHandler(c *gin.Context) {
 		count = u.BanCount
 	}
 
-	u = database.AddBan(id, by, banReason, srcGroup, banMsg, srcUrl, isBot, count)
+	info := &database.BanInfo{
+		UserID:   id,
+		Adder:    by,
+		Reason:   banReason,
+		SrcGroup: srcGroup,
+		Message:  banMsg,
+		Src:      srcUrl,
+		IsBot:    isBot,
+		Count:    count,
+	}
+	u = database.AddBan(info)
+
 	entry.SendResult(c, &BanResult{
 		CurrentBan: u,
 	})

@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 
-	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
 	wc "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
 )
@@ -157,6 +156,10 @@ func (t *Token) GetCacheDate() time.Time {
 	return t.cacheDate
 }
 
+func (t *Token) IsExpired(d time.Duration) bool {
+	return time.Since(t.cacheDate) > d
+}
+
 func (t *Token) GetFormatedCreatedDate() string {
 	return t.CreatedAt.Format("2006-01-02 at 15:04:05")
 }
@@ -178,6 +181,17 @@ func (p UserPermission) GetStringPermission() string {
 		return "owner"
 	default:
 		return strconv.Itoa(int(p))
+	}
+}
+
+func (p UserPermission) GetNormString() string {
+	switch p {
+	case Enforcer:
+		return "Enforcer"
+	case Inspector:
+		return "Inspector"
+	default:
+		return "Not registered"
 	}
 }
 
@@ -221,43 +235,112 @@ func (r *Report) getTargetName() string {
 	return r.getNameById(r.TargetUser)
 }
 
+func (r *Report) GetTargetType() string {
+	if r.IsBot {
+		return "Bot"
+	}
+
+	if r.TargetUser < 0 {
+		return "Chat"
+	}
+
+	return "User"
+}
+
 func (r *Report) ParseAsMd() mdparser.WMarkDown {
 	md := mdparser.GetNormal("\u200D#SCAN:\n")
-	md.AppendBoldThis("・User: ")
+	agentId := strconv.FormatInt(r.ReporterId, 10)
+	targetId := strconv.FormatInt(r.TargetUser, 10)
 	agent := r.getReporterName()
-	target := r.getTargetName()
-	if len(target) != 0 {
-		md.AppendMentionThis(target, r.TargetUser)
-	} else {
-		md.AppendMentionThis("\u200D", r.TargetUser)
-		md.AppendMonoThis(strconv.FormatInt(r.TargetUser, 10))
+	if len(agent) > 22 {
+		// truncate the name if it's just too long
+		agent = agent[:22] + "..."
 	}
-	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・By " + r.ReporterPermission + " ")
+
+	target := r.getTargetName()
+	if len(target) > 22 {
+		// truncate the name if it's just too long
+		target = target[:22] + "..."
+	}
+
+	var theScanMessage string
+	if len(r.ReportMessage) > 256 {
+		// truncate the message if it's just too long
+		theScanMessage = r.ReportMessage[:256] + "..."
+	} else {
+		theScanMessage = r.ReportMessage
+	}
+
+	var theReason string
+	if len(r.ReportReason) > 126 {
+		// truncate the message if it's just too long
+		theReason = r.ReportReason[:126] + "..."
+	} else {
+		theReason = r.ReportReason
+	}
+
+	md.AppendBoldThis("・" + r.ReporterPermission.GetNormString() + ": ")
 
 	if len(agent) != 0 {
 		md.AppendMentionThis(agent, r.ReporterId)
+		md.AppendNormalThis(" [").AppendMonoThis(agentId).AppendNormalThis("]")
 	} else {
 		md.AppendMentionThis("\u200D", r.ReporterId)
-		md.AppendMonoThis(strconv.FormatInt(r.ReporterId, 10))
+		md.AppendMonoThis(agentId)
 	}
 
 	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・Reason: ")
-	md.AppendMonoThis(r.ReportReason)
-	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・Date: ")
+	md.AppendBoldThis("・Target: ")
+
+	if len(target) != 0 {
+		md.AppendMentionThis(target, r.TargetUser)
+		md.AppendNormalThis(" [").AppendMonoThis(targetId).AppendNormalThis("]")
+	} else {
+		md.AppendMentionThis("\u200D", r.TargetUser)
+		md.AppendMonoThis(targetId)
+	}
+
+	md.AppendBoldThis("\n・Scan reason: ")
+	md.AppendMonoThis(theReason)
+	md.AppendBoldThis("\n・Date: ")
 	md.AppendMonoThis(r.ReportDate)
-	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・Is bot: ")
-	md.AppendMonoThis(ws.YesOrNo(r.IsBot))
-	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・Report Source: ")
+	md.AppendBoldThis("\n・Type: ")
+	md.AppendMonoThis(r.GetTargetType())
+	md.AppendBoldThis("\n・Scan source: ")
 	md.AppendNormalThis(r.ScanSourceLink)
-	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・Target Message: ")
-	md.AppendNormalThis(r.ReportMessage)
+	md.AppendBoldThis("\n・Date: ")
+	md.AppendMonoThis(r.ReportDate)
+	md.AppendBoldThis("\n・Unique ID: ")
+	md.AppendMonoThis(r.UniqueId)
+	md.AppendBoldThis("\n・Message: ")
+	md.AppendMonoThis(theScanMessage)
 	return md
+}
+
+func (r *Report) SetUniqueId() {
+	if r.UniqueId != "" {
+		return
+	}
+
+	r.UniqueId = strconv.FormatInt(time.Now().Unix(), 16)
+	r.UniqueId += "-" + strconv.FormatInt(r.ReporterId, 16)
+	r.UniqueId += "-" + strconv.FormatInt(r.TargetUser, 16)
+}
+
+func (r *Report) IsInvalid() bool {
+	return r.UniqueId == ""
+}
+
+func (r *Report) GetCacheDate() time.Time {
+	return r.cacheDate
+}
+
+func (r *Report) SetCacheDate() {
+	r.cacheDate = time.Now()
+}
+
+func (r *Report) IsExpired(d time.Duration) bool {
+	return time.Since(r.cacheDate) > d
 }
 
 //---------------------------------------------------------
@@ -268,6 +351,10 @@ func (u *User) GetCacheDate() time.Time {
 
 func (u *User) SetCacheDate() {
 	u.cacheDate = time.Now()
+}
+
+func (u *User) IsExpired(d time.Duration) bool {
+	return time.Since(u.cacheDate) > d
 }
 
 func (u *User) setHueColor() {

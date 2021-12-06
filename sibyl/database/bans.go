@@ -6,19 +6,20 @@ import (
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
 
-func AddBan(userID, adder int64, reason, srcGroup, message, src string, isBot bool, count int) *sv.User {
+func AddBan(info *BanInfo) *sv.User {
 	user := &sv.User{
-		UserID:       userID,
+		UserID:       info.UserID,
 		Banned:       true,
 		Date:         time.Now(),
-		Message:      message,
-		BannedBy:     adder,
-		BanSourceUrl: src,
-		SourceGroup:  srcGroup,
-		IsBot:        isBot,
-		BanCount:     count,
+		Message:      info.Message,
+		BannedBy:     info.Adder,
+		BanSourceUrl: info.Src,
+		SourceGroup:  info.SrcGroup,
+		IsBot:        info.IsBot,
+		BanCount:     info.Count,
 	}
-	user.SetAsBanReason(reason)
+
+	user.SetAsBanReason(info.Reason)
 	user.IncreaseCrimeCoefficientAuto()
 	NewUser(user)
 	return user
@@ -26,13 +27,16 @@ func AddBan(userID, adder int64, reason, srcGroup, message, src string, isBot bo
 
 func AddBanByInfo(info *sv.MultiBanUserInfo, adder int64, count int) *sv.User {
 	return AddBan(
-		info.UserId,
-		adder,
-		info.Reason,
-		info.SourceGroup,
-		info.Message,
-		info.Source,
-		info.IsBot, count,
+		&BanInfo{
+			UserID:   info.UserId,
+			Adder:    adder,
+			Reason:   info.Reason,
+			SrcGroup: info.SourceGroup,
+			Message:  info.Message,
+			Src:      info.Source,
+			IsBot:    info.IsBot,
+			Count:    count,
+		},
 	)
 }
 

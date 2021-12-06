@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
-	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
@@ -52,7 +51,11 @@ func StartDatabase() {
 	logging.Info("Database connected")
 
 	// Create tables if they don't exist
-	err = SESSION.AutoMigrate(modelUser, modelToken)
+	err = SESSION.AutoMigrate(
+		modelUser,
+		modelToken,
+		modelScan,
+	)
 	if err != nil {
 		logging.Fatal(err)
 	}
@@ -60,10 +63,7 @@ func StartDatabase() {
 	if sibylConfig.SibylConfig.UseSqlite {
 		dbMutex = &sync.Mutex{}
 	}
-	tokenMapMutex = &sync.Mutex{}
-	tokenDbMap = make(map[int64]*sv.Token)
-	userMapMutex = &sync.Mutex{}
-	userDbMap = make(map[int64]*sv.User)
+
 	go cleanMaps()
 
 	migrateOwners(sibylConfig.GetOwnersID())
@@ -86,7 +86,7 @@ func cleanMaps() {
 
 		tokenMapMutex.Lock()
 		for key, value := range tokenDbMap {
-			if value == nil || time.Since(value.GetCacheDate()) > mtime {
+			if value == nil || value.IsExpired(mtime) {
 				delete(tokenDbMap, key)
 			}
 		}
@@ -94,11 +94,19 @@ func cleanMaps() {
 
 		userMapMutex.Lock()
 		for key, value := range userDbMap {
-			if value == nil || time.Since(value.GetCacheDate()) > mtime {
+			if value == nil || value.IsExpired(mtime) {
 				delete(userDbMap, key)
 			}
 		}
 		userMapMutex.Unlock()
+
+		scanMapMutex.Lock()
+		for key, value := range scanDbMap {
+			if value == nil || value.IsExpired(mtime) {
+				delete(scanDbMap, key)
+			}
+		}
+		scanMapMutex.Unlock()
 	}
 }
 
