@@ -27,7 +27,8 @@ func SendReportHandler(r *sv.Report) {
 
 	text = md.ToString()
 	opts = &gotgbot.SendMessageOpts{
-		ParseMode: sv.MarkDownV2,
+		ParseMode:             sv.MarkDownV2,
+		DisableWebPagePreview: true,
 		//ReplyMarkup: getReportButtons(r.GetUniqueId()),
 	}
 
