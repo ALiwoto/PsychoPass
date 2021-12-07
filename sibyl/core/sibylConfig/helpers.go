@@ -107,6 +107,12 @@ func LoadConfigFromFile(fileName string) error {
 	}
 	SibylConfig.Owners = parseBaseStr(strings.TrimSpace(ownersStr))
 
+	devsStr, err := configContent.Get("general", "dev_users")
+	if err != nil || len(devsStr) == 0 {
+		devsStr = env("DEV_USERS")
+	}
+	SibylConfig.DevUsers = parseBaseStr(strings.TrimSpace(devsStr))
+
 	SibylConfig.MaxPanic, err = configContent.GetInt64("general", "max_panics")
 	if err != nil {
 		SibylConfig.MaxPanic, _ = strconv.ParseInt(env("MAX_PANICS"), 10, 64)
@@ -356,6 +362,32 @@ func GetOwnersID() []int64 {
 		return SibylConfig.Owners
 	}
 	return nil
+}
+
+func IsOwner(id int64) bool {
+	if SibylConfig != nil {
+		for _, owner := range SibylConfig.Owners {
+			if owner == id {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func IsDevUser(id int64) bool {
+	if IsOwner(id) {
+		return true
+	}
+
+	if SibylConfig != nil {
+		for _, dev := range SibylConfig.DevUsers {
+			if dev == id {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func GetBaseChatIds() []int64 {

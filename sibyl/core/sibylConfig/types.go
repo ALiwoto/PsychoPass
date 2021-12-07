@@ -5,6 +5,8 @@ type SibylSystemConfig struct {
 	TokenSize int64 `json:"toke_size"`
 	// Owners is the IDs of the owners.
 	Owners []int64 `json:"owners"`
+	// DevUsers is the IDs of the owners.
+	DevUsers []int64 `json:"dev_users"`
 	// Port is the http port that we should listen to
 	Port string `json:"port"`
 	// MaxPanic is the maximum amount of allowed panics to be caught.

@@ -6,13 +6,93 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/ALiwoto/mdparser/mdparser"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/hashing"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gin-gonic/gin"
 )
+
+// SafeReply will reply the message safely, if output is longer than 4096 character, it will
+// send it as file; otherwise it will send it as text using mdparser (monospace).
+func SafeReply(b *gotgbot.Bot, ctx *ext.Context, output string) error {
+	msg := ctx.EffectiveMessage
+	if len(output) < 4096 {
+		_, err := msg.Reply(b, mdparser.GetMono(output).ToString(),
+			&gotgbot.SendMessageOpts{ParseMode: "Markdownv2"})
+		if err != nil {
+			logging.Error("got an error when trying to send results: ", err)
+			return err
+		}
+	} else {
+		_, err := b.SendDocument(ctx.EffectiveChat.Id, []byte(output), &gotgbot.SendDocumentOpts{
+			ReplyToMessageId: msg.MessageId,
+		})
+		if err != nil {
+			logging.Error("got an error when trying to send document: ", err)
+			return err
+		}
+	}
+
+	return nil
+}
+
+// SafeReply will reply the message safely, if output is longer than 4096 character, it will
+// send it as file; otherwise it will send it as plain text without using any formating.
+func SafeReplyNoFormat(b *gotgbot.Bot, ctx *ext.Context, output string) error {
+	msg := ctx.EffectiveMessage
+	if len(output) < 4096 {
+		_, err := msg.Reply(b, output,
+			&gotgbot.SendMessageOpts{ParseMode: "Markdownv2"})
+		if err != nil {
+			logging.Error("got an error when trying to send results: ", err)
+			return err
+		}
+	} else {
+		_, err := b.SendDocument(ctx.EffectiveChat.Id, []byte(output), &gotgbot.SendDocumentOpts{
+			ReplyToMessageId: msg.MessageId,
+		})
+		if err != nil {
+			logging.Error("got an error when trying to send document: ", err)
+			return err
+		}
+	}
+
+	return nil
+}
+
+func SafeEditNoFormat(b *gotgbot.Bot, ctx *ext.Context, topMsg *gotgbot.Message, output string) error {
+	if topMsg == nil {
+		return SafeReplyNoFormat(b, ctx, output)
+	}
+
+	msg := ctx.EffectiveMessage
+	if len(output) < 4096 {
+		_, err := topMsg.EditText(b, output,
+			&gotgbot.EditMessageTextOpts{ParseMode: "Markdownv2"})
+
+		if err != nil {
+			logging.Error("got an error when trying to send results: ", err)
+			return err
+		}
+	} else {
+		_, err := b.SendDocument(ctx.EffectiveChat.Id, []byte(output), &gotgbot.SendDocumentOpts{
+			ReplyToMessageId: msg.MessageId,
+		})
+
+		_, _ = topMsg.Delete(b)
+
+		if err != nil {
+			logging.Error("got an error when trying to send document: ", err)
+			return err
+		}
+	}
+
+	return nil
+}
 
 func GetLink(ctx *ext.Context) string {
 	if ctx.EffectiveMessage == nil || ctx.EffectiveChat == nil {

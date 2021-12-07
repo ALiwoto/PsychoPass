@@ -31,3 +31,24 @@ func GetGitStats() string {
 
 	return stdout
 }
+
+func RestartBot(isWindows bool) {
+	if !isWindows {
+		startProcess(ShellToUseUnix, "-c", "./run.sh &")
+	} else {
+		startProcess(ShellToUseWin, "/C", "upgrade.bat")
+	}
+}
+
+func startProcess(args ...string) (p *os.Process, err error) {
+	if args[0], err = exec.LookPath(args[0]); err == nil {
+		var procAttr os.ProcAttr
+		procAttr.Files = []*os.File{os.Stdin,
+			os.Stdout, os.Stderr}
+		p, err := os.StartProcess(args[0], args, &procAttr)
+		if err == nil {
+			return p, nil
+		}
+	}
+	return nil, err
+}
