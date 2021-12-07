@@ -9,7 +9,8 @@ buildApp()
 	cd ..
 
 	echo -e "building Sibyl System, please wait a bit..."
-
+	
+	rm sibylSystem -f
 	go build -o sibylSystem
 }
 
