@@ -3,6 +3,7 @@ package tgCore
 import (
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/tgCore/plugins/devPlugin"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/tgCore/plugins/infoPlugin"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/tgCore/plugins/reportPlugin"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/tgCore/plugins/startPlugin"
@@ -17,6 +18,7 @@ func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 	infoPlugin.LoadAllHandlers(d, triggers)
 	reportPlugin.LoadAllHandlers(d, triggers)
 	tokenPlugin.LoadAllHandlers(d, triggers)
+	devPlugin.LoadAllHandlers(d, triggers)
 }
 
 func loadLimiter(d *ext.Dispatcher) {
