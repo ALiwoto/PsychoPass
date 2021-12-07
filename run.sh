@@ -1,4 +1,5 @@
 
+
 buildApp() 
 {
 	# clear the screen (the terminal)
@@ -58,3 +59,5 @@ if [ $operations == 0 ]
 then
 	echo "You have done nothing!"
 fi;
+
+# hail woto.
