@@ -147,14 +147,14 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Catawba](https://img.shields.io/static/v1?label=&message=Catawba&color=703642&style=for-the-badge) | Catawba  |  703642 | | 
 | ![Shades_of_cyan](https://img.shields.io/static/v1?label=&message=Shades_of_cyan&color=007BA7&style=for-the-badge) | Shades_of_cyan  |  007BA7 | | 
 | ![Skyblue](https://img.shields.io/static/v1?label=&message=Skyblue&color=B2FFFF&style=for-the-badge) | Skyblue  |  B2FFFF | | 
-| ![Isatis_tinctoria | Celticblue](https://img.shields.io/static/v1?label=&message=Isatis_tinctoriaCelticblue&color=246BCE&style=for-the-badge) | Isatis_tinctoria | Celticblue  |  246BCE | | 
+| ![Isatis_tinctoria Celticblue](https://img.shields.io/static/v1?label=&message=Isatis_tinctoriaCelticblue&color=246BCE&style=for-the-badge) | Isatis_tinctoria Celticblue  |  246BCE | | 
 | ![Cerise](https://img.shields.io/static/v1?label=&message=Cerise&color=DE3163&style=for-the-badge) | Cerise  |  DE3163 | | 
 | ![Cerulean](https://img.shields.io/static/v1?label=&message=Cerulean&color=007BA7&style=for-the-badge) | Cerulean  |  007BA7 | | 
 | ![Cerulean](https://img.shields.io/static/v1?label=&message=Cerulean&color=2A52BE&style=for-the-badge) | Cerulean  |  2A52BE | | 
 | ![Cerulean](https://img.shields.io/static/v1?label=&message=Cerulean&color=6D9BC3&style=for-the-badge) | Cerulean  |  6D9BC3 | | 
 | ![Cerulean](https://img.shields.io/static/v1?label=&message=Cerulean&color=1DACD6&style=for-the-badge) | Cerulean  |  1DACD6 | | 
-| ![CGBlue | CGblue](https://img.shields.io/static/v1?label=&message=CGBlueCGblue&color=007AA5&style=for-the-badge) | CGBlue | CGblue  |  007AA5 | | 
-| ![CGRed | CGred](https://img.shields.io/static/v1?label=&message=CGRedCGred&color=E03C31&style=for-the-badge) | CGRed | CGred  |  E03C31 | | 
+| ![CGBlue CGblue](https://img.shields.io/static/v1?label=&message=CGBlueCGblue&color=007AA5&style=for-the-badge) | CGBlue CGblue  |  007AA5 | | 
+| ![CGRed CGred](https://img.shields.io/static/v1?label=&message=CGRedCGred&color=E03C31&style=for-the-badge) | CGRed CGred  |  E03C31 | | 
 | ![Champagne](https://img.shields.io/static/v1?label=&message=Champagne&color=F7E7CE&style=for-the-badge) | Champagne  |  F7E7CE | | 
 | ![Chartreuse](https://img.shields.io/static/v1?label=&message=Chartreuse&color=DFFF00&style=for-the-badge) | Chartreuse  |  DFFF00 | | 
 | ![Chartreuse](https://img.shields.io/static/v1?label=&message=Chartreuse&color=7FFF00&style=for-the-badge) | Chartreuse  |  7FFF00 | | 
@@ -165,7 +165,7 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Chocolate](https://img.shields.io/static/v1?label=&message=Chocolate&color=D2691E&style=for-the-badge) | Chocolate  |  D2691E | | 
 | ![Chromeyellow](https://img.shields.io/static/v1?label=&message=Chromeyellow&color=FFA700&style=for-the-badge) | Chromeyellow  |  FFA700 | | 
 | ![Cinereous](https://img.shields.io/static/v1?label=&message=Cinereous&color=98817B&style=for-the-badge) | Cinereous  |  98817B | | 
-| ![Vermilion | Cinnabar](https://img.shields.io/static/v1?label=&message=VermilionCinnabar&color=E34234&style=for-the-badge) | Vermilion | Cinnabar  |  E34234 | | 
+| ![Vermilion Cinnabar](https://img.shields.io/static/v1?label=&message=VermilionCinnabar&color=E34234&style=for-the-badge) | Vermilion Cinnabar  |  E34234 | | 
 | ![Citrine](https://img.shields.io/static/v1?label=&message=Citrine&color=E4D00A&style=for-the-badge) | Citrine  |  E4D00A | | 
 | ![Citron](https://img.shields.io/static/v1?label=&message=Citron&color=9FA91F&style=for-the-badge) | Citron  |  9FA91F | | 
 | ![Wine](https://img.shields.io/static/v1?label=&message=Wine&color=7F1734&style=for-the-badge) | Wine  |  7F1734 | | 
@@ -209,7 +209,7 @@ Refer to [HTMLColorCodes](https://htmlcolorcodes.com/color-names/) for detailed 
 | ![Maroon](https://img.shields.io/static/v1?label=&message=Maroon&color=8B0000&style=for-the-badge) | Maroon  |  8B0000 | | 
 | ![Salmon](https://img.shields.io/static/v1?label=&message=Salmon&color=E9967A&style=for-the-badge) | Salmon  |  E9967A | | 
 | ![X11colornames](https://img.shields.io/static/v1?label=&message=X11colornames&color=8FBC8F&style=for-the-badge) | X11colornames  |  8FBC8F | | 
-| ![Sienna | Darksienna](https://img.shields.io/static/v1?label=&message=SiennaDarksienna&color=3C1414&style=for-the-badge) | Sienna | Darksienna  |  3C1414 | | 
+| ![Sienna Darksienna](https://img.shields.io/static/v1?label=&message=SiennaDarksienna&color=3C1414&style=for-the-badge) | Sienna Darksienna  |  3C1414 | | 
 | ![Skyblue](https://img.shields.io/static/v1?label=&message=Skyblue&color=8CBED6&style=for-the-badge) | Skyblue  |  8CBED6 | | 
 | ![X11colornames](https://img.shields.io/static/v1?label=&message=X11colornames&color=483D8B&style=for-the-badge) | X11colornames  |  483D8B | | 
 | ![Slategray](https://img.shields.io/static/v1?label=&message=Slategray&color=2F4F4F&style=for-the-badge) | Slategray  |  2F4F4F | | 
