@@ -79,8 +79,11 @@ func gitpullHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	go shellUtils.RestartBot(isWindows)
 
-	time.Sleep(2500 * time.Millisecond)
+	if !isWindows {
+		time.Sleep(3500 * time.Millisecond)
 
-	os.Exit(0x0)
+		os.Exit(0x0)
+	}
+
 	return ext.EndGroups
 }
