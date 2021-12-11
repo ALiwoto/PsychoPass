@@ -1,7 +1,7 @@
 
 This readme contains the basics and understanding of Coefficients and ban levels on PsychoPass
 
-**Types of Levels **
+**Types of Levels**
 - Under 100: Suspect is not a target for enforcement action. The trigger of the Dominator will be locked.
 - 100-299: Suspect is classified as a latent criminal and is a target for enforcement action. The Dominator is set to Non-Lethal Paralyzer mode.
 - Over 300 ‒ Suspect poses a serious threat to the society. Lethal force is authorized. The Dominator will automatically switch to Lethal Eliminator.
@@ -55,10 +55,11 @@ If its less than 3 digits then take the number twice
 
 now assign a weight to conditions 
 
-============
-7 - pfp
-10 - username
-9 - first name
+<hr/>
+
+7 - pfp \
+10 - username \
+9 - first name \
 8 - last name 
-=============
-====================================
+
+<hr/>
