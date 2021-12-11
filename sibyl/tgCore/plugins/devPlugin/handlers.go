@@ -25,7 +25,7 @@ func gitpullHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	msg := ctx.EffectiveMessage
 	isForced := strings.Contains(msg.Text, "restart")
 
-	topMsg, err := msg.Reply(b, "Trying to pull changes...", nil)
+	topMsg, err := msg.Reply(b, "Now Trying to pull changes...", nil)
 	if err != nil || topMsg == nil {
 		return ext.EndGroups
 	}
