@@ -36,7 +36,7 @@ func RestartBot(isWindows bool) {
 	if !isWindows {
 		startProcess(ShellToUseUnix, "-c", "./run.sh &")
 	} else {
-		startProcess(ShellToUseUnix, "-c", "./Upgrade.bat")
+		startProcess(ShellToUseWin, "/C", "./Upgrade.bat")
 	}
 }
 

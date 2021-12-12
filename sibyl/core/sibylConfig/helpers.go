@@ -63,7 +63,7 @@ func LoadTriggers() error {
 	return nil
 }
 
-func LoadConfigFromFile(fileName string) error {
+func LoadConfigFromFileOld(fileName string) error {
 	if SibylConfig != nil {
 		return nil
 	}
@@ -240,6 +240,16 @@ func LoadConfigFromFile(fileName string) error {
 	}
 
 	return nil
+}
+
+func LoadConfigFromFile(fileName string) error {
+	if SibylConfig != nil {
+		return nil
+	}
+
+	SibylConfig = &SibylSystemConfig{}
+
+	return ws.ParseConfig(SibylConfig, fileName)
 }
 
 func parseCmdPrefixes(value string) []rune {

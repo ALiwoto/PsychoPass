@@ -4,6 +4,7 @@ import (
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
 	"github.com/PaulSonOfLars/gotgbot/v2"
+	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 )
 
 func getReportButtons(uniqueId string) *gotgbot.InlineKeyboardMarkup {
@@ -34,4 +35,8 @@ func sendReportMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) {
 	if err != nil {
 		logging.Debug("Tried to send message to ", chat, err)
 	}
+}
+
+func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
+	sv.SendReportHandler = SendReportHandler
 }
