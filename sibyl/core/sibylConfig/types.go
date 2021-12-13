@@ -18,7 +18,7 @@ type SibylSystemConfig struct {
 	MaxCacheTime int64 `section:"database" key:"max_cache_time" default:"60"`
 	// DbUrl is the of your postgresql database.
 	// if `use_sqlite` is set to `true`, this variable will be ignored.
-	DbUrl string `section:"database" key:"db_url"`
+	DbUrl string `section:"database" key:"url"`
 	// DbName is the database name. if `use_sqlite` is true, this value is required;
 	// in that case, if it's empty, it will be set to `sibyldb` by default.
 	DbName string `section:"database" key:"db_name"`
