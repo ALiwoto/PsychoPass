@@ -123,7 +123,7 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	button := message.ReplyMarkup.InlineKeyboard[0][0]
+	button := markup.InlineKeyboard[0][0]
 	if button.CallbackData == "" {
 		return ext.EndGroups
 	}
@@ -181,7 +181,7 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	button := message.ReplyMarkup.InlineKeyboard[0][0]
+	button := markup.InlineKeyboard[0][0]
 	if button.CallbackData == "" {
 		return ext.EndGroups
 	}
@@ -238,7 +238,7 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	button := message.ReplyMarkup.InlineKeyboard[0][0]
+	button := markup.InlineKeyboard[0][0]
 	if button.CallbackData == "" {
 		return ext.EndGroups
 	}
