@@ -56,4 +56,5 @@ func UpdateScan(scan *sv.Report) {
 	tx := SESSION.Begin()
 	tx.Save(scan)
 	tx.Commit()
+	unlockdb()
 }
