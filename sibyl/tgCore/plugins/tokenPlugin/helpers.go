@@ -141,7 +141,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 
 	if aValue.agent.CanTryChangePermission(true) {
 		md = mdparser.GetBold("Assigned Successfully! ").ElThis().AppendThis(md)
-		md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" has now been assigned as ")
+		md.AppendNormalThis("\n✳️ ").AppendThis(uMd).AppendNormalThis(" has now been assigned as ")
 		md.AppendBoldThis(aValue.perm)
 		md.AppendNormalThis("!\nTheir dominator and token have been sent to their ")
 		md.AppendHyperLinkThis("PM", "http://t.me/"+b.Username).AppendNormalThis(".")
@@ -193,7 +193,6 @@ func toAssignValue(msg *gotgbot.Message, perm sv.UserPermission) *AssignValue {
 		permValue: perm, // for now, since it's impossible for another values
 		src:       utils.GetLinkFromMessage(msg),
 	}
-	print(myStrs)
 
 	/*
 		How to parse?

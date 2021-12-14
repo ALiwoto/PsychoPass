@@ -310,8 +310,8 @@ func (r *Report) ParseAsMd() mdparser.WMarkDown {
 	md.AppendNormalThis(r.ScanSourceLink)
 	md.AppendBoldThis("\n・Date: ")
 	md.AppendMonoThis(r.ReportDate)
-	md.AppendBoldThis("\n・Unique ID: ")
-	md.AppendMonoThis(r.UniqueId)
+	//md.AppendBoldThis("\n・Unique ID: ")
+	//md.AppendMonoThis(r.UniqueId)
 	md.AppendBoldThis("\n・Message: ")
 	md.AppendMonoThis(theScanMessage)
 	return md

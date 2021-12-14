@@ -183,7 +183,16 @@ func GetAppealLogChatIds() []int64 {
 
 func GetCmdPrefixes() []rune {
 	if SibylConfig != nil && len(SibylConfig.CmdPrefixes) > 0 {
-		return []rune{'/', '!', '?'}
+		if SibylConfig.cmdPrefixes == nil {
+			myStrs := ws.Split(SibylConfig.CmdPrefixes, " ")
+			var myRunes []rune
+			for _, current := range myStrs {
+				myRunes = []rune(current)
+				SibylConfig.cmdPrefixes = append(SibylConfig.cmdPrefixes, myRunes[0])
+			}
+		}
+
+		return SibylConfig.cmdPrefixes
 	}
 	return []rune{'/', '!', '?'}
 }

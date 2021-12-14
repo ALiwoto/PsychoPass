@@ -24,7 +24,7 @@ func getReportButtons(uniqueId string) *gotgbot.InlineKeyboardMarkup {
 
 	kb.InlineKeyboard[1] = append(kb.InlineKeyboard[1], gotgbot.InlineKeyboardButton{
 		Text:         "Close",
-		CallbackData: "ap_close", // let start package handle close button xD
+		CallbackData: ReportPrefix + sepChar + CloseData,
 	})
 
 	return kb
