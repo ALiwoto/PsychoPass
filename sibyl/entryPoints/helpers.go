@@ -19,7 +19,7 @@ func SendBadGateAway(c *gin.Context, message, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadRequest,
+			ErrorCode: http.StatusBadGateway,
 			Message:   message,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
