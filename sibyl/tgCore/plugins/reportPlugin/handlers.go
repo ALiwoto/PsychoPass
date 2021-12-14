@@ -79,6 +79,19 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
+	if !scan.IsPending() {
+		_, _ = ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
+			Text:      "This scan has already been " + scan.GetStatusString() + "...",
+			ShowAlert: true,
+			CacheTime: 5,
+		})
+		_, _ = message.EditText(b, message.Text, &gotgbot.EditMessageTextOpts{
+			Entities:              message.Entities,
+			DisableWebPagePreview: true,
+		})
+		return ext.EndGroups
+	}
+
 	scan.AgentUser = tgUser
 
 	if data == CloseData {
@@ -149,6 +162,14 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
+	if !scan.IsPending() {
+		_, _ = replied.EditText(b, replied.Text, &gotgbot.EditMessageTextOpts{
+			Entities:              replied.Entities,
+			DisableWebPagePreview: true,
+		})
+		return ext.EndGroups
+	}
+
 	args := strongStringGo.SplitN(message.Text, 2, " ", "\n")
 	var newReason string
 	if len(args) > 1 {
@@ -207,6 +228,14 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
+	if !scan.IsPending() {
+		_, _ = replied.EditText(b, replied.Text, &gotgbot.EditMessageTextOpts{
+			Entities:              replied.Entities,
+			DisableWebPagePreview: true,
+		})
+		return ext.EndGroups
+	}
+
 	args := strongStringGo.SplitN(message.Text, 2, " ", "\n")
 	var newReason string
 	if len(args) > 1 {
@@ -261,6 +290,14 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	caseId := myStrs[2]
 	scan := database.GetScan(caseId)
 	if scan == nil {
+		return ext.EndGroups
+	}
+
+	if !scan.IsPending() {
+		_, _ = replied.EditText(b, replied.Text, &gotgbot.EditMessageTextOpts{
+			Entities:              replied.Entities,
+			DisableWebPagePreview: true,
+		})
 		return ext.EndGroups
 	}
 
