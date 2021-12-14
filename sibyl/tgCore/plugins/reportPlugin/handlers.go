@@ -112,11 +112,12 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 
 func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	message := ctx.EffectiveMessage
-	if message.ReplyToMessage == nil || message.ReplyMarkup == nil {
+	replied := message.ReplyToMessage
+	if message.ReplyToMessage == nil || replied.ReplyMarkup == nil {
 		return ext.EndGroups
 	}
 
-	markup := message.ReplyMarkup
+	markup := replied.ReplyMarkup
 
 	if len(markup.InlineKeyboard) == 0 || len(markup.InlineKeyboard[0]) == 0 {
 		return ext.EndGroups
@@ -169,11 +170,14 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	message := ctx.EffectiveMessage
-	if message.ReplyToMessage == nil || message.ReplyMarkup == nil {
+	replied := message.ReplyToMessage
+	if message.ReplyToMessage == nil || replied.ReplyMarkup == nil {
 		return ext.EndGroups
 	}
 
-	if len(message.ReplyMarkup.InlineKeyboard) == 0 || len(message.ReplyMarkup.InlineKeyboard[0]) == 0 {
+	markup := replied.ReplyMarkup
+
+	if len(markup.InlineKeyboard) == 0 || len(markup.InlineKeyboard[0]) == 0 {
 		return ext.EndGroups
 	}
 
@@ -223,11 +227,12 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	message := ctx.EffectiveMessage
-	if message.ReplyToMessage == nil || message.ReplyMarkup == nil {
+	replied := message.ReplyToMessage
+	if message.ReplyToMessage == nil || replied.ReplyMarkup == nil {
 		return ext.EndGroups
 	}
 
-	markup := message.ReplyMarkup
+	markup := replied.ReplyMarkup
 
 	if len(markup.InlineKeyboard) == 0 || len(markup.InlineKeyboard[0]) == 0 {
 		return ext.EndGroups
