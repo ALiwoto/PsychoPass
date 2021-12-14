@@ -45,7 +45,7 @@ func (t *Token) CanReport() bool {
 // CanBeReported returns true if the token with its current
 // permission can be reported to sibyl system or not.
 func (t *Token) CanBeReported(agentPerm UserPermission) bool {
-	return t.Permission < Inspector || t.Permission > agentPerm
+	return t.Permission < Inspector && t.Permission <= agentPerm
 }
 
 // CanBeBanned returns true if the token with its current

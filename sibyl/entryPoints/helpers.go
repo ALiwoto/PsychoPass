@@ -19,7 +19,7 @@ func SendBadGateAway(c *gin.Context, message, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   message,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -43,7 +43,7 @@ func SendInvalidTokenError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrInvalidToken,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -67,7 +67,7 @@ func SendInvalidUserIdError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrInvalidUserId,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -79,7 +79,7 @@ func SendInvalidPermError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrInvalidPerm,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -115,7 +115,7 @@ func SendNoReasonError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrNoReason,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -127,7 +127,7 @@ func SendCannotReportYourselfError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrCannotReportYourself,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -139,7 +139,7 @@ func SendCannotBanYourselfError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrCannotBanYourself,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -151,7 +151,7 @@ func SendCannotBeReportedError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrCannotBeReported,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -163,7 +163,7 @@ func SendCannotBeBannedError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrCannotBeBanned,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
@@ -299,7 +299,7 @@ func SendPermissionDenied(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
-			ErrorCode: http.StatusBadGateway,
+			ErrorCode: http.StatusBadRequest,
 			Message:   ErrPermissionDenied,
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
