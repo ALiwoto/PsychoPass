@@ -84,6 +84,7 @@ func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 	rejectCmd := handlers.NewCommand(ApproveCmd, rejectHandler)
 	rCmd := handlers.NewCommand(ApproveCmd, rejectHandler)
 	closeCmd := handlers.NewCommand(CloseCmd, closeHandler)
+	scanCb.AllowChannel = true
 	approveCmd.Triggers = triggers
 	aCmd.Triggers = triggers
 	rejectCmd.Triggers = triggers
