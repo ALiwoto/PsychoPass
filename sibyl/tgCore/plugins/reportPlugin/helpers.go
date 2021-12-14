@@ -80,9 +80,9 @@ func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 	sv.SendReportHandler = SendReportHandler
 	scanCb := handlers.NewCallback(scanCallBackQuery, scanCallBackResponse)
 	approveCmd := handlers.NewCommand(ApproveCmd, approveHandler)
-	aCmd := handlers.NewCommand(ApproveCmd, approveHandler)
-	rejectCmd := handlers.NewCommand(ApproveCmd, rejectHandler)
-	rCmd := handlers.NewCommand(ApproveCmd, rejectHandler)
+	aCmd := handlers.NewCommand(ACmd, approveHandler)
+	rejectCmd := handlers.NewCommand(RejectCmd, rejectHandler)
+	rCmd := handlers.NewCommand(RCmd, rejectHandler)
 	closeCmd := handlers.NewCommand(CloseCmd, closeHandler)
 	scanCb.AllowChannel = true
 	approveCmd.Triggers = triggers
