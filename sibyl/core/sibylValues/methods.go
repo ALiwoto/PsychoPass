@@ -44,8 +44,8 @@ func (t *Token) CanReport() bool {
 
 // CanBeReported returns true if the token with its current
 // permission can be reported to sibyl system or not.
-func (t *Token) CanBeReported() bool {
-	return t.Permission == NormalUser
+func (t *Token) CanBeReported(agentPerm UserPermission) bool {
+	return t.Permission > Enforcer || t.Permission > agentPerm
 }
 
 // CanBeBanned returns true if the token with its current
@@ -247,6 +247,72 @@ func (r *Report) GetTargetType() string {
 	return "User"
 }
 
+func (r *Report) IsPending() bool {
+	return r.ScanStatus == ScanPending
+}
+
+func (r *Report) IsApproved() bool {
+	return r.ScanStatus == ScanApproved
+}
+
+func (r *Report) IsRejected() bool {
+	return r.ScanStatus == ScanRejected
+}
+
+func (r *Report) IsClosed() bool {
+	return r.ScanStatus == ScanClosed
+}
+
+func (r *Report) CanBeChanged() bool {
+	return r.ScanStatus == ScanPending
+}
+
+func (r *Report) GetStatusString() string {
+	switch r.ScanStatus {
+	case ScanPending:
+		return "pending"
+	case ScanApproved:
+		return "approved"
+	case ScanRejected:
+		return "rejected"
+	case ScanClosed:
+		return "closed"
+	default:
+		return "unknown"
+	}
+}
+
+func (r *Report) Approve(agentId int64, newReason string) {
+	r.ScanStatus = ScanApproved
+	r.AgentDate = time.Now()
+	r.AgentId = agentId
+	if len(newReason) > 0 {
+		r.ReportReason = newReason
+	}
+}
+
+func (r *Report) Reject(agentId int64, reason string) {
+	r.ScanStatus = ScanRejected
+	r.AgentDate = time.Now()
+	r.AgentId = agentId
+	r.AgentReason = reason
+}
+
+func (r *Report) Close(agentId int64, reason string) {
+	r.ScanStatus = ScanClosed
+	r.AgentDate = time.Now()
+	r.AgentId = agentId
+	r.AgentReason = reason
+}
+
+func (r *Report) GetMaxMessage() int {
+	if r.ScanStatus == ScanPending {
+		return 512
+	} else {
+		return 128
+	}
+}
+
 func (r *Report) ParseAsMd() mdparser.WMarkDown {
 	md := mdparser.GetNormal("\u200D#SCAN:\n")
 	agentId := strconv.FormatInt(r.ReporterId, 10)
@@ -263,10 +329,11 @@ func (r *Report) ParseAsMd() mdparser.WMarkDown {
 		target = target[:22] + "..."
 	}
 
+	maxMessage := r.GetMaxMessage()
 	var theScanMessage string
-	if len(r.ReportMessage) > 512 {
+	if len(r.ReportMessage) > maxMessage {
 		// truncate the message if it's just too long
-		theScanMessage = r.ReportMessage[:512] + "..."
+		theScanMessage = r.ReportMessage[:maxMessage] + "..."
 	} else {
 		theScanMessage = r.ReportMessage
 	}
@@ -308,12 +375,17 @@ func (r *Report) ParseAsMd() mdparser.WMarkDown {
 	md.AppendMonoThis(r.GetTargetType())
 	md.AppendBoldThis("\n・Scan source: ")
 	md.AppendNormalThis(r.ScanSourceLink)
-	md.AppendBoldThis("\n・Date: ")
-	md.AppendMonoThis(r.ReportDate)
 	//md.AppendBoldThis("\n・Unique ID: ")
 	//md.AppendMonoThis(r.UniqueId)
 	md.AppendBoldThis("\n・Message: ")
 	md.AppendMonoThis(theScanMessage)
+
+	if !r.IsPending() && r.AgentUser != nil {
+		md.AppendNormalThis("\n\n Scan has been " + r.GetStatusString() + " by ")
+		md.AppendMentionThis(r.AgentUser.FirstName, r.AgentUser.Id)
+		md.AppendNormalThis(" at ").AppendMonoThis(r.AgentDate.Format("2006-01-02 15:04:05"))
+	}
+
 	return md
 }
 

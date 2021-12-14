@@ -5,5 +5,10 @@ const (
 	sepChar      = "_"
 	RejectData   = "r"
 	CloseData    = "close"
-	AcceptData   = "a"
+	ApproveData  = "a"
+	ApproveCmd   = "approve"
+	ACmd         = "a"
+	RejectCmd    = "reject"
+	RCmd         = "r"
+	CloseCmd     = "close"
 )

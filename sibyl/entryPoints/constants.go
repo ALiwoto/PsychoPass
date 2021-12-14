@@ -63,11 +63,11 @@ const (
 
 	// ErrNoSource is the error message that should be sent when the user
 	// has sent a request without providing any source.
-	ErrNoSource = "Report source is required for this action"
+	ErrNoSource = "Scan source is required for this action"
 
 	// ErrCannotBeReported is the error message that should be sent when the user
 	// has sent a report request for a user that cannot be reported.
-	ErrCannotBeReported = "User cannot be reported"
+	ErrCannotBeReported = "User cannot be scanned"
 
 	// ErrCannotBeReported is the error message that should be sent when the user
 	// has sent a report request for a user that cannot be reported.

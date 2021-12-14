@@ -12,6 +12,21 @@ const (
 )
 
 const (
+	// ScanPending is the status of a pending scan.
+	// it can be approved, rejected or closed.
+	ScanPending ScanStatus = iota
+	// ScanApproved is the status of an approved scan.
+	// the details of an approved scan cannot be changed anymore.
+	ScanApproved
+	// ScanRejected is the status of a rejected scan.
+	// the details of a rejected scan cannot be changed anymore.
+	ScanRejected
+	// ScanClosed is the status of a closed scan.
+	// the details of a closed scan cannot be changed anymore.
+	ScanClosed
+)
+
+const (
 	MarkDownV2          = "markdownv2"
 	OwnersTokenFileName = "owners.token"
 	AppealLogDateFormat = "02-01-2006 3:04PM"

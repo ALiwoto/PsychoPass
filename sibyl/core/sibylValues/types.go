@@ -4,6 +4,7 @@ import (
 	"time"
 
 	wc "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
+	"github.com/PaulSonOfLars/gotgbot/v2"
 )
 
 /*
@@ -23,6 +24,7 @@ import (
 */
 
 type UserPermission int
+type ScanStatus int
 type BanFlag string
 type ReportHandler func(r *Report)
 
@@ -111,16 +113,36 @@ type Token struct {
 }
 
 type Report struct {
-	UniqueId           string         `json:"unique_id" gorm:"primaryKey"`
-	ReporterId         int64          `json:"reporter_id"`
-	TargetUser         int64          `json:"target_user"`
-	IsBot              bool           `json:"is_bot"`
-	ReportDate         string         `json:"report_date"`
-	ReportReason       string         `json:"report_reason"`
-	ReportMessage      string         `json:"report_message"`
-	ScanSourceLink     string         `json:"scan_source_link"`
+	UniqueId       string `json:"unique_id" gorm:"primaryKey"`
+	ReporterId     int64  `json:"reporter_id"`
+	TargetUser     int64  `json:"target_user"`
+	IsBot          bool   `json:"is_bot"`
+	ReportDate     string `json:"report_date"`
+	ReportReason   string `json:"report_reason"`
+	ReportMessage  string `json:"report_message"`
+	ScanSourceLink string `json:"scan_source_link"`
+	// AgentId is the user id of the person who approved, rejected or closed the
+	// scan.
+	AgentId int64 `json:"agent_id"`
+	// AgentReason is the reason that agent used to reject or close the
+	// scan.
+	AgentReason string `json:"agent_reason"`
+	// AgentDate is the date that agent used to approve, reject or close the scan.
+	AgentDate time.Time `json:"agent_date"`
+	// ReporterPermission is the permission of the reporter.
 	ReporterPermission UserPermission `json:"reporter_permission"`
-	cacheDate          time.Time      `json:"-" gorm:"-" sql:"-"`
+	// ScanStatus is the status of this scan. it can either be approved, rejected or
+	// closed.
+	// please notice that only pending scans' details can be changed; if a
+	// scan is approved, rejected or closed, its details cannot be changed anymore.
+	ScanStatus ScanStatus `json:"scan_status"`
+	// AgentUser is the agent user who has clicked the approve, reject or close
+	// button (or sent the command).
+	AgentUser *gotgbot.User `json:"-" gorm:"-" sql:"-"`
+	// cacheDate is the date of this scan being cached in the memory.
+	// its for internal usage only; it shouldn't be present in json, gorm or sql
+	// operations.
+	cacheDate time.Time `json:"-" gorm:"-" sql:"-"`
 }
 
 // CrimeCoefficientRange is the range of crime coefficients.

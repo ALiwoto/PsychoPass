@@ -65,7 +65,7 @@ func ReportUserHandler(c *gin.Context) {
 
 	u, err := database.GetTokenFromId(id)
 	if err == nil && u != nil {
-		if !u.CanBeReported() {
+		if !u.CanBeReported(d.Permission) {
 			entry.SendCannotBeReportedError(c, OriginReport)
 			return
 		}
