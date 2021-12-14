@@ -98,7 +98,6 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		go pushScanToDatabase(scan)
 	case RejectData:
 		scan.Reject(token.UserId, "") /* no reason */
-		return ext.EndGroups
 	}
 
 	database.UpdateScan(scan)
