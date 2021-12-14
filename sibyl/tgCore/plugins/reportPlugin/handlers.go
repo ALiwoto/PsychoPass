@@ -160,7 +160,7 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	scan.Approve(token.UserId, newReason)
 	go pushScanToDatabase(scan)
 	database.UpdateScan(scan)
-	_, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+	_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 	})
@@ -217,7 +217,7 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	scan.Reject(token.UserId, newReason)
 	database.UpdateScan(scan)
-	_, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+	_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 	})
@@ -274,12 +274,12 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	scan.Close(token.UserId, newReason)
 	database.UpdateScan(scan)
-	_, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+	_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 	})
 
-	_, _ = message.ReplyToMessage.Delete(b)
+	_, _ = replied.Delete(b)
 
 	return ext.EndGroups
 }
