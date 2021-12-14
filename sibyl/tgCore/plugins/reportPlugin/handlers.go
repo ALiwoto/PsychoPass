@@ -50,7 +50,7 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	token, err := database.GetTokenFromId(tgUser.Id)
 	message := ctx.EffectiveMessage
 
-	if err != nil || token == nil || !token.CanTryChangePermission(true) {
+	if err != nil || token == nil || !token.CanBan() {
 		_, _ = ctx.CallbackQuery.Answer(b, &gotgbot.AnswerCallbackQueryOpts{
 			Text:      "This is not for you...",
 			ShowAlert: true,
