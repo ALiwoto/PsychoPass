@@ -14,7 +14,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 
 |     FLAG      | Coefficient Range |            Explanation            |       Action       |
 | :-----------: | :---------------: | :-------------------------------: | :----------------: |
-| Civilian      |      000-080      | Standard, clean user              |        NONE        |
+| Civilian      |      010-080      | Standard, clean user              |        NONE        |
 | Restored      |      081-100      | User has a history of past ban    |        NONE        |
 | Enforcer      |      101-150      | Has scan power & can be scanned   |   SCENARIO BASED   |
 | TROLLING      |      151-200      | Trolling                          |        MUTE        |
