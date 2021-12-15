@@ -13,12 +13,10 @@ func toGeneralInfoResult(t, agent *sv.Token) *GeneralInfoResult {
 		AssignedAt:     t.GetFormatedCreatedDate(),
 	}
 
-	if t.IsOwner() {
-		if agent.IsOwner() {
-			i.Permission = t.Permission
-		} else {
-			i.Permission = sv.Inspector
-		}
+	if t.IsOwner() && !agent.IsOwner() {
+		i.Permission = sv.Inspector
+	} else {
+		i.Permission = t.Permission
 	}
 
 	return i
