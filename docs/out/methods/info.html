@@ -48,6 +48,11 @@
     </a>
    </li>
    <li>
+    <a href="#getgeneralinfo">
+     /getGeneralInfo
+    </a>
+   </li>
+   <li>
     <a href="#checktoken">
      /checkToken
     </a>
@@ -249,6 +254,66 @@
                 <span class="nt">"is_bot"</span><span class="p">:</span> <span class="kc">false</span>
             <span class="p">}</span>
         <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">"error"</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+        
+</code></pre>
+  </div>
+  <hr/>
+  <h2 id="getgeneralinfo">
+   <code>
+    /getGeneralInfo
+   </code>
+   <a class="permalink" href="#getgeneralinfo">
+    ¶
+   </a>
+  </h2>
+  <p>
+   Gets info about an enforcer, inspector or owner
+  </p>
+  <h3>
+   URL Query Parameters
+  </h3>
+  <table>
+   <tr>
+    <th>
+     Key
+    </th>
+    <th>
+     Value
+    </th>
+   </tr>
+   <tr>
+    <td>
+     token
+    </td>
+    <td>
+     An enforcer, inspector or owner token to authorize this request
+    </td>
+   </tr>
+   <tr>
+    <td>
+     userid
+    </td>
+    <td>
+     User to get info about
+    </td>
+   </tr>
+  </table>
+  <h3>
+   Example response
+  </h3>
+  <div class="highlight">
+   <pre><span></span><code><span class="p">{</span>
+    <span class="nt">"success"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"result"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"user_id"</span><span class="p">:</span> <span class="mi">558772678</span><span class="p">,</span>
+        <span class="nt">"division"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">"assigned_by"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">"assigned_reason"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="nt">"assigned_at"</span><span class="p">:</span> <span class="s2">"2021-10-30 at 16:04:03"</span><span class="p">,</span>
+        <span class="nt">"permission"</span><span class="p">:</span> <span class="mi">1</span>
     <span class="p">},</span>
     <span class="nt">"error"</span><span class="p">:</span> <span class="kc">null</span>
 <span class="p">}</span>

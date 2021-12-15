@@ -23,6 +23,7 @@
             <li><a href="#getinfo">/getInfo</a></li>
             <li><a href="#getstats">/getStats</a></li>
             <li><a href="#getallbans">/getAllBans</a></li>
+            <li><a href="#getgeneralinfo">/getGeneralInfo</a></li>
             <li><a href="#checktoken">/checkToken</a></li>
         </ul>
 
@@ -141,7 +142,33 @@
         </div>
 
         <hr/>
-        
+
+        <h2 id="getgeneralinfo"><code>/getGeneralInfo</code> <a href="#getgeneralinfo" class="permalink">¶</a></h2>
+        <p>Gets info about an enforcer, inspector or owner</p>
+        <h3>URL Query Parameters</h3>
+        <table>
+            <tr><th>Key</th><th>Value</th></tr>
+            <tr><td>token</td><td>An enforcer, inspector or owner token to authorize this request</td></tr>
+            <tr><td>userid</td><td>User to get info about</td></tr>
+        </table>
+        <h3>Example response</h3>
+        <div class="highlightjson">
+{
+    "success": true,
+    "result": {
+        "user_id": 558772678,
+        "division": 0,
+        "assigned_by": 0,
+        "assigned_reason": "",
+        "assigned_at": "2021-10-30 at 16:04:03",
+        "permission": 1
+    },
+    "error": null
+}
+        </div>
+
+        <hr/>
+
         <h2 id="checktoken"><code>/checkToken</code> <a href="#checktoken" class="permalink">¶</a></h2>
         <p>Checks if a token is valid</p>
         <h3>URL Query Parameters</h3>
