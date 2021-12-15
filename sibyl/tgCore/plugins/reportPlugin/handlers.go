@@ -85,8 +85,7 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 			ShowAlert: true,
 			CacheTime: 5,
 		})
-		_, _ = message.EditText(b, message.Text, &gotgbot.EditMessageTextOpts{
-			Entities:              message.Entities,
+		_, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
 		})
 		return ext.EndGroups
@@ -163,8 +162,7 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	if !scan.IsPending() {
-		_, _ = replied.EditText(b, replied.Text, &gotgbot.EditMessageTextOpts{
-			Entities:              replied.Entities,
+		_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
 		})
 		return ext.EndGroups
@@ -229,8 +227,7 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	if !scan.IsPending() {
-		_, _ = replied.EditText(b, replied.Text, &gotgbot.EditMessageTextOpts{
-			Entities:              replied.Entities,
+		_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
 		})
 		return ext.EndGroups
@@ -294,8 +291,7 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	if !scan.IsPending() {
-		_, _ = replied.EditText(b, replied.Text, &gotgbot.EditMessageTextOpts{
-			Entities:              replied.Entities,
+		_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
 		})
 		return ext.EndGroups
