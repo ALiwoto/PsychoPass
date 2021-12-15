@@ -7,8 +7,7 @@ echo.
 echo Pulling latest version....
 git pull
 echo.
-echo Updating vendors ....
-go mod vendor
+go mod tidy
 echo.
 echo Building latest binary....
 go build
