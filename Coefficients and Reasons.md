@@ -36,7 +36,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | MALIMP  | impersonation, malimp, fake profile                                                         | 
 | NSFW    | porn, pornography, nsfw, cp                                                                 | 
 | Crypto  | btc, crypto, forex, trading, binary                                                         | 
-| MASSADD | spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding | 
+| MASSADD | spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding, spam-adding, mass-adding | 
 
 ### Formula ideas needed for civilian bs 
 We can use a weight formula that starts from 80 and deducts points for every good thing done. This same logic can also be given to the server itself but not saved into the DB, just for the assign command beautification.
