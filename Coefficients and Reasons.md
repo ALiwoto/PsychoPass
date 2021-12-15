@@ -32,7 +32,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 
 | FLAG    |                                Associated words list                                        |
 | :-----: | :-----------------------------------------------------------------------------------------: |
-| EVADE   | evade, banevade                                                                             | 
+| EVADE   | evade, banevade, alt, altaccount                                                            | 
 | MALIMP  | impersonation, malimp, fake profile                                                         | 
 | NSFW    | porn, pornography, nsfw, cp                                                                 | 
 | Crypto  | btc, crypto, forex, trading, binary                                                         | 
