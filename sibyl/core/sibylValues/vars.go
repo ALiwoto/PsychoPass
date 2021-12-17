@@ -39,7 +39,7 @@ var (
 
 // crime coefficient increasement ranges
 var (
-	RangeCivilian     = &CrimeCoefficientRange{0, 80}
+	RangeCivilian     = &CrimeCoefficientRange{10, 80}
 	RangeRestored     = &CrimeCoefficientRange{81, 100}
 	RangeEnforcer     = &CrimeCoefficientRange{101, 150}
 	RangeTrolling     = &CrimeCoefficientRange{151, 200}
@@ -56,7 +56,7 @@ var (
 
 var (
 
-	/// This commentented out data is outdated, see line 25 for updated ones. 
+	/// This commentented out data is outdated, see line 25 for updated ones.
 	// Range 0-100 (No bans) (Dominator Locked)
 	// Civilian     - 0-80
 	// Restored  - 81-100

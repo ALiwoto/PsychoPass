@@ -417,6 +417,25 @@ func (r *Report) IsExpired(d time.Duration) bool {
 
 //---------------------------------------------------------
 
+func (u *User) IsCCValid(t *Token) bool {
+	if u.Banned || t == nil {
+		return true
+	}
+
+	switch t.Permission {
+	case Owner, Inspector:
+		return u.CrimeCoefficient == 0
+	case Enforcer:
+		return RangeEnforcer.IsInRange(u.CrimeCoefficient)
+	case NormalUser:
+		return RangeCivilian.IsInRange(u.CrimeCoefficient)
+	}
+
+	// impossible to reach;
+	// added for backward compatibility.
+	return false
+}
+
 func (u *User) GetCacheDate() time.Time {
 	return u.cacheDate
 }
@@ -475,7 +494,12 @@ func (u *User) IncreaseCrimeCoefficientAuto() {
 }
 
 func (u *User) IncreaseCrimeCoefficientByPerm(p UserPermission) {
-	if p == Owner || p == Inspector || u.Banned {
+	if u.Banned {
+		return
+	}
+
+	if p == Owner || p == Inspector {
+		u.CrimeCoefficient = 0
 		return
 	}
 

@@ -19,30 +19,37 @@ func GetInfoHandler(c *gin.Context) {
 		return
 	}
 
-	d, err := database.GetTokenFromString(token)
-	if err != nil || d == nil {
+	agent, err := database.GetTokenFromString(token)
+	if err != nil || agent == nil {
 		entry.SendInvalidTokenError(c, OriginGetInfo)
 		return
 	}
 
-	id, err := strconv.ParseInt(userId, 10, 64)
-	if err != nil || sv.IsInvalidID(id) {
+	targetId, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil || sv.IsInvalidID(targetId) {
 		entry.SendInvalidUserIdError(c, OriginGetInfo)
 		return
 	}
 
-	if sv.IsForbiddenID(id) {
+	if sv.IsForbiddenID(targetId) {
 		entry.SendPermissionDenied(c, OriginGetInfo)
 		return
 	}
 
-	u, _ := database.GetUserFromId(id)
-	if u == nil {
+	target, _ := database.GetUserFromId(targetId)
+	if target == nil {
 		entry.SendUserNotFoundError(c, OriginGetInfo)
 		return
 	}
 
-	entry.SendResult(c, u)
+	targetToken, err := database.GetTokenFromId(targetId)
+	if err == nil && targetToken != nil {
+		if !target.IsCCValid(targetToken) {
+			database.UpdateUserCrimeCoefficientByPerm(target, targetToken.Permission)
+		}
+	}
+
+	entry.SendResult(c, target)
 }
 
 func GetAllBansHandler(c *gin.Context) {
