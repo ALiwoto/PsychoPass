@@ -27,9 +27,10 @@ const (
 )
 
 const (
-	MarkDownV2          = "markdownv2"
-	OwnersTokenFileName = "owners.token"
-	AppealLogDateFormat = "02-01-2006 3:04PM"
+	MarkDownV2            = "markdownv2"
+	AssociationScanPrefix = "AC-"
+	OwnersTokenFileName   = "owners.token"
+	AppealLogDateFormat   = "02-01-2006 3:04PM"
 )
 
 // Factor constants

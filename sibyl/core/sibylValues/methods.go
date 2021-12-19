@@ -842,7 +842,8 @@ func (m *MultiBanUserInfo) IsInvalid(by int64) bool {
 //---------------------------------------------------------
 
 func (m *MultiScanRawData) GenerateID() {
-	m.AssociationBanId = strconv.FormatInt(time.Now().Unix(), 34)
+	m.AssociationBanId =
+		AssociationScanPrefix + strconv.FormatInt(time.Now().Unix(), 34)
 }
 
 func (m *MultiScanRawData) SetCacheDate() {
