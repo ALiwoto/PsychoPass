@@ -174,6 +174,13 @@ func GetBaseChatIds() []int64 {
 	return nil
 }
 
+func GetADIds() []int64 {
+	if SibylConfig != nil {
+		return SibylConfig.AssaultDominators
+	}
+	return nil
+}
+
 func GetAppealLogChatIds() []int64 {
 	if SibylConfig != nil {
 		return SibylConfig.AppealLogs
