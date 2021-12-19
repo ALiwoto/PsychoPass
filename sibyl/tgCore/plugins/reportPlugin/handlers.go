@@ -42,6 +42,7 @@ func sendReportHandler(r *sv.Report) {
 }
 
 func sendMultiReportHandler(r *sv.MultiScanRawData) {
+
 }
 
 func scanCallBackQuery(cq *gotgbot.CallbackQuery) bool {

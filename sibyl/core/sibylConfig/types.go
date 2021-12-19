@@ -10,6 +10,10 @@ type SibylSystemConfig struct {
 	// DevUsers is the IDs of the owners.
 	DevUsers []int64 `section:"general" key:"dev_users"`
 
+	// AssaultDominators is the list of userbots known as
+	// "assault dominators".
+	AssaultDominators []int64 `section:"general" key:"assault_dominators"`
+
 	// Port is the http port that we should listen to
 	Port string `section:"general" key:"port" default:"8080"`
 
