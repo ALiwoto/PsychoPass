@@ -20,7 +20,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | TROLLING      |      151-200      | Trolling                          |        MUTE        |
 | SPAM          |      201-250      | Spam/Unwanted Promotion           |        MUTE        |
 | PSYCHOHAZARD  |      251-300      | Bulk banned due to some bad users |        MUTE        |        
-| SPAMBOT       |      301-350      | Crypto, trading scams, thotbot    | BAN + DEL Join MSG |
+| SCAM          |      301-350      | Crypto, trading scams, thotbot    | BAN + DEL Join MSG |
 | CUSTOM        |      351-400      | Any Custom reason                 |        BAN         |
 | NSFW          |      401-450      | Sending NSFW Content in SFW       |        BAN         |
 | EVADE         |      451-500      | Ban Evade using alts              |        MUTE        |
@@ -35,7 +35,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | EVADE   | evade, banevade, alt, altaccount, ban evasion                                               | 
 | MALIMP  | impersonation, malimp, fake profile                                                         | 
 | NSFW    | porn, pornography, nsfw, cp                                                                 | 
-| Crypto  | btc, crypto, forex, trading, binary                                                         | 
+| SCAM    | btc, crypto, forex, trading, binary, scambot                                                | 
 | MASSADD | spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding, spam-adding, mass-adding | 
 
 ### Formula ideas needed for civilian bs 
