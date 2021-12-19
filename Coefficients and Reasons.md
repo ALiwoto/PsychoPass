@@ -20,7 +20,7 @@ This readme contains the basics and understanding of Coefficients and ban levels
 | TROLLING      |      151-200      | Trolling                          |        MUTE        |
 | SPAM          |      201-250      | Spam/Unwanted Promotion           |        MUTE        |
 | PSYCHOHAZARD  |      251-300      | Bulk banned due to some bad users |        MUTE        |        
-| SCAM          |      301-350      | Crypto, trading scams, thotbot    | BAN + DEL Join MSG |
+| SPAMBOT       |      301-350      | Crypto, scams, thotbot            | BAN + DEL Join MSG |
 | CUSTOM        |      351-400      | Any Custom reason                 |        BAN         |
 | NSFW          |      401-450      | Sending NSFW Content in SFW       |        BAN         |
 | EVADE         |      451-500      | Ban Evade using alts              |        MUTE        |
@@ -30,12 +30,15 @@ This readme contains the basics and understanding of Coefficients and ban levels
 
 ### Trigger word aliases
 
-| FLAG    |                                Associated words list                                        |
-| :-----: | :-----------------------------------------------------------------------------------------: |
-| EVADE   | evade, banevade, alt, altaccount, ban evasion                                               | 
-| MALIMP  | impersonation, malimp, fake profile                                                         | 
-| NSFW    | porn, pornography, nsfw, cp                                                                 | 
-| SCAM    | btc, crypto, forex, trading, binary, scambot                                                | 
+| FLAG    |                                Associated words list                                                                  |
+| :-----: | :-------------------------------------------------------------------------------------------------------------------: |
+| TROLLING| trolling, fooling around, annoying, agitating                                                                         |
+| SPAM    | spam, spamming, flooding, promote, promoting, promotion                                                               |
+| EVADE   | evade, banevade, ban evade, ban-evade alt, altaccount, ban evasion, evading                                           | 
+| MALIMP  | impersonation, malimp, fake profile, impersonating, malicious impersonation, malicious-impersonation                  | 
+| NSFW    | porn, pornography, nsfw, cp, child porn, child-porn, porno, hentai                                                    | 
+| SPAMBOT | btc, crypto, forex, trading, binary, scambot, scam, scamming, stocks, market                                          | 
+| RAID    | raiding, raid, mass join, spam join, mass-join, mass joining, spam-join, bulk join, bulk-join                         | 
 | MASSADD | spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding, spam-adding, mass-adding | 
 
 ### Formula ideas needed for civilian bs 
