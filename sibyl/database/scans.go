@@ -20,6 +20,37 @@ func AddScan(scan *sv.Report) {
 	scanMapMutex.Unlock()
 }
 
+func AddMultiScan(data *sv.MultiScanRawData) {
+	if data == nil {
+		return
+	}
+
+	var scans []*sv.Report
+	var tmpScans *sv.Report
+	for _, current := range data.Users {
+		tmpScans = sv.NewReport(
+			current.Reason,
+			current.Message,
+			current.Source,
+			current.UserId,
+			data.ReporterId,
+			data.ReporterPermission,
+			current.IsBot,
+		)
+		scans = append(scans, tmpScans)
+	}
+
+	lockdb()
+	tx := SESSION.Begin()
+	tx.Create(scans)
+	tx.Commit()
+	unlockdb()
+	data.SetCacheDate()
+	associationScanMutex.Lock()
+	associationScanMap[data.AssociationBanId] = data
+	associationScanMutex.Unlock()
+}
+
 func GetScan(uniqueId string) *sv.Report {
 	if uniqueId == "" {
 		return nil

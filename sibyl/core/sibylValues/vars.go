@@ -10,11 +10,12 @@ import (
 )
 
 var (
-	HelperBot         *gotgbot.Bot
-	BotUpdater        *ext.Updater
-	RateLimiter       *ratelimiter.Limiter
-	SendReportHandler ReportHandler
-	ServerStartTime   time.Time
+	HelperBot              *gotgbot.Bot
+	BotUpdater             *ext.Updater
+	RateLimiter            *ratelimiter.Limiter
+	SendReportHandler      ReportHandler
+	SendMultiReportHandler MultiReportHandler
+	ServerStartTime        time.Time
 )
 
 var (

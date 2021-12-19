@@ -839,3 +839,15 @@ func (m *MultiBanUserInfo) IsInvalid(by int64) bool {
 }
 
 //---------------------------------------------------------
+
+func (m *MultiScanRawData) GenerateID() {
+	m.AssociationBanId = strconv.FormatInt(time.Now().Unix(), 34)
+}
+
+func (m *MultiScanRawData) SetCacheDate() {
+	m.cacheDate = time.Now()
+}
+
+func (m *MultiScanRawData) IsExpired(d time.Duration) bool {
+	return time.Since(m.cacheDate) > d
+}

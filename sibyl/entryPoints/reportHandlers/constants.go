@@ -1,9 +1,15 @@
 package reportHandlers
 
 const (
-	OriginReport = "Report"
+	OriginReport    = "Report"
+	OriginMultiScan = "MultiScan"
 )
 
 const (
-	MessageReported = "User has been reported"
+	MaxMultiUsers = 50
+)
+
+const (
+	MessageReported          = "User has been reported"
+	MessageApplyingMultiScan = "Applying your multi-scan request in background"
 )

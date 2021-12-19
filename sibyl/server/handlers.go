@@ -65,7 +65,10 @@ func LoadHandlers() {
 	bindHandler(infoHandlers.CheckTokenHandler, "checkToken")
 
 	// report handlers
-	bindHandler(reportHandlers.ReportUserHandler, "report", "reportUser")
+	bindHandler(reportHandlers.ReportUserHandler, "report", "reportUser", "scan", "scanUser")
+
+	// multiReport handlers
+	bindPostHandler(reportHandlers.MultiReportHandler, "multiReport", "multiScan")
 
 	bindNoRoot()
 }
@@ -92,7 +95,7 @@ func loadDocs() {
 }
 
 func addHeaders() {
-	ServerEngine.Use(gin.HandlerFunc(func (ctx *gin.Context) {
+	ServerEngine.Use(gin.HandlerFunc(func(ctx *gin.Context) {
 		ctx.Header("Content-Security-Policy", "default-src 'none'; style-src 'self'")
 		ctx.Header("Access-Control-Allow-Origin", "*")
 	}))
@@ -118,7 +121,11 @@ func noRootHandler(c *gin.Context) {
 	case "multiban", "addmultiban":
 		banHandlers.MultiBanHandler(c)
 	case "multiunban", "removemultiban":
+		if c.Request.Method != http.MethodPost {
+			goto redirect_req
+		}
 		banHandlers.MultiUnBanHandler(c)
+
 	case "deleteban", "removeban", "revertban", "remban":
 		banHandlers.RemoveBanHandler(c)
 	case "getinfo", "fetchinfo":
@@ -133,8 +140,18 @@ func noRootHandler(c *gin.Context) {
 		infoHandlers.GetStatsHandler(c)
 	case "report", "reportuser":
 		reportHandlers.ReportUserHandler(c)
+	case "multireport", "multiscan":
+		if c.Request.Method != http.MethodPost {
+			goto redirect_req
+		}
+		reportHandlers.MultiReportHandler(c)
 	default:
 		c.Redirect(http.StatusPermanentRedirect, "/docs/")
 		return
 	}
+
+	return
+
+redirect_req: /* redirect requests to /docs */
+	c.Redirect(http.StatusPermanentRedirect, "/docs/")
 }

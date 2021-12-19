@@ -107,6 +107,14 @@ func cleanMaps() {
 			}
 		}
 		scanMapMutex.Unlock()
+
+		associationScanMutex.Lock()
+		for key, value := range associationScanMap {
+			if value == nil || value.IsExpired(mtime) {
+				delete(scanDbMap, key)
+			}
+		}
+		associationScanMutex.Unlock()
 	}
 }
 

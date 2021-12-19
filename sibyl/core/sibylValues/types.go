@@ -27,6 +27,7 @@ type UserPermission int
 type ScanStatus int
 type BanFlag string
 type ReportHandler func(r *Report)
+type MultiReportHandler func(data *MultiScanRawData)
 
 type StatValue struct {
 	BannedCount          int64     `json:"banned_count"`
@@ -136,6 +137,8 @@ type Report struct {
 	// please notice that only pending scans' details can be changed; if a
 	// scan is approved, rejected or closed, its details cannot be changed anymore.
 	ScanStatus ScanStatus `json:"scan_status"`
+	// AssociationBanId is empty is the scan is not an association scan.
+	AssociationBanId string `json:"association_ban_id"`
 	// AgentUser is the agent user who has clicked the approve, reject or close
 	// button (or sent the command).
 	AgentUser *gotgbot.User `json:"-" gorm:"-" sql:"-"`
@@ -166,6 +169,24 @@ type MultiBanRawData struct {
 
 type MultiUnBanRawData struct {
 	Users []int64 `json:"users"`
+}
+
+type MultiScanUserInfo struct {
+	UserId  int64  `json:"user_id"`
+	Reason  string `json:"reason"`
+	Message string `json:"message"`
+	Source  string `json:"source"`
+	IsBot   bool   `json:"is_bot"`
+}
+
+type MultiScanRawData struct {
+	AssociationBanId string              `json:"-"`
+	Users            []MultiScanUserInfo `json:"users"`
+	// ReporterPermission is the permission of the person who has sent this scan.
+	// ignored by json.
+	ReporterPermission UserPermission `json:"-"`
+	ReporterId         int64          `json:"-"`
+	cacheDate          time.Time      `json:"-" gorm:"-" sql:"-"`
 }
 
 type Triggers struct {

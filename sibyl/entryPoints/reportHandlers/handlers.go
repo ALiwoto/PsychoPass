@@ -1,6 +1,7 @@
 package reportHandlers
 
 import (
+	"encoding/json"
 	"strconv"
 
 	"github.com/ALiwoto/StrongStringGo/strongStringGo"
@@ -27,13 +28,13 @@ func ReportUserHandler(c *gin.Context) {
 		return
 	}
 
-	d, err := database.GetTokenFromString(token)
-	if err != nil || d == nil {
+	agent, err := database.GetTokenFromString(token)
+	if err != nil || agent == nil {
 		entry.SendInvalidTokenError(c, OriginReport)
 		return
 	}
 
-	if !d.CanReport() {
+	if !agent.CanReport() {
 		entry.SendPermissionDenied(c, OriginReport)
 		return
 	}
@@ -65,17 +66,75 @@ func ReportUserHandler(c *gin.Context) {
 
 	u, err := database.GetTokenFromId(id)
 	if err == nil && u != nil {
-		if !u.CanBeReported(d.Permission) {
+		if !u.CanBeReported(agent.Permission) {
 			entry.SendCannotBeReportedError(c, OriginReport)
 			return
 		}
 	}
 
 	if sv.SendReportHandler != nil {
-		r := sv.NewReport(reason, msg, msgLink, id, by, d.Permission, isBot)
+		r := sv.NewReport(
+			reason,
+			msg,
+			msgLink,
+			id,
+			by,
+			agent.Permission,
+			isBot,
+		)
 		database.AddScan(r)
 		go sv.SendReportHandler(r)
 	}
 
 	entry.SendResult(c, MessageReported)
+}
+
+func MultiReportHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginMultiScan)
+		return
+	}
+
+	agent, err := database.GetTokenFromString(token)
+	if err != nil || agent == nil {
+		entry.SendInvalidTokenError(c, OriginMultiScan)
+		return
+	}
+
+	if !agent.CanBan() {
+		entry.SendPermissionDenied(c, OriginMultiScan)
+		return
+	}
+
+	var rawData []byte
+	multiScanData := new(sv.MultiScanRawData)
+
+	rawData, err = c.GetRawData()
+	if err != nil || len(rawData) < 2 {
+		entry.SendNoDataError(c, OriginMultiScan)
+		return
+	}
+
+	err = json.Unmarshal(rawData, multiScanData)
+	if err != nil {
+		entry.SendBadDataError(c, OriginMultiScan)
+		return
+	}
+
+	if multiScanData != nil && len(multiScanData.Users) > 0 {
+		if len(multiScanData.Users) > MaxMultiUsers {
+			entry.SendTooManyError(c, OriginMultiScan)
+			return
+		}
+		if sv.SendMultiReportHandler != nil {
+			multiScanData.ReporterPermission = agent.Permission
+			multiScanData.ReporterId = agent.UserId
+			// prevent from spawning new goroutine if there is no handler
+			go applyMultiScan(multiScanData)
+		}
+	}
+
+	entry.SendResult(c, MessageApplyingMultiScan)
 }
