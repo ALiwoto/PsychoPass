@@ -31,7 +31,7 @@ func AddMultiScan(data *sv.MultiScanRawData) {
 		tmpScans = sv.NewReport(
 			current.Reason,
 			current.Message,
-			current.Source,
+			data.Source,
 			current.UserId,
 			data.ReporterId,
 			data.ReporterPermission,
@@ -49,6 +49,62 @@ func AddMultiScan(data *sv.MultiScanRawData) {
 	associationScanMutex.Lock()
 	associationScanMap[data.AssociationBanId] = data
 	associationScanMutex.Unlock()
+}
+
+func GetMultiScan(associationBanId string) *sv.MultiScanRawData {
+	associationScanMutex.Lock()
+	data := associationScanMap[associationBanId]
+	associationScanMutex.Unlock()
+	if data != nil {
+		return data
+	}
+
+	var scans []*sv.Report
+	lockdb()
+	SESSION.Model(modelScan).Where("association_ban_id = ?", associationBanId).Find(&scans)
+	unlockdb()
+
+	if len(scans) == 0 {
+		return nil
+	}
+
+	data = toMultiScanRawData(scans)
+	associationScanMutex.Lock()
+	associationScanMap[associationBanId] = data
+	associationScanMutex.Unlock()
+	return data
+}
+
+func toMultiScanRawData(scans []*sv.Report) *sv.MultiScanRawData {
+	data := &sv.MultiScanRawData{
+		Status: scans[0].ScanStatus,
+	}
+
+	for _, current := range scans {
+		data.Users = append(data.Users, sv.MultiScanUserInfo{
+			UserId:  current.TargetUser,
+			Reason:  current.ReportReason,
+			Message: current.ReportMessage,
+			IsBot:   current.IsBot,
+		})
+
+		if data.ReporterId == 0 && current.ReporterId != 0 {
+			data.ReporterId = current.ReporterId
+		}
+
+		if data.ReporterPermission == 0 && current.ReporterPermission != 0 {
+			data.ReporterPermission = current.ReporterPermission
+		}
+
+		if data.Source == "" && current.ScanSourceLink != "" {
+			data.Source = current.ScanSourceLink
+		}
+
+	}
+
+	data.SetCacheDate()
+
+	return data
 }
 
 func GetScan(uniqueId string) *sv.Report {

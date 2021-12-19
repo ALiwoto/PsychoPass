@@ -231,6 +231,7 @@ func (r *Report) getNameById(id int64) string {
 func (r *Report) getReporterName() string {
 	return r.getNameById(r.ReporterId)
 }
+
 func (r *Report) getTargetName() string {
 	return r.getNameById(r.TargetUser)
 }
@@ -850,4 +851,116 @@ func (m *MultiScanRawData) SetCacheDate() {
 
 func (m *MultiScanRawData) IsExpired(d time.Duration) bool {
 	return time.Since(m.cacheDate) > d
+}
+
+func (m *MultiScanRawData) getNameById(id int64) string {
+	chat, err := HelperBot.GetChat(id)
+	if err != nil || chat == nil {
+		return ""
+	}
+	if len(chat.FirstName) > 0 {
+		return chat.FirstName
+	}
+	if len(chat.LastName) > 0 {
+		return chat.LastName
+	}
+	return chat.Title
+}
+
+func (m *MultiScanRawData) getReporterName() string {
+	return m.getNameById(m.ReporterId)
+}
+
+func (m *MultiScanRawData) GetSingleReason() string {
+	for _, current := range m.Users {
+		if current.Reason != "" {
+			if len(current.Reason) > 256 {
+				return current.Reason[:256]
+			}
+
+			return current.Reason
+		}
+	}
+
+	return ""
+}
+
+func (m *MultiScanRawData) IsPending() bool {
+	return m.Status == ScanPending
+}
+
+func (m *MultiScanRawData) IsApproved() bool {
+	return m.Status == ScanApproved
+}
+
+func (m *MultiScanRawData) IsRejected() bool {
+	return m.Status == ScanRejected
+}
+
+func (m *MultiScanRawData) IsClosed() bool {
+	return m.Status == ScanClosed
+}
+
+func (m *MultiScanRawData) CanBeChanged() bool {
+	return m.Status == ScanPending
+}
+
+func (m *MultiScanRawData) GetStatusString() string {
+	switch m.Status {
+	case ScanPending:
+		return "pending"
+	case ScanApproved:
+		return "approved"
+	case ScanRejected:
+		return "rejected"
+	case ScanClosed:
+		return "closed"
+	default:
+		return "unknown"
+	}
+}
+
+func (m *MultiScanRawData) ParseAsMd() mdparser.WMarkDown {
+	md := mdparser.GetNormal("#SCAN:\n")
+	agentId := strconv.FormatInt(m.ReporterId, 10)
+	agent := m.getReporterName()
+	if len(agent) > 22 {
+		// truncate the name if it's just too long
+		agent = agent[:22] + "..."
+	}
+
+	var theReason = m.GetSingleReason()
+
+	md.AppendBoldThis("・" + m.ReporterPermission.GetNormString() + ": ")
+
+	if len(agent) != 0 {
+		md.AppendMentionThis(agent, m.ReporterId)
+		md.AppendNormalThis(" [").AppendMonoThis(agentId).AppendNormalThis("]")
+	} else {
+		md.AppendMentionThis("\u200D", m.ReporterId)
+		md.AppendMonoThis(agentId)
+	}
+
+	md.AppendBoldThis("\n・Scan reason: ")
+	md.AppendMonoThis(theReason)
+	md.AppendBoldThis("\n・Users: \n")
+
+	for _, current := range m.Users {
+		md.AppendMonoThis(strconv.FormatInt(current.UserId, 10) + "\n")
+	}
+
+	md.AppendBoldThis("\n・Date: ")
+	md.AppendMonoThis(time.Now().Format("2006-01-02 15:04:05"))
+	md.AppendBoldThis("\n・Scan source: ")
+	md.AppendNormalThis(m.Source)
+	//md.AppendBoldThis("\n・Unique ID: ")
+	//md.AppendMonoThis(r.UniqueId)
+
+	if !m.IsPending() && m.AgentUser != nil {
+		md.AppendNormalThis("\n\n Scan has been " + m.GetStatusString() + " by ")
+		md.AppendMentionThis(m.AgentUser.FirstName, m.AgentUser.Id)
+		md.AppendNormalThis(" at ").AppendMonoThis(m.AgentDate.Format("2006-01-02 15:04:05"))
+	}
+
+	return md
 }

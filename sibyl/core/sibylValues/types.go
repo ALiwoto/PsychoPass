@@ -159,18 +159,22 @@ type MultiScanUserInfo struct {
 	UserId  int64  `json:"user_id"`
 	Reason  string `json:"reason"`
 	Message string `json:"message"`
-	Source  string `json:"source"`
 	IsBot   bool   `json:"is_bot"`
 }
 
 type MultiScanRawData struct {
 	AssociationBanId string              `json:"-"`
 	Users            []MultiScanUserInfo `json:"users"`
+	Source           string              `json:"source"`
+	GroupLink        string              `json:"group_link"`
 	// ReporterPermission is the permission of the person who has sent this scan.
 	// ignored by json.
 	ReporterPermission UserPermission `json:"-"`
+	AgentUser          *gotgbot.User  `json:"-"`
+	AgentDate          time.Time      `json:"-"`
 	ReporterId         int64          `json:"-"`
-	cacheDate          time.Time      `json:"-" gorm:"-" sql:"-"`
+	Status             ScanStatus     `json:"-"`
+	cacheDate          time.Time      `json:"-" `
 }
 
 type Triggers struct {
