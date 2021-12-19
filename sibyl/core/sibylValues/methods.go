@@ -921,7 +921,7 @@ func (m *MultiScanRawData) GetStatusString() string {
 }
 
 func (m *MultiScanRawData) ParseAsMd() mdparser.WMarkDown {
-	md := mdparser.GetNormal("#SCAN:\n")
+	md := mdparser.GetNormal("#ASSOCIATION_SCAN:\n")
 	agentId := strconv.FormatInt(m.ReporterId, 10)
 	agent := m.getReporterName()
 	if len(agent) > 22 {
