@@ -11,7 +11,7 @@ import (
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 )
 
-func SendReportHandler(r *sv.Report) {
+func sendReportHandler(r *sv.Report) {
 	// prevent from panic xD
 	if sv.HelperBot == nil {
 		return
@@ -39,6 +39,9 @@ func SendReportHandler(r *sv.Report) {
 	for _, chat := range bases {
 		sendReportMessage(chat, text, opts)
 	}
+}
+
+func sendMultiReportHandler(r *sv.MultiScanRawData) {
 }
 
 func scanCallBackQuery(cq *gotgbot.CallbackQuery) bool {

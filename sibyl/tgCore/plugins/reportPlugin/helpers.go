@@ -77,7 +77,9 @@ func pushScanToDatabase(scan *sv.Report) {
 }
 
 func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
-	sv.SendReportHandler = SendReportHandler
+	sv.SendReportHandler = sendReportHandler
+	sv.SendMultiReportHandler = sendMultiReportHandler
+
 	scanCb := handlers.NewCallback(scanCallBackQuery, scanCallBackResponse)
 	approveCmd := handlers.NewCommand(ApproveCmd, approveHandler)
 	aCmd := handlers.NewCommand(ACmd, approveHandler)
