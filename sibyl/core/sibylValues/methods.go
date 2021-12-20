@@ -501,6 +501,18 @@ func (u *User) IsCCValid(t *Token) bool {
 	return false
 }
 
+func (u *User) IsPastBanned() bool {
+	return RangeRestored.IsInRange(u.CrimeCoefficient)
+}
+
+func (u *User) IsCivilian() bool {
+	return RangeCivilian.IsInRange(u.CrimeCoefficient)
+}
+
+func (u *User) IsRestored() bool {
+	return RangeRestored.IsInRange(u.CrimeCoefficient)
+}
+
 func (u *User) GetCacheDate() time.Time {
 	return u.cacheDate
 }

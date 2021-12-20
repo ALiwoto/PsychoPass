@@ -49,6 +49,11 @@ func GetInfoHandler(c *gin.Context) {
 		}
 	}
 
+	if shouldSendNotFound(targetToken, target) {
+		entry.SendUserNotFoundError(c, OriginGetInfo)
+		return
+	}
+
 	entry.SendResult(c, target)
 }
 
