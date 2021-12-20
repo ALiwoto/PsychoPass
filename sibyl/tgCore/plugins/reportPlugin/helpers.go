@@ -45,9 +45,9 @@ func pushScanToDatabase(scan *sv.Report) {
 	var count int
 	if u != nil && err == nil {
 		if u.Banned {
-			if scan.IsBot != u.IsBot {
+			if scan.TargetType != u.TargetType {
 				// check both conditions; if they don't match, update the field.
-				u.IsBot = scan.IsBot
+				u.TargetType = scan.TargetType
 			}
 			u.BannedBy = scan.ReporterId
 			u.Message = scan.ReportMessage
@@ -63,14 +63,14 @@ func pushScanToDatabase(scan *sv.Report) {
 	}
 
 	info := &database.BanInfo{
-		UserID:   scan.TargetUser,
-		Adder:    scan.ReporterId,
-		Reason:   scan.ReportReason,
-		SrcGroup: "", /* TODO */
-		Src:      scan.ScanSourceLink,
-		Message:  scan.ReportMessage,
-		IsBot:    scan.IsBot,
-		Count:    count,
+		UserID:     scan.TargetUser,
+		Adder:      scan.ReporterId,
+		Reason:     scan.ReportReason,
+		SrcGroup:   "", /* TODO */
+		Src:        scan.ScanSourceLink,
+		Message:    scan.ReportMessage,
+		TargetType: scan.TargetType,
+		Count:      count,
 	}
 
 	database.AddBan(info)

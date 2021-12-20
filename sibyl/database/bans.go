@@ -15,7 +15,7 @@ func AddBan(info *BanInfo) *sv.User {
 		BannedBy:     info.Adder,
 		BanSourceUrl: info.Src,
 		SourceGroup:  info.SrcGroup,
-		IsBot:        info.IsBot,
+		TargetType:   info.TargetType,
 		BanCount:     info.Count,
 	}
 
@@ -28,14 +28,14 @@ func AddBan(info *BanInfo) *sv.User {
 func AddBanByInfo(info *sv.MultiBanUserInfo, adder int64, count int) *sv.User {
 	return AddBan(
 		&BanInfo{
-			UserID:   info.UserId,
-			Adder:    adder,
-			Reason:   info.Reason,
-			SrcGroup: info.SourceGroup,
-			Message:  info.Message,
-			Src:      info.Source,
-			IsBot:    info.IsBot,
-			Count:    count,
+			UserID:     info.UserId,
+			Adder:      adder,
+			Reason:     info.Reason,
+			SrcGroup:   info.SourceGroup,
+			Message:    info.Message,
+			Src:        info.Source,
+			TargetType: info.TargetType,
+			Count:      count,
 		},
 	)
 }

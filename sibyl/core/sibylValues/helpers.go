@@ -10,14 +10,14 @@ import (
 )
 
 func NewReport(reason, message, link string, target, reporter int64,
-	reporterPerm UserPermission, isBot bool) *Report {
+	reporterPerm UserPermission, targetType EntityType) *Report {
 
 	r := &Report{
 		ReportReason:       reason,
 		ReportMessage:      message,
 		ScanSourceLink:     link,
-		IsBot:              isBot,
 		TargetUser:         target,
+		TargetType:         targetType,
 		ReporterId:         reporter,
 		ReportDate:         timeUtils.GenerateCurrentDateTime(),
 		ReporterPermission: reporterPerm,

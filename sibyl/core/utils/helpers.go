@@ -160,6 +160,25 @@ func GetParam(c *gin.Context, key ...string) string {
 	return result
 }
 
+func GetEntityType(c *gin.Context) sv.EntityType {
+	t := GetParam(c, "type", "entityType", "entity-type")
+	if t == "" {
+		return sv.EntityTypeUser
+	}
+
+	myInt, err := strconv.Atoi(t)
+	if err != nil {
+		return sv.EntityTypeUser
+	}
+
+	eType := sv.EntityType(myInt)
+	if eType.IsInvalid() {
+		return sv.EntityTypeUser
+	}
+
+	return eType
+}
+
 // getParam returns the value of the param with the given key.
 // If the key is not found, it returns an empty string.
 // This function will first check the key in header, then url query.

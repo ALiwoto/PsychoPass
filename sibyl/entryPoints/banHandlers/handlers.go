@@ -23,7 +23,7 @@ func AddBanHandler(c *gin.Context) {
 	srcUrl := utils.GetParam(c, "srcUrl", "source",
 		"source-url", "ban-src", "src")
 	srcGroup := utils.GetParam(c, "source-group", "src-group")
-	isBot := ws.ToBool(utils.GetParam(c, "is-bot", "isBot", "bot"))
+	targetType := utils.GetEntityType(c)
 
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginAddBan)
@@ -78,9 +78,9 @@ func AddBanHandler(c *gin.Context) {
 			// make a copy of the current struct value.
 			pre := *u
 			by := hashing.GetIdFromToken(token)
-			if isBot != u.IsBot {
+			if targetType != u.TargetType {
 				// check both conditions; if they don't match, update the field.
-				u.IsBot = isBot
+				u.TargetType = targetType
 			}
 			u.BannedBy = by
 			u.Message = banMsg
@@ -100,14 +100,14 @@ func AddBanHandler(c *gin.Context) {
 	}
 
 	info := &database.BanInfo{
-		UserID:   id,
-		Adder:    by,
-		Reason:   banReason,
-		SrcGroup: srcGroup,
-		Message:  banMsg,
-		Src:      srcUrl,
-		IsBot:    isBot,
-		Count:    count,
+		UserID:     id,
+		Adder:      by,
+		Reason:     banReason,
+		SrcGroup:   srcGroup,
+		Message:    banMsg,
+		Src:        srcUrl,
+		TargetType: targetType,
+		Count:      count,
 	}
 	u = database.AddBan(info)
 

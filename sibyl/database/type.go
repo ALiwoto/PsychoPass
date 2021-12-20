@@ -1,12 +1,14 @@
 package database
 
+import sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+
 type BanInfo struct {
-	UserID,
-	Adder int64
-	Reason,
-	SrcGroup,
-	Message,
-	Src string
-	IsBot bool
-	Count int
+	UserID     int64
+	Adder      int64
+	Reason     string
+	SrcGroup   string
+	Message    string
+	Src        string
+	TargetType sv.EntityType
+	Count      int
 }

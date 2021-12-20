@@ -17,11 +17,11 @@ func TestGetRawMultiBanSampleData(t *testing.T) {
 	var tmpInfo *sibylValues.MultiBanUserInfo
 	for i := 0; i < 10; i++ {
 		tmpInfo = &sibylValues.MultiBanUserInfo{
-			UserId:  int64(i + 100),
-			Reason:  "spam and raid",
-			Message: "https://t.me/telegram/505050",
-			Source:  "https://t.me/src/5123",
-			IsBot:   (i%2 == 0),
+			UserId:     int64(i + 100),
+			Reason:     "spam and raid",
+			Message:    "https://t.me/telegram/505050",
+			Source:     "https://t.me/src/5123",
+			TargetType: sibylValues.EntityType(i % 2),
 		}
 		data.Users = append(data.Users, *tmpInfo)
 	}
@@ -42,11 +42,11 @@ func GetRawMultiBanSampleData(t *testing.T) []byte {
 	var tmpInfo *sibylValues.MultiBanUserInfo
 	for i := 0; i < 10; i++ {
 		tmpInfo = &sibylValues.MultiBanUserInfo{
-			UserId:  int64(i + 100),
-			Reason:  "spam and raid",
-			Message: "https://t.me/telegram/505050",
-			Source:  "https://t.me/src/5123",
-			IsBot:   (i%2 == 0),
+			UserId:     int64(i + 100),
+			Reason:     "spam and raid",
+			Message:    "https://t.me/telegram/505050",
+			Source:     "https://t.me/src/5123",
+			TargetType: sibylValues.EntityType(i % 2),
 		}
 		data.Users = append(data.Users, *tmpInfo)
 	}

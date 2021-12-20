@@ -35,7 +35,7 @@ func AddMultiScan(data *sv.MultiScanRawData) {
 			current.UserId,
 			data.ReporterId,
 			data.ReporterPermission,
-			current.IsBot,
+			current.TargetType,
 		)
 		scans = append(scans, tmpScans)
 	}
@@ -61,7 +61,9 @@ func GetMultiScan(associationBanId string) *sv.MultiScanRawData {
 
 	var scans []*sv.Report
 	lockdb()
-	SESSION.Model(modelScan).Where("association_ban_id = ?", associationBanId).Find(&scans)
+	SESSION.Model(modelScan).Where(
+		"association_ban_id = ?", associationBanId,
+	).Find(&scans)
 	unlockdb()
 
 	if len(scans) == 0 {
@@ -82,10 +84,10 @@ func toMultiScanRawData(scans []*sv.Report) *sv.MultiScanRawData {
 
 	for _, current := range scans {
 		data.Users = append(data.Users, sv.MultiScanUserInfo{
-			UserId:  current.TargetUser,
-			Reason:  current.ReportReason,
-			Message: current.ReportMessage,
-			IsBot:   current.IsBot,
+			UserId:     current.TargetUser,
+			Reason:     current.ReportReason,
+			Message:    current.ReportMessage,
+			TargetType: current.TargetType,
 		})
 
 		if data.ReporterId == 0 && current.ReporterId != 0 {

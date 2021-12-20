@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	entry "github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints"
 
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
@@ -21,7 +20,7 @@ func ReportUserHandler(c *gin.Context) {
 	msg := utils.GetParam(c, "message", "msg", "reportMsg", "report-msg")
 	msgLink := utils.GetParam(c, "src", "source", "report-src",
 		"message-src", "msg-src")
-	isBot := strongStringGo.ToBool(utils.GetParam(c, "is-bot", "isBot", "bot"))
+	targetType := utils.GetEntityType(c)
 
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginReport)
@@ -80,7 +79,7 @@ func ReportUserHandler(c *gin.Context) {
 			id,
 			by,
 			agent.Permission,
-			isBot,
+			targetType,
 		)
 		database.AddScan(r)
 		go sv.SendReportHandler(r)

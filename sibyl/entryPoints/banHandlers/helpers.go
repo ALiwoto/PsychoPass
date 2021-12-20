@@ -36,9 +36,9 @@ func applyMultiBan(data *sv.MultiBanRawData, by int64) {
 		var count int
 		if tmpUser != nil && err == nil {
 			if tmpUser.Banned {
-				if current.IsBot != tmpUser.IsBot {
+				if current.TargetType != tmpUser.TargetType {
 					// check both conditions; if they don't match, update the field.
-					tmpUser.IsBot = current.IsBot
+					tmpUser.TargetType = current.TargetType
 				}
 				tmpUser.BannedBy = by
 				tmpUser.Message = current.Message

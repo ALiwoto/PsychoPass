@@ -1,5 +1,8 @@
 package sibylValues
 
+// possible values for type `UserPermission`.
+// please notice that any other value for this type, is considered
+// as "invalid" by API.
 const (
 	// NormalUser Can read from the Sibyl System.
 	NormalUser UserPermission = iota
@@ -11,6 +14,9 @@ const (
 	Owner
 )
 
+// possible values for type `ScanStatus`.
+// please notice that any other value for this type, is considered
+// as "invalid" by API.
 const (
 	// ScanPending is the status of a pending scan.
 	// it can be approved, rejected or closed.
@@ -24,6 +30,30 @@ const (
 	// ScanClosed is the status of a closed scan.
 	// the details of a closed scan cannot be changed anymore.
 	ScanClosed
+)
+
+const (
+	// EntityTypeUser represents a normal user while being scanned.
+	// please notice that "being normal", doesn't necessarily mean
+	// not being criminal.
+	EntityTypeUser EntityType = iota
+	// EntityTypeBot represents an account which is considered as a bot.
+	// as API has no idea what is a "bot account", the value "is_bot"
+	// should be set by the enforcer/inspector while sending requests
+	// to sibyl.
+	EntityTypeBot
+	// EntityTypeAdmin represents an account which is considered as an admin
+	// in a psychohazard event. it's completely up to the person who is scanning
+	// to decide what is an admin account.
+	EntityTypeAdmin
+	// EntityTypeOwner represents an account which is considered as an owner
+	// in a psychohazard event. it's completely up to the person who is scanning
+	// to decide what is an owner account.
+	EntityTypeOwner
+	// EntityTypeChannel represents an entity which is considered as a channel.
+	EntityTypeChannel
+	// EntityTypeGroup represents an entity which is considered as a group.
+	EntityTypeGroup
 )
 
 const (
@@ -52,7 +82,7 @@ const (
 )
 
 /*
-	RangeCivilian     = &CrimeCoefficientRange{0, 080}
+	RangeCivilian     = &CrimeCoefficientRange{10, 080}
 	RangeRestored     = &CrimeCoefficientRange{81, 100}
 	RangeEnforcer     = &CrimeCoefficientRange{101, 150}
 	RangeTROLLING     = &CrimeCoefficientRange{151, 200}

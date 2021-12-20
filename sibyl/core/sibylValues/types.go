@@ -9,6 +9,7 @@ import (
 
 type UserPermission int
 type ScanStatus int
+type EntityType int
 type BanFlag string
 type ReportHandler func(r *Report)
 type MultiReportHandler func(data *MultiScanRawData)
@@ -40,12 +41,12 @@ type User struct {
 	BanSourceUrl     string      `json:"ban_source_url"`
 	Date             time.Time   `json:"-"`
 	BannedBy         int64       `json:"banned_by"`
+	TargetType       EntityType  `json:"target_type"`
 	CrimeCoefficient int         `json:"crime_coefficient"`
 	BanDate          string      `json:"date" gorm:"-" sql:"-"`
 	SourceGroup      string      `json:"source_group"`
 	HueColor         wc.HueColor `json:"hue_color" gorm:"-" sql:"-"`
 	BanFlags         []BanFlag   `json:"ban_flags" gorm:"-" sql:"-"`
-	IsBot            bool        `json:"is_bot"`
 	BanCount         int         `json:"-"` // internal usage only; not meant to be seen by users.
 	FlagTrolling     bool        `json:"-"`
 	FlagSpam         bool        `json:"-"`
@@ -98,14 +99,14 @@ type Token struct {
 }
 
 type Report struct {
-	UniqueId       string `json:"unique_id" gorm:"primaryKey"`
-	ReporterId     int64  `json:"reporter_id"`
-	TargetUser     int64  `json:"target_user"`
-	IsBot          bool   `json:"is_bot"`
-	ReportDate     string `json:"report_date"`
-	ReportReason   string `json:"report_reason"`
-	ReportMessage  string `json:"report_message"`
-	ScanSourceLink string `json:"scan_source_link"`
+	UniqueId       string     `json:"unique_id" gorm:"primaryKey"`
+	ReporterId     int64      `json:"reporter_id"`
+	TargetUser     int64      `json:"target_user"`
+	TargetType     EntityType `json:"target_type"`
+	ReportDate     string     `json:"report_date"`
+	ReportReason   string     `json:"report_reason"`
+	ReportMessage  string     `json:"report_message"`
+	ScanSourceLink string     `json:"scan_source_link"`
 	// AgentId is the user id of the person who approved, rejected or closed the
 	// scan.
 	AgentId int64 `json:"agent_id"`
@@ -139,12 +140,12 @@ type CrimeCoefficientRange struct {
 }
 
 type MultiBanUserInfo struct {
-	UserId      int64  `json:"user_id"`
-	Reason      string `json:"reason"`
-	SourceGroup string `json:"source_group"`
-	Message     string `json:"message"`
-	Source      string `json:"source"`
-	IsBot       bool   `json:"is_bot"`
+	UserId      int64      `json:"user_id"`
+	Reason      string     `json:"reason"`
+	SourceGroup string     `json:"source_group"`
+	Message     string     `json:"message"`
+	Source      string     `json:"source"`
+	TargetType  EntityType `json:"target_type"`
 }
 
 type MultiBanRawData struct {
@@ -156,10 +157,10 @@ type MultiUnBanRawData struct {
 }
 
 type MultiScanUserInfo struct {
-	UserId  int64  `json:"user_id"`
-	Reason  string `json:"reason"`
-	Message string `json:"message"`
-	IsBot   bool   `json:"is_bot"`
+	UserId     int64      `json:"user_id"`
+	Reason     string     `json:"reason"`
+	Message    string     `json:"message"`
+	TargetType EntityType `json:"target_type"`
 }
 
 type MultiScanRawData struct {

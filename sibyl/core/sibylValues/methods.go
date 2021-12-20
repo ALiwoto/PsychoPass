@@ -212,6 +212,74 @@ func (p UserPermission) ToString() string {
 	return strconv.Itoa(int(p))
 }
 
+//---------------------------------------------------------.
+
+func (t EntityType) IsInvalid() bool {
+	switch t {
+	case EntityTypeUser,
+		EntityTypeBot,
+		EntityTypeAdmin,
+		EntityTypeOwner:
+		return false
+	default:
+		return true
+	}
+}
+
+func (t EntityType) ToString() string {
+	switch t {
+	case EntityTypeUser:
+		return "user"
+	case EntityTypeBot:
+		return "bot"
+	case EntityTypeAdmin:
+		return "admin"
+	case EntityTypeOwner:
+		return "owner"
+	default:
+		return "unknown"
+	}
+}
+
+func (t EntityType) ToTitle() string {
+	switch t {
+	case EntityTypeUser:
+		return "User"
+	case EntityTypeBot:
+		return "Bot"
+	case EntityTypeAdmin:
+		return "Admin"
+	case EntityTypeOwner:
+		return "Owner"
+	case EntityTypeChannel:
+		return "Channel"
+	case EntityTypeGroup:
+		return "Group"
+	default:
+		return "Unknown"
+	}
+}
+
+func (t EntityType) IsNormal() bool {
+	return t == EntityTypeUser
+}
+
+func (t EntityType) IsBot() bool {
+	return t == EntityTypeBot
+}
+
+func (t EntityType) IsAdmin() bool {
+	return t == EntityTypeAdmin
+}
+
+func (t EntityType) IsOwner() bool {
+	return t == EntityTypeOwner
+}
+
+func (t EntityType) IsChannel() bool {
+	return t == EntityTypeChannel
+}
+
 //---------------------------------------------------------
 
 func (r *Report) getNameById(id int64) string {
@@ -237,15 +305,11 @@ func (r *Report) getTargetName() string {
 }
 
 func (r *Report) GetTargetType() string {
-	if r.IsBot {
-		return "Bot"
-	}
-
 	if r.TargetUser < 0 {
 		return "Chat"
 	}
 
-	return "User"
+	return r.TargetType.ToTitle()
 }
 
 func (r *Report) IsPending() bool {
