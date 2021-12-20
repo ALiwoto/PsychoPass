@@ -134,11 +134,15 @@ func FetchStat() (*sv.StatValue, error) {
 func NewUser(u *sv.User) {
 	u.FormatBanDate()
 	u.SetBanFlags()
-	lockdb()
-	tx := SESSION.Begin()
-	tx.Save(u)
-	tx.Commit()
-	unlockdb()
+
+	if u.ShouldSaveInDB() {
+		lockdb()
+		tx := SESSION.Begin()
+		tx.Save(u)
+		tx.Commit()
+		unlockdb()
+	}
+
 	u.SetCacheDate()
 	userMapMutex.Lock()
 	userDbMap[u.UserID] = u

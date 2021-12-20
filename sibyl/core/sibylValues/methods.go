@@ -812,6 +812,10 @@ func (u *User) invalidateFlags() {
 	u.FlagMassAdd = false
 }
 
+func (u *User) ShouldSaveInDB() bool {
+	return u.Banned || !RangeCivilian.IsInRange(u.CrimeCoefficient)
+}
+
 //---------------------------------------------------------
 
 func (c *CrimeCoefficientRange) IsInRange(value int) bool {
