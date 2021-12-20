@@ -33,6 +33,28 @@ func getReportButtons(uniqueId string) *gotgbot.InlineKeyboardMarkup {
 	return kb
 }
 
+func getMultiReportButtons(uniqueId string) *gotgbot.InlineKeyboardMarkup {
+	kb := &gotgbot.InlineKeyboardMarkup{}
+
+	kb.InlineKeyboard = make([][]gotgbot.InlineKeyboardButton, 2)
+
+	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
+		Text:         "✅ Approve",
+		CallbackData: MultiReportPrefix + sepChar + ApproveData + sepChar + uniqueId,
+	})
+	kb.InlineKeyboard[0] = append(kb.InlineKeyboard[0], gotgbot.InlineKeyboardButton{
+		Text:         "❌ Reject",
+		CallbackData: MultiReportPrefix + sepChar + RejectData + sepChar + uniqueId,
+	})
+
+	kb.InlineKeyboard[1] = append(kb.InlineKeyboard[1], gotgbot.InlineKeyboardButton{
+		Text:         "Close",
+		CallbackData: MultiReportPrefix + sepChar + CloseData + sepChar + uniqueId,
+	})
+
+	return kb
+}
+
 func sendReportMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) {
 	_, err := sv.HelperBot.SendMessage(chat, text, opts)
 	if err != nil {
