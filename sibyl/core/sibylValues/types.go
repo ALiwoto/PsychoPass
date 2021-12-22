@@ -132,7 +132,7 @@ type Report struct {
 	// please notice that only pending scans' details can be changed; if a
 	// scan is approved, rejected or closed, its details cannot be changed anymore.
 	ScanStatus ScanStatus `json:"scan_status"`
-	// AssociationBanId is empty is the scan is not an association scan.
+	// AssociationBanId is empty if the scan is not an association scan.
 	AssociationBanId string `json:"association_ban_id"`
 	// AgentUser is the agent user who has clicked the approve, reject or close
 	// button (or sent the command).
