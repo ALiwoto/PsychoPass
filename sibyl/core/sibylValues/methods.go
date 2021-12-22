@@ -1,6 +1,7 @@
 package sibylValues
 
 import (
+	"encoding/json"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -1044,4 +1045,15 @@ func (m *MultiScanRawData) ParseAsMd() mdparser.WMarkDown {
 	}
 
 	return md
+}
+
+//---------------------------------------------------------
+
+func (d *AssaultDominatorData) ParseAsText() string {
+	b, err := json.MarshalIndent(d, "", "    ")
+	if err != nil {
+		return ""
+	}
+
+	return mdparser.GetMono(string(b)).ToString()
 }

@@ -71,6 +71,32 @@ func sendMultiReportHandler(r *sv.MultiScanRawData) {
 	}
 }
 
+func sendToADHandler(d *sv.AssaultDominatorData) {
+	// prevent from panic xD
+	if sv.HelperBot == nil {
+		return
+	}
+
+	bases := sibylConfig.GetADIds()
+	if len(bases) == 0 {
+		// there is no chat to send the report to...
+		// ignore the report...
+		return
+	}
+
+	var opts *gotgbot.SendMessageOpts
+
+	text := d.ParseAsText()
+	opts = &gotgbot.SendMessageOpts{
+		ParseMode:             sv.MarkDownV2,
+		DisableWebPagePreview: true,
+	}
+
+	for _, chat := range bases {
+		sendReportMessage(chat, text, opts)
+	}
+}
+
 func scanCallBackQuery(cq *gotgbot.CallbackQuery) bool {
 	return strings.HasPrefix(cq.Data, ReportPrefix+sepChar)
 }
