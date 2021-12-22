@@ -12,6 +12,7 @@ type ScanStatus int
 type EntityType int
 type BanFlag string
 type ReportHandler func(r *Report)
+type AssaultDominatorHandler func(r *AssaultDominatorData)
 type MultiReportHandler func(data *MultiScanRawData)
 
 type StatValue struct {
@@ -96,6 +97,15 @@ type Token struct {
 
 	// cacheDate is the starting date of value being cached in the memory.
 	cacheDate time.Time `json:"-"`
+}
+
+type AssaultDominatorData struct {
+	Type         string   `json:"type"`
+	TargetUser   int64    `json:"user"`
+	ShortReasons []string `json:"short_reasons"`
+	LongReason   string   `json:"long_reason"`
+	ScannedBy    int64    `json:"scanned_by"`
+	SrcUrl       string   `json:"src_url"`
 }
 
 type Report struct {

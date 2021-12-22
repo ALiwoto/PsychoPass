@@ -135,13 +135,15 @@ func NewUser(u *sv.User) {
 	u.FormatBanDate()
 	u.SetBanFlags()
 
-	if u.ShouldSaveInDB() {
-		lockdb()
-		tx := SESSION.Begin()
-		tx.Save(u)
-		tx.Commit()
-		unlockdb()
+	if !u.ShouldSaveInDB() {
+		u.CrimeCoefficient = 0
 	}
+
+	lockdb()
+	tx := SESSION.Begin()
+	tx.Save(u)
+	tx.Commit()
+	unlockdb()
 
 	u.SetCacheDate()
 	userMapMutex.Lock()

@@ -14,6 +14,7 @@ var (
 	BotUpdater             *ext.Updater
 	RateLimiter            *ratelimiter.Limiter
 	SendReportHandler      ReportHandler
+	SendToADHandler        AssaultDominatorHandler
 	SendMultiReportHandler MultiReportHandler
 	ServerStartTime        time.Time
 )
