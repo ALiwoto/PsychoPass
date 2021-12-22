@@ -6,7 +6,46 @@ import (
 	"log"
 	"net/http"
 	"testing"
+
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
+
+func TestMultiScanData(t *testing.T) {
+	d := sibylValues.MultiScanRawData{}
+
+	d.Source = "https://t.me/OnePunchDev/101824"
+	d.GroupLink = "https://t.me/OnePunchDev"
+	d.Users = append(d.Users, sibylValues.MultiScanUserInfo{
+		UserId:     123456,
+		Reason:     "mass add",
+		Message:    "https://t.me/OnePunchDev/101824",
+		TargetType: sibylValues.EntityTypeOwner,
+	})
+
+	d.Users = append(d.Users, sibylValues.MultiScanUserInfo{
+		UserId:     121212121,
+		Reason:     "psychohazard",
+		Message:    "https://t.me/OnePunchDev/101824",
+		TargetType: sibylValues.EntityTypeAdmin,
+	})
+
+	d.Users = append(d.Users, sibylValues.MultiScanUserInfo{
+		UserId:     191191919,
+		Reason:     "psychohazard",
+		Message:    "https://t.me/OnePunchDev/101824",
+		TargetType: sibylValues.EntityTypeAdmin,
+	})
+
+	b, err := json.MarshalIndent(d, "", "    ")
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	log.Print(string(b))
+
+	log.Println("done")
+}
 
 func TestReportUser01(t *testing.T) {
 	decideToRun()
