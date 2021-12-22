@@ -829,6 +829,23 @@ func (u *User) ShouldSaveInDB() bool {
 	return u.Banned || !RangeCivilian.IsInRange(u.CrimeCoefficient)
 }
 
+func (u *User) ToDominatorData(isBan bool) *AssaultDominatorData {
+	var t string
+	if isBan {
+		t = "ban"
+	} else {
+		t = "revert"
+	}
+	return &AssaultDominatorData{
+		Type:         t,
+		TargetUser:   u.UserID,
+		ShortReasons: u.BanFlags,
+		LongReason:   u.Reason,
+		ScannedBy:    u.BannedBy,
+		SrcUrl:       u.BanSourceUrl,
+	}
+}
+
 //---------------------------------------------------------
 
 func (c *CrimeCoefficientRange) IsInRange(value int) bool {

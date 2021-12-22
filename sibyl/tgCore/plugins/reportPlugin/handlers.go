@@ -77,8 +77,8 @@ func sendToADHandler(d *sv.AssaultDominatorData) {
 		return
 	}
 
-	bases := sibylConfig.GetADIds()
-	if len(bases) == 0 {
+	dominators := sibylConfig.GetADIds()
+	if len(dominators) == 0 {
 		// there is no chat to send the report to...
 		// ignore the report...
 		return
@@ -92,7 +92,7 @@ func sendToADHandler(d *sv.AssaultDominatorData) {
 		DisableWebPagePreview: true,
 	}
 
-	for _, chat := range bases {
+	for _, chat := range dominators {
 		sendReportMessage(chat, text, opts)
 	}
 }

@@ -100,12 +100,12 @@ type Token struct {
 }
 
 type AssaultDominatorData struct {
-	Type         string   `json:"type"`
-	TargetUser   int64    `json:"user"`
-	ShortReasons []string `json:"short_reasons"`
-	LongReason   string   `json:"long_reason"`
-	ScannedBy    int64    `json:"scanned_by"`
-	SrcUrl       string   `json:"src_url"`
+	Type         string    `json:"type"`
+	TargetUser   int64     `json:"user"`
+	ShortReasons []BanFlag `json:"short_reasons"`
+	LongReason   string    `json:"long_reason"`
+	ScannedBy    int64     `json:"scanned_by"`
+	SrcUrl       string    `json:"src_url"`
 }
 
 type Report struct {

@@ -22,6 +22,11 @@ func AddBan(info *BanInfo) *sv.User {
 	user.SetAsBanReason(info.Reason)
 	user.IncreaseCrimeCoefficientAuto()
 	NewUser(user)
+
+	if sv.SendToADHandler != nil {
+		go sv.SendToADHandler(user.ToDominatorData(true))
+	}
+
 	return user
 }
 
@@ -65,6 +70,11 @@ func RemoveUserBan(user *sv.User, clearHistory bool) {
 	tx.Save(user)
 	tx.Commit()
 	unlockdb()
+
+	if sv.SendToADHandler != nil {
+		go sv.SendToADHandler(user.ToDominatorData(false))
+	}
+
 }
 
 // ClearHistory will unban a user from the sibyl database.
@@ -87,6 +97,10 @@ func UpdateBanparameter(user *sv.User) {
 	tx.Save(user)
 	tx.Commit()
 	unlockdb()
+
+	if sv.SendToADHandler != nil {
+		go sv.SendToADHandler(user.ToDominatorData(true))
+	}
 }
 
 func UpdateUserCrimeCoefficientByPerm(user *sv.User, perm sv.UserPermission) {
