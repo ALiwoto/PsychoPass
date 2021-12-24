@@ -28,7 +28,6 @@
   "nsfw": [
     "nsfw",
     "cp",
-    "pornography",
     "porn"
   ],
   "raid": [
@@ -45,7 +44,8 @@
     "thotbot",
     "joinspam",
     "binance",
-    "advertis"
+    "advertis",
+    "scam"
   ],
   "mass_add": [
     "massadd",
