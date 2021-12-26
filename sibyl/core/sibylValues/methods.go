@@ -113,6 +113,10 @@ func (t *Token) CanGetRegisteredList() bool {
 
 // CanBeRevoked returns true if this token can be revoked; otherwise false.
 func (t *Token) CanBeRevoked() bool {
+	if t.Permission >= Inspector {
+		return true
+	}
+
 	if time.Since(t.LastRevokeDate) < 24*time.Hour {
 		if t.RevokeCount >= MaxTokenRevokeCount {
 			return false
