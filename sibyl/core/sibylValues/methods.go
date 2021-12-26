@@ -488,7 +488,7 @@ func (r *Report) IsExpired(d time.Duration) bool {
 //---------------------------------------------------------
 
 func (u *User) IsCCValid(t *Token) bool {
-	if u.Banned || t == nil {
+	if u.Banned || u.IsPastBanned() || t == nil {
 		return true
 	}
 
