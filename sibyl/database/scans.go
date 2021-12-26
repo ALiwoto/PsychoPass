@@ -146,4 +146,28 @@ func UpdateScan(scan *sv.Report) {
 	tx.Save(scan)
 	tx.Commit()
 	unlockdb()
+
+	if scan.IsApproved() {
+		agent, err := GetTokenFromId(scan.ReporterId)
+		if agent == nil || err != nil {
+			return
+		}
+		agent.AcceptedReports++
+		lockdb()
+		tx := SESSION.Begin()
+		tx.Save(agent)
+		tx.Commit()
+		unlockdb()
+	} else if scan.IsRejected() {
+		agent, err := GetTokenFromId(scan.ReporterId)
+		if agent == nil || err != nil {
+			return
+		}
+		agent.DeniedReports++
+		lockdb()
+		tx := SESSION.Begin()
+		tx.Save(agent)
+		tx.Commit()
+		unlockdb()
+	}
 }
