@@ -488,7 +488,7 @@ func (r *Report) IsExpired(d time.Duration) bool {
 //---------------------------------------------------------
 
 func (u *User) IsCCValid(t *Token) bool {
-	if u.Banned || u.IsPastBanned() || t == nil {
+	if u.Banned || t == nil {
 		return true
 	}
 
@@ -498,6 +498,9 @@ func (u *User) IsCCValid(t *Token) bool {
 	case Enforcer:
 		return RangeEnforcer.IsInRange(u.CrimeCoefficient)
 	case NormalUser:
+		if u.IsPastBanned() {
+			return RangeRestored.IsInRange(u.CrimeCoefficient)
+		}
 		return RangeCivilian.IsInRange(u.CrimeCoefficient)
 	}
 
@@ -589,6 +592,10 @@ func (u *User) IncreaseCrimeCoefficientByPerm(p UserPermission) {
 	case Enforcer:
 		u.CrimeCoefficient = RangeEnforcer.GetRandom()
 	case NormalUser:
+		if u.IsPastBanned() {
+			u.CrimeCoefficient = RangeRestored.GetRandom()
+			return
+		}
 		u.CrimeCoefficient = RangeCivilian.GetRandom()
 	}
 }
