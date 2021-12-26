@@ -510,7 +510,7 @@ func (u *User) IsCCValid(t *Token) bool {
 }
 
 func (u *User) IsPastBanned() bool {
-	return RangeRestored.IsInRange(u.CrimeCoefficient)
+	return RangeRestored.IsInRange(u.CrimeCoefficient) || u.BanCount > 0
 }
 
 func (u *User) IsCivilian() bool {
