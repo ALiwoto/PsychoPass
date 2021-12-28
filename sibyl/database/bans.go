@@ -23,14 +23,15 @@ func AddBan(info *BanInfo) *sv.User {
 	user.IncreaseCrimeCoefficientAuto()
 	NewUser(user)
 
-	if sv.SendToADHandler != nil {
+	if sv.SendToADHandler != nil && !info.IsSilent {
 		go sv.SendToADHandler(user.ToDominatorData(true))
 	}
 
 	return user
 }
 
-func AddBanByInfo(info *sv.MultiBanUserInfo, adder int64, count int) *sv.User {
+func AddBanByInfo(info *sv.MultiBanUserInfo, adder int64,
+	count int, silent bool) *sv.User {
 	return AddBan(
 		&BanInfo{
 			UserID:     info.UserId,
@@ -41,6 +42,7 @@ func AddBanByInfo(info *sv.MultiBanUserInfo, adder int64, count int) *sv.User {
 			Src:        info.Source,
 			TargetType: info.TargetType,
 			Count:      count,
+			IsSilent:   silent,
 		},
 	)
 }
@@ -91,14 +93,14 @@ func ClearHistory(user *sv.User) {
 }
 
 // UpdateBanparameter will update a user's ban parameter into the database.
-func UpdateBanparameter(user *sv.User) {
+func UpdateBanparameter(user *sv.User, silent bool) {
 	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(user)
 	tx.Commit()
 	unlockdb()
 
-	if sv.SendToADHandler != nil {
+	if sv.SendToADHandler != nil && !silent {
 		go sv.SendToADHandler(user.ToDominatorData(true))
 	}
 }

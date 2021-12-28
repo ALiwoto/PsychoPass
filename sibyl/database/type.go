@@ -11,4 +11,5 @@ type BanInfo struct {
 	Src        string
 	TargetType sv.EntityType
 	Count      int
+	IsSilent   bool
 }

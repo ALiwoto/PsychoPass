@@ -89,7 +89,7 @@ func AddBanHandler(c *gin.Context) {
 			u.SourceGroup = srcGroup
 			u.SetAsBanReason(banReason)
 			u.IncreaseCrimeCoefficientAuto()
-			database.UpdateBanparameter(u)
+			database.UpdateBanparameter(u, false)
 			entry.SendResult(c, &BanResult{
 				PreviousBan: &pre,
 				CurrentBan:  u,
@@ -118,6 +118,7 @@ func AddBanHandler(c *gin.Context) {
 
 func MultiBanHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
+	isSilent := ws.ToBool(utils.GetParam(c, "silent", "is-silent"))
 
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginMultiBan)
@@ -156,6 +157,10 @@ func MultiBanHandler(c *gin.Context) {
 		if len(multiBanData.Users) > MaxMultiUsers {
 			entry.SendTooManyError(c, OriginMultiBan)
 			return
+		}
+
+		if !multiBanData.IsSilent && isSilent {
+			multiBanData.IsSilent = isSilent
 		}
 		go applyMultiBan(multiBanData, by)
 	}

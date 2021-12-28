@@ -159,7 +159,8 @@ type MultiBanUserInfo struct {
 }
 
 type MultiBanRawData struct {
-	Users []MultiBanUserInfo `json:"users"`
+	Users    []MultiBanUserInfo `json:"users"`
+	IsSilent bool               `json:"is_silent"`
 }
 
 type MultiUnBanRawData struct {

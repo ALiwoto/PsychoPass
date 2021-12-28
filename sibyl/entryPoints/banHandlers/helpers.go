@@ -46,13 +46,13 @@ func applyMultiBan(data *sv.MultiBanRawData, by int64) {
 				tmpUser.BanSourceUrl = current.Source
 				tmpUser.SetAsBanReason(current.Reason)
 				tmpUser.IncreaseCrimeCoefficientAuto()
-				database.UpdateBanparameter(tmpUser)
+				database.UpdateBanparameter(tmpUser, data.IsSilent)
 				continue
 			}
 			count = tmpUser.BanCount
 		}
 
-		_ = database.AddBanByInfo(&current, by, count)
+		_ = database.AddBanByInfo(&current, by, count, data.IsSilent)
 	}
 
 	multiBanMutex.Unlock()
