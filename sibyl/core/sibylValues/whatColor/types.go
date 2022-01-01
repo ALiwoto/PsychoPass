@@ -2,10 +2,10 @@ package whatColor
 
 type HueColor string
 
-type hueValue struct {
-	Color       string
-	Hex         string
-	Coefficient int
+type HueValue struct {
+	Color       string `json:"color"`
+	Hex         string `json:"hex"`
+	Coefficient int    `json:"coefficient"`
 }
 
-type hueCollection []hueValue
+type HueCollection []HueValue

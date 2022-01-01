@@ -27,7 +27,7 @@ func loadColorsFromFile() {
 		return
 	}
 
-	collection := make(hueCollection, 0)
+	collection := make(HueCollection, 0)
 	err = json.Unmarshal(b, &collection)
 	if err != nil {
 		logging.Warn(err)
@@ -52,7 +52,7 @@ func LoadColors() {
 		return
 	}
 
-	collection := make(hueCollection, 0)
+	collection := make(HueCollection, 0)
 	err = json.Unmarshal(b, &collection)
 	if err != nil {
 		loadColorsFromFile()
@@ -70,7 +70,7 @@ func saveCollectionToFile(data []byte) {
 	}
 }
 
-func loadValues(collection hueCollection) {
+func loadValues(collection HueCollection) {
 	for _, current := range collection {
 		if current.Coefficient > maxCoefficient {
 			maxCoefficient = current.Coefficient
