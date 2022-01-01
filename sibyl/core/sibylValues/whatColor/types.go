@@ -2,8 +2,10 @@ package whatColor
 
 type HueColor string
 
-// HueRange is the range of hue colors.
-type HueRange struct {
-	start int
-	end   int
+type hueValue struct {
+	Color       string
+	Hex         string
+	Coefficient int
 }
+
+type hueCollection []hueValue

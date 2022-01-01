@@ -2,11 +2,13 @@ package server
 
 import (
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
 	"github.com/gin-gonic/gin"
 )
 
 func RunSibylSystem() {
+	whatColor.LoadColors()
 	port := sibylConfig.GetPort()
 
 	if !sibylConfig.IsDebug() {

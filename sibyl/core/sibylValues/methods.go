@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/ALiwoto/mdparser/mdparser"
-	wc "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
 )
 
 //---------------------------------------------------------
@@ -534,7 +534,7 @@ func (u *User) IsExpired(d time.Duration) bool {
 }
 
 func (u *User) setHueColor() {
-	u.HueColor = wc.GetHueColor(u.CrimeCoefficient)
+	u.HueColor = whatColor.GetHueColor(u.CrimeCoefficient)
 }
 
 func (u *User) GetCrimeCoefficientRange() *CrimeCoefficientRange {
