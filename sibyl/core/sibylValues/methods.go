@@ -605,7 +605,12 @@ func (u *User) CanTryAppealing() bool {
 }
 
 func (u *User) CanAppeal() bool {
-	return u.CrimeCoefficient <= MaxAppealCoefficient && !u.HasCustomFlag()
+	return u.CrimeCoefficient <= MaxAppealCoefficient &&
+		!u.HasCustomFlag() && !u.IsPerma()
+}
+
+func (u *User) IsPerma() bool {
+	return strings.Contains(u.Reason, "perma")
 }
 
 func (u *User) HasCustomFlag() bool {

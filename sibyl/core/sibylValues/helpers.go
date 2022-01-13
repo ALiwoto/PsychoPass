@@ -210,7 +210,9 @@ func fixReasonString(value string) string {
 		value = strings.ReplaceAll(value, "member scrap", ReasonMassAdd[0])
 		value = strings.ReplaceAll(value, "member add", ReasonMassAdd[0])
 		value = strings.ReplaceAll(value, "spam add", ReasonMassAdd[0])
+		value = strings.ReplaceAll(value, "spam-add", ReasonMassAdd[0])
 		value = strings.ReplaceAll(value, "bulk add", ReasonMassAdd[0])
+		value = strings.ReplaceAll(value, "bulk-add", ReasonMassAdd[0])
 		value = strings.ReplaceAll(value, "group add", ReasonMassAdd[0])
 	}
 
