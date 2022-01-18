@@ -196,14 +196,10 @@ func getCCRangeByString(value string) *CrimeCoefficientRange {
 }
 
 func fixReasonString(value string) string {
-	/*
-		Trigger word aliases
-		EVADE   - evade, banevade
-		MALIMP  - impersonation, malimp, fake profile
-		NSFW    - porn, pornography, nsfw, cp
-		Crypto  - btc, crypto, forex, trading, binary
-		MASSADD - spam add, kidnapping, member scraping, member adding, mass adding, spam adding, bulk adding
-	*/
+	if len(ReasonTrolling) > 0 {
+		value = strings.ReplaceAll(value, "fooling around", ReasonTrolling[0])
+	}
+
 	if len(ReasonMassAdd) > 0 {
 		value = strings.ReplaceAll(value, "mass add", ReasonMassAdd[0])
 		value = strings.ReplaceAll(value, "mass-add", ReasonMassAdd[0])
@@ -214,10 +210,17 @@ func fixReasonString(value string) string {
 		value = strings.ReplaceAll(value, "bulk add", ReasonMassAdd[0])
 		value = strings.ReplaceAll(value, "bulk-add", ReasonMassAdd[0])
 		value = strings.ReplaceAll(value, "group add", ReasonMassAdd[0])
+		value = strings.ReplaceAll(value, "group spam add", ReasonMassAdd[0])
 	}
 
 	if len(ReasonNSFW) > 0 {
 		value = strings.ReplaceAll(value, "n.s.f.w", ReasonNSFW[0])
+	}
+
+	if len(ReasonEvade) > 0 {
+		value = strings.ReplaceAll(value, "ban evade", ReasonEvade[0])
+		value = strings.ReplaceAll(value, "ban evasion", ReasonEvade[0])
+		value = strings.ReplaceAll(value, "ban evading", ReasonEvade[0])
 	}
 
 	if len(ReasonPsychoHazard) > 0 {
