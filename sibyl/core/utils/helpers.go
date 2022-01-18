@@ -71,7 +71,7 @@ func SafeEditNoFormat(b *gotgbot.Bot, ctx *ext.Context, topMsg *gotgbot.Message,
 
 	msg := ctx.EffectiveMessage
 	if len(output) < 4096 {
-		_, err := topMsg.EditText(b, output,
+		_, _, err := topMsg.EditText(b, output,
 			&gotgbot.EditMessageTextOpts{ParseMode: "Markdownv2"})
 
 		if err != nil {
