@@ -7,7 +7,7 @@ type SibylSystemConfig struct {
 	// Owners is the IDs of the owners.
 	Owners []int64 `section:"general" key:"owners"`
 
-	// DevUsers is the IDs of the owners.
+	// DevUsers is the IDs of the developers.
 	DevUsers []int64 `section:"general" key:"dev_users"`
 
 	// AssaultDominators is the list of userbots known as

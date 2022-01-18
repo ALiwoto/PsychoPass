@@ -71,21 +71,9 @@ func IsInvalidID(id int64) bool {
 
 func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {
 	/*
-		RangeCivilian     = &CrimeCoefficientRange{0, 080}
-		RangeRestored     = &CrimeCoefficientRange{81, 100}
-		RangeEnforcer     = &CrimeCoefficientRange{101, 150}
-		RangeTROLLING     = &CrimeCoefficientRange{151, 200}
-		RangeSPAM         = &CrimeCoefficientRange{201, 250}
-		RangePSYCHOHAZARD = &CrimeCoefficientRange{251, 300}
-		RangeSPAMBOT      = &CrimeCoefficientRange{301, 350}
-		RangeCUSTOM       = &CrimeCoefficientRange{351, 400}
-		RangeNSFW         = &CrimeCoefficientRange{401, 450}
-		RangeEVADE        = &CrimeCoefficientRange{451, 500}
-		RangeMALIMP       = &CrimeCoefficientRange{501, 550}
-		RangeRAID         = &CrimeCoefficientRange{551, 600}
-		RangeMASSADD      = &CrimeCoefficientRange{601, 650}
+		for seeing all possible values of crime coefficient ranges
+		and related values, please refer to https://t.me/SibylSystem/4
 	*/
-
 	switch {
 	case value < 0:
 		return nil
@@ -154,22 +142,8 @@ func GetCCRangeByString(value string) []*CrimeCoefficientRange {
 
 func getCCRangeByString(value string) *CrimeCoefficientRange {
 	/*
-		// Range 0-100 (No bans) (Dominator Locked)
-		// Civilian     - 0-80
-		// Restored  - 81-100
-		// Enforcer  - 101-125
-		// Range 126-300 (Auto-mute) (Non-lethal Paralyzer)
-		ReasonTrolling
-		ReasonSpam
-		ReasonEvade
-		ReasonCustom
-		// Range 300+ (Ban on Sight) (Lethal Eliminator)
-		ReasonMalimp
-		ReasonPsychoHazard
-		ReasonNSFW
-		ReasonRaid
-		ReasonSpamBot
-		ReasonMassAdd
+		for seeing all possible values of crime coefficient ranges
+		and related values, please refer to https://t.me/SibylSystem/4
 	*/
 	switch {
 	case canMatchStringArray(value, ReasonTrolling):
@@ -196,6 +170,10 @@ func getCCRangeByString(value string) *CrimeCoefficientRange {
 }
 
 func fixReasonString(value string) string {
+	/*
+		for seeing all possible values of crime coefficient ranges
+		and related values, please refer to https://t.me/SibylSystem/4
+	*/
 	if len(ReasonTrolling) > 0 {
 		value = strings.ReplaceAll(value, "fooling around", ReasonTrolling[0])
 	}
@@ -260,5 +238,5 @@ func IsForbiddenID(id int64) bool {
 	if HelperBot != nil && HelperBot.Id == id {
 		return true
 	}
-	return false // TODO: Add new forbidden IDs here....
+	return false
 }
