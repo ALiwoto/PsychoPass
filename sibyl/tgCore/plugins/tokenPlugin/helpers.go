@@ -93,7 +93,7 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 	md.AppendBoldThis("• Crime Coefficient: ")
 	md.AppendMonoThis(strconv.Itoa(targetUser.CrimeCoefficient)).ElThis()
 
-	msg, err = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+	msg, _, err = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode: sv.MarkDownV2,
 	})
 	if err != nil {
@@ -108,7 +108,7 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 	se, cc := targetUser.EstimateCrimeCoefficientSep()
 	md.AppendNormalThis(se).AppendMonoThis(cc).ElThis()
 	md.AppendBoldThis("Attached reason: ").AppendMonoThis(targetUser.Reason)
-	_, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+	_, _, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode: sv.MarkDownV2,
 	})
 }
@@ -127,7 +127,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 	md.ElThis()
 	// let the goroutine sleep for 2 seconds
 	time.Sleep(2 * time.Second)
-	aValue.msg, err = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+	aValue.msg, _, err = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 	})
@@ -145,7 +145,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 		md.AppendBoldThis(aValue.perm)
 		md.AppendNormalThis("!\nTheir dominator and token have been sent to their ")
 		md.AppendHyperLinkThis("PM", "http://t.me/"+b.Username).AppendNormalThis(".")
-		_, _ = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+		_, _, _ = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 			ParseMode:             sv.MarkDownV2,
 			DisableWebPagePreview: true,
 		})
@@ -154,7 +154,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 		md.AppendThis(mdBack)
 		md.AppendNormalThis("✳️ ").AppendThis(uMd).AppendNormalThis(" will be assigned as ")
 		md.AppendBoldThis(aValue.perm).AppendNormalThis(" after verification.")
-		_, _ = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+		_, _, _ = aValue.msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 			ParseMode:             sv.MarkDownV2,
 			DisableWebPagePreview: true,
 		})

@@ -141,7 +141,7 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 			ShowAlert: true,
 			CacheTime: 5,
 		})
-		_, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+		_, _, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
 		})
 		return ext.EndGroups
@@ -152,7 +152,7 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	if data == CloseData {
 		scan.Close(token.UserId, "") /* no reason */
 		database.UpdateScan(scan)
-		_, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+		_, _, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			ParseMode:             sv.MarkDownV2,
 			DisableWebPagePreview: true,
 		})
@@ -170,7 +170,7 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	database.UpdateScan(scan)
 
-	_, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+	_, _, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 	})
@@ -218,7 +218,7 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	if !scan.IsPending() {
-		_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+		_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
 		})
 		return ext.EndGroups
@@ -235,7 +235,7 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	scan.Approve(token.UserId, newReason)
 	go pushScanToDatabase(scan)
 	database.UpdateScan(scan)
-	_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+	_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 	})
@@ -283,7 +283,7 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	if !scan.IsPending() {
-		_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+		_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
 		})
 		return ext.EndGroups
@@ -299,7 +299,7 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	scan.Reject(token.UserId, newReason)
 	database.UpdateScan(scan)
-	_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+	_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 	})
@@ -347,7 +347,7 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	if !scan.IsPending() {
-		_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+		_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
 		})
 		return ext.EndGroups
@@ -363,7 +363,7 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	scan.Close(token.UserId, newReason)
 	database.UpdateScan(scan)
-	_, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
+	_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
 	})

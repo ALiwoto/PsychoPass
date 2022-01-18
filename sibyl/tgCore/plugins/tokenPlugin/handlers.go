@@ -60,7 +60,7 @@ func getTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	kb.InlineKeyboard[2][0].Text = "Revoke API token"
 	kb.InlineKeyboard[2][0].CallbackData = RevokeTokenCbValue
 
-	_, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+	_, _, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:   sv.MarkDownV2,
 		ReplyMarkup: *kb,
 	})
@@ -127,7 +127,7 @@ func revokeTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	kb.InlineKeyboard[2][0].Text = "Close"
 	kb.InlineKeyboard[2][0].CallbackData = "ap_close" // let start package handle close button xD
 
-	_, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+	_, _, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:   sv.MarkDownV2,
 		ReplyMarkup: *kb,
 	})
@@ -385,7 +385,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			md.AppendMonoThis(strconv.FormatInt(targetId, 10))
 			md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
 			if topMsg != nil {
-				_, _ = topMsg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
+				_, _, _ = topMsg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 					ParseMode:             sv.MarkDownV2,
 					ReplyMarkup:           *startCymaticScanButton,
 					DisableWebPagePreview: true,
@@ -485,7 +485,7 @@ func assignCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	switch data {
 	case RejectCbData:
 		txt := ctx.EffectiveMessage.Text + "\n\nRequest has been rejected."
-		_, _ = ctx.EffectiveMessage.EditText(b, txt, &gotgbot.EditMessageTextOpts{
+		_, _, _ = ctx.EffectiveMessage.EditText(b, txt, &gotgbot.EditMessageTextOpts{
 			Entities:              ctx.EffectiveMessage.Entities,
 			DisableWebPagePreview: true,
 		})
