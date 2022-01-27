@@ -10,6 +10,11 @@ import (
 // this function should be run in a different goroutine rather than http handler's
 // goroutine.
 func applyMultiScan(data *sv.MultiScanRawData) {
+	if sv.SendMultiReportHandler == nil {
+		// normally, impossible to reach here
+		// this condition is added just in case
+		return
+	}
 	data.GenerateID()
 	database.AddMultiScan(data)
 	sv.SendMultiReportHandler(data)

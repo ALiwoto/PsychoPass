@@ -173,16 +173,7 @@ func showUserAssigned(b *gotgbot.Bot, ctx *ext.Context, aValue *AssignValue) {
 			DisableWebPagePreview: true,
 		}
 
-		for _, chat := range bases {
-			sendRequestMessage(chat, text, opts)
-		}
-	}
-}
-
-func sendRequestMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) {
-	_, err := sv.HelperBot.SendMessage(chat, text, opts)
-	if err != nil {
-		logging.Debug("Tried to send message to ", chat, err)
+		utils.SendMultipleMessages(bases, text, opts)
 	}
 }
 

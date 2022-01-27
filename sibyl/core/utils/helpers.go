@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/ALiwoto/mdparser/mdparser"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
@@ -62,6 +63,20 @@ func SafeReplyNoFormat(b *gotgbot.Bot, ctx *ext.Context, output string) error {
 	}
 
 	return nil
+}
+
+func SendMultipleMessages(chats []int64, text string, opts *gotgbot.SendMessageOpts) {
+	if len(chats) == 0 || text == "" {
+		return
+	}
+	time.Sleep(time.Second)
+
+	sendMultipleMessageMutex.Lock()
+	for _, current := range chats {
+		_, _ = sv.HelperBot.SendMessage(current, text, opts)
+		time.Sleep(time.Second)
+	}
+	sendMultipleMessageMutex.Unlock()
 }
 
 func SafeEditNoFormat(b *gotgbot.Bot, ctx *ext.Context, topMsg *gotgbot.Message, output string) error {

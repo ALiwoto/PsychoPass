@@ -4,7 +4,6 @@ import (
 	"time"
 
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
-	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
@@ -53,13 +52,6 @@ func getMultiReportButtons(uniqueId string) *gotgbot.InlineKeyboardMarkup {
 	})
 
 	return kb
-}
-
-func sendReportMessage(chat int64, text string, opts *gotgbot.SendMessageOpts) {
-	_, err := sv.HelperBot.SendMessage(chat, text, opts)
-	if err != nil {
-		logging.Debug("Tried to send message to ", chat, err)
-	}
 }
 
 func pushScanToDatabase(scan *sv.Report) {

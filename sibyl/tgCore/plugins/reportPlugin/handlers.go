@@ -6,6 +6,7 @@ import (
 	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
@@ -36,9 +37,7 @@ func sendReportHandler(r *sv.Report) {
 		ReplyMarkup:           getReportButtons(r.UniqueId),
 	}
 
-	for _, chat := range bases {
-		sendReportMessage(chat, text, opts)
-	}
+	utils.SendMultipleMessages(bases, text, opts)
 }
 
 func sendMultiReportHandler(r *sv.MultiScanRawData) {
@@ -66,9 +65,7 @@ func sendMultiReportHandler(r *sv.MultiScanRawData) {
 		ReplyMarkup:           getMultiReportButtons(r.AssociationBanId),
 	}
 
-	for _, chat := range bases {
-		sendReportMessage(chat, text, opts)
-	}
+	utils.SendMultipleMessages(bases, text, opts)
 }
 
 func sendToADHandler(d *sv.AssaultDominatorData) {
@@ -92,9 +89,7 @@ func sendToADHandler(d *sv.AssaultDominatorData) {
 		DisableWebPagePreview: true,
 	}
 
-	for _, chat := range dominators {
-		sendReportMessage(chat, text, opts)
-	}
+	utils.SendMultipleMessages(dominators, text, opts)
 }
 
 func scanCallBackQuery(cq *gotgbot.CallbackQuery) bool {
