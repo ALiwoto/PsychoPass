@@ -726,11 +726,10 @@ func (u *User) SetBanFlags() {
 		FlagMassAdd      bool      `json:"-"`
 	*/
 	u.BanFlags = nil
+	u.setHueColor()
 	if !u.Banned {
 		return
 	}
-
-	u.setHueColor()
 
 	if u.FlagTrolling {
 		u.BanFlags = append(u.BanFlags, BanFlagTrolling)
