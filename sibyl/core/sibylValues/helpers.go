@@ -148,6 +148,8 @@ func getCCRangeByString(value string) *CrimeCoefficientRange {
 	switch {
 	case canMatchStringArray(value, ReasonTrolling):
 		return RangeTrolling
+	case canMatchStringArray(value, ReasonSpamBot):
+		return RangeSpamBot
 	case canMatchStringArray(value, ReasonSpam):
 		return RangeSpam
 	case canMatchStringArray(value, ReasonEvade):
@@ -160,8 +162,6 @@ func getCCRangeByString(value string) *CrimeCoefficientRange {
 		return RangeNSFW
 	case canMatchStringArray(value, ReasonRaid):
 		return RangeRaid
-	case canMatchStringArray(value, ReasonSpamBot):
-		return RangeSpamBot
 	case canMatchStringArray(value, ReasonMassAdd):
 		return RangeMassAdd
 	}

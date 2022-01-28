@@ -1,11 +1,10 @@
 {
   "spam": [
-    "spam",
     "refer",
-    "referral",
     "propaganda",
     "promo",
-    "flood"
+    "flood",
+    "spam"
   ],
   "trolling": [
     "troll",
@@ -42,6 +41,7 @@
   "spam_bot": [
     "crypto",
     "btc",
+    "usdt",
     "bitcoin",
     "forex",
     "trading",
