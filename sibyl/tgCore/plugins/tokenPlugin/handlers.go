@@ -112,7 +112,7 @@ func revokeTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		_ = database.RevokeTokenHash(t, hashing.GetUserToken(user.Id))
 	}
 
-	md := mdparser.GetNormal("\u200DYour token has been revoked successfully!")
+	md := mdparser.GetNormal("Your token has been revoked successfully!")
 	md.AppendNormalThis("\nInformation:")
 	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
 	md.AppendMentionThis(user.FirstName, user.Id)

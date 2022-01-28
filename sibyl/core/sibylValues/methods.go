@@ -614,10 +614,7 @@ func (u *User) IsPerma() bool {
 }
 
 func (u *User) HasCustomFlag() bool {
-	if len(u.BanFlags) == 0 {
-		return false
-	}
-	return u.BanFlags[0x0] == BanFlagCustom
+	return len(u.BanFlags) != 0 && u.BanFlags[0x0] == BanFlagCustom
 }
 
 func (u *User) SetAsBanReason(reason string) {
