@@ -80,26 +80,26 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 
 	time.Sleep(3 * time.Second)
 
-	md = welcomeMd.AppendNormalThis("\nCymatic Scan results:")
-	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
-	md.AppendMentionThis(user.FirstName, user.Id)
-	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
-	md.AppendBoldThis("\n • Is banned").AppendNormalThis(": ")
-	md.AppendMonoThis(ws.YesOrNo(u.Banned))
-	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
-	md.AppendMonoThis(t.GetTitleStringPermission())
-	md.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
-	md.AppendMonoThis(u.GetStringCrimeCoefficient())
-	md.AppendBoldThis("\n • Ban Reason(s)").AppendNormalThis(": ")
+	md = welcomeMd.Normal("\nCymatic Scan results:")
+	md.Bold("\n • User").Normal(": ")
+	md.Mention(user.FirstName, user.Id)
+	md.Bold("\n • ID").Normal(": ")
+	md.Mono(strconv.FormatInt(user.Id, 10))
+	md.Bold("\n • Is banned").Normal(": ")
+	md.Mono(ws.YesOrNo(u.Banned))
+	md.Bold("\n • Status").Normal(": ")
+	md.Mono(t.GetTitleStringPermission())
+	md.Bold("\n • Crime Coefficient").Normal(": ")
+	md.Mono(u.GetStringCrimeCoefficient())
+	md.Bold("\n • Ban Reason(s)").Normal(": ")
 	md.AppendThis(u.FormatFlags())
-	md.AppendBoldThis("\n • Description").AppendNormalThis(": ")
-	md.AppendMonoThis(u.Reason)
+	md.Bold("\n • Description").Normal(": ")
+	md.Mono(u.Reason)
 
 	var markup gotgbot.InlineKeyboardMarkup
 
 	if !u.CanTryAppealing() {
-		md.AppendNormalThis("\n\nYour ban is not appealable.")
+		md.Normal("\n\nYour ban is not appealable.")
 		_, _, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 			ParseMode: sv.MarkDownV2,
 		})
@@ -107,9 +107,9 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 		return
 	}
 
-	md.AppendNormalThis("\n\nSince this is your first time we can allow you")
-	md.AppendNormalThis(" a one time exception provided that you will not")
-	md.AppendNormalThis(" repeat this ever again.")
+	md.Normal("\n\nSince this is your first time we can allow you")
+	md.Normal(" a one time exception provided that you will not")
+	md.Normal(" repeat this ever again.")
 	markup.InlineKeyboard = makeFirstPageAppealButtons()
 	_, _, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:   sv.MarkDownV2,
@@ -137,17 +137,17 @@ func startForNotBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token
 	markup := &gotgbot.InlineKeyboardMarkup{
 		InlineKeyboard: makeNormalButtons(),
 	}
-	md = welcomeMd.AppendNormalThis("Cymatic Scan results:")
-	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
-	md.AppendMentionThis(user.FirstName, user.Id)
-	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
-	md.AppendBoldThis("\n • Is banned").AppendNormalThis(": ")
-	md.AppendMonoThis(ws.YesOrNo(u.Banned))
-	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
-	md.AppendMonoThis(t.GetTitleStringPermission())
-	md.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
-	md.AppendMonoThis(u.EstimateCrimeCoefficient()).ElThis()
+	md = welcomeMd.Normal("Cymatic Scan results:")
+	md.Bold("\n • User").Normal(": ")
+	md.Mention(user.FirstName, user.Id)
+	md.Bold("\n • ID").Normal(": ")
+	md.Mono(strconv.FormatInt(user.Id, 10))
+	md.Bold("\n • Is banned").Normal(": ")
+	md.Mono(ws.YesOrNo(u.Banned))
+	md.Bold("\n • Status").Normal(": ")
+	md.Mono(t.GetTitleStringPermission())
+	md.Bold("\n • Crime Coefficient").Normal(": ")
+	md.Mono(u.EstimateCrimeCoefficient()).ElThis()
 	_, _, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:   sv.MarkDownV2,
 		ReplyMarkup: *markup,
@@ -159,17 +159,17 @@ func showAppealDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	user := ctx.EffectiveUser
 	msg := ctx.EffectiveMessage
 	md := mdparser.GetUserMention(user.FirstName, user.Id)
-	md.AppendNormalThis("! You were blacklisted on ")
-	md.AppendHyperLinkThis("Sibyl System", "https://t.me/SibylSystem/13")
-	md.AppendNormalThis(" for ")
+	md.Normal("! You were blacklisted on ")
+	md.Link("Sibyl System", "https://t.me/SibylSystem/13")
+	md.Normal(" for ")
 	md.AppendThis(u.FormatCuteFlags())
 	md.AppendThis(u.FormatDetailStrings(true))
-	md.AppendNormalThis("Such type of actions are often unwanted and unwelcome around Sibyl.")
-	md.AppendNormalThis(" Please do note that should this ever happen again your ban will be")
-	md.AppendNormalThis(" swift and its damage, measurable on the richter scale!")
-	md.AppendNormalThis("\nClick the button below to confirm that you understand this")
-	md.AppendNormalThis(" and if you have questions please click the Support button")
-	md.AppendNormalThis(" to take your query to the bureau.")
+	md.Normal("Such type of actions are often unwanted and unwelcome around Sibyl.")
+	md.Normal(" Please do note that should this ever happen again your ban will be")
+	md.Normal(" swift and its damage, measurable on the richter scale!")
+	md.Normal("\nClick the button below to confirm that you understand this")
+	md.Normal(" and if you have questions please click the Support button")
+	md.Normal(" to take your query to the bureau.")
 	_, _, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
 		DisableWebPagePreview: true,
@@ -182,9 +182,9 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	user := ctx.EffectiveUser
 	msg := ctx.EffectiveMessage
 	md := mdparser.GetUserMention(user.FirstName, user.Id)
-	md.AppendNormalThis("! You have been unbanned!")
-	md.AppendBoldThis("\nNote: ").AppendNormalThis("You will ")
-	md.AppendBoldThis("not ").AppendNormalThis("be able to appeal this ban again.")
+	md.Normal("! You have been unbanned!")
+	md.Bold("\nNote: ").Normal("You will ")
+	md.Bold("not ").Normal("be able to appeal this ban again.")
 	markup := gotgbot.InlineKeyboardMarkup{
 		InlineKeyboard: makeNormalButtons(),
 	}
@@ -200,18 +200,18 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 	if len(chats) > 0 {
 		uPre := &pre
 		logMd := mdparser.GetNormal("#AutoAppeal")
-		logMd.AppendBoldThis("\n • User").AppendNormalThis(": ")
-		logMd.AppendMentionThis(user.FirstName, user.Id)
-		logMd.AppendBoldThis("\n • Crime Coefficient").AppendNormalThis(": ")
-		logMd.AppendMonoThis(uPre.GetStringCrimeCoefficient())
-		logMd.AppendBoldThis("\n • Reason(s)").AppendNormalThis(": ")
+		logMd.Bold("\n • User").Normal(": ")
+		logMd.Mention(user.FirstName, user.Id)
+		logMd.Bold("\n • Crime Coefficient").Normal(": ")
+		logMd.Mono(uPre.GetStringCrimeCoefficient())
+		logMd.Bold("\n • Reason(s)").Normal(": ")
 		logMd.AppendThis(uPre.FormatFlags())
-		logMd.AppendBoldThis("\n • Description").AppendNormalThis(": ")
-		logMd.AppendNormalThis(uPre.Reason)
-		logMd.AppendBoldThis("\n • Scan Date").AppendNormalThis(": ")
-		logMd.AppendMonoThis(uPre.GetDateAsShort())
-		logMd.AppendBoldThis("\n • Appeal Date").AppendNormalThis(": ")
-		logMd.AppendMonoThis(time.Now().Format(sv.AppealLogDateFormat))
+		logMd.Bold("\n • Description").Normal(": ")
+		logMd.Normal(uPre.Reason)
+		logMd.Bold("\n • Scan Date").Normal(": ")
+		logMd.Mono(uPre.GetDateAsShort())
+		logMd.Bold("\n • Appeal Date").Normal(": ")
+		logMd.Mono(time.Now().Format(sv.AppealLogDateFormat))
 
 		go func() {
 			text := logMd.ToString()
@@ -262,9 +262,9 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		if !u.CanTryAppealing() || !u.CanAppeal() {
 			user := ctx.EffectiveUser
 			md := mdparser.GetUserMention(user.FirstName, user.Id)
-			md.AppendNormalThis(", you are no longer able to use auto appeal system.")
-			md.AppendNormalThis("\nPlease take your questions to @PublicSafetyBureau")
-			md.AppendNormalThis(" if you want an unban.")
+			md.Normal(", you are no longer able to use auto appeal system.")
+			md.Normal("\nPlease take your questions to @PublicSafetyBureau")
+			md.Normal(" if you want an unban.")
 			_, _, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 				ParseMode:             sv.MarkDownV2,
 				DisableWebPagePreview: true,
@@ -295,8 +295,8 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		if !u.CanTryAppealing() || !u.CanAppeal() {
 			user := ctx.EffectiveUser
 			md := mdparser.GetUserMention(user.FirstName, user.Id)
-			md.AppendNormalThis(", you are no longer able to use auto appeal system.\n")
-			md.AppendNormalThis("Please take your questions to @PublicSafetyBureau if you want an unban.")
+			md.Normal(", you are no longer able to use auto appeal system.\n")
+			md.Normal("Please take your questions to @PublicSafetyBureau if you want an unban.")
 			_, _, _ = ctx.EffectiveMessage.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 				ParseMode:             sv.MarkDownV2,
 				DisableWebPagePreview: true,

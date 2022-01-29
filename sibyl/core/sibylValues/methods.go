@@ -416,44 +416,44 @@ func (r *Report) ParseAsMd() mdparser.WMarkDown {
 		theReason = r.ReportReason
 	}
 
-	md.AppendBoldThis("・" + r.ReporterPermission.GetNormString() + ": ")
+	md.Bold("・" + r.ReporterPermission.GetNormString() + ": ")
 
 	if len(agent) != 0 {
-		md.AppendMentionThis(agent, r.ReporterId)
-		md.AppendNormalThis(" [").AppendMonoThis(agentId).AppendNormalThis("]")
+		md.Mention(agent, r.ReporterId)
+		md.Normal(" [").Mono(agentId).Normal("]")
 	} else {
-		md.AppendMentionThis("\u200D", r.ReporterId)
-		md.AppendMonoThis(agentId)
+		md.Mention("\u200D", r.ReporterId)
+		md.Mono(agentId)
 	}
 
-	md.AppendNormalThis("\n")
-	md.AppendBoldThis("・Target: ")
+	md.Normal("\n")
+	md.Bold("・Target: ")
 
 	if len(target) != 0 {
-		md.AppendMentionThis(target, r.TargetUser)
-		md.AppendNormalThis(" [").AppendMonoThis(targetId).AppendNormalThis("]")
+		md.Mention(target, r.TargetUser)
+		md.Normal(" [").Mono(targetId).Normal("]")
 	} else {
-		md.AppendMentionThis("\u200D", r.TargetUser)
-		md.AppendMonoThis(targetId)
+		md.Mention("\u200D", r.TargetUser)
+		md.Mono(targetId)
 	}
 
-	md.AppendBoldThis("\n・Scan reason: ")
-	md.AppendMonoThis(theReason)
-	md.AppendBoldThis("\n・Date: ")
-	md.AppendMonoThis(r.ReportDate)
-	md.AppendBoldThis("\n・Type: ")
-	md.AppendMonoThis(r.GetTargetType())
-	md.AppendBoldThis("\n・Scan source: ")
-	md.AppendNormalThis(r.ScanSourceLink)
-	//md.AppendBoldThis("\n・Unique ID: ")
-	//md.AppendMonoThis(r.UniqueId)
-	md.AppendBoldThis("\n・Message: ")
-	md.AppendMonoThis(theScanMessage)
+	md.Bold("\n・Scan reason: ")
+	md.Mono(theReason)
+	md.Bold("\n・Date: ")
+	md.Mono(r.ReportDate)
+	md.Bold("\n・Type: ")
+	md.Mono(r.GetTargetType())
+	md.Bold("\n・Scan source: ")
+	md.Normal(r.ScanSourceLink)
+	//md.Bold("\n・Unique ID: ")
+	//md.Mono(r.UniqueId)
+	md.Bold("\n・Message: ")
+	md.Mono(theScanMessage)
 
 	if !r.IsPending() && r.AgentUser != nil {
-		md.AppendNormalThis("\n\n Scan has been " + r.GetStatusString() + " by ")
-		md.AppendMentionThis(r.AgentUser.FirstName, r.AgentUser.Id)
-		md.AppendNormalThis(" at ").AppendMonoThis(r.AgentDate.Format("2006-01-02 15:04:05"))
+		md.Normal("\n\n Scan has been " + r.GetStatusString() + " by ")
+		md.Mention(r.AgentUser.FirstName, r.AgentUser.Id)
+		md.Normal(" at ").Mono(r.AgentDate.Format("2006-01-02 15:04:05"))
 	}
 
 	return md
@@ -650,9 +650,9 @@ func (u *User) FormatFlags() mdparser.WMarkDown {
 
 	for i, current := range u.BanFlags {
 		if i != 0 {
-			md.AppendNormalThis(", ")
+			md.Normal(", ")
 		}
-		md.AppendMonoThis(string(current))
+		md.Mono(string(current))
 	}
 
 	return md
@@ -663,16 +663,16 @@ func (u *User) FormatCuteFlags() mdparser.WMarkDown {
 	if len(u.BanFlags) == 0 {
 		return md
 	} else if len(u.BanFlags) == 1 {
-		return md.AppendNormalThis(strings.ToLower(string(u.BanFlags[0x0])))
+		return md.Normal(strings.ToLower(string(u.BanFlags[0x0])))
 	}
 
 	for i, current := range u.BanFlags {
 		if i != 0 && i != len(u.BanFlags)-1 {
-			md.AppendNormalThis(", ")
+			md.Normal(", ")
 		} else if i == len(u.BanFlags)-1 {
-			md.AppendNormalThis(" and ")
+			md.Normal(" and ")
 		}
-		md.AppendNormalThis(strings.ToLower(string(current)))
+		md.Normal(strings.ToLower(string(current)))
 	}
 
 	return md
@@ -686,7 +686,7 @@ func (u *User) FormatDetailStrings(showPrefixes bool) mdparser.WMarkDown {
 
 	var details string
 	if showPrefixes {
-		md.AppendNormalThis(".\n\n")
+		md.Normal(".\n\n")
 	}
 
 	for _, current := range u.BanFlags {
@@ -694,7 +694,7 @@ func (u *User) FormatDetailStrings(showPrefixes bool) mdparser.WMarkDown {
 		if len(details) == 0 {
 			continue
 		}
-		md.AppendNormalThis("• " + details + "\n\n")
+		md.Normal("• " + details + "\n\n")
 	}
 
 	return md
@@ -1042,35 +1042,35 @@ func (m *MultiScanRawData) ParseAsMd() mdparser.WMarkDown {
 
 	var theReason = m.GetSingleReason()
 
-	md.AppendBoldThis("・" + m.ReporterPermission.GetNormString() + ": ")
+	md.Bold("・" + m.ReporterPermission.GetNormString() + ": ")
 
 	if len(agent) != 0 {
-		md.AppendMentionThis(agent, m.ReporterId)
-		md.AppendNormalThis(" [").AppendMonoThis(agentId).AppendNormalThis("]")
+		md.Mention(agent, m.ReporterId)
+		md.Normal(" [").Mono(agentId).Normal("]")
 	} else {
-		md.AppendMentionThis("\u200D", m.ReporterId)
-		md.AppendMonoThis(agentId)
+		md.Mention("\u200D", m.ReporterId)
+		md.Mono(agentId)
 	}
 
-	md.AppendBoldThis("\n・Scan reason: ")
-	md.AppendMonoThis(theReason)
-	md.AppendBoldThis("\n・Users: \n")
+	md.Bold("\n・Scan reason: ")
+	md.Mono(theReason)
+	md.Bold("\n・Users: \n")
 
 	for _, current := range m.Users {
-		md.AppendMonoThis(strconv.FormatInt(current.UserId, 10) + "\n")
+		md.Mono(strconv.FormatInt(current.UserId, 10) + "\n")
 	}
 
-	md.AppendBoldThis("\n・Date: ")
-	md.AppendMonoThis(time.Now().Format("2006-01-02 15:04:05"))
-	md.AppendBoldThis("\n・Scan source: ")
-	md.AppendNormalThis(m.Source)
-	//md.AppendBoldThis("\n・Unique ID: ")
-	//md.AppendMonoThis(r.UniqueId)
+	md.Bold("\n・Date: ")
+	md.Mono(time.Now().Format("2006-01-02 15:04:05"))
+	md.Bold("\n・Scan source: ")
+	md.Normal(m.Source)
+	//md.Bold("\n・Unique ID: ")
+	//md.Mono(r.UniqueId)
 
 	if !m.IsPending() && m.AgentUser != nil {
-		md.AppendNormalThis("\n\n Scan has been " + m.GetStatusString() + " by ")
-		md.AppendMentionThis(m.AgentUser.FirstName, m.AgentUser.Id)
-		md.AppendNormalThis(" at ").AppendMonoThis(m.AgentDate.Format("2006-01-02 15:04:05"))
+		md.Normal("\n\n Scan has been " + m.GetStatusString() + " by ")
+		md.Mention(m.AgentUser.FirstName, m.AgentUser.Id)
+		md.Normal(" at ").Mono(m.AgentDate.Format("2006-01-02 15:04:05"))
 	}
 
 	return md

@@ -15,12 +15,12 @@ func (a *AssignValue) ParseToMd(info mdparser.WMarkDown) mdparser.WMarkDown {
 	if a.agentProfile != nil {
 		name := utils.GetNameFromUser(a.agentProfile, a.agent.GetStringPermission())
 		name = strings.ReplaceAll(name, SpecialChar, "")
-		md.AppendBoldThis(SpecialChar+" • By: ").AppendMentionThis(name+SpecialChar, a.agentProfile.Id)
+		md.Bold(SpecialChar+" • By: ").Mention(name+SpecialChar, a.agentProfile.Id)
 	} else {
-		md.AppendBoldThis(SpecialChar + " • By: ").AppendMonoThis(by + SpecialChar)
+		md.Bold(SpecialChar + " • By: ").Mono(by + SpecialChar)
 	}
 	md.ElThis().AppendThis(info)
-	md.AppendBoldThis(SpecialChar+" • Source: ").AppendHyperLinkThis("here", a.src)
+	md.Bold(SpecialChar+" • Source: ").Link("here", a.src)
 	return md
 }
 

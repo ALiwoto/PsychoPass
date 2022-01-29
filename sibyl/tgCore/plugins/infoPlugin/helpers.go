@@ -41,9 +41,9 @@ func fetchGitStats(md mdparser.WMarkDown) {
 	vsInt := upstream - local
 	commitUrl := gitBaseUrl + "/commit/" + longGit
 
-	md.AppendNormalThis("ℹ️ ").AppendHyperLinkThis("Git ", gitBaseUrl)
-	md.AppendBoldThis("Status:")
-	md.AppendNormalThis("\n• Currently on: ").AppendHyperLinkThis(shortGit, commitUrl)
-	md.AppendNormalThis("\n• Running behind by: ").AppendMonoThis(strconv.Itoa(vsInt))
-	md.AppendNormalThis(" commits\n\n")
+	md.Normal("ℹ️ ").Link("Git ", gitBaseUrl)
+	md.Bold("Status:")
+	md.Normal("\n• Currently on: ").Link(shortGit, commitUrl)
+	md.Normal("\n• Running behind by: ").Mono(strconv.Itoa(vsInt))
+	md.Normal(" commits\n\n")
 }

@@ -47,15 +47,15 @@ func getTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	md := mdparser.GetNormal("\u200DInformation:")
-	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
-	md.AppendMentionThis(user.FirstName, user.Id)
-	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
-	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
-	md.AppendMonoThis(t.GetTitleStringPermission())
-	md.AppendBoldThis("\n\nToken").AppendNormalThis(":\n")
-	md.AppendMonoThis(t.Hash)
-	md.AppendNormalThis("\n\nPlease don't share your token with anyone else!")
+	md.Bold("\n • User").Normal(": ")
+	md.Mention(user.FirstName, user.Id)
+	md.Bold("\n • ID").Normal(": ")
+	md.Mono(strconv.FormatInt(user.Id, 10))
+	md.Bold("\n • Status").Normal(": ")
+	md.Mono(t.GetTitleStringPermission())
+	md.Bold("\n\nToken").Normal(":\n")
+	md.Mono(t.Hash)
+	md.Normal("\n\nPlease don't share your token with anyone else!")
 
 	kb.InlineKeyboard[2][0].Text = "Revoke API token"
 	kb.InlineKeyboard[2][0].CallbackData = RevokeTokenCbValue
@@ -113,16 +113,16 @@ func revokeTokenCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	md := mdparser.GetNormal("Your token has been revoked successfully!")
-	md.AppendNormalThis("\nInformation:")
-	md.AppendBoldThis("\n • User").AppendNormalThis(": ")
-	md.AppendMentionThis(user.FirstName, user.Id)
-	md.AppendBoldThis("\n • ID").AppendNormalThis(": ")
-	md.AppendMonoThis(strconv.FormatInt(user.Id, 10))
-	md.AppendBoldThis("\n • Status").AppendNormalThis(": ")
-	md.AppendMonoThis(t.GetTitleStringPermission())
-	md.AppendBoldThis("\n\nToken").AppendNormalThis(":\n")
-	md.AppendMonoThis(t.Hash)
-	md.AppendNormalThis("\n\nPlease don't share your token with anyone else!")
+	md.Normal("\nInformation:")
+	md.Bold("\n • User").Normal(": ")
+	md.Mention(user.FirstName, user.Id)
+	md.Bold("\n • ID").Normal(": ")
+	md.Mono(strconv.FormatInt(user.Id, 10))
+	md.Bold("\n • Status").Normal(": ")
+	md.Mono(t.GetTitleStringPermission())
+	md.Bold("\n\nToken").Normal(":\n")
+	md.Mono(t.Hash)
+	md.Normal("\n\nPlease don't share your token with anyone else!")
 
 	kb.InlineKeyboard[2][0].Text = "Close"
 	kb.InlineKeyboard[2][0].CallbackData = "ap_close" // let start package handle close button xD
@@ -145,13 +145,13 @@ func revokeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	database.RevokeTokenHash(t, hashing.GetUserToken(user.Id))
 
-	md := mdparser.GetNormal("Hi ").AppendMentionThis(user.FirstName, user.Id)
-	md.AppendNormalThis(" !\nHere is your new token:\n")
-	md.AppendMonoThis(t.Hash).AppendNormalThis("\n\n")
-	md.AppendBoldThis("Please don't share this token with anyone!")
+	md := mdparser.GetNormal("Hi ").Mention(user.FirstName, user.Id)
+	md.Normal(" !\nHere is your new token:\n")
+	md.Mono(t.Hash).Normal("\n\n")
+	md.Bold("Please don't share this token with anyone!")
 	if t.HasRole() {
-		md.AppendItalicThis("You are a valid").AppendNormalThis(" ")
-		md.AppendItalicThis(t.GetStringPermission()).AppendNormal(".")
+		md.Italic("You are a valid").Normal(" ")
+		md.Italic(t.GetStringPermission()).AppendNormal(".")
 	}
 
 	b.SendMessage(user.Id, md.ToString(), &gotgbot.SendMessageOpts{
@@ -178,14 +178,14 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	args := strongStringGo.Split(msg.Text, " ", "\n", "\t", ",", "-", "~")
 	if len(args) < 2 {
 		// show help.
-		md := mdparser.GetNormal("Dear ").AppendMentionThis(user.FirstName, user.Id)
-		md.AppendNormalThis(", this command lets you authorize dominator access for ")
-		md.AppendHyperLinkThis("Sibyl", "http://t.me/SibylSystem")
-		md.AppendNormalThis("\nRun command again in the following format")
-		md.AppendBoldThis("\nYour options are:")
-		md.AppendNormalThis("\n- ").AppendMonoThis("/assign inspector ID")
-		md.AppendNormalThis("\n- ").AppendMonoThis("/assign enforcer ID")
-		md.AppendNormalThis("\n- ").AppendMonoThis("/assign civilian ID")
+		md := mdparser.GetNormal("Dear ").Mention(user.FirstName, user.Id)
+		md.Normal(", this command lets you authorize dominator access for ")
+		md.Link("Sibyl", "http://t.me/SibylSystem")
+		md.Normal("\nRun command again in the following format")
+		md.Bold("\nYour options are:")
+		md.Normal("\n- ").Mono("/assign inspector ID")
+		md.Normal("\n- ").Mono("/assign enforcer ID")
+		md.Normal("\n- ").Mono("/assign civilian ID")
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			AllowSendingWithoutReply: true,
@@ -201,11 +201,11 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	perm, err := sv.ConvertToPermission(args[1])
 	if err != nil {
 		md := mdparser.GetNormal("Invalid permission provided: ")
-		md.AppendMonoThis(args[1])
-		md.AppendNormalThis("!\nHere is a list of possible permissions:")
-		md.AppendNormalThis("\n- ").AppendMonoThis("inspector")
-		md.AppendNormalThis("\n- ").AppendMonoThis("enforcer")
-		md.AppendNormalThis("\n- ").AppendMonoThis("civilian")
+		md.Mono(args[1])
+		md.Normal("!\nHere is a list of possible permissions:")
+		md.Normal("\n- ").Mono("inspector")
+		md.Normal("\n- ").Mono("enforcer")
+		md.Normal("\n- ").Mono("civilian")
 
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
@@ -239,10 +239,10 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if len(args) < 3 && !replied {
 		// show help.
 		md := mdparser.GetNormal("You need to provide a user ID for this command.")
-		md.AppendBoldThis("\nYour options are:")
-		md.AppendNormalThis("\n- ").AppendMonoThis("/assign inspector ID")
-		md.AppendNormalThis("\n- ").AppendMonoThis("/assign enforcer ID")
-		md.AppendNormalThis("\n- ").AppendMonoThis("/assign civilian ID")
+		md.Bold("\nYour options are:")
+		md.Normal("\n- ").Mono("/assign inspector ID")
+		md.Normal("\n- ").Mono("/assign enforcer ID")
+		md.Normal("\n- ").Mono("/assign civilian ID")
 
 		_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
@@ -269,8 +269,8 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if err != nil || targetId == 0 {
 		if !replied && !preReplied {
 			md := mdparser.GetNormal("Invalid ID provided: ")
-			md.AppendMonoThis(args[2])
-			md.AppendNormalThis("!\nPlease make sure the target's ID is valid.")
+			md.Mono(args[2])
+			md.Normal("!\nPlease make sure the target's ID is valid.")
 
 			_, err := msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 				ParseMode:                sv.MarkDownV2,
@@ -326,15 +326,15 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		isDemote = u.Permission > perm
 		if u.IsOwner() {
 			md = mdparser.GetNormal("This decision is of Sibyl to make.\n")
-			md.AppendNormalThis("Please try another user ID.")
+			md.Normal("Please try another user ID.")
 		} else if u.Permission == perm {
 			md = mdparser.GetNormal("The user ")
-			md.AppendMentionThis(strconv.FormatInt(targetId, 10), u.UserId)
-			md.AppendNormalThis(" is already assigned as ")
-			md.AppendMonoThis(perm.GetStringPermission()).AppendNormal(".")
+			md.Mention(strconv.FormatInt(targetId, 10), u.UserId)
+			md.Normal(" is already assigned as ")
+			md.Mono(perm.GetStringPermission()).AppendNormal(".")
 		} else if !t.CanChangePermission(u.Permission, perm) {
 			md = mdparser.GetNormal("Seems like you don't have enough privileges to ")
-			md.AppendNormalThis("take this action.\nPlease try another user ID.")
+			md.Normal("take this action.\nPlease try another user ID.")
 		} else {
 			targetUser, err = database.GetUserFromId(targetId)
 			if err == nil && targetUser != nil && targetUser.Banned {
@@ -354,7 +354,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		}
 	} else {
 		md = mdparser.GetUserMention(strconv.FormatInt(targetId, 10), targetId)
-		md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
+		md.Normal(" needs to start me in PM to connect to Sibyl.")
 		_, err = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:                sv.MarkDownV2,
 			ReplyMarkup:              *startCymaticScanButton,
@@ -372,18 +372,18 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if !invalid {
 		var pm *gotgbot.Message
 		mdback := mdparser.GetNormal("Your permission has been changed to ")
-		mdback.AppendMonoThis(perm.GetStringPermission())
-		mdback.AppendNormalThis("!\n\nHere is your token:\n")
-		mdback.AppendMonoThis(u.Hash).AppendNormalThis("\n\n")
-		mdback.AppendBoldThis("Please don't share this token with anyone!")
+		mdback.Mono(perm.GetStringPermission())
+		mdback.Normal("!\n\nHere is your token:\n")
+		mdback.Mono(u.Hash).Normal("\n\n")
+		mdback.Bold("Please don't share this token with anyone!")
 		pm, err = b.SendMessage(targetId, mdback.ToString(), &gotgbot.SendMessageOpts{
 			ParseMode:             sv.MarkDownV2,
 			DisableWebPagePreview: true,
 		})
 		sendShouldStart := func() {
 			md = mdparser.GetUserMention("\u200D", targetId)
-			md.AppendMonoThis(strconv.FormatInt(targetId, 10))
-			md.AppendNormalThis(" needs to start me in PM to connect to Sibyl.")
+			md.Mono(strconv.FormatInt(targetId, 10))
+			md.Normal(" needs to start me in PM to connect to Sibyl.")
 			if topMsg != nil {
 				_, _, _ = topMsg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
 					ParseMode:             sv.MarkDownV2,

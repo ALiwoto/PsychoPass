@@ -55,17 +55,17 @@ func gitpullHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	mdResult := mdparser.GetEmpty()
 	if err != nil {
-		mdResult.AppendBoldThis("\n\nError:\n").AppendMonoThis(err.Error())
+		mdResult.Bold("\n\nError:\n").Mono(err.Error())
 		if len(errout) != 0 {
-			mdResult.AppendMonoThis("\n" + errout)
+			mdResult.Mono("\n" + errout)
 		}
 	} else {
 		if len(output) == 0 && len(errout) == 0 {
-			mdResult.AppendMonoThis("None")
+			mdResult.Mono("None")
 		} else {
-			mdResult.AppendMonoThis(
+			mdResult.Mono(
 				strings.ReplaceAll(output, b.Token, "$TOKEN"))
-			mdResult.AppendMonoThis(
+			mdResult.Mono(
 				strings.ReplaceAll("\n"+errout, b.Token, "$TOKEN"))
 		}
 	}

@@ -30,9 +30,9 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	fetchGitStats(md)
 
-	md.AppendBoldThis("📊 Current census of ")
+	md.Bold("📊 Current census of ")
 	nme := func() mdparser.WMarkDown {
-		return md.AppendNormalThis("\n• ")
+		return md.Normal("\n• ")
 	}
 	stat, err := database.FetchStat()
 	if err != nil {
@@ -42,13 +42,13 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	}
 
 	reasonAppend := func(c int64, r string) mdparser.WMarkDown {
-		nme().AppendMonoThis(strconv.FormatInt(c, 10))
-		return md.AppendNormalThis(" banned due to ").AppendMonoThis(r)
+		nme().Mono(strconv.FormatInt(c, 10))
+		return md.Normal(" banned due to ").Mono(r)
 	}
 
-	md.AppendHyperLinkThis("Sibyl System:", "https://t.me/SibylSystem/13")
-	nme().AppendNormalThis("Total ban count: ")
-	md.AppendMonoThis(stat.GetBannedCountString())
+	md.Link("Sibyl System:", "https://t.me/SibylSystem/13")
+	nme().Normal("Total ban count: ")
+	md.Mono(stat.GetBannedCountString())
 
 	reasonAppend(stat.TrollingBanCount, "TROLLING")
 	reasonAppend(stat.SpamBanCount, "SPAM")
@@ -61,20 +61,20 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	reasonAppend(stat.SpamBotBanCount, "SPAMBOT")
 	reasonAppend(stat.MassAddBanCount, "MASSADD")
 
-	nme().AppendMonoThis(stat.GetCloudyCountString())
-	md.AppendNormalThis(" with Cloudy Psychopass")
+	nme().Mono(stat.GetCloudyCountString())
+	md.Normal(" with Cloudy Psychopass")
 
-	nme().AppendMonoThis(stat.GetTokenCountString())
-	md.AppendNormalThis(" tokens generated")
+	nme().Mono(stat.GetTokenCountString())
+	md.Normal(" tokens generated")
 
-	nme().AppendMonoThis(stat.GetInspectorsCountString())
-	md.AppendNormalThis(" registered Inspectors")
+	nme().Mono(stat.GetInspectorsCountString())
+	md.Normal(" registered Inspectors")
 
-	nme().AppendMonoThis(stat.GetEnforcesCountString())
-	md.AppendNormalThis(" registered Enforcers")
+	nme().Mono(stat.GetEnforcesCountString())
+	md.Normal(" registered Enforcers")
 
-	md.AppendNormalThis("\n\n- Server uptime: ")
-	md.AppendMonoThis(sibylValues.GetPrettyUptime())
+	md.Normal("\n\n- Server uptime: ")
+	md.Mono(sibylValues.GetPrettyUptime())
 	_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode:             sibylValues.MarkDownV2,
 		DisableWebPagePreview: true,

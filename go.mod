@@ -3,8 +3,8 @@ module github.com/MinistryOfWelfare/PsychoPass
 go 1.17
 
 require (
-	github.com/ALiwoto/StrongStringGo v1.0.9
-	github.com/ALiwoto/mdparser v1.0.7
+	github.com/ALiwoto/StrongStringGo v1.0.10
+	github.com/ALiwoto/mdparser v1.0.10
 	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.5
 	github.com/gin-gonic/gin v1.7.7
 	github.com/gotgbot/ratelimiter v1.0.5
@@ -40,7 +40,7 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	golang.org/x/crypto v0.0.0-20220128200615-198e4374d7ed // indirect
-	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
+	golang.org/x/sys v0.0.0-20220128215802-99c3d69c2c27 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
