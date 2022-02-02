@@ -7,7 +7,7 @@ require (
 	github.com/ALiwoto/mdparser v1.0.10
 	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.6
 	github.com/gin-gonic/gin v1.7.7
-	github.com/gotgbot/ratelimiter v1.0.6
+	github.com/gotgbot/ratelimiter v1.0.7
 	go.uber.org/zap v1.20.0
 	gorm.io/driver/postgres v1.2.3
 	gorm.io/driver/sqlite v1.2.6
