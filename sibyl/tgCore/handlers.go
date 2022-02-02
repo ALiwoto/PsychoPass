@@ -22,9 +22,14 @@ func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 }
 
 func loadLimiter(d *ext.Dispatcher) {
-	sv.RateLimiter = ratelimiter.NewLimiter(d, false, false)
-	sv.RateLimiter.TextOnly = true
-	sv.RateLimiter.ConsiderUser = true
+	sv.RateLimiter = ratelimiter.NewLimiter(d, &ratelimiter.LimiterConfig{
+		ConsiderChannel:  false,
+		ConsiderUser:     true,
+		ConsiderEdits:    false,
+		IgnoreMediaGroup: true,
+		TextOnly:         true,
+		ConsiderInline:   true,
+	})
 	/*
 		# ratelimiter's punishment (ignoring) time in minutes.
 		ratelimiter_punishment_time = 40
@@ -56,10 +61,7 @@ func loadLimiter(d *ext.Dispatcher) {
 	if maxCache != 0 {
 		sv.RateLimiter.SetMaxCacheDuration(maxCache)
 	}
-
-	if len(ex) != 0 {
-		sv.RateLimiter.SetAsExceptionList(ex)
-	}
+	sv.RateLimiter.SetAsExceptionList(ex)
 
 	sv.RateLimiter.Start()
 }

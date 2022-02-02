@@ -5,9 +5,9 @@ go 1.17
 require (
 	github.com/ALiwoto/StrongStringGo v1.0.10
 	github.com/ALiwoto/mdparser v1.0.10
-	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.5
+	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.6
 	github.com/gin-gonic/gin v1.7.7
-	github.com/gotgbot/ratelimiter v1.0.5
+	github.com/gotgbot/ratelimiter v1.0.6
 	go.uber.org/zap v1.20.0
 	gorm.io/driver/postgres v1.2.3
 	gorm.io/driver/sqlite v1.2.6
@@ -39,7 +39,7 @@ require (
 	github.com/ugorji/go/codec v1.2.6 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
-	golang.org/x/crypto v0.0.0-20220128200615-198e4374d7ed // indirect
+	golang.org/x/crypto v0.0.0-20220131195533-30dcbda58838 // indirect
 	golang.org/x/sys v0.0.0-20220128215802-99c3d69c2c27 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
