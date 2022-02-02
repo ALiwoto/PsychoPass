@@ -58,6 +58,8 @@ github.com/gotgbot/ratelimiter v1.0.5 h1:5fcm53IvzaRII/gP4TDovF5A+ivj3uybwzd+2x3
 github.com/gotgbot/ratelimiter v1.0.5/go.mod h1:YUfD/iZi1LiqUxq0n8xI7s83KpuBK5QahmEXVSzYVZE=
 github.com/gotgbot/ratelimiter v1.0.6 h1:6hc+RkJt2Q08nCY4ltuZVqaCQ+VsheVhIs14n6XdY6s=
 github.com/gotgbot/ratelimiter v1.0.6/go.mod h1:WLQxe9yE13sSb1okzmWc8tTgAyr79poTuylbe0GFnig=
+github.com/gotgbot/ratelimiter v1.0.7 h1:qZZo50TkGKxyu8q8/IQ0+uA15q0NZqPCoVhQ7ou0aQA=
+github.com/gotgbot/ratelimiter v1.0.7/go.mod h1:WLQxe9yE13sSb1okzmWc8tTgAyr79poTuylbe0GFnig=
 github.com/jackc/chunkreader v1.0.0 h1:4s39bBR8ByfqH+DKm8rQA3E1LHZWB9XWcrz8fqaZbe0=
 github.com/jackc/chunkreader v1.0.0/go.mod h1:RT6O25fNZIuasFJRyZ4R/Y2BbhasbmZXF9QQ7T3kePo=
 github.com/jackc/chunkreader/v2 v2.0.0/go.mod h1:odVSm741yZoC3dpHEUXIqA9tQRhFrgOHwnPIn9lDKlk=
