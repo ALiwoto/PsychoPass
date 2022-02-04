@@ -202,6 +202,7 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 		logMd := mdparser.GetNormal("#AutoAppeal")
 		logMd.Bold("\n • User").Normal(": ")
 		logMd.Mention(user.FirstName, user.Id)
+		logMd.Normal("[").Mono(ws.ToBase10(user.Id)).Normal("]")
 		logMd.Bold("\n • Crime Coefficient").Normal(": ")
 		logMd.Mono(uPre.GetStringCrimeCoefficient())
 		logMd.Bold("\n • Reason(s)").Normal(": ")
@@ -212,6 +213,10 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 		logMd.Mono(uPre.GetDateAsShort())
 		logMd.Bold("\n • Appeal Date").Normal(": ")
 		logMd.Mono(time.Now().Format(sv.AppealLogDateFormat))
+		if uPre.BanSourceUrl != "" {
+			logMd.Bold("\n • Scan source").Normal(": ")
+			logMd.Normal(uPre.BanSourceUrl)
+		}
 
 		go func() {
 			text := logMd.ToString()
