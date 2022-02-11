@@ -23,9 +23,5 @@ func toGeneralInfoResult(t, agent *sv.Token) *GeneralInfoResult {
 }
 
 func shouldSendNotFound(token *sv.Token, user *sv.User) bool {
-	if token == nil {
-		return !user.IsPastBanned() && user.IsCivilian()
-	}
-
-	return !token.IsRegistered() && !user.IsPastBanned()
+	return !user.IsPastBanned() && user.IsCivilian() && !token.IsRegistered()
 }

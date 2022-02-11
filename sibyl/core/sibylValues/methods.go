@@ -34,7 +34,7 @@ func (t *Token) IsEnforcer() bool {
 // IsRegistered returns true if the owner of this token is considered as
 // a valid registered user in the system.
 func (t *Token) IsRegistered() bool {
-	return t.Permission > NormalUser
+	return t != nil && t.Permission > NormalUser
 }
 
 // CanReport returns true if the token with its current
