@@ -24,6 +24,7 @@ var (
 	scanDbMap            map[string]*sv.Report           = make(map[string]*sv.Report)
 	associationScanMap   map[string]*sv.MultiScanRawData = make(map[string]*sv.MultiScanRawData)
 	modelUser            *sv.User                        = &sv.User{}
+	emptyUser            *sv.User                        = &sv.User{}
 	modelToken           *sv.Token                       = &sv.Token{}
 	modelScan            *sv.Report                      = &sv.Report{}
 	lastStats            *sv.StatValue

@@ -57,16 +57,7 @@ func ConvertToPermission(value string) (UserPermission, error) {
 }
 
 func IsInvalidID(id int64) bool {
-	switch id {
-	case 0, // 0 is not a valid ID
-		777000,     // telegram
-		1087968824, // anon
-		136817688,  // channel bot
-		1926801217: // unsupported user
-		return true
-	default:
-		return false
-	}
+	return _invalidUserIDs[id]
 }
 
 func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {

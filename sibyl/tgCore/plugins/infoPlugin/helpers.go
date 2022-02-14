@@ -43,7 +43,7 @@ func fetchGitStats(md mdparser.WMarkDown) {
 
 	md.Normal("ℹ️ ").Link("Git ", gitBaseUrl)
 	md.Bold("Status:")
-	md.Normal("\n• Currently on: ").Link(shortGit, commitUrl)
-	md.Normal("\n• Running behind by: ").Mono(strconv.Itoa(vsInt))
+	md.Normal("\n• Current commit: ").Link(shortGit, commitUrl)
+	md.Normal("\n• Running behind by ").Mono(strconv.Itoa(vsInt))
 	md.Normal(" commits\n\n")
 }

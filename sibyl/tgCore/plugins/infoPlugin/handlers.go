@@ -43,11 +43,11 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	reasonAppend := func(c int64, r string) mdparser.WMarkDown {
 		nme().Mono(strconv.FormatInt(c, 10))
-		return md.Normal(" banned due to ").Mono(r)
+		return md.Normal(" banned for ").Mono(r)
 	}
 
 	md.Link("Sibyl System:", "https://t.me/SibylSystem/13")
-	nme().Normal("Total ban count: ")
+	nme().Normal("Total bans: ")
 	md.Mono(stat.GetBannedCountString())
 
 	reasonAppend(stat.TrollingBanCount, "TROLLING")
@@ -73,7 +73,7 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	nme().Mono(stat.GetEnforcesCountString())
 	md.Normal(" registered Enforcers")
 
-	md.Normal("\n\n- Server uptime: ")
+	md.Normal("\n\n• Server uptime: ")
 	md.Mono(sibylValues.GetPrettyUptime())
 	_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode:             sibylValues.MarkDownV2,

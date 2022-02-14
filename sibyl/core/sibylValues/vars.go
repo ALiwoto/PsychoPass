@@ -92,3 +92,11 @@ var _detailsString = map[BanFlag]string{
 	BanFlagSpamBot:      "You were behaving like a scam bot that attempts to ensnare users with falsified data in attempt to scam them.",
 	BanFlagMassAdd:      "You were spam adding members from other groups to your own, not only this isn't welcome as platform terms of service this is also unwelcome around Sibyl, your ban will not be appealable.",
 }
+
+var _invalidUserIDs = map[int64]bool{
+	0:          true, // 0 is not a valid ID
+	777000:     true, // telegram
+	1087968824: true, // anon
+	136817688:  true, // channel bot
+	1926801217: true, // unsupported user
+}

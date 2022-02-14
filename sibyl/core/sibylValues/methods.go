@@ -568,6 +568,10 @@ func (u *User) ClearHistory() {
 	u.BanCount = 0x0
 }
 
+func (u *User) IsInvalid() bool {
+	return IsInvalidID(u.UserID)
+}
+
 func (u *User) IncreaseCrimeCoefficient(reason string) {
 	ranges := GetCCRangeByString(reason)
 	u.IncreaseCrimeCoefficientByRanges(ranges...)

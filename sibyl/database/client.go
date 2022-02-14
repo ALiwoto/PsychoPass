@@ -94,7 +94,7 @@ func cleanMaps() {
 
 		userMapMutex.Lock()
 		for key, value := range userDbMap {
-			if value == nil || value.IsExpired(mtime) {
+			if (value == nil || value.IsExpired(mtime)) && value != emptyUser {
 				delete(userDbMap, key)
 			}
 		}

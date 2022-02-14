@@ -18,6 +18,9 @@ func GetUserFromId(id int64) (*sv.User, error) {
 	if u != nil {
 		u.SetCacheDate()
 		return u, nil
+	} else if u == emptyUser {
+		// not found
+		return nil, nil
 	}
 
 	u = &sv.User{}
@@ -26,6 +29,9 @@ func GetUserFromId(id int64) (*sv.User, error) {
 	unlockdb()
 	if u.UserID != id {
 		// not found
+		userMapMutex.Lock()
+		userDbMap[id] = emptyUser
+		userMapMutex.Unlock()
 		return nil, nil
 	}
 
