@@ -85,6 +85,10 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	md.Mention(user.FirstName, user.Id)
 	md.Bold("\n • ID").Normal(": ")
 	md.Mono(strconv.FormatInt(user.Id, 10))
+	if user.Username != "" {
+		md.Bold("\n • Username").Normal(": ")
+		md.Mono(user.Username)
+	}
 	md.Bold("\n • Is banned").Normal(": ")
 	md.Mono(ws.YesOrNo(u.Banned))
 	md.Bold("\n • Status").Normal(": ")
@@ -95,6 +99,10 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	md.AppendThis(u.FormatFlags())
 	md.Bold("\n • Description").Normal(": ")
 	md.Mono(u.Reason)
+	if u.BanSourceUrl != "" {
+		md.Bold("\n • Scan source").Normal(": ")
+		md.Normal(u.BanSourceUrl)
+	}
 
 	var markup gotgbot.InlineKeyboardMarkup
 
@@ -112,8 +120,9 @@ func startForBanned(b *gotgbot.Bot, ctx *ext.Context, u *sv.User, t *sv.Token) {
 	md.Normal(" repeat this ever again.")
 	markup.InlineKeyboard = makeFirstPageAppealButtons()
 	_, _, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
-		ParseMode:   sv.MarkDownV2,
-		ReplyMarkup: markup,
+		ParseMode:             sv.MarkDownV2,
+		DisableWebPagePreview: true,
+		ReplyMarkup:           markup,
 	})
 	sv.RateLimiter.RemoveCustomIgnore(user.Id)
 }
@@ -203,6 +212,10 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 		logMd.Bold("\n • User").Normal(": ")
 		logMd.Mention(user.FirstName, user.Id)
 		logMd.Normal("[").Mono(ws.ToBase10(user.Id)).Normal("]")
+		if user.Username != "" {
+			logMd.Bold("\n • Username").Normal(": ")
+			logMd.Mono(user.Username)
+		}
 		logMd.Bold("\n • Crime Coefficient").Normal(": ")
 		logMd.Mono(uPre.GetStringCrimeCoefficient())
 		logMd.Bold("\n • Reason(s)").Normal(": ")
@@ -218,14 +231,10 @@ func showAppealDoneDetails(b *gotgbot.Bot, ctx *ext.Context, u *sv.User) error {
 			logMd.Normal(uPre.BanSourceUrl)
 		}
 
-		go func() {
-			text := logMd.ToString()
-			for _, chatId := range chats {
-				_, _ = b.SendMessage(chatId, text, &gotgbot.SendMessageOpts{
-					ParseMode: sv.MarkDownV2,
-				})
-			}
-		}()
+		go utils.SendMultipleMessages(chats, logMd.ToString(), &gotgbot.SendMessageOpts{
+			ParseMode:             sv.MarkDownV2,
+			DisableWebPagePreview: true,
+		})
 	}
 
 	_, _, _ = msg.EditText(b, md.ToString(), &gotgbot.EditMessageTextOpts{
