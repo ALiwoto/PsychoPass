@@ -75,7 +75,7 @@ const (
 
 	// ErrCannotReportYourself is the error message that should be sent when the user
 	// has sent a report request for itself.
-	ErrCannotReportYourself = "You can't report yourself"
+	ErrCannotReportYourself = "You can't scan yourself"
 
 	// ErrCannotBanYourself is the error message that should be sent when the user
 	// has sent a report request for itself.

@@ -157,20 +157,8 @@ func (t *Token) GetTitleStringPermission() string {
 	return strings.Title(t.Permission.GetStringPermission())
 }
 
-func (t *Token) GetCacheDate() time.Time {
-	return t.cacheDate
-}
-
-func (t *Token) IsExpired(d time.Duration) bool {
-	return time.Since(t.cacheDate) > d
-}
-
 func (t *Token) GetFormatedCreatedDate() string {
 	return t.CreatedAt.Format("2006-01-02 at 15:04:05")
-}
-
-func (t *Token) SetCacheDate() {
-	t.cacheDate = time.Now()
 }
 
 //---------------------------------------------------------
@@ -473,18 +461,6 @@ func (r *Report) IsInvalid() bool {
 	return r.UniqueId == ""
 }
 
-func (r *Report) GetCacheDate() time.Time {
-	return r.cacheDate
-}
-
-func (r *Report) SetCacheDate() {
-	r.cacheDate = time.Now()
-}
-
-func (r *Report) IsExpired(d time.Duration) bool {
-	return time.Since(r.cacheDate) > d
-}
-
 //---------------------------------------------------------
 
 func (u *User) IsCCValid(t *Token) bool {
@@ -519,18 +495,6 @@ func (u *User) IsCivilian() bool {
 
 func (u *User) IsRestored() bool {
 	return RangeRestored.IsInRange(u.CrimeCoefficient)
-}
-
-func (u *User) GetCacheDate() time.Time {
-	return u.cacheDate
-}
-
-func (u *User) SetCacheDate() {
-	u.cacheDate = time.Now()
-}
-
-func (u *User) IsExpired(d time.Duration) bool {
-	return time.Since(u.cacheDate) > d
 }
 
 func (u *User) setHueColor() {
@@ -958,14 +922,6 @@ func (m *MultiBanUserInfo) IsInvalid(by int64) bool {
 func (m *MultiScanRawData) GenerateID() {
 	m.AssociationBanId =
 		AssociationScanPrefix + strconv.FormatInt(time.Now().Unix(), 34)
-}
-
-func (m *MultiScanRawData) SetCacheDate() {
-	m.cacheDate = time.Now()
-}
-
-func (m *MultiScanRawData) IsExpired(d time.Duration) bool {
-	return time.Since(m.cacheDate) > d
 }
 
 func (m *MultiScanRawData) getNameById(id int64) string {

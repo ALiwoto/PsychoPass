@@ -24,7 +24,6 @@ func NewReport(reason, message, link string, target, reporter int64,
 	}
 
 	r.SetUniqueId()
-	r.SetCacheDate()
 	return r
 }
 

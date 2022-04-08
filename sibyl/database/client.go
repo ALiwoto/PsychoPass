@@ -73,6 +73,10 @@ func StartDatabase() {
 
 func cleanMaps() {
 	mtime := sibylConfig.GetMaxCacheTime()
+	tokenDbMap.SetExpiration(mtime)
+	userDbMap.SetExpiration(mtime)
+	scanDbMap.SetExpiration(mtime)
+	associationScanMap.SetExpiration(mtime)
 	for {
 		time.Sleep(mtime)
 
@@ -84,37 +88,10 @@ func cleanMaps() {
 			return
 		}
 
-		tokenMapMutex.Lock()
-		for key, value := range tokenDbMap {
-			if value == nil || value.IsExpired(mtime) {
-				delete(tokenDbMap, key)
-			}
-		}
-		tokenMapMutex.Unlock()
-
-		userMapMutex.Lock()
-		for key, value := range userDbMap {
-			if (value == nil || value.IsExpired(mtime)) && value != emptyUser {
-				delete(userDbMap, key)
-			}
-		}
-		userMapMutex.Unlock()
-
-		scanMapMutex.Lock()
-		for key, value := range scanDbMap {
-			if value == nil || value.IsExpired(mtime) {
-				delete(scanDbMap, key)
-			}
-		}
-		scanMapMutex.Unlock()
-
-		associationScanMutex.Lock()
-		for key, value := range associationScanMap {
-			if value == nil || value.IsExpired(mtime) {
-				delete(scanDbMap, key)
-			}
-		}
-		associationScanMutex.Unlock()
+		tokenDbMap.DoCheck()
+		userDbMap.DoCheck()
+		scanDbMap.DoCheck()
+		associationScanMap.DoCheck()
 	}
 }
 

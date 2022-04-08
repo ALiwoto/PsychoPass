@@ -12,11 +12,8 @@ func GetUserFromId(id int64) (*sv.User, error) {
 		return nil, ErrNoSession
 	}
 
-	userMapMutex.Lock()
-	u := userDbMap[id]
-	userMapMutex.Unlock()
+	u := userDbMap.Get(id)
 	if u != nil {
-		u.SetCacheDate()
 		return u, nil
 	} else if u == emptyUser {
 		// not found
@@ -29,18 +26,13 @@ func GetUserFromId(id int64) (*sv.User, error) {
 	unlockdb()
 	if u.UserID != id {
 		// not found
-		userMapMutex.Lock()
-		userDbMap[id] = emptyUser
-		userMapMutex.Unlock()
+		userDbMap.Add(id, emptyUser)
 		return nil, nil
 	}
 
-	u.SetCacheDate()
 	u.FormatBanDate()
 	u.SetBanFlags()
-	userMapMutex.Lock()
-	userDbMap[u.UserID] = u
-	userMapMutex.Unlock()
+	userDbMap.Add(u.UserID, u)
 
 	return u, nil
 }
@@ -151,10 +143,7 @@ func NewUser(u *sv.User) {
 	tx.Commit()
 	unlockdb()
 
-	u.SetCacheDate()
-	userMapMutex.Lock()
-	userDbMap[u.UserID] = u
-	userMapMutex.Unlock()
+	userDbMap.Add(u.UserID, u)
 }
 
 // ForceInsert function acts like `AddBan`, but it doesn't ban the user.

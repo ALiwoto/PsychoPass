@@ -14,10 +14,7 @@ func AddScan(scan *sv.Report) {
 	tx.Save(scan)
 	tx.Commit()
 	unlockdb()
-	scan.SetCacheDate()
-	scanMapMutex.Lock()
-	scanDbMap[scan.UniqueId] = scan
-	scanMapMutex.Unlock()
+	scanDbMap.Add(scan.UniqueId, scan)
 }
 
 func AddMultiScan(data *sv.MultiScanRawData) {
@@ -45,16 +42,17 @@ func AddMultiScan(data *sv.MultiScanRawData) {
 	tx.Create(scans)
 	tx.Commit()
 	unlockdb()
-	data.SetCacheDate()
-	associationScanMutex.Lock()
-	associationScanMap[data.AssociationBanId] = data
-	associationScanMutex.Unlock()
+	associationScanMap.Add(data.AssociationBanId, data)
 }
 
 func GetMultiScan(associationBanId string) *sv.MultiScanRawData {
-	associationScanMutex.Lock()
-	data := associationScanMap[associationBanId]
-	associationScanMutex.Unlock()
+	data := associationScanMap.Get(associationBanId)
+	if data == emptyAssociationData {
+		// we have already done a check for this associationBan Id and we do know
+		// that it doesn't exist, don't send a new query to database and return nil.
+		return nil
+	}
+
 	if data != nil {
 		return data
 	}
@@ -67,13 +65,14 @@ func GetMultiScan(associationBanId string) *sv.MultiScanRawData {
 	unlockdb()
 
 	if len(scans) == 0 {
+		// id is not found, cache the id in memory so we don't send new database
+		// query in the future for this id.
+		associationScanMap.Add(associationBanId, emptyAssociationData)
 		return nil
 	}
 
 	data = toMultiScanRawData(scans)
-	associationScanMutex.Lock()
-	associationScanMap[associationBanId] = data
-	associationScanMutex.Unlock()
+	associationScanMap.Add(associationBanId, data)
 	return data
 }
 
@@ -104,8 +103,6 @@ func toMultiScanRawData(scans []*sv.Report) *sv.MultiScanRawData {
 
 	}
 
-	data.SetCacheDate()
-
 	return data
 }
 
@@ -114,9 +111,7 @@ func GetScan(uniqueId string) *sv.Report {
 		return nil
 	}
 
-	scanMapMutex.Lock()
-	scan := scanDbMap[uniqueId]
-	scanMapMutex.Unlock()
+	scan := scanDbMap.Get(uniqueId)
 	if scan != nil {
 		return scan
 	}
@@ -130,9 +125,7 @@ func GetScan(uniqueId string) *sv.Report {
 		return scan
 	}
 
-	scanMapMutex.Lock()
-	scanDbMap[scan.UniqueId] = scan
-	scanMapMutex.Unlock()
+	scanDbMap.Add(uniqueId, scan)
 	return scan
 }
 

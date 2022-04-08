@@ -59,7 +59,6 @@ type User struct {
 	FlagRaid         bool        `json:"-"`
 	FlagSpamBot      bool        `json:"-"`
 	FlagMassAdd      bool        `json:"-"`
-	cacheDate        time.Time   `json:"-" gorm:"-" sql:"-"`
 }
 
 type Token struct {
@@ -94,9 +93,6 @@ type Token struct {
 
 	// DeniedReports is the count of denied reports.
 	DeniedReports int `json:"denied_reports"`
-
-	// cacheDate is the starting date of value being cached in the memory.
-	cacheDate time.Time `json:"-"`
 }
 
 type AssaultDominatorData struct {
@@ -137,10 +133,6 @@ type Report struct {
 	// AgentUser is the agent user who has clicked the approve, reject or close
 	// button (or sent the command).
 	AgentUser *gotgbot.User `json:"-" gorm:"-" sql:"-"`
-	// cacheDate is the date of this scan being cached in the memory.
-	// its for internal usage only; it shouldn't be present in json, gorm or sql
-	// operations.
-	cacheDate time.Time `json:"-" gorm:"-" sql:"-"`
 }
 
 // CrimeCoefficientRange is the range of crime coefficients.
@@ -186,7 +178,6 @@ type MultiScanRawData struct {
 	AgentDate          time.Time      `json:"-"`
 	ReporterId         int64          `json:"-"`
 	Status             ScanStatus     `json:"-"`
-	cacheDate          time.Time      `json:"-" `
 }
 
 type Triggers struct {
