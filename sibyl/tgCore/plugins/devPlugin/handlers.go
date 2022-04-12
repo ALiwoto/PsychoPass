@@ -63,10 +63,8 @@ func gitpullHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		if len(output) == 0 && len(errout) == 0 {
 			mdResult.Mono("None")
 		} else {
-			mdResult.Mono(
-				strings.ReplaceAll(output, b.Token, "$TOKEN"))
-			mdResult.Mono(
-				strings.ReplaceAll("\n"+errout, b.Token, "$TOKEN"))
+			mdResult.Mono(output)
+			mdResult.Mono("\n" + errout)
 		}
 	}
 	_ = utils.SafeEditNoFormat(b, ctx, topMsg, mdResult.ToString())

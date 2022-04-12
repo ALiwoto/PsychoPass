@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/ALiwoto/mdparser/mdparser"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
@@ -27,6 +28,8 @@ func StartTelegramBot() {
 		logging.Info("Unable to login to the helper bot due to:", err)
 		return
 	}
+
+	mdparser.AddSecret(b.Token, "$TOKEN")
 
 	url := sibylConfig.GetAPIUrl()
 	if len(url) != 0 {
