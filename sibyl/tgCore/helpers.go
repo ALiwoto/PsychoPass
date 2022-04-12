@@ -33,7 +33,12 @@ func StartTelegramBot() {
 		b.APIURL = url
 	}
 
-	utmp := ext.NewUpdater(nil)
+	uOptions := &ext.UpdaterOpts{
+		DispatcherOpts: ext.DispatcherOpts{
+			MaxRoutines: -1,
+		},
+	}
+	utmp := ext.NewUpdater(uOptions)
 	updater := &utmp
 	err = updater.StartPolling(b, &ext.PollingOpts{
 		DropPendingUpdates: sibylConfig.DropUpdates(),

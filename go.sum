@@ -4,10 +4,14 @@ github.com/ALiwoto/StrongStringGo v1.0.18 h1:LtoKRyH/t6BOsZbEzUrVKgJjxxxvOqVo9yS
 github.com/ALiwoto/StrongStringGo v1.0.18/go.mod h1:TTdQ00xWfw4XTbG49A42DDSAODPsCUi0ZCRPM+/ga1k=
 github.com/ALiwoto/StrongStringGo v1.0.19 h1:OhiwoMseu7eQ5dMSpRy2Z86AWYHjq79rKE3kxHeuRRw=
 github.com/ALiwoto/StrongStringGo v1.0.19/go.mod h1:TTdQ00xWfw4XTbG49A42DDSAODPsCUi0ZCRPM+/ga1k=
+github.com/ALiwoto/StrongStringGo v1.1.1 h1:zz0meoh5wIpR6KtfngFlsrrMXuZbOiKvMUdrrCHU+1I=
+github.com/ALiwoto/StrongStringGo v1.1.1/go.mod h1:TTdQ00xWfw4XTbG49A42DDSAODPsCUi0ZCRPM+/ga1k=
 github.com/ALiwoto/mdparser v1.0.10 h1:fV1YePSwHNCqEboFDvaTrHqTiUazTWVKBER03HUAAIc=
 github.com/ALiwoto/mdparser v1.0.10/go.mod h1:oKSQ8y6XxAX5Z1CWX7M9pRPNyGINi0fGGvu4GIJTebw=
 github.com/ALiwoto/mdparser v1.0.11 h1:qQq8e3Bco60ziiMFhq1F8QLaFhnB+pBtkg6dvdcwDzg=
 github.com/ALiwoto/mdparser v1.0.11/go.mod h1:aOfQn8/SEPOFdMRhhE0oaFomYgQLJ+8QUG0EFvWUGBg=
+github.com/ALiwoto/mdparser v1.0.14 h1:9VJ8ABnnHqe4nu+C+2EsNNU2sDh1tOlg1pUdLOpBwrE=
+github.com/ALiwoto/mdparser v1.0.14/go.mod h1:DF420RaJFmh6PNvaM9ago77Rw9XVXwEJaE/oJOJE7s8=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Masterminds/semver/v3 v3.1.1 h1:hLg3sBzpNErnxhQtUy/mmLR2I9foDujNK030IGemrRc=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
@@ -247,6 +251,8 @@ golang.org/x/crypto v0.0.0-20220213190939-1e6e3497d506 h1:EuGTJDfeg/PGZJp3gq1K+1
 golang.org/x/crypto v0.0.0-20220213190939-1e6e3497d506/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
 golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 h1:tkVvjkPTB7pnW3jnid7kNyAMPVWllTNOf/qKDze4p9o=
 golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
+golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 h1:kUhD7nTDoI3fVd9G4ORWrbV5NY0liEs/Jg2pv5f+bBA=
+golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
 golang.org/x/lint v0.0.0-20190930215403-16217165b5de/go.mod h1:6SW0HCj/g11FgYtHlgUYUwCkIfeOF89ocIRzGO/8vkc=
 golang.org/x/mod v0.0.0-20190513183733-4bf6d317e70e/go.mod h1:mXi4GBBbnImb6dmsKGUJ2LatrhH/nqhxcFungHvyanc=
 golang.org/x/mod v0.1.1-0.20191105210325-c90efee705ee/go.mod h1:QqPTAvyqsEbceGzBzNggFXnrqF1CaUcvgkdR5Ot7KZg=
@@ -287,6 +293,8 @@ golang.org/x/sys v0.0.0-20220403205710-6acee93ad0eb h1:PVGECzEo9Y3uOidtkHGdd347N
 golang.org/x/sys v0.0.0-20220403205710-6acee93ad0eb/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220406163625-3f8b81556e12 h1:QyVthZKMsyaQwBTJE04jdNN0Pp5Fn9Qga0mrgxyERQM=
 golang.org/x/sys v0.0.0-20220406163625-3f8b81556e12/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20220412015802-83041a38b14a h1:MjZauhfFyuA8jS6CGa4rO215DgesKDIEzMSQ6mm8wW8=
+golang.org/x/sys v0.0.0-20220412015802-83041a38b14a/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/term v0.0.0-20201117132131-f5c789dd3221/go.mod h1:Nr5EML6q2oocZ2LXRh80K7BxOlk5/8JxuGnuhpl+muw=
 golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
