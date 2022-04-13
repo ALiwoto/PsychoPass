@@ -54,6 +54,7 @@ func getMultiReportButtons(uniqueId string) *gotgbot.InlineKeyboardMarkup {
 	return kb
 }
 
+// pushScanToDatabase converts a scan to a ban and pushes it to the database
 func pushScanToDatabase(scan *sv.Report) {
 	u, err := database.GetUserFromId(scan.TargetUser)
 	var count int
@@ -90,18 +91,32 @@ func pushScanToDatabase(scan *sv.Report) {
 	database.AddBan(info)
 }
 
+func pushMultipleScanToDatabase(data *sv.MultiScanRawData) {
+	if len(data.Origins) == 0 {
+		return
+	}
+
+	for _, current := range data.Origins {
+		pushScanToDatabase(current)
+	}
+}
+
 func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 	sv.SendReportHandler = sendReportHandler
 	sv.SendMultiReportHandler = sendMultiReportHandler
 	sv.SendToADHandler = sendToADHandler
 
 	scanCb := handlers.NewCallback(scanCallBackQuery, scanCallBackResponse)
+	multiScanCb := handlers.NewCallback(multiScanCallBackQuery, multiScanCallBackResponse)
 	approveCmd := handlers.NewCommand(ApproveCmd, approveHandler)
-	aCmd := handlers.NewCommand(ACmd, approveHandler)
+	aCmd := handlers.NewCommand(ACmd, approveHandler) // 'a' short for approve command
 	rejectCmd := handlers.NewCommand(RejectCmd, rejectHandler)
-	rCmd := handlers.NewCommand(RCmd, rejectHandler)
+	rCmd := handlers.NewCommand(RCmd, rejectHandler) // 'r' short for reject command
 	closeCmd := handlers.NewCommand(CloseCmd, closeHandler)
+
 	scanCb.AllowChannel = true
+	multiScanCb.AllowChannel = true
+
 	approveCmd.Triggers = triggers
 	aCmd.Triggers = triggers
 	rejectCmd.Triggers = triggers
@@ -113,4 +128,5 @@ func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 	d.AddHandler(rCmd)
 	d.AddHandler(closeCmd)
 	d.AddHandler(scanCb)
+	d.AddHandler(multiScanCb)
 }

@@ -101,6 +101,7 @@ func toMultiScanRawData(scans []*sv.Report) *sv.MultiScanRawData {
 			data.Source = current.ScanSourceLink
 		}
 
+		data.Origins = append(data.Origins, current)
 	}
 
 	return data
@@ -162,5 +163,15 @@ func UpdateScan(scan *sv.Report) {
 		tx.Save(agent)
 		tx.Commit()
 		unlockdb()
+	}
+}
+
+func UpdateMultipleScan(data *sv.MultiScanRawData) {
+	if data == nil || len(data.Origins) == 0 {
+		return
+	}
+
+	for _, current := range data.Origins {
+		UpdateScan(current)
 	}
 }

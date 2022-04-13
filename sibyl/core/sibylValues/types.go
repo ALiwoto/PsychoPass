@@ -178,6 +178,7 @@ type MultiScanRawData struct {
 	AgentDate          time.Time      `json:"-"`
 	ReporterId         int64          `json:"-"`
 	Status             ScanStatus     `json:"-"`
+	Origins            []*Report
 }
 
 type Triggers struct {

@@ -991,6 +991,36 @@ func (m *MultiScanRawData) GetStatusString() string {
 	}
 }
 
+func (m *MultiScanRawData) Close(agentId int64, reason string) {
+	if len(m.Origins) == 0 {
+		return
+	}
+
+	for _, current := range m.Origins {
+		current.Close(agentId, reason)
+	}
+}
+
+func (m *MultiScanRawData) Approve(agentId int64, reason string) {
+	if len(m.Origins) == 0 {
+		return
+	}
+
+	for _, current := range m.Origins {
+		current.Approve(agentId, reason)
+	}
+}
+
+func (m *MultiScanRawData) Reject(agentId int64, reason string) {
+	if len(m.Origins) == 0 {
+		return
+	}
+
+	for _, current := range m.Origins {
+		current.Reject(agentId, reason)
+	}
+}
+
 func (m *MultiScanRawData) ParseAsMd() mdparser.WMarkDown {
 	md := mdparser.GetNormal("#ASSOCIATION_SCAN:\n")
 	agentId := strconv.FormatInt(m.ReporterId, 10)
