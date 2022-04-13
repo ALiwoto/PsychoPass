@@ -13,11 +13,11 @@ func GetUserFromId(id int64) (*sv.User, error) {
 	}
 
 	u := userDbMap.Get(id)
-	if u != nil {
-		return u, nil
-	} else if u == emptyUser {
-		// not found
+	if u == emptyUser {
 		return nil, nil
+	} else if u != nil {
+		// not found
+		return u, nil
 	}
 
 	u = &sv.User{}
