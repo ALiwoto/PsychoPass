@@ -37,6 +37,11 @@ func AddMultiScan(data *sv.MultiScanRawData) {
 		scans = append(scans, tmpScans)
 	}
 
+	// without doing this, none of the `Approve`, `Reject` and `Close` will work.
+	// See also: https://github.com/MinistryOfWelfare/PsychoPass/issues/3
+	// See also: https://github.com/MinistryOfWelfare/PsychoPass/issues/3#issuecomment-1098486411
+	data.Origins = scans
+
 	lockdb()
 	tx := SESSION.Begin()
 	tx.Create(scans)
