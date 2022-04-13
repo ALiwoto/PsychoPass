@@ -363,7 +363,7 @@ func (r *Report) Close(agentId int64, reason string) {
 	r.AgentReason = reason
 }
 
-func (r *Report) GetMaxMessage() int {
+func (r *Report) GetMaxMessageLength() int {
 	if r.ScanStatus == ScanPending {
 		return 512
 	} else {
@@ -387,7 +387,7 @@ func (r *Report) ParseAsMd() mdparser.WMarkDown {
 		target = target[:22] + "..."
 	}
 
-	maxMessage := r.GetMaxMessage()
+	maxMessage := r.GetMaxMessageLength()
 	var theScanMessage string
 	if len(r.ReportMessage) > maxMessage {
 		// truncate the message if it's just too long
@@ -991,6 +991,20 @@ func (m *MultiScanRawData) GetStatusString() string {
 	}
 }
 
+// setStatus method sets the `Status` field of this struct to the passed
+// argument. `AgentDate` field will be set to current time as well.
+// this method is private and supposed to be called *only* in `Approve`, `Reject`
+// and `Close` methods. if you want to change the status of this multi-scan value,
+// you have to call one of the mentioned methods.
+func (m *MultiScanRawData) setStatus(status ScanStatus) {
+	// if we don't set this field here, it will be zero,
+	// and the `tgCore` package will return wrong text for the
+	// helper bot's message.
+	// See also: https://github.com/MinistryOfWelfare/PsychoPass/issues/4
+	m.AgentDate = time.Now()
+	m.Status = status
+}
+
 func (m *MultiScanRawData) Close(agentId int64, reason string) {
 	if len(m.Origins) == 0 {
 		return
@@ -1000,7 +1014,7 @@ func (m *MultiScanRawData) Close(agentId int64, reason string) {
 		current.Close(agentId, reason)
 	}
 
-	m.Status = ScanClosed
+	m.setStatus(ScanClosed)
 }
 
 func (m *MultiScanRawData) Approve(agentId int64, reason string) {
@@ -1012,7 +1026,7 @@ func (m *MultiScanRawData) Approve(agentId int64, reason string) {
 		current.Approve(agentId, reason)
 	}
 
-	m.Status = ScanApproved
+	m.setStatus(ScanApproved)
 }
 
 func (m *MultiScanRawData) Reject(agentId int64, reason string) {
@@ -1024,7 +1038,7 @@ func (m *MultiScanRawData) Reject(agentId int64, reason string) {
 		current.Reject(agentId, reason)
 	}
 
-	m.Status = ScanRejected
+	m.setStatus(ScanRejected)
 }
 
 func (m *MultiScanRawData) ParseAsMd() mdparser.WMarkDown {
