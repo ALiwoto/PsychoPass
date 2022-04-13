@@ -7,6 +7,11 @@ import (
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
 
+// GetUserFromId returns the user value from the database, returns error if any.
+// please do notice that if the user can't be found in database, this function
+// will return nil for both return variable. you should always have a checker for first
+// value as well. This function use caching to speed up its operations, so most of the
+// times it will return as fast as possible.
 func GetUserFromId(id int64) (*sv.User, error) {
 	if SESSION == nil {
 		return nil, ErrNoSession
@@ -14,22 +19,35 @@ func GetUserFromId(id int64) (*sv.User, error) {
 
 	u := userDbMap.Get(id)
 	if u == emptyUser {
+		// an empty user is cached in our map, which means we have
+		// already checked for this id, don't waste resources and don't
+		// send any database queries again.
+		// instead return nil.
+		// this might use up a little bit memory, but instead will increase
+		// the speed a lot.
 		return nil, nil
 	} else if u != nil {
-		// not found
+		// map has returned a valid user, return it.
 		return u, nil
 	}
 
+	// when we are at this point, it means we are checking this id for the first ever
+	// time (in a while). we should send database query to get the user.
 	u = &sv.User{}
 	lockdb()
 	SESSION.Where("user_id = ?", id).Take(u)
 	unlockdb()
 	if u.UserID != id {
-		// not found
+		// if the user id is not the same as the one we are looking for,
+		// which means the user doesn't exist in the database.
+		// cache an empty user in our map, so we don't waste resources
+		// again and again for checking the same id in future.
 		userDbMap.Add(id, emptyUser)
 		return nil, nil
 	}
 
+	// everything is fine, set parameters for the user, cache it in memory
+	// and return the value.
 	u.FormatBanDate()
 	u.SetBanFlags()
 	userDbMap.Add(u.UserID, u)
@@ -37,6 +55,8 @@ func GetUserFromId(id int64) (*sv.User, error) {
 	return u, nil
 }
 
+// GetAllBannedUsers this function returns all banned users in the database.
+// it doesn't use any cache at all, maybe we should implement it in future.
 func GetAllBannedUsers() ([]sv.User, error) {
 	if SESSION == nil {
 		return nil, ErrNoSession
@@ -50,6 +70,9 @@ func GetAllBannedUsers() ([]sv.User, error) {
 	return users, nil
 }
 
+// GetBannedUsersCount returns all banned users count in the database.
+// this function isn't using any caching, calling it all the times will result in
+// slow operations. (the caller itself is supposed to cache the returned value)
 func GetBannedUsersCount() (c int64) {
 	lockdb()
 	m := SESSION.Model(&sv.User{})
@@ -58,6 +81,11 @@ func GetBannedUsersCount() (c int64) {
 	return
 }
 
+// FetchStat function will return a pointer to a sv.StatValue struct,
+// representing the current stats of the database. this function is using caching
+// for speeding up the operations it's using (the cache total time is obtained by calling
+// sibylConfig.GetStatsCacheTime() function). calling this function repeatedly shouldn't cause
+// any performance issues (in... normal situations I guess).
 func FetchStat() (*sv.StatValue, error) {
 	if SESSION == nil {
 		return nil, ErrNoSession
@@ -129,6 +157,7 @@ func FetchStat() (*sv.StatValue, error) {
 	return lastStats, nil
 }
 
+// NewUser saves the user to the database and caches it in memory.
 func NewUser(u *sv.User) {
 	u.FormatBanDate()
 	u.SetBanFlags()
