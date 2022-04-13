@@ -999,6 +999,8 @@ func (m *MultiScanRawData) Close(agentId int64, reason string) {
 	for _, current := range m.Origins {
 		current.Close(agentId, reason)
 	}
+
+	m.Status = ScanClosed
 }
 
 func (m *MultiScanRawData) Approve(agentId int64, reason string) {
@@ -1009,6 +1011,8 @@ func (m *MultiScanRawData) Approve(agentId int64, reason string) {
 	for _, current := range m.Origins {
 		current.Approve(agentId, reason)
 	}
+
+	m.Status = ScanApproved
 }
 
 func (m *MultiScanRawData) Reject(agentId int64, reason string) {
@@ -1019,6 +1023,8 @@ func (m *MultiScanRawData) Reject(agentId int64, reason string) {
 	for _, current := range m.Origins {
 		current.Reject(agentId, reason)
 	}
+
+	m.Status = ScanRejected
 }
 
 func (m *MultiScanRawData) ParseAsMd() mdparser.WMarkDown {
