@@ -23,9 +23,9 @@ func AddMultiScan(data *sv.MultiScanRawData) {
 	}
 
 	var scans []*sv.Report
-	var tmpScans *sv.Report
+	var tmpScan *sv.Report
 	for _, current := range data.Users {
-		tmpScans = sv.NewReport(
+		tmpScan = sv.NewReport(
 			current.Reason,
 			current.Message,
 			data.Source,
@@ -34,7 +34,12 @@ func AddMultiScan(data *sv.MultiScanRawData) {
 			data.ReporterPermission,
 			current.TargetType,
 		)
-		scans = append(scans, tmpScans)
+
+		// sv.NewReport function doesn't set `AssociationBanId` field
+		// of the tmpScan variable. we have to set them manually here.
+		// for more info please visit: https://github.com/MinistryOfWelfare/PsychoPass/issues/8
+		tmpScan.AssociationBanId = data.AssociationBanId
+		scans = append(scans, tmpScan)
 	}
 
 	// without doing this, none of the `Approve`, `Reject` and `Close` will work.
