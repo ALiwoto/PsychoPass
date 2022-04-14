@@ -1,6 +1,7 @@
 package entryPoints
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
@@ -243,12 +244,12 @@ func SendCannotBeRevokedError(c *gin.Context, origin string) {
 	})
 }
 
-func SendTooManyError(c *gin.Context, origin string) {
+func SendTooManyError(c *gin.Context, origin string, maximum int) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,
 		Error: &EndpointError{
 			ErrorCode: http.StatusBadRequest,
-			Message:   ErrTooManyUsers,
+			Message:   fmt.Sprintf(ErrTooManyUsers, maximum),
 			Origin:    origin,
 			Date:      timeUtils.GenerateCurrentDateTime(),
 		},

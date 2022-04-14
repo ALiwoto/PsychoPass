@@ -124,7 +124,7 @@ func MultiReportHandler(c *gin.Context) {
 
 	if multiScanData != nil && len(multiScanData.Users) > 0 {
 		if len(multiScanData.Users) > MaxMultiUsers {
-			entry.SendTooManyError(c, OriginMultiScan)
+			entry.SendTooManyError(c, OriginMultiScan, MaxMultiUsers)
 			return
 		}
 		if sv.SendMultiReportHandler != nil {
