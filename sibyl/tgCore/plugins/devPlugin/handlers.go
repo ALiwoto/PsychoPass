@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
+	ws "github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/shellUtils"

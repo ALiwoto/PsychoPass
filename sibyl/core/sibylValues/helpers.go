@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ALiwoto/StrongStringGo/strongStringGo"
+	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/timeUtils"
 )
 
@@ -100,7 +100,7 @@ func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {
 
 func GetCCRangeByString(value string) []*CrimeCoefficientRange {
 	value = fixReasonString(strings.ToLower(strings.TrimSpace(value)))
-	values := strongStringGo.Split(value, " ", "\n", ",", "|", "\t", ";",
+	values := ssg.Split(value, " ", "\n", ",", "|", "\t", ";",
 		".", "..", "...", "....", "-", "--", "---")
 	var tmp *CrimeCoefficientRange
 	var result []*CrimeCoefficientRange

@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
+	"github.com/AnimeKaizoku/ssg/ssg"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/hashing"
@@ -175,7 +175,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	args := strongStringGo.Split(msg.Text, " ", "\n", "\t", ",", "-", "~")
+	args := ssg.Split(msg.Text, " ", "\n", "\t", ",", "-", "~")
 	if len(args) < 2 {
 		// show help.
 		md := mdparser.GetNormal("Dear ").Mention(user.FirstName, user.Id)

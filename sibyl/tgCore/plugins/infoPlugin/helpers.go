@@ -3,8 +3,8 @@ package infoPlugin
 import (
 	"strconv"
 
-	"github.com/ALiwoto/StrongStringGo/strongStringGo"
 	"github.com/ALiwoto/mdparser/mdparser"
+	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/shellUtils"
 )
 
@@ -20,13 +20,13 @@ func fetchGitStats(md mdparser.WMarkDown) {
 			return
 		}
 	}
-	allRaws := strongStringGo.Split(rawGit, "\n")
+	allRaws := ssg.Split(rawGit, "\n")
 	if len(allRaws) < 3 {
 		return
 	}
 	shortGit := allRaws[0]
 	longGit := allRaws[1]
-	gitVs := strongStringGo.Split(allRaws[2], " ", "\t")
+	gitVs := ssg.Split(allRaws[2], " ", "\t")
 	if len(gitVs) != 2 {
 		return
 	}

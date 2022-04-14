@@ -3,7 +3,7 @@ package reportPlugin
 import (
 	"strings"
 
-	"github.com/ALiwoto/StrongStringGo/strongStringGo"
+	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
@@ -318,7 +318,7 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	args := strongStringGo.SplitN(message.Text, 2, " ", "\n")
+	args := ssg.SplitN(message.Text, 2, " ", "\n")
 	var newReason string
 	if len(args) > 1 {
 		newReason = args[1]
@@ -383,7 +383,7 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	args := strongStringGo.SplitN(message.Text, 2, " ", "\n")
+	args := ssg.SplitN(message.Text, 2, " ", "\n")
 	var newReason string
 	if len(args) > 1 {
 		newReason = args[1]
@@ -447,7 +447,7 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		return ext.EndGroups
 	}
 
-	args := strongStringGo.SplitN(message.Text, 2, " ", "\n")
+	args := ssg.SplitN(message.Text, 2, " ", "\n")
 	var newReason string
 	if len(args) > 1 {
 		newReason = args[1]

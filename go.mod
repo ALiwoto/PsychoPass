@@ -3,8 +3,8 @@ module github.com/MinistryOfWelfare/PsychoPass
 go 1.18
 
 require (
-	github.com/ALiwoto/StrongStringGo v1.1.1
-	github.com/ALiwoto/mdparser v1.0.14
+	github.com/ALiwoto/mdparser v1.1.2
+	github.com/AnimeKaizoku/ssg v1.1.2
 	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.6
 	github.com/gin-gonic/gin v1.7.7
 	github.com/gotgbot/ratelimiter v1.0.7

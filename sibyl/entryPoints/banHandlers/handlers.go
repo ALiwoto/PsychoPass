@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	ws "github.com/ALiwoto/StrongStringGo/strongStringGo"
+	ws "github.com/AnimeKaizoku/ssg/ssg"
 	entry "github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints"
 
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"

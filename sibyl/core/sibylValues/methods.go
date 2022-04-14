@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/ALiwoto/mdparser/mdparser"
+	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
 )
 
@@ -154,7 +155,7 @@ func (t *Token) GetStringPermission() string {
 }
 
 func (t *Token) GetTitleStringPermission() string {
-	return strings.Title(t.Permission.GetStringPermission())
+	return ssg.Title(t.Permission.GetStringPermission())
 }
 
 func (t *Token) GetFormatedCreatedDate() string {
