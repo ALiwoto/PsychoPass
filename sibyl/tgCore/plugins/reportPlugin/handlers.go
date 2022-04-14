@@ -214,6 +214,18 @@ func multiScanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 			ShowAlert: true,
 			CacheTime: 5,
 		})
+
+		// if user wants to close the multi-scan (even if the scan itself is invalid),
+		// delete the message.
+		// See also: https://github.com/MinistryOfWelfare/PsychoPass/issues/6
+		if data == CloseData {
+			_, _, _ = message.EditText(b, message.Text, &gotgbot.EditMessageTextOpts{
+				Entities:              message.Entities,
+				ParseMode:             sv.MarkDownV2,
+				DisableWebPagePreview: true,
+			})
+			_, _ = message.Delete(b)
+		}
 		return ext.EndGroups
 	}
 
