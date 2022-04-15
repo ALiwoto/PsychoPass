@@ -15,7 +15,43 @@ func applyMultiScan(data *sv.MultiScanRawData) {
 		// this condition is added just in case
 		return
 	}
+
+	// check and remove repeated user-ids sent by the client.
+	// this checker is there to solve the problem of the client sending
+	// multiple-repeated user-ids.
+	// See also: https://github.com/MinistryOfWelfare/PsychoPass/issues/2
+	data.Users = removeRepeatedUsers(data.Users)
+
 	data.GenerateID()
 	database.AddMultiScan(data)
 	sv.SendMultiReportHandler(data)
+}
+
+// removeRepeatedUsers will remove repeated user-ids from the given slice.
+func removeRepeatedUsers(users []sv.MultiScanUserInfo) []sv.MultiScanUserInfo {
+	var result []sv.MultiScanUserInfo
+	var shouldIgnore bool
+
+	for _, currentUser := range users {
+		if len(result) == 0 {
+			result = append(result, currentUser)
+			continue
+		}
+
+		for _, rUser := range result {
+			if rUser.UserId == currentUser.UserId {
+				shouldIgnore = true
+				break
+			}
+		}
+
+		if shouldIgnore {
+			shouldIgnore = false
+			continue
+		}
+
+		result = append(result, currentUser)
+	}
+
+	return result
 }
