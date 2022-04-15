@@ -138,6 +138,7 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		})
 		_, _, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
+			ParseMode:             sv.MarkDownV2,
 		})
 		return ext.EndGroups
 	}
@@ -237,6 +238,7 @@ func multiScanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 		})
 		_, _, _ = message.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
+			ParseMode:             sv.MarkDownV2,
 		})
 		return ext.EndGroups
 	}
@@ -314,6 +316,7 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if !scan.IsPending() {
 		_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
+			ParseMode:             sv.MarkDownV2,
 		})
 		return ext.EndGroups
 	}
@@ -379,6 +382,7 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if !scan.IsPending() {
 		_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
+			ParseMode:             sv.MarkDownV2,
 		})
 		return ext.EndGroups
 	}
@@ -443,6 +447,7 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	if !scan.IsPending() {
 		_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 			DisableWebPagePreview: true,
+			ParseMode:             sv.MarkDownV2,
 		})
 		return ext.EndGroups
 	}
