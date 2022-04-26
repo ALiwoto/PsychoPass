@@ -590,6 +590,11 @@ func (u *User) SetAsBanReason(reason string) {
 	u.Reason = reason
 }
 
+func (u *User) Clone() *User {
+	var tmpU = *u
+	return &tmpU
+}
+
 func (u *User) FormatBanDate() {
 	u.BanDate = time.Now().Format("2006-01-02 at 15:04:05")
 }

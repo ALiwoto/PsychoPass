@@ -36,16 +36,22 @@ func applyMultiBan(data *sv.MultiBanRawData, by int64) {
 		var count int
 		if tmpUser != nil && err == nil {
 			if tmpUser.Banned {
+				cloneUser := tmpUser.Clone()
 				if current.TargetType != tmpUser.TargetType {
 					// check both conditions; if they don't match, update the field.
-					tmpUser.TargetType = current.TargetType
+					cloneUser.TargetType = current.TargetType
 				}
-				tmpUser.BannedBy = by
-				tmpUser.Message = current.Message
-				tmpUser.Date = time.Now()
-				tmpUser.BanSourceUrl = current.Source
-				tmpUser.SetAsBanReason(current.Reason)
-				tmpUser.IncreaseCrimeCoefficientAuto()
+				cloneUser.BannedBy = by
+				cloneUser.Message = current.Message
+				cloneUser.Date = time.Now()
+				cloneUser.BanSourceUrl = current.Source
+				cloneUser.SetAsBanReason(current.Reason)
+				cloneUser.IncreaseCrimeCoefficientAuto()
+				if cloneUser.CrimeCoefficient < tmpUser.CrimeCoefficient {
+					continue
+				}
+
+				*tmpUser = *cloneUser
 				database.UpdateBanparameter(tmpUser, data.IsSilent)
 				continue
 			}

@@ -91,13 +91,59 @@ func pushScanToDatabase(scan *sv.Report) {
 	database.AddBan(info)
 }
 
+// pushScanToDatabaseWithValidation converts a scan to a ban and pushes it
+// to the database if and only if the user's crime coefficient will increase
+// by doing so. this function is good only in multi-scan and multi-ban methods.
+func pushScanToDatabaseWithValidation(scan *sv.Report) {
+	u, err := database.GetUserFromId(scan.TargetUser)
+	var count int
+	if u != nil && err == nil {
+		if u.Banned {
+			tmpUser := u.Clone()
+			if scan.TargetType != u.TargetType {
+				// check both conditions; if they don't match, update the field.
+				tmpUser.TargetType = scan.TargetType
+			}
+			tmpUser.BannedBy = scan.ReporterId
+			tmpUser.Message = scan.ReportMessage
+			tmpUser.Date = time.Now()
+			tmpUser.BanSourceUrl = scan.ScanSourceLink
+			tmpUser.SourceGroup = "" /* TODO */
+			tmpUser.SetAsBanReason(scan.ReportReason)
+			tmpUser.IncreaseCrimeCoefficientAuto()
+			if tmpUser.CrimeCoefficient < u.CrimeCoefficient {
+				return
+			}
+
+			*u = *tmpUser
+			database.UpdateBanparameter(u, false)
+			return
+		}
+		count = u.BanCount
+	}
+
+	info := &database.BanInfo{
+		UserID:     scan.TargetUser,
+		Adder:      scan.ReporterId,
+		Reason:     scan.ReportReason,
+		SrcGroup:   "", /* TODO */
+		Src:        scan.ScanSourceLink,
+		Message:    scan.ReportMessage,
+		TargetType: scan.TargetType,
+		Count:      count,
+	}
+
+	database.AddBan(info)
+
+}
+
 func pushMultipleScanToDatabase(data *sv.MultiScanRawData) {
 	if len(data.Origins) == 0 {
 		return
 	}
 
 	for _, current := range data.Origins {
-		pushScanToDatabase(current)
+		pushScanToDatabaseWithValidation(current)
 	}
 }
 
