@@ -36,4 +36,5 @@ var (
 	modelToken           *sv.Token            = &sv.Token{}
 	modelScan            *sv.Report           = &sv.Report{}
 	lastStats            *sv.StatValue
+	statsMutex           *sync.Mutex = &sync.Mutex{}
 )

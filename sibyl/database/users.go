@@ -91,6 +91,10 @@ func FetchStat() (*sv.StatValue, error) {
 		return nil, ErrNoSession
 	}
 
+	// this mutex here won't let db to be spammed by a lot of sql queries.
+	// please see also: https://github.com/MinistryOfWelfare/PsychoPass/issues/13
+	statsMutex.Lock()
+	defer statsMutex.Unlock()
 	if lastStats != nil && !lastStats.IsExpired(sibylConfig.GetStatsCacheTime()) {
 		return lastStats, nil
 	}
