@@ -16,6 +16,11 @@ func applyMultiBan(data *sv.MultiBanRawData, by int64) {
 		multiBanMutex = new(sync.Mutex)
 	}
 
+	// calling this method here will cause all of the users of this
+	// multi-ban get perma-ban if and only if one of the users have
+	// got perma-ban.
+	data.SyncPermaBans()
+
 	multiBanMutex.Lock()
 
 	var tmpToken *sv.Token

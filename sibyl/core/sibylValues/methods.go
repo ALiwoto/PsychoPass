@@ -579,7 +579,7 @@ func (u *User) CanAppeal() bool {
 }
 
 func (u *User) IsPerma() bool {
-	return strings.Contains(u.Reason, "perma")
+	return strings.Contains(u.Reason, permaCheckerValue)
 }
 
 func (u *User) HasCustomFlag() bool {
@@ -1102,3 +1102,35 @@ func (d *AssaultDominatorData) ParseAsText() string {
 
 	return mdparser.GetMono(string(b)).ToString()
 }
+
+//---------------------------------------------------------
+
+// SyncPermaBans checks for all user-bans' reasons, if only one of them
+// are perma-banned, it will make sure all of them get perma-ban.
+func (d *MultiBanRawData) SyncPermaBans() {
+	areAllPerma := true
+	hasOnePerma := false
+	var noPerma []int
+	for i := 0; i < len(d.Users); i++ {
+		if strings.Contains(d.Users[i].Reason, permaCheckerValue) {
+			hasOnePerma = true
+		} else {
+			areAllPerma = false
+			noPerma = append(noPerma, i)
+		}
+	}
+
+	if areAllPerma || !hasOnePerma {
+		// either all of them has perma-ban
+		// or none of them has perma-ban.
+		// in any of these case, we no longer need to
+		// waste our time and synchronize their reasons.
+		return
+	}
+
+	for _, i := range noPerma {
+		d.Users[i].Reason += permaAppendingReason
+	}
+}
+
+//---------------------------------------------------------

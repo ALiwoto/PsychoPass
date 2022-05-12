@@ -63,6 +63,11 @@ const (
 	AppealLogDateFormat   = "02-01-2006 3:04PM"
 )
 
+const (
+	permaCheckerValue    = "perma"
+	permaAppendingReason = " | perma ban"
+)
+
 // Factor constants
 const (
 	// LowerCloudyFactor is the minimum possible value for a
