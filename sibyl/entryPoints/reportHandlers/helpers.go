@@ -21,6 +21,11 @@ func applyMultiScan(data *sv.MultiScanRawData) {
 	// multiple-repeated user-ids.
 	// See also: https://github.com/MinistryOfWelfare/PsychoPass/issues/2
 	data.Users = validateMultiScanUsers(data.Users, data.ReporterPermission)
+	if len(data.Users) == 0 {
+		// this scan is totally invalid, don't waste resources to save it
+		// to db.
+		return
+	}
 
 	data.GenerateID()
 	database.AddMultiScan(data)
