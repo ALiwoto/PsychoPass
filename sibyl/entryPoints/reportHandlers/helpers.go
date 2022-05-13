@@ -20,21 +20,41 @@ func applyMultiScan(data *sv.MultiScanRawData) {
 	// this checker is there to solve the problem of the client sending
 	// multiple-repeated user-ids.
 	// See also: https://github.com/MinistryOfWelfare/PsychoPass/issues/2
-	data.Users = removeRepeatedUsers(data.Users)
+	data.Users = validateMultiScanUsers(data.Users, data.ReporterPermission)
+	if len(data.Users) == 0 {
+		// this scan is totally invalid, don't waste resources to save it
+		// to db.
+		return
+	}
 
 	data.GenerateID()
 	database.AddMultiScan(data)
 	sv.SendMultiReportHandler(data)
 }
 
-// removeRepeatedUsers will remove repeated user-ids from the given slice.
-func removeRepeatedUsers(users []sv.MultiScanUserInfo) []sv.MultiScanUserInfo {
+// validateMultiScanUsers will validate all users in the multi-scan request.
+// (previously known as removeRepeatedUsers).
+// this function will remove repeated user-ids from the given slice as well.
+func validateMultiScanUsers(
+	users []sv.MultiScanUserInfo,
+	agentPerm sv.UserPermission,
+) []sv.MultiScanUserInfo {
 	var result []sv.MultiScanUserInfo
 	var shouldIgnore bool
+
+	var tmpToken *sv.Token
 
 	for _, currentUser := range users {
 		if len(result) == 0 {
 			result = append(result, currentUser)
+			continue
+		}
+
+		// the target user might be a valid registered user (such as inspector or
+		// owner). if yes, ignore the user.
+		// See also: https://github.com/MinistryOfWelfare/PsychoPass/issues/20
+		tmpToken, _ = database.GetTokenFromId(currentUser.UserId)
+		if tmpToken != nil && !tmpToken.CanBeReported(agentPerm) {
 			continue
 		}
 
