@@ -99,6 +99,11 @@ type Token struct {
 	DeniedReports int `json:"denied_reports"`
 }
 
+type PollingUserConfig struct {
+	UserId            int64
+	LastGetUpdateTime time.Time
+}
+
 type AssaultDominatorData struct {
 	Type         string    `json:"type"`
 	TargetUser   int64     `json:"user"`

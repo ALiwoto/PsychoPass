@@ -110,6 +110,12 @@ func (t *Token) CanGetAllBans() bool {
 	return t.Permission > NormalUser
 }
 
+// CanStartPolling returns true if the token with its current
+// permission can start polling updates.
+func (t *Token) CanStartPolling() bool {
+	return t.Permission > Enforcer
+}
+
 // CanGetRegisteredList returns true if the token with its current
 // permission can get all the registered users.
 func (t *Token) CanGetRegisteredList() bool {

@@ -3,3 +3,9 @@
  * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
  */
 package pollingHandlers
+
+const (
+	OriginStartPolling = "StartPolling"
+	OriginStopPolling  = "StopPolling"
+	OriginGetUpdates   = "GetUpdates"
+)
