@@ -4,3 +4,29 @@
  */
 
 package sibylBroadcast
+
+import "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
+
+func SendScanRequestApproved(r sibylValues.Report) {
+	sibylValues.BroadcastUpdate(&sibylValues.PollingUserUpdate{
+		UpdateType: UpdateTypeScanRequestApproved,
+		UpdateData: &ScanRequestApprovedUpdate{
+			UniqueId:    r.UniqueId,
+			TargetUser:  r.TargetUser,
+			TargetType:  r.TargetType,
+			AgentReason: r.AgentReason,
+		},
+	})
+}
+
+func SendScanRequestRejected(r sibylValues.Report) {
+	sibylValues.BroadcastUpdate(&sibylValues.PollingUserUpdate{
+		UpdateType: UpdateTypeScanRequestRejected,
+		UpdateData: &ScanRequestRejectedUpdate{
+			UniqueId:    r.UniqueId,
+			TargetUser:  r.TargetUser,
+			TargetType:  r.TargetType,
+			AgentReason: r.AgentReason,
+		},
+	})
+}
