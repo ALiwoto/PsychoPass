@@ -7,7 +7,7 @@ package sibylBroadcast
 
 import "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 
-func SendScanRequestApproved(r sibylValues.Report) {
+func SendScanRequestApproved(r *sibylValues.Report) {
 	sibylValues.BroadcastUpdate(&sibylValues.PollingUserUpdate{
 		UpdateType: UpdateTypeScanRequestApproved,
 		UpdateData: &ScanRequestApprovedUpdate{
@@ -19,7 +19,7 @@ func SendScanRequestApproved(r sibylValues.Report) {
 	})
 }
 
-func SendScanRequestRejected(r sibylValues.Report) {
+func SendScanRequestRejected(r *sibylValues.Report) {
 	sibylValues.BroadcastUpdate(&sibylValues.PollingUserUpdate{
 		UpdateType: UpdateTypeScanRequestRejected,
 		UpdateData: &ScanRequestRejectedUpdate{
