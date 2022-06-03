@@ -38,7 +38,7 @@ func LoadHandlers() {
 
 	// get all register handlers
 	bindHandler(tokenHandlers.GetAllRegisteredUsersHandler, "getRegistered",
-		"registeredUsers", "getAllregistered")
+		"registeredUsers", "getAllRegistered")
 
 	// addBan handlers
 	bindHandler(banHandlers.AddBanHandler, "addBan", "ban", "banUser")
