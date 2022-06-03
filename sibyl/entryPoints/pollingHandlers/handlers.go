@@ -5,31 +5,58 @@
 package pollingHandlers
 
 import (
+	"time"
+
+	"github.com/AnimeKaizoku/ssg/ssg"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	entry "github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints"
 	"github.com/gin-gonic/gin"
 )
 
-func StartPollingHandler(c *gin.Context) {
+func GetUpdatesHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
+	timeout := utils.GetParam(c, "timeout", "time-out")
 	if len(token) == 0 {
-		entry.SendNoTokenError(c, OriginStartPolling)
+		entry.SendNoTokenError(c, OriginGetUpdates)
 		return
 	}
 
-	d, err := database.GetTokenFromString(token)
-	if err != nil || d == nil {
-		entry.SendInvalidTokenError(c, OriginStartPolling)
+	timeoutValue := sibylValues.DefaultPollingTimeout
+	if timeout != "" {
+		timeoutInt := ssg.ToInt64(timeout)
+		if sibylValues.IsPollingTimeoutInvalid(timeoutInt) {
+			timeoutValue = time.Duration(timeoutInt) * time.Second
+		}
+	}
+
+	requesterToken, err := database.GetTokenFromString(token)
+	if err != nil || requesterToken == nil {
+		entry.SendInvalidTokenError(c, OriginGetUpdates)
 		return
 	}
 
-	if !d.CanStartPolling() {
-		entry.SendPermissionDenied(c, OriginStartPolling)
+	if !requesterToken.CanStartPolling() {
+		entry.SendPermissionDenied(c, OriginGetUpdates)
 		return
 	}
 
-	// TODO: generate and add config
+	pValue := sibylValues.RegisterNewPollingValue(
+		requesterToken.UserId,
+		pollingNumGenerator.Next(),
+		timeoutValue,
+	)
 
-	entry.SendResult(c, true)
+	select {
+	case <-pValue.Done():
+		entry.SendResult(c, nil)
+		// we got timed out here, so we have to unregister the registered pValue.
+		sibylValues.UnregisterPollingValue(false, pValue)
+	case pUpdate := <-pValue.GotUpdate():
+		// there is no need to unregister the pValue here, everything is done on caller's side
+		// (the one that broadcasted this update, we just have to send the response to the user and
+		// we are done!)
+		entry.SendResult(c, pUpdate)
+	}
 }

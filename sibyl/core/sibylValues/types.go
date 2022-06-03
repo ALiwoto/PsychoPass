@@ -5,6 +5,7 @@
 package sibylValues
 
 import (
+	"context"
 	"time"
 
 	wc "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
@@ -99,9 +100,18 @@ type Token struct {
 	DeniedReports int `json:"denied_reports"`
 }
 
-type PollingUserConfig struct {
-	UserId            int64
-	LastGetUpdateTime time.Time
+type PollingUserUpdate struct {
+	UpdateType string `json:"update_type"`
+	UpdateData any    `json:"update_data"`
+}
+
+type RegisteredPollingValue struct {
+	theChannel chan *PollingUserUpdate
+	OwnerId    int64
+	Timeout    time.Duration
+	UniqueId   uint64
+	ctx        context.Context
+	cancelFunc context.CancelFunc
 }
 
 type AssaultDominatorData struct {

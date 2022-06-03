@@ -4,6 +4,8 @@
  */
 package sibylValues
 
+import "time"
+
 // possible values for type `UserPermission`.
 // please notice that any other value for this type, is considered
 // as "invalid" by API.
@@ -118,4 +120,14 @@ const (
 	BanFlagRaid         = "RAID"
 	BanFlagSpamBot      = "SPAMBOT"
 	BanFlagMassAdd      = "MASSADD"
+)
+
+const (
+	// MaxPollingTimeout is the maximum allowed polling timeout in seconds.
+	MaxPollingTimeout = 30
+	// MinPollingTimeout is the minimum allowed polling timeout in seconds.
+	MinPollingTimeout = 1
+	// DefaultPollingTimeout is the default polling timeout defined for a user's
+	// polling request.
+	DefaultPollingTimeout = 3 * time.Second
 )

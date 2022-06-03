@@ -102,6 +102,44 @@ func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {
 	return nil
 }
 
+func RegisterNewPollingValue(ownerId int64, uniqueId uint64, timeout time.Duration) *RegisteredPollingValue {
+	pValue := &RegisteredPollingValue{
+		OwnerId:    ownerId,
+		UniqueId:   uniqueId,
+		theChannel: make(chan *PollingUserUpdate, 1), // buffered channel with len of 1
+	}
+
+	pValue.GenerateContext(timeout)
+
+	registeredPollingValues.Add(uniqueId, pValue)
+	return pValue
+}
+
+func UnregisterPollingValue(withContext bool, pValue *RegisteredPollingValue) {
+	pValue.MarkAsInvalid(withContext)
+	registeredPollingValues.Delete(pValue.UniqueId)
+}
+
+func BroadcastUpdate(updateValue *PollingUserUpdate) {
+	if registeredPollingValues == nil || registeredPollingValues.Length() == 0 {
+		// no one is listening anyway
+		return
+	}
+
+	registeredPollingValues.ForEach(func(_ uint64, pValue *RegisteredPollingValue) bool {
+		if pValue.IsInvalid() {
+			// let the map remove the invalid value from itself.
+			return true
+		}
+
+		myChannel := pValue.theChannel
+		myChannel <- updateValue
+
+		pValue.MarkAsInvalid(false)
+		return true
+	})
+}
+
 func GetCCRangeByString(value string) []*CrimeCoefficientRange {
 	value = fixReasonString(strings.ToLower(strings.TrimSpace(value)))
 	values := ssg.Split(value, " ", "\n", ",", "|", "\t", ";",
@@ -233,4 +271,10 @@ func IsForbiddenID(id int64) bool {
 		return true
 	}
 	return false
+}
+
+// IsPollingTimeoutInvalid method returns true if the value is in the correct
+// range of polling timeout.
+func IsPollingTimeoutInvalid(value int64) bool {
+	return value >= MinPollingTimeout && value <= MaxPollingTimeout
 }

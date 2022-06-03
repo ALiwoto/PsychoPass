@@ -8,6 +8,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gotgbot/ratelimiter/ratelimiter"
@@ -104,3 +105,5 @@ var _invalidUserIDs = map[int64]bool{
 	136817688:  true, // channel bot
 	1926801217: true, // unsupported user
 }
+
+var registeredPollingValues = ssg.NewSafeMap[uint64, RegisteredPollingValue]()

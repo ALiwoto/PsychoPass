@@ -11,6 +11,7 @@ import (
 
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/banHandlers"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/infoHandlers"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/pollingHandlers"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/reportHandlers"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/tokenHandlers"
 	"github.com/gin-gonic/gin"
@@ -73,6 +74,9 @@ func LoadHandlers() {
 
 	// multiReport handlers
 	bindPostHandler(reportHandlers.MultiReportHandler, "multiReport", "multiScan")
+
+	// getUpdates handlers
+	bindPostHandler(pollingHandlers.GetUpdatesHandler, "getUpdates")
 
 	bindNoRoot()
 }

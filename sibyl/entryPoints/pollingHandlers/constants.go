@@ -5,7 +5,5 @@
 package pollingHandlers
 
 const (
-	OriginStartPolling = "StartPolling"
-	OriginStopPolling  = "StopPolling"
-	OriginGetUpdates   = "GetUpdates"
+	OriginGetUpdates = "GetUpdates"
 )
