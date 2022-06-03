@@ -98,7 +98,3 @@ func cleanMaps() {
 		associationScanMap.DoCheck()
 	}
 }
-
-func IsFirstTime() bool {
-	return SESSION.Find(modelToken).RowsAffected == 0
-}

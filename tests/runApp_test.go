@@ -99,7 +99,7 @@ func getOwnerToken() string {
 }
 
 func prepareOwnerToken() {
-	if database.IsFirstTime() {
+	if _, err := os.Stat(sibylValues.OwnersTokenFileName); os.IsNotExist(err) {
 		err := ioutil.WriteFile(sibylValues.OwnersTokenFileName, []byte(""), 0644)
 		if err != nil {
 			logging.Fatal(err)

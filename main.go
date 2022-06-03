@@ -69,7 +69,7 @@ func recoverFromPanic() {
 }
 
 func prepareOwnerTokens() {
-	if database.IsFirstTime() {
+	if _, err := os.Stat(sibylValues.OwnersTokenFileName); os.IsNotExist(err) {
 		ids := sibylConfig.GetOwnersID()
 		if len(ids) == 0 {
 			logging.Fatal("There should be at least one owner")
