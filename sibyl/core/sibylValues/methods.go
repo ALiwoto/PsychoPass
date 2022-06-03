@@ -1,6 +1,11 @@
+/*
+ * This file is part of PsychoPass Project (https://github.com/MinistryOfWelfare/PsychoPass).
+ * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
+ */
 package sibylValues
 
 import (
+	"context"
 	"encoding/json"
 	"math/rand"
 	"strconv"
@@ -104,6 +109,12 @@ func (t *Token) CanGetGeneralInfo() bool {
 // permission can get all the banned users.
 func (t *Token) CanGetAllBans() bool {
 	return t.Permission > NormalUser
+}
+
+// CanStartPolling returns true if the token with its current
+// permission can start polling updates.
+func (t *Token) CanStartPolling() bool {
+	return t.Permission > Enforcer
 }
 
 // CanGetRegisteredList returns true if the token with its current
@@ -1133,4 +1144,41 @@ func (d *MultiBanRawData) SyncPermaBans() {
 	}
 }
 
+//---------------------------------------------------------
+
+func (p *RegisteredPollingValue) IsInvalid() bool {
+	return p == nil || p.theChannel == nil
+}
+
+func (p *RegisteredPollingValue) MarkAsInvalid(withContext bool) {
+	if p.cancelFunc != nil {
+		if withContext {
+			p.cancelFunc()
+		}
+		p.ctx = nil
+		p.cancelFunc = nil
+	}
+
+	if p.theChannel != nil {
+		close(p.theChannel)
+		p.theChannel = nil
+	}
+}
+
+func (p *RegisteredPollingValue) GenerateContext(timeout time.Duration) {
+	p.Timeout = timeout
+	p.ctx, p.cancelFunc = context.WithTimeout(context.Background(), timeout)
+}
+
+func (p *RegisteredPollingValue) Done() <-chan struct{} {
+	return p.ctx.Done()
+}
+
+func (p *RegisteredPollingValue) GotUpdate() <-chan *PollingUserUpdate {
+	return p.theChannel
+}
+
+//---------------------------------------------------------
+//---------------------------------------------------------
+//---------------------------------------------------------
 //---------------------------------------------------------

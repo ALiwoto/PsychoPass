@@ -1,8 +1,12 @@
+/*
+ * This file is part of PsychoPass Project (https://github.com/MinistryOfWelfare/PsychoPass).
+ * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
+ */
 package entryPoints
 
 type EndpointResponse struct {
 	Success bool           `json:"success"`
-	Result  interface{}    `json:"result"`
+	Result  any            `json:"result"`
 	Error   *EndpointError `json:"error"`
 }
 

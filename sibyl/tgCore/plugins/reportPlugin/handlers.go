@@ -1,9 +1,14 @@
+/*
+ * This file is part of PsychoPass Project (https://github.com/MinistryOfWelfare/PsychoPass).
+ * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
+ */
 package reportPlugin
 
 import (
 	"strings"
 
 	"github.com/AnimeKaizoku/ssg/ssg"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylBroadcast"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
@@ -160,8 +165,10 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	case ApproveData:
 		scan.Approve(token.UserId, "") /* no reason */
 		go pushScanToDatabase(scan)
+		go sibylBroadcast.SendScanRequestApproved(scan)
 	case RejectData:
 		scan.Reject(token.UserId, "") /* no reason */
+		go sibylBroadcast.SendScanRequestRejected(scan)
 	}
 
 	database.UpdateScan(scan)
@@ -260,8 +267,10 @@ func multiScanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	case ApproveData:
 		scan.Approve(token.UserId, "") /* no reason */
 		go pushMultipleScanToDatabase(scan)
+		// go sibylBroadcast.SendScanRequestRejected(scan) #TODO
 	case RejectData:
 		scan.Reject(token.UserId, "") /* no reason */
+		// go sibylBroadcast.SendScanRequestRejected(scan) #TODO
 	}
 
 	database.UpdateMultipleScan(scan)
@@ -331,6 +340,7 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	scan.Approve(token.UserId, newReason)
 	go pushScanToDatabase(scan)
+	go sibylBroadcast.SendScanRequestApproved(scan)
 	database.UpdateScan(scan)
 	_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
@@ -396,6 +406,7 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	scan.AgentUser = tgUser
 
 	scan.Reject(token.UserId, newReason)
+	go sibylBroadcast.SendScanRequestRejected(scan)
 	database.UpdateScan(scan)
 	_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,

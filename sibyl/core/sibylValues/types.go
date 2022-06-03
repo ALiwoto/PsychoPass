@@ -1,6 +1,11 @@
+/*
+ * This file is part of PsychoPass Project (https://github.com/MinistryOfWelfare/PsychoPass).
+ * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
+ */
 package sibylValues
 
 import (
+	"context"
 	"time"
 
 	wc "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues/whatColor"
@@ -93,6 +98,20 @@ type Token struct {
 
 	// DeniedReports is the count of denied reports.
 	DeniedReports int `json:"denied_reports"`
+}
+
+type PollingUserUpdate struct {
+	UpdateType string `json:"update_type"`
+	UpdateData any    `json:"update_data"`
+}
+
+type RegisteredPollingValue struct {
+	theChannel chan *PollingUserUpdate
+	OwnerId    int64
+	Timeout    time.Duration
+	UniqueId   uint64
+	ctx        context.Context
+	cancelFunc context.CancelFunc
 }
 
 type AssaultDominatorData struct {

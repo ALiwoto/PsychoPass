@@ -1,9 +1,14 @@
+/*
+ * This file is part of PsychoPass Project (https://github.com/MinistryOfWelfare/PsychoPass).
+ * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
+ */
 package sibylValues
 
 import (
 	"errors"
 	"time"
 
+	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gotgbot/ratelimiter/ratelimiter"
@@ -100,3 +105,5 @@ var _invalidUserIDs = map[int64]bool{
 	136817688:  true, // channel bot
 	1926801217: true, // unsupported user
 }
+
+var registeredPollingValues = ssg.NewSafeMap[uint64, RegisteredPollingValue]()

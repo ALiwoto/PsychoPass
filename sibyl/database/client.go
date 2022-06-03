@@ -1,3 +1,7 @@
+/*
+ * This file is part of PsychoPass Project (https://github.com/MinistryOfWelfare/PsychoPass).
+ * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
+ */
 package database
 
 import (
@@ -93,8 +97,4 @@ func cleanMaps() {
 		scanDbMap.DoCheck()
 		associationScanMap.DoCheck()
 	}
-}
-
-func IsFirstTime() bool {
-	return SESSION.Find(modelToken).RowsAffected == 0
 }

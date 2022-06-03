@@ -1,3 +1,7 @@
+/*
+ * This file is part of PsychoPass Project (https://github.com/MinistryOfWelfare/PsychoPass).
+ * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
+ */
 package tests_test
 
 import (
@@ -95,7 +99,7 @@ func getOwnerToken() string {
 }
 
 func prepareOwnerToken() {
-	if database.IsFirstTime() {
+	if _, err := os.Stat(sibylValues.OwnersTokenFileName); os.IsNotExist(err) {
 		err := ioutil.WriteFile(sibylValues.OwnersTokenFileName, []byte(""), 0644)
 		if err != nil {
 			logging.Fatal(err)

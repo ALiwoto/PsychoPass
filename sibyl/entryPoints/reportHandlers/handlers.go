@@ -1,3 +1,7 @@
+/*
+ * This file is part of PsychoPass Project (https://github.com/MinistryOfWelfare/PsychoPass).
+ * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
+ */
 package reportHandlers
 
 import (
@@ -71,6 +75,8 @@ func ReportUserHandler(c *gin.Context) {
 		}
 	}
 
+	reportUniqueId := MessageReported
+
 	if sv.SendReportHandler != nil {
 		r := sv.NewReport(
 			reason,
@@ -83,9 +89,11 @@ func ReportUserHandler(c *gin.Context) {
 		)
 		database.AddScan(r)
 		go sv.SendReportHandler(r)
+		// plot twist: send the unique-id of the scan to the user :P
+		reportUniqueId = r.UniqueId
 	}
 
-	entry.SendResult(c, MessageReported)
+	entry.SendResult(c, reportUniqueId)
 }
 
 func MultiReportHandler(c *gin.Context) {

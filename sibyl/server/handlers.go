@@ -1,3 +1,7 @@
+/*
+ * This file is part of PsychoPass Project (https://github.com/MinistryOfWelfare/PsychoPass).
+ * Copyright (c) 2021-2022 PsychoPass Authors, Ministry of welfare.
+ */
 package server
 
 import (
@@ -7,6 +11,7 @@ import (
 
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/banHandlers"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/infoHandlers"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/pollingHandlers"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/reportHandlers"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints/tokenHandlers"
 	"github.com/gin-gonic/gin"
@@ -34,7 +39,7 @@ func LoadHandlers() {
 
 	// get all register handlers
 	bindHandler(tokenHandlers.GetAllRegisteredUsersHandler, "getRegistered",
-		"registeredUsers", "getAllregistered")
+		"registeredUsers", "getAllRegistered")
 
 	// addBan handlers
 	bindHandler(banHandlers.AddBanHandler, "addBan", "ban", "banUser")
@@ -69,6 +74,9 @@ func LoadHandlers() {
 
 	// multiReport handlers
 	bindPostHandler(reportHandlers.MultiReportHandler, "multiReport", "multiScan")
+
+	// getUpdates handlers
+	bindPostHandler(pollingHandlers.GetUpdatesHandler, "getUpdates")
 
 	bindNoRoot()
 }
@@ -145,6 +153,8 @@ func noRootHandler(c *gin.Context) {
 			goto redirect_req
 		}
 		reportHandlers.MultiReportHandler(c)
+	case "getupdates":
+		pollingHandlers.GetUpdatesHandler(c)
 	default:
 		c.Redirect(http.StatusPermanentRedirect, "/docs/")
 		return
