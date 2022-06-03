@@ -153,6 +153,8 @@ func noRootHandler(c *gin.Context) {
 			goto redirect_req
 		}
 		reportHandlers.MultiReportHandler(c)
+	case "getupdates":
+		pollingHandlers.GetUpdatesHandler(c)
 	default:
 		c.Redirect(http.StatusPermanentRedirect, "/docs/")
 		return
