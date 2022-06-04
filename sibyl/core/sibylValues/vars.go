@@ -8,7 +8,6 @@ import (
 	"errors"
 	"time"
 
-	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/gotgbot/ratelimiter/ratelimiter"
@@ -44,7 +43,7 @@ var (
 	RangeMASSADD      = &CrimeCoefficientRange{601, 650}
 */
 
-// crime coefficient increasement ranges
+// crime coefficient increment ranges
 var (
 	RangeCivilian     = &CrimeCoefficientRange{10, 80}
 	RangeRestored     = &CrimeCoefficientRange{81, 100}
@@ -63,7 +62,7 @@ var (
 
 var (
 
-	/// This commentented out data is outdated, see line 25 for updated ones.
+	/// This commented out data is outdated, see line 25 for updated ones.
 	// Range 0-100 (No bans) (Dominator Locked)
 	// Civilian     - 0-80
 	// Restored  - 81-100
@@ -106,4 +105,4 @@ var _invalidUserIDs = map[int64]bool{
 	1926801217: true, // unsupported user
 }
 
-var registeredPollingValues = ssg.NewSafeMap[uint64, RegisteredPollingValue]()
+var registeredPollingValues = _getRegisteredPollingValues()
