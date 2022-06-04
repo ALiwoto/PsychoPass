@@ -115,6 +115,28 @@ func RegisterNewPollingValue(ownerId int64, uniqueId uint64, timeout time.Durati
 	return pValue
 }
 
+func RegisterNewPersistancePollingValue(ownerId int64, uniqueId uint64) *RegisteredPollingValue {
+	pValue := &RegisteredPollingValue{
+		OwnerId:       ownerId,
+		UniqueId:      uniqueId,
+		theChannel:    make(chan *PollingUserUpdate, 1), // buffered channel with len of 1
+		isPersistance: true,
+	}
+
+	registeredPollingValues.Add(uniqueId, pValue)
+	return pValue
+}
+
+func GetPollingValueByUniqueId(uniqueId uint64, timeout time.Duration) *RegisteredPollingValue {
+	pValue := registeredPollingValues.Get(uniqueId)
+	if pValue == nil {
+		return nil
+	}
+
+	pValue.GenerateContext(timeout)
+	return pValue
+}
+
 func UnregisterPollingValue(withContext bool, pValue *RegisteredPollingValue) {
 	pValue.MarkAsInvalid(withContext)
 	registeredPollingValues.Delete(pValue.UniqueId)
@@ -135,8 +157,16 @@ func BroadcastUpdate(updateValue *PollingUserUpdate) {
 		myChannel := pValue.theChannel
 		myChannel <- updateValue
 
-		pValue.MarkAsInvalid(false)
-		return true
+		if !pValue.IsPersistance() {
+			// temporary polling values should be removed from the
+			// memory once they get an update, if a polling-value is
+			// persistance, it should remain there as long as possible (unless
+			// it gets removed from the memory cache because of inactivity)
+			pValue.MarkAsInvalid(false)
+			return true
+		}
+
+		return false
 	})
 }
 
@@ -277,4 +307,19 @@ func IsForbiddenID(id int64) bool {
 // range of polling timeout.
 func IsPollingTimeoutInvalid(value int64) bool {
 	return value >= MinPollingTimeout && value <= MaxPollingTimeout
+}
+
+func _getRegisteredPollingValues() *ssg.SafeEMap[uint64, RegisteredPollingValue] {
+	m := ssg.NewSafeEMap[uint64, RegisteredPollingValue]()
+	m.SetInterval(20 * time.Minute)
+	m.SetExpiration(40 * time.Minute)
+	m.SetOnExpired(func(key uint64, value RegisteredPollingValue) {
+		defer func() {
+			_ = recover()
+		}()
+		value.MarkAsInvalid(true)
+	})
+	m.EnableChecking()
+
+	return m
 }

@@ -15,9 +15,36 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func StartPollingHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginStartPolling)
+		return
+	}
+
+	requesterToken, err := database.GetTokenFromString(token)
+	if err != nil || requesterToken == nil {
+		entry.SendInvalidTokenError(c, OriginStartPolling)
+		return
+	}
+
+	if !requesterToken.CanStartPolling() {
+		entry.SendPermissionDenied(c, OriginStartPolling)
+		return
+	}
+
+	pValue := sibylValues.RegisterNewPersistancePollingValue(
+		requesterToken.UserId,
+		pollingNumGenerator.Next(),
+	)
+
+	entry.SendResult(c, pValue.UniqueId)
+}
+
 func GetUpdatesHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
-	timeout := utils.GetParam(c, "timeout", "time-out")
+	timeout := utils.GetParam(c, "timeout", "time-out", "polling-timeout")
+	pUniqueIdStr := utils.GetParam(c, "polling-unique-id")
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginGetUpdates)
 		return
@@ -42,17 +69,33 @@ func GetUpdatesHandler(c *gin.Context) {
 		return
 	}
 
-	pValue := sibylValues.RegisterNewPollingValue(
-		requesterToken.UserId,
-		pollingNumGenerator.Next(),
-		timeoutValue,
-	)
+	var pUniqueId uint64 = 0
+	if pUniqueIdStr != "" {
+		pUniqueId = uint64(ssg.ToInt64(pUniqueIdStr))
+	}
+
+	var pValue *sibylValues.RegisteredPollingValue
+	if pUniqueId == 0 {
+		pValue = sibylValues.RegisterNewPollingValue(
+			requesterToken.UserId,
+			pollingNumGenerator.Next(),
+			timeoutValue,
+		)
+	} else {
+		pValue = sibylValues.GetPollingValueByUniqueId(pUniqueId, timeoutValue)
+		if pValue == nil {
+			entry.SendInvalidUniqueIdError(c, OriginGetUpdates)
+			return
+		}
+	}
 
 	select {
 	case <-pValue.Done():
 		entry.SendResult(c, nil)
-		// we got timed out here, so we have to unregister the registered pValue.
-		sibylValues.UnregisterPollingValue(false, pValue)
+		if !pValue.IsPersistance() {
+			// we got timed out here, so we have to unregister the registered pValue.
+			sibylValues.UnregisterPollingValue(false, pValue)
+		}
 	case pUpdate := <-pValue.GotUpdate():
 		// there is no need to unregister the pValue here, everything is done on caller's side
 		// (the one that broadcasted this update, we just have to send the response to the user and

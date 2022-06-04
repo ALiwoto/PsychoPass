@@ -169,7 +169,7 @@ func (t *Token) GetTitleStringPermission() string {
 	return ssg.Title(t.Permission.GetStringPermission())
 }
 
-func (t *Token) GetFormatedCreatedDate() string {
+func (t *Token) GetFormattedCreatedDate() string {
 	return t.CreatedAt.Format("2006-01-02 at 15:04:05")
 }
 
@@ -1176,6 +1176,10 @@ func (p *RegisteredPollingValue) Done() <-chan struct{} {
 
 func (p *RegisteredPollingValue) GotUpdate() <-chan *PollingUserUpdate {
 	return p.theChannel
+}
+
+func (p *RegisteredPollingValue) IsPersistance() bool {
+	return p.isPersistance
 }
 
 //---------------------------------------------------------

@@ -14,7 +14,7 @@ func toGeneralInfoResult(t, agent *sv.Token) *GeneralInfoResult {
 		Division:       t.DivisionNum,
 		AssignedBy:     t.AssignedBy,
 		AssignedReason: t.AssignedReason,
-		AssignedAt:     t.GetFormatedCreatedDate(),
+		AssignedAt:     t.GetFormattedCreatedDate(),
 	}
 
 	if t.IsOwner() && !agent.IsOwner() {

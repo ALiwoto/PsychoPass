@@ -80,6 +80,18 @@ func SendInvalidUserIdError(c *gin.Context, origin string) {
 	})
 }
 
+func SendInvalidUniqueIdError(c *gin.Context, origin string) {
+	c.JSON(http.StatusOK, &EndpointResponse{
+		Success: false,
+		Error: &EndpointError{
+			ErrorCode: http.StatusBadRequest,
+			Message:   ErrInvalidUniqueId,
+			Origin:    origin,
+			Date:      timeUtils.GenerateCurrentDateTime(),
+		},
+	})
+}
+
 func SendInvalidPermError(c *gin.Context, origin string) {
 	c.JSON(http.StatusOK, &EndpointResponse{
 		Success: false,

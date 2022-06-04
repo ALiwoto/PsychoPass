@@ -13,6 +13,10 @@ const (
 	// the target's user id is invalid. (contains invalid characters)
 	ErrInvalidUserId = "Invalid user-id provided"
 
+	// ErrInvalidUniqueId is the error message that should be sent when
+	// the provided unique-id is invalid.
+	ErrInvalidUniqueId = "Invalid unique-id provided"
+
 	// ErrInvalidPerm is the error message that should be sent when
 	// the target's permission param is invalid.
 	ErrInvalidPerm = "Invalid permission provided"

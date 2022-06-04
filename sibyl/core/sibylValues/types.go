@@ -106,12 +106,13 @@ type PollingUserUpdate struct {
 }
 
 type RegisteredPollingValue struct {
-	theChannel chan *PollingUserUpdate
-	OwnerId    int64
-	Timeout    time.Duration
-	UniqueId   uint64
-	ctx        context.Context
-	cancelFunc context.CancelFunc
+	OwnerId       int64
+	Timeout       time.Duration
+	UniqueId      uint64
+	theChannel    chan *PollingUserUpdate
+	ctx           context.Context
+	cancelFunc    context.CancelFunc
+	isPersistance bool
 }
 
 type AssaultDominatorData struct {
