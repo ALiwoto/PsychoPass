@@ -16,6 +16,7 @@ type UserPermission int
 type ScanStatus int
 type EntityType int
 type BanFlag string
+type SibylUpdateType string
 type ReportHandler func(r *Report)
 type AssaultDominatorHandler func(r *AssaultDominatorData)
 type MultiReportHandler func(data *MultiScanRawData)
@@ -101,8 +102,8 @@ type Token struct {
 }
 
 type PollingUserUpdate struct {
-	UpdateType string `json:"update_type"`
-	UpdateData any    `json:"update_data"`
+	UpdateType SibylUpdateType `json:"update_type"`
+	UpdateData any             `json:"update_data"`
 }
 
 type RegisteredPollingValue struct {
