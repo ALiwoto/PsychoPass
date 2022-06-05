@@ -78,6 +78,9 @@ func LoadHandlers() {
 	// getUpdates handlers
 	bindPostHandler(pollingHandlers.GetUpdatesHandler, "getUpdates")
 
+	// startPolling handlers
+	bindPostHandler(pollingHandlers.StartPollingHandler, "startPolling")
+
 	bindNoRoot()
 }
 
@@ -155,6 +158,8 @@ func noRootHandler(c *gin.Context) {
 		reportHandlers.MultiReportHandler(c)
 	case "getupdates":
 		pollingHandlers.GetUpdatesHandler(c)
+	case "startpolling":
+		pollingHandlers.StartPollingHandler(c)
 	default:
 		c.Redirect(http.StatusPermanentRedirect, "/docs/")
 		return
