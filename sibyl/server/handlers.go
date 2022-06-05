@@ -61,7 +61,7 @@ func LoadHandlers() {
 	bindHandler(infoHandlers.GeneralInfoHandler, "generalInfo", "getGeneralInfo")
 
 	// get all bans handlers
-	bindHandler(infoHandlers.GetAllBansHandler, "getAll", "getAllBans", "getbans")
+	bindHandler(infoHandlers.GetAllBansHandler, "getAll", "getAllBans", "getBans")
 
 	// stats handlers
 	bindHandler(infoHandlers.GetStatsHandler, "getStats", "stats")
@@ -85,15 +85,23 @@ func LoadHandlers() {
 }
 
 func bindHandler(handler gin.HandlerFunc, paths ...string) {
+	var currentPath string
 	for _, path := range paths {
-		ServerEngine.GET(path, handler)
-		ServerEngine.POST(path, handler)
+		// ServerEngine.GET(path, handler)
+		// ServerEngine.POST(path, handler)
+
+		currentPath = strings.ToLower(path)
+		getHandlers[currentPath] = handler
+		postHandlers[currentPath] = handler
 	}
 }
 
 func bindPostHandler(handler gin.HandlerFunc, paths ...string) {
+	var currentPath string
 	for _, path := range paths {
-		ServerEngine.POST(path, handler)
+		// ServerEngine.POST(path, handler)
+		currentPath = strings.ToLower(path)
+		postHandlers[currentPath] = handler
 	}
 }
 
@@ -116,57 +124,27 @@ func noRootHandler(c *gin.Context) {
 	path := strings.TrimSpace(c.Request.URL.Path)
 	path = strings.Trim(path, "/")
 	path = strings.ToLower(path)
-	switch path {
-	case "create", "createtoken", "generate":
-		tokenHandlers.CreateTokenHandler(c)
-	case "revoke", "revoketoken":
-		tokenHandlers.RevokeTokenHandler(c)
-	case "changeperm", "promote":
-		tokenHandlers.ChangeTokenPermHandler(c)
-	case "gettoken":
-		tokenHandlers.GetTokenHandler(c)
-	case "getregistered", "registeredusers", "getallregistered":
-		tokenHandlers.GetAllRegisteredUsersHandler(c)
-	case "addban", "ban", "banuser":
-		banHandlers.AddBanHandler(c)
-	case "multiban", "addmultiban":
-		banHandlers.MultiBanHandler(c)
-	case "multiunban", "removemultiban":
-		if c.Request.Method != http.MethodPost {
-			goto redirect_req
+	switch c.Request.Method {
+	case http.MethodGet:
+		h := getHandlers[path]
+		if h != nil {
+			h(c)
+			return
 		}
-		banHandlers.MultiUnBanHandler(c)
-
-	case "deleteban", "removeban", "revertban", "remban":
-		banHandlers.RemoveBanHandler(c)
-	case "getinfo", "fetchinfo":
-		infoHandlers.GetInfoHandler(c)
-	case "generalinfo", "getgeneralinfo":
-		infoHandlers.GeneralInfoHandler(c)
-	case "checktoken":
-		infoHandlers.CheckTokenHandler(c)
-	case "getall", "getallbans", "getbans":
-		infoHandlers.GetAllBansHandler(c)
-	case "getstats", "stats":
-		infoHandlers.GetStatsHandler(c)
-	case "report", "reportuser":
-		reportHandlers.ReportUserHandler(c)
-	case "multireport", "multiscan":
-		if c.Request.Method != http.MethodPost {
-			goto redirect_req
-		}
-		reportHandlers.MultiReportHandler(c)
-	case "getupdates":
-		pollingHandlers.GetUpdatesHandler(c)
-	case "startpolling":
-		pollingHandlers.StartPollingHandler(c)
-	default:
-		c.Redirect(http.StatusPermanentRedirect, "/docs/")
+		c.Redirect(http.StatusPermanentRedirect, DocsPath)
 		return
+	case http.MethodPost:
+		h := postHandlers[path]
+		if h != nil {
+			h(c)
+			return
+		}
+		c.Redirect(http.StatusPermanentRedirect, DocsPath)
+		return
+	default:
+		goto redirect_req
 	}
 
-	return
-
 redirect_req: /* redirect requests to /docs */
-	c.Redirect(http.StatusPermanentRedirect, "/docs/")
+	c.Redirect(http.StatusPermanentRedirect, DocsPath)
 }
