@@ -76,10 +76,10 @@ func LoadHandlers() {
 	bindPostHandler(reportHandlers.MultiReportHandler, "multiReport", "multiScan")
 
 	// getUpdates handlers
-	bindPostHandler(pollingHandlers.GetUpdatesHandler, "getUpdates")
+	bindHandler(pollingHandlers.GetUpdatesHandler, "getUpdates")
 
 	// startPolling handlers
-	bindPostHandler(pollingHandlers.StartPollingHandler, "startPolling")
+	bindHandler(pollingHandlers.StartPollingHandler, "startPolling")
 
 	bindNoRoot()
 }
