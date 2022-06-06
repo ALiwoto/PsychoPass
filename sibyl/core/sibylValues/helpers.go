@@ -155,6 +155,15 @@ func BroadcastUpdate(updateValue *PollingUserUpdate) {
 		}
 
 		go func() {
+			defer func() {
+				r := recover()
+				if r != nil {
+					rStr, ok := r.(string)
+					if ok && strings.Contains(rStr, "send on closed channel") {
+						registeredPollingValues.Delete(pValue.UniqueId)
+					}
+				}
+			}()
 			pValue.theChannel <- updateValue
 		}()
 
