@@ -154,8 +154,9 @@ func BroadcastUpdate(updateValue *PollingUserUpdate) {
 			return true
 		}
 
-		myChannel := pValue.theChannel
-		myChannel <- updateValue
+		go func() {
+			pValue.theChannel <- updateValue
+		}()
 
 		if !pValue.IsPersistance() {
 			// temporary polling values should be removed from the
