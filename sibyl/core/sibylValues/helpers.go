@@ -152,7 +152,11 @@ func BroadcastUpdate(updateValue *PollingUserUpdate, pollingId *PollingIdentifie
 		// local broadcast.
 		pValue := registeredPollingValues.Get(pollingId.PollingUniqueId)
 		if !pValue.IsInvalid() && pValue.AccessHash == pollingId.PollingAccessHash {
-			go pValue.SendUpdate(updateValue)
+			// there is no need to use a new goroutine in here, because this function itself
+			// should be called in a separated goroutine, even if `pValue.SendUpdate` method
+			// blocks the execution, we will have to return after that, so doesn't really
+			// matter.
+			pValue.SendUpdate(updateValue)
 			return
 		}
 	}
@@ -163,6 +167,10 @@ func BroadcastUpdate(updateValue *PollingUserUpdate, pollingId *PollingIdentifie
 			return true
 		}
 
+		// the reason we are calling this function in a separated goroutine is because
+		// if it blocks our execution, the mutex in registeredPollingValues will remain
+		// locked, now imagine this blocking happens for all of the registered polling,
+		// server **might** get into a deadlock state.
 		go pValue.SendUpdate(updateValue)
 
 		if !pValue.IsPersistance() {

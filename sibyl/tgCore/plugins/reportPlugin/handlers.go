@@ -165,10 +165,10 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	case ApproveData:
 		scan.Approve(token.UserId, "") /* no reason */
 		go pushScanToDatabase(scan)
-		go sibylBroadcast.SendScanRequestApproved(scan)
+		go sibylBroadcast.SendScanRequestApproved(scan, scan.PollingId)
 	case RejectData:
 		scan.Reject(token.UserId, "") /* no reason */
-		go sibylBroadcast.SendScanRequestRejected(scan)
+		go sibylBroadcast.SendScanRequestRejected(scan, scan.PollingId)
 	}
 
 	database.UpdateScan(scan)
@@ -340,7 +340,7 @@ func approveHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	scan.Approve(token.UserId, newReason)
 	go pushScanToDatabase(scan)
-	go sibylBroadcast.SendScanRequestApproved(scan)
+	go sibylBroadcast.SendScanRequestApproved(scan, scan.PollingId)
 	database.UpdateScan(scan)
 	_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
@@ -406,7 +406,7 @@ func rejectHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	scan.AgentUser = tgUser
 
 	scan.Reject(token.UserId, newReason)
-	go sibylBroadcast.SendScanRequestRejected(scan)
+	go sibylBroadcast.SendScanRequestRejected(scan, scan.PollingId)
 	database.UpdateScan(scan)
 	_, _, _ = replied.EditText(b, scan.ParseAsMd().ToString(), &gotgbot.EditMessageTextOpts{
 		ParseMode:             sv.MarkDownV2,
