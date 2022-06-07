@@ -90,6 +90,10 @@ func GetUpdatesHandler(c *gin.Context) {
 		if pValue == nil {
 			entry.SendInvalidUniqueIdError(c, OriginGetUpdates)
 			return
+		} else if pValue.OwnerId != requesterToken.UserId {
+			// don't let users access to another users' polling.
+			entry.SendPermissionDenied(c, OriginGetUpdates)
+			return
 		}
 	}
 
