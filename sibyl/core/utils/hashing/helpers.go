@@ -15,10 +15,21 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-var characterRunes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
+var (
+	characterRunes  = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
+	accessHashChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/.0123456789+"
+)
 
 func GetToken(size, id int64) string {
 	return FormatToken(RandomString(size), id)
+}
+
+func GenerateAccessHash() string {
+	b := make([]byte, PollingAccessHashSize)
+	for i := range b {
+		b[i] = accessHashChars[rand.Intn(len(accessHashChars))]
+	}
+	return string(b)
 }
 
 func FormatToken(hash string, id int64) string {
