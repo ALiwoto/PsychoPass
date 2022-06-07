@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"strconv"
 
+	"github.com/AnimeKaizoku/ssg/ssg"
 	entry "github.com/MinistryOfWelfare/PsychoPass/sibyl/entryPoints"
 
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
@@ -24,6 +25,8 @@ func ReportUserHandler(c *gin.Context) {
 	msg := utils.GetParam(c, "message", "msg", "reportMsg", "report-msg")
 	msgLink := utils.GetParam(c, "src", "source", "report-src",
 		"message-src", "msg-src")
+	pUniqueIdStr := utils.GetParam(c, "polling-unique-id")
+	pollingAccessHash := utils.GetParam(c, "polling-access-hash")
 	targetType := utils.GetEntityType(c)
 
 	if len(token) == 0 {
@@ -87,6 +90,21 @@ func ReportUserHandler(c *gin.Context) {
 			agent.Permission,
 			targetType,
 		)
+
+		if u.CanStartPolling() {
+			var pUniqueId sv.PollingUniqueId = 0
+			if pUniqueIdStr != "" {
+				pUniqueId = sv.PollingUniqueId(ssg.ToInt64(pUniqueIdStr))
+			}
+
+			if pUniqueId != 0 && pollingAccessHash != "" {
+				r.PollingId = &sv.PollingIdentifier{
+					PollingUniqueId:   pUniqueId,
+					PollingAccessHash: pollingAccessHash,
+				}
+			}
+		}
+
 		database.AddScan(r)
 		go sv.SendReportHandler(r)
 		// plot twist: send the unique-id of the scan to the user :P

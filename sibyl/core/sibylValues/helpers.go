@@ -127,9 +127,9 @@ func RegisterNewPersistancePollingValue(ownerId int64, uniqueId PollingUniqueId)
 	return pValue
 }
 
-func GetPollingValueByUniqueId(uniqueId PollingUniqueId, accessHash string, timeout time.Duration) *RegisteredPollingValue {
-	pValue := registeredPollingValues.Get(uniqueId)
-	if pValue == nil || pValue.AccessHash != accessHash {
+func GetPollingValueByUniqueId(pollingId *PollingIdentifier, timeout time.Duration) *RegisteredPollingValue {
+	pValue := registeredPollingValues.Get(pollingId.PollingUniqueId)
+	if pValue == nil || pValue.AccessHash != pollingId.PollingAccessHash {
 		return nil
 	}
 
@@ -142,10 +142,19 @@ func UnregisterPollingValue(withContext bool, pValue *RegisteredPollingValue) {
 	registeredPollingValues.Delete(pValue.UniqueId)
 }
 
-func BroadcastUpdate(updateValue *PollingUserUpdate) {
+func BroadcastUpdate(updateValue *PollingUserUpdate, pollingId *PollingIdentifier) {
 	if registeredPollingValues == nil || registeredPollingValues.Length() == 0 {
 		// no one is listening anyway
 		return
+	}
+
+	if pollingId != nil {
+		// local broadcast.
+		pValue := registeredPollingValues.Get(pollingId.PollingUniqueId)
+		if !pValue.IsInvalid() && pValue.AccessHash == pollingId.PollingAccessHash {
+			go pValue.SendUpdate(updateValue)
+			return
+		}
 	}
 
 	registeredPollingValues.ForEach(func(_ PollingUniqueId, pValue *RegisteredPollingValue) bool {
@@ -154,18 +163,7 @@ func BroadcastUpdate(updateValue *PollingUserUpdate) {
 			return true
 		}
 
-		go func() {
-			defer func() {
-				r := recover()
-				if r != nil {
-					rStr, ok := r.(string)
-					if ok && strings.Contains(rStr, "send on closed channel") {
-						registeredPollingValues.Delete(pValue.UniqueId)
-					}
-				}
-			}()
-			pValue.theChannel <- updateValue
-		}()
+		go pValue.SendUpdate(updateValue)
 
 		if !pValue.IsPersistance() {
 			// temporary polling values should be removed from the

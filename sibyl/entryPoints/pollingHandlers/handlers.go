@@ -86,7 +86,11 @@ func GetUpdatesHandler(c *gin.Context) {
 			timeoutValue,
 		)
 	} else {
-		pValue = sibylValues.GetPollingValueByUniqueId(pUniqueId, pollingAccessHash, timeoutValue)
+		pollingId := &sibylValues.PollingIdentifier{
+			PollingUniqueId:   pUniqueId,
+			PollingAccessHash: pollingAccessHash,
+		}
+		pValue = sibylValues.GetPollingValueByUniqueId(pollingId, timeoutValue)
 		if pValue == nil {
 			entry.SendInvalidUniqueIdError(c, OriginGetUpdates)
 			return

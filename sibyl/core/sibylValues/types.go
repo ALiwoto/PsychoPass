@@ -102,6 +102,12 @@ type Token struct {
 	DeniedReports int `json:"denied_reports"`
 }
 
+// PollingIdentifier represents a unique polling identifier.
+type PollingIdentifier struct {
+	PollingUniqueId   PollingUniqueId `json:"polling_unique_id"`
+	PollingAccessHash string          `json:"polling_access_hash"`
+}
+
 type PollingUserUpdate struct {
 	UpdateType SibylUpdateType `json:"update_type"`
 	UpdateData any             `json:"update_data"`
@@ -128,34 +134,60 @@ type AssaultDominatorData struct {
 }
 
 type Report struct {
-	UniqueId       string     `json:"unique_id" gorm:"primaryKey"`
-	ReporterId     int64      `json:"reporter_id"`
-	TargetUser     int64      `json:"target_user"`
-	TargetType     EntityType `json:"target_type"`
-	ReportDate     string     `json:"report_date"`
-	ReportReason   string     `json:"report_reason"`
-	ReportMessage  string     `json:"report_message"`
-	ScanSourceLink string     `json:"scan_source_link"`
+	// UniqueId is the unique id of the report.
+	UniqueId string `json:"unique_id" gorm:"primaryKey"`
+
+	// ReporterId is the reporter id.
+	ReporterId int64 `json:"reporter_id"`
+
+	// TargetUser is the id of the target.
+	TargetUser int64 `json:"target_user"`
+
+	// TargetType is the type of the target.
+	TargetType EntityType `json:"target_type"`
+
+	// ReportDate is the date of report.
+	ReportDate string `json:"report_date"`
+
+	// ReportReason is the reason of reporting.
+	ReportReason string `json:"report_reason"`
+
+	// ReportMessage is the message that the reported message.
+	ReportMessage string `json:"report_message"`
+
+	// ScanSourceLink is the link to the source of the scan.
+	ScanSourceLink string `json:"scan_source_link"`
+
 	// AgentId is the user id of the person who approved, rejected or closed the
 	// scan.
 	AgentId int64 `json:"agent_id"`
+
 	// AgentReason is the reason that agent used to reject or close the
 	// scan.
 	AgentReason string `json:"agent_reason"`
+
 	// AgentDate is the date that agent used to approve, reject or close the scan.
 	AgentDate time.Time `json:"agent_date"`
+
 	// ReporterPermission is the permission of the reporter.
 	ReporterPermission UserPermission `json:"reporter_permission"`
+
 	// ScanStatus is the status of this scan. it can either be approved, rejected or
 	// closed.
 	// please notice that only pending scans' details can be changed; if a
 	// scan is approved, rejected or closed, its details cannot be changed anymore.
 	ScanStatus ScanStatus `json:"scan_status"`
+
 	// AssociationBanId is empty if the scan is not an association scan.
 	AssociationBanId string `json:"association_ban_id"`
+
 	// AgentUser is the agent user who has clicked the approve, reject or close
 	// button (or sent the command).
 	AgentUser *gotgbot.User `json:"-" gorm:"-" sql:"-"`
+
+	// PollingId is the id of the polling that the result should be sent
+	// to. it can be nil.
+	PollingId *PollingIdentifier `json:"-" gorm:"-" sql:"-"`
 }
 
 // CrimeCoefficientRange is the range of crime coefficients.
