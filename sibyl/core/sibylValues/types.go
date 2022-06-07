@@ -15,6 +15,7 @@ import (
 type UserPermission int
 type ScanStatus int
 type EntityType int
+type PollingUniqueId uint64
 type BanFlag string
 type SibylUpdateType string
 type ReportHandler func(r *Report)
@@ -109,7 +110,8 @@ type PollingUserUpdate struct {
 type RegisteredPollingValue struct {
 	OwnerId       int64
 	Timeout       time.Duration
-	UniqueId      uint64
+	UniqueId      PollingUniqueId
+	AccessHash    string
 	theChannel    chan *PollingUserUpdate
 	ctx           context.Context
 	cancelFunc    context.CancelFunc

@@ -10,6 +10,5 @@ import (
 )
 
 var (
-	pollingMap          = ssg.NewSafeMap[uint64, sv.PollingUserUpdate]()
-	pollingNumGenerator = ssg.NewNumIdGenerator[uint64]()
+	pollingNumGenerator = ssg.NewNumIdGenerator[sv.PollingUniqueId]()
 )

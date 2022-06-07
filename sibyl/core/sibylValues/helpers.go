@@ -102,7 +102,7 @@ func GetCrimeCoefficientRange(value int) *CrimeCoefficientRange {
 	return nil
 }
 
-func RegisterNewPollingValue(ownerId int64, uniqueId uint64, timeout time.Duration) *RegisteredPollingValue {
+func RegisterNewPollingValue(ownerId int64, uniqueId PollingUniqueId, timeout time.Duration) *RegisteredPollingValue {
 	pValue := &RegisteredPollingValue{
 		OwnerId:    ownerId,
 		UniqueId:   uniqueId,
@@ -115,7 +115,7 @@ func RegisterNewPollingValue(ownerId int64, uniqueId uint64, timeout time.Durati
 	return pValue
 }
 
-func RegisterNewPersistancePollingValue(ownerId int64, uniqueId uint64) *RegisteredPollingValue {
+func RegisterNewPersistancePollingValue(ownerId int64, uniqueId PollingUniqueId) *RegisteredPollingValue {
 	pValue := &RegisteredPollingValue{
 		OwnerId:       ownerId,
 		UniqueId:      uniqueId,
@@ -127,9 +127,9 @@ func RegisterNewPersistancePollingValue(ownerId int64, uniqueId uint64) *Registe
 	return pValue
 }
 
-func GetPollingValueByUniqueId(uniqueId uint64, timeout time.Duration) *RegisteredPollingValue {
+func GetPollingValueByUniqueId(uniqueId PollingUniqueId, accessHash string, timeout time.Duration) *RegisteredPollingValue {
 	pValue := registeredPollingValues.Get(uniqueId)
-	if pValue == nil {
+	if pValue == nil || pValue.AccessHash != accessHash {
 		return nil
 	}
 
@@ -148,7 +148,7 @@ func BroadcastUpdate(updateValue *PollingUserUpdate) {
 		return
 	}
 
-	registeredPollingValues.ForEach(func(_ uint64, pValue *RegisteredPollingValue) bool {
+	registeredPollingValues.ForEach(func(_ PollingUniqueId, pValue *RegisteredPollingValue) bool {
 		if pValue.IsInvalid() {
 			// let the map remove the invalid value from itself.
 			return true
@@ -304,7 +304,7 @@ func GetPrettyUptime() string {
 
 // IsForbiddenID function checks if the given ID is forbidden
 // or not. forbidden IDs cannot be looked up by any of the API endpoints.
-// If they try to interract with these IDs, they will get a 403 forbidden
+// If they try to interact with these IDs, they will get a 403 forbidden
 // response.
 func IsForbiddenID(id int64) bool {
 	if HelperBot != nil && HelperBot.Id == id {
@@ -319,11 +319,11 @@ func IsPollingTimeoutInvalid(value int64) bool {
 	return value >= MinPollingTimeout && value <= MaxPollingTimeout
 }
 
-func _getRegisteredPollingValues() *ssg.SafeEMap[uint64, RegisteredPollingValue] {
-	m := ssg.NewSafeEMap[uint64, RegisteredPollingValue]()
+func _getRegisteredPollingValues() *ssg.SafeEMap[PollingUniqueId, RegisteredPollingValue] {
+	m := ssg.NewSafeEMap[PollingUniqueId, RegisteredPollingValue]()
 	m.SetInterval(20 * time.Minute)
 	m.SetExpiration(40 * time.Minute)
-	m.SetOnExpired(func(key uint64, value RegisteredPollingValue) {
+	m.SetOnExpired(func(key PollingUniqueId, value RegisteredPollingValue) {
 		defer func() {
 			_ = recover()
 		}()

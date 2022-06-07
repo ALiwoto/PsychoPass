@@ -38,13 +38,17 @@ func StartPollingHandler(c *gin.Context) {
 		pollingNumGenerator.Next(),
 	)
 
-	entry.SendResult(c, pValue.UniqueId)
+	entry.SendResult(c, &StartPollingResult{
+		PollingUniqueId:   pValue.UniqueId,
+		PollingAccessHash: pValue.AccessHash,
+	})
 }
 
 func GetUpdatesHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	timeout := utils.GetParam(c, "timeout", "time-out", "polling-timeout")
 	pUniqueIdStr := utils.GetParam(c, "polling-unique-id")
+	pollingAccessHash := utils.GetParam(c, "polling-access-hash")
 	if len(token) == 0 {
 		entry.SendNoTokenError(c, OriginGetUpdates)
 		return
@@ -69,9 +73,9 @@ func GetUpdatesHandler(c *gin.Context) {
 		return
 	}
 
-	var pUniqueId uint64 = 0
+	var pUniqueId sibylValues.PollingUniqueId = 0
 	if pUniqueIdStr != "" {
-		pUniqueId = uint64(ssg.ToInt64(pUniqueIdStr))
+		pUniqueId = sibylValues.PollingUniqueId(ssg.ToInt64(pUniqueIdStr))
 	}
 
 	var pValue *sibylValues.RegisteredPollingValue
@@ -82,7 +86,7 @@ func GetUpdatesHandler(c *gin.Context) {
 			timeoutValue,
 		)
 	} else {
-		pValue = sibylValues.GetPollingValueByUniqueId(pUniqueId, timeoutValue)
+		pValue = sibylValues.GetPollingValueByUniqueId(pUniqueId, pollingAccessHash, timeoutValue)
 		if pValue == nil {
 			entry.SendInvalidUniqueIdError(c, OriginGetUpdates)
 			return
