@@ -42,7 +42,7 @@ func SafeReply(b *gotgbot.Bot, ctx *ext.Context, output string) error {
 }
 
 // SafeReply will reply the message safely, if output is longer than 4096 character, it will
-// send it as file; otherwise it will send it as plain text without using any formating.
+// send it as file; otherwise it will send it as plain text without using any formatting.
 func SafeReplyNoFormat(b *gotgbot.Bot, ctx *ext.Context, output string) error {
 	msg := ctx.EffectiveMessage
 	if len(output) < 4096 {
@@ -98,7 +98,7 @@ func SafeEditNoFormat(b *gotgbot.Bot, ctx *ext.Context, topMsg *gotgbot.Message,
 			ReplyToMessageId: msg.MessageId,
 		})
 
-		_, _ = topMsg.Delete(b)
+		_, _ = topMsg.Delete(b, nil)
 
 		if err != nil {
 			logging.Error("got an error when trying to send document: ", err)

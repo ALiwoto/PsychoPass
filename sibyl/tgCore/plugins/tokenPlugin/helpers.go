@@ -64,7 +64,7 @@ func showUserIsBanned(b *gotgbot.Bot, ctx *ext.Context, targetUser *sv.User, p s
 		suMd.Mention(strName, targetUser.UserID).ElThis()
 		suMd.Bold("• ID: ").Mono(strNameId).ElThis()
 	} else {
-		ch, err := b.GetChat(targetUser.UserID)
+		ch, err := b.GetChat(targetUser.UserID, nil)
 		if err != nil {
 			return
 		}

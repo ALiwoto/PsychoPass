@@ -409,7 +409,7 @@ func assignHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 			}
 			// if we are going to demote the user, simply ignore the pm
 			// part and do your own thing.
-			chat, err := b.GetChat(targetId)
+			chat, err := b.GetChat(targetId, nil)
 			if err != nil || chat == nil {
 				chat = &gotgbot.Chat{
 					Id:        targetId,
@@ -496,7 +496,7 @@ func assignCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 
 		return ext.EndGroups
 	case CloseCbData:
-		_, _ = ctx.EffectiveMessage.Delete(b)
+		_, _ = ctx.EffectiveMessage.Delete(b, nil)
 		return ext.EndGroups
 	}
 

@@ -24,21 +24,18 @@ func StartTelegramBot() {
 	}
 
 	b, err := gotgbot.NewBot(token, &gotgbot.BotOpts{
-		Client:      http.Client{},
-		GetTimeout:  gotgbot.DefaultGetTimeout,
-		PostTimeout: gotgbot.DefaultPostTimeout,
+		Client: http.Client{},
+		DefaultRequestOpts: &gotgbot.RequestOpts{
+			Timeout: 6 * gotgbot.DefaultTimeout,
+			APIURL:  sibylConfig.GetAPIUrl(),
+		},
 	})
 	if err != nil {
 		logging.Info("Unable to login to the helper bot due to:", err)
 		return
 	}
 
-	mdparser.AddSecret(b.Token, "$TOKEN")
-
-	url := sibylConfig.GetAPIUrl()
-	if len(url) != 0 {
-		b.APIURL = url
-	}
+	mdparser.AddSecret(b.GetToken(), "$TOKEN")
 
 	uOptions := &ext.UpdaterOpts{
 		DispatcherOpts: ext.DispatcherOpts{

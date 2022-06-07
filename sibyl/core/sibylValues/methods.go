@@ -288,7 +288,7 @@ func (t EntityType) IsChannel() bool {
 //---------------------------------------------------------
 
 func (r *Report) getNameById(id int64) string {
-	chat, err := HelperBot.GetChat(id)
+	chat, err := HelperBot.GetChat(id, nil)
 	if err != nil || chat == nil {
 		return ""
 	}
@@ -942,7 +942,7 @@ func (m *MultiScanRawData) GenerateID() {
 }
 
 func (m *MultiScanRawData) getNameById(id int64) string {
-	chat, err := HelperBot.GetChat(id)
+	chat, err := HelperBot.GetChat(id, nil)
 	if err != nil || chat == nil {
 		return ""
 	}

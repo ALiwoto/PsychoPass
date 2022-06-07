@@ -157,7 +157,7 @@ func scanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 			ParseMode:             sv.MarkDownV2,
 			DisableWebPagePreview: true,
 		})
-		_, _ = message.Delete(b)
+		_, _ = message.Delete(b, nil)
 		return ext.EndGroups
 	}
 
@@ -232,7 +232,7 @@ func multiScanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 				ParseMode:             sv.MarkDownV2,
 				DisableWebPagePreview: true,
 			})
-			_, _ = message.Delete(b)
+			_, _ = message.Delete(b, nil)
 		}
 		return ext.EndGroups
 	}
@@ -259,7 +259,7 @@ func multiScanCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 			ParseMode:             sv.MarkDownV2,
 			DisableWebPagePreview: true,
 		})
-		_, _ = message.Delete(b)
+		_, _ = message.Delete(b, nil)
 		return ext.EndGroups
 	}
 
@@ -478,7 +478,7 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 		DisableWebPagePreview: true,
 	})
 
-	_, _ = replied.Delete(b)
+	_, _ = replied.Delete(b, nil)
 
 	return ext.EndGroups
 }

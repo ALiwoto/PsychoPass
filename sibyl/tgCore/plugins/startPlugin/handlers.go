@@ -257,7 +257,7 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 	action := strings.TrimPrefix(ctx.CallbackQuery.Data, AutoAppealCbPrefix)
 	switch action {
 	case CloseCbData:
-		_, _ = ctx.EffectiveMessage.Delete(b)
+		_, _ = ctx.EffectiveMessage.Delete(b, nil)
 	case firstAcceptCbData:
 		date := time.Unix(ctx.CallbackQuery.Message.Date, 0)
 		if time.Since(date) > time.Minute*5 {
@@ -265,7 +265,7 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 				Text:      "You took too long to respond. Please try again.",
 				ShowAlert: true,
 			})
-			_, _ = ctx.EffectiveMessage.Delete(b)
+			_, _ = ctx.EffectiveMessage.Delete(b, nil)
 			return ext.EndGroups
 		}
 		u, err := database.GetUserFromId(ctx.CallbackQuery.From.Id)
@@ -274,7 +274,7 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 				Text:      "You are not banned.",
 				ShowAlert: true,
 			})
-			_, _ = ctx.EffectiveMessage.Delete(b)
+			_, _ = ctx.EffectiveMessage.Delete(b, nil)
 			return ext.EndGroups
 		}
 		if !u.CanTryAppealing() || !u.CanAppeal() {
@@ -298,7 +298,7 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 				Text:      "You took too long to respond. Please try again.",
 				ShowAlert: true,
 			})
-			_, _ = ctx.EffectiveMessage.Delete(b)
+			_, _ = ctx.EffectiveMessage.Delete(b, nil)
 			return ext.EndGroups
 		}
 		u, err := database.GetUserFromId(ctx.CallbackQuery.From.Id)
@@ -307,7 +307,7 @@ func appealCallBackResponse(b *gotgbot.Bot, ctx *ext.Context) error {
 				Text:      "You are not banned.",
 				ShowAlert: true,
 			})
-			_, _ = ctx.EffectiveMessage.Delete(b)
+			_, _ = ctx.EffectiveMessage.Delete(b, nil)
 			return ext.EndGroups
 		}
 		if !u.CanTryAppealing() || !u.CanAppeal() {
