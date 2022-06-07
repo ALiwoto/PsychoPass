@@ -106,3 +106,4 @@ var _invalidUserIDs = map[int64]bool{
 }
 
 var registeredPollingValues = _getRegisteredPollingValues()
+var GeneratePollingAccessHash func() string

@@ -121,6 +121,7 @@ func RegisterNewPersistancePollingValue(ownerId int64, uniqueId PollingUniqueId)
 		UniqueId:      uniqueId,
 		theChannel:    make(chan *PollingUserUpdate, 1), // buffered channel with len of 1
 		isPersistance: true,
+		AccessHash:    GeneratePollingAccessHash(),
 	}
 
 	registeredPollingValues.Add(uniqueId, pValue)

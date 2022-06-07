@@ -9,10 +9,12 @@ import (
 	"time"
 
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
+	sibylValues.GeneratePollingAccessHash = GenerateAccessHash
 }
 
 var (

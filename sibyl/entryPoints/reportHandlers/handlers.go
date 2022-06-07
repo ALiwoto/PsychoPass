@@ -91,17 +91,15 @@ func ReportUserHandler(c *gin.Context) {
 			targetType,
 		)
 
-		if u.CanStartPolling() {
-			var pUniqueId sv.PollingUniqueId = 0
-			if pUniqueIdStr != "" {
-				pUniqueId = sv.PollingUniqueId(ssg.ToInt64(pUniqueIdStr))
-			}
+		var pUniqueId sv.PollingUniqueId = 0
+		if pUniqueIdStr != "" {
+			pUniqueId = sv.PollingUniqueId(ssg.ToInt64(pUniqueIdStr))
+		}
 
-			if pUniqueId != 0 && pollingAccessHash != "" {
-				r.PollingId = &sv.PollingIdentifier{
-					PollingUniqueId:   pUniqueId,
-					PollingAccessHash: pollingAccessHash,
-				}
+		if pUniqueId != 0 && pollingAccessHash != "" {
+			r.PollingId = &sv.PollingIdentifier{
+				PollingUniqueId:   pUniqueId,
+				PollingAccessHash: pollingAccessHash,
 			}
 		}
 
