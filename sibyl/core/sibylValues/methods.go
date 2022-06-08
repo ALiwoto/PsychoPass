@@ -820,6 +820,7 @@ func (u *User) invalidateFlags() {
 	u.FlagRaid = false
 	u.FlagSpamBot = false
 	u.FlagMassAdd = false
+	u.setHueColor()
 }
 
 func (u *User) ShouldSaveInDB() bool {
