@@ -563,6 +563,10 @@ func (u *User) IncreaseCrimeCoefficientByPerm(p UserPermission) {
 		return
 	}
 
+	// lazy way of fixing a bug in /assign command.
+	// See also: https://github.com/MinistryOfWelfare/PsychoPass/issues/23
+	defer u.setHueColor()
+
 	if p == Owner || p == Inspector {
 		u.CrimeCoefficient = 0
 		return
