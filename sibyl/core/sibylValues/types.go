@@ -100,6 +100,15 @@ type Token struct {
 
 	// DeniedReports is the count of denied reports.
 	DeniedReports int `json:"denied_reports"`
+
+	// ForcedCount is the count of forced scan that this user has
+	// sent (the ban count).
+	ForcedCount int `json:"forced_count"`
+
+	// RevertCount is the count of revert request that this user has
+	// sent, inspector's revert request is direct, but enforcer's
+	// revert request has to be approved by an inspector at NONA tower.
+	RevertCount int `json:"revert_count"`
 }
 
 // PollingIdentifier represents a unique polling identifier.

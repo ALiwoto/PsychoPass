@@ -8,19 +8,23 @@ import (
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
 
-func toGeneralInfoResult(t, agent *sv.Token) *GeneralInfoResult {
+func toGeneralInfoResult(targetToken, agent *sv.Token) *GeneralInfoResult {
 	i := &GeneralInfoResult{
-		UserId:         t.UserId,
-		Division:       t.DivisionNum,
-		AssignedBy:     t.AssignedBy,
-		AssignedReason: t.AssignedReason,
-		AssignedAt:     t.GetFormattedCreatedDate(),
+		UserId:             targetToken.UserId,
+		Division:           targetToken.DivisionNum,
+		AssignedBy:         targetToken.AssignedBy,
+		AssignedReason:     targetToken.AssignedReason,
+		AssignedAt:         targetToken.GetFormattedCreatedDate(),
+		ApprovedScansCount: targetToken.AcceptedReports,
+		RejectedScansCount: targetToken.DeniedReports,
+		ForcedScansCount:   targetToken.ForcedCount,
+		RevertCount:        targetToken.RevertCount,
 	}
 
-	if t.IsOwner() && !agent.IsOwner() {
+	if targetToken.IsOwner() && !agent.IsOwner() {
 		i.Permission = sv.Inspector
 	} else {
-		i.Permission = t.Permission
+		i.Permission = targetToken.Permission
 	}
 
 	return i

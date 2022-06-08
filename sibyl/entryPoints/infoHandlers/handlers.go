@@ -142,13 +142,13 @@ func GeneralInfoHandler(c *gin.Context) {
 		return
 	}
 
-	d, err := database.GetTokenFromString(token)
-	if err != nil || d == nil {
+	requesterToken, err := database.GetTokenFromString(token)
+	if err != nil || requesterToken == nil {
 		entry.SendInvalidTokenError(c, OriginGeneralInfo)
 		return
 	}
 
-	if !d.CanGetGeneralInfo() {
+	if !requesterToken.CanGetGeneralInfo() {
 		entry.SendPermissionDenied(c, OriginGeneralInfo)
 		return
 	}
@@ -164,16 +164,16 @@ func GeneralInfoHandler(c *gin.Context) {
 		return
 	}
 
-	u, err := database.GetTokenFromId(id)
-	if u == nil || err != nil {
+	targetToken, err := database.GetTokenFromId(id)
+	if targetToken == nil || err != nil {
 		entry.SendUserNotFoundError(c, OriginGeneralInfo)
 		return
 	}
 
-	if !u.IsRegistered() {
+	if !targetToken.IsRegistered() {
 		entry.SendUserNotRegisteredError(c, OriginGeneralInfo)
 		return
 	}
 
-	entry.SendResult(c, toGeneralInfoResult(u, d))
+	entry.SendResult(c, toGeneralInfoResult(targetToken, requesterToken))
 }
