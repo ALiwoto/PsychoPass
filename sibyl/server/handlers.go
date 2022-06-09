@@ -110,7 +110,7 @@ func bindNoRoot() {
 }
 
 func loadDocs() {
-	ServerEngine.Static("/docs", "docs"+string(os.PathSeparator)+"out")
+	ServerEngine.Static("/docs", "docs"+string(os.PathSeparator)+"site")
 }
 
 func addHeaders() {

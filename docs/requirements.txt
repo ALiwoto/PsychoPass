@@ -1,3 +1,1 @@
-pygments
-beautifulsoup4
-lxml
+mkdocs

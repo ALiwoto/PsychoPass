@@ -1,0 +1,7 @@
+site_name: PsychoPass
+site_url: https://PsychoPass.animekaizoku.com/docs/
+nav:
+    - Home: index.md
+    - About: about.md
+theme:
+  name: readthedocs
