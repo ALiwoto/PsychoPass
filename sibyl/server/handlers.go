@@ -115,7 +115,7 @@ func loadDocs() {
 
 func addHeaders() {
 	ServerEngine.Use(gin.HandlerFunc(func(ctx *gin.Context) {
-		ctx.Header("Content-Security-Policy", "default-src 'none'; style-src 'self'")
+		// ctx.Header("Content-Security-Policy", "default-src 'none'; style-src 'self'")
 		ctx.Header("Access-Control-Allow-Origin", "*")
 	}))
 }
