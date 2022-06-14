@@ -1,7 +1,148 @@
+# This is a required setting, and should be a string that is used as 
+# the main title for the project documentation.
+# When rendering the theme this setting will be passed as the site_name 
+# context variable.
 site_name: PsychoPass
+
+# Set the canonical URL of the site. 
+# This will add a link tag with the canonical URL to the head section
+# of each HTML page. If the 'root' of the MkDocs site will be within a 
+# subdirectory of a domain, be sure to include that subdirectory in 
+# the setting (https://example.com/foo/).
+#
+# This setting is also used for mkdocs serve: 
+# the server will be mounted onto a path taken from the path component of the URL, 
+# e.g. some/page.md will be served from http://127.0.0.1:8000/foo/some/page/ 
+# to mimic the expected remote layout.
+# default: null
 site_url: https://PsychoPass.animekaizoku.com/docs/
+
+# When set, provides a link to your repository (GitHub, Bitbucket, GitLab, ...) on each page.
+# default: null
+repo_url: https://github.com/MinistryOfWelfare/PsychoPass
+
+# When set, provides the name for the link to your repository on each page.
+# default: 'GitHub', 'Bitbucket' or 'GitLab' if the repo_url matches those domains, 
+# otherwise the hostname from the repo_url.
+repo_name: GitHub
+
+# The path from the base repo_url to the docs directory when directly viewing a page,
+# accounting for specifics of the repository host (e.g. GitHub, Bitbucket, etc), 
+# the branch, and the docs directory itself. 
+# MkDocs concatenates repo_url and edit_uri, and appends the input path of the page.
+# When set, and if your theme supports it, provides a link directly to the page 
+# in your source repository. This makes it easier to find and edit the source for 
+# the page. If repo_url is not set, this option is ignored. On some themes, 
+# setting this option may cause an edit link to be used in place of a repository 
+# link. Other themes may show both links.
+# The edit_uri supports query ('?') and fragment ('#') characters. 
+# For repository hosts that use a query or a fragment to access the files, 
+# the edit_uri might be set as follows. (Note the ? and # in the URI...)
+edit_uri: 'edit/master/docs/docs/'
+
+# Set the site description. This will add a meta tag to the generated HTML header.
+# default: null
+site_description: PsychoPass API documentations
+
+# Set the name of the author. This will add a meta tag to the generated HTML header.
+# default: null
+site_author: animekaizoku
+
+# Set the copyright information to be included in the documentation by the theme.
+# default: null
+copyright: © Copyright 2021-2022, <a href="https://github.com/ALiwoto">ALiwoto</a>, <a href="https://github.com/MinistryOfWelfare">Ministry Of Welfare</a> | <a href="https://animekaizoku.com/">Kaizoku Network</a>
+
+# Set the remote branch to commit to when using gh-deploy to deploy to GitHub Pages.
+# This option can be overridden by a command line option in gh-deploy.
+remote_branch: gh-pages
+
+# Set the remote name to push to when using gh-deploy to deploy to GitHub Pages. 
+# This option can be overridden by a command line option in gh-deploy.
+remote_name: origin
+
+# This setting is used to determine the format and layout of the global navigation for 
+# the site.
+# All paths in the navigation configuration must be relative to the docs_dir 
+# configuration option. 
+# See the section on configuring pages and navigation for a more detailed breakdown, 
+# including how to create sub-sections.
 nav:
     - Home: index.md
-    - About: about.md
+    - General:
+      - About:
+        - Introduction: about/introduction.md
+        - Frequently asked questions: about/faq.md
+        - Troubleshooting: about/troubleshooting.md
+    - Getting Started:
+      - Introduction:
+        - Introduction to API: getting_started/introduction/introduction_to_api.md
+        - Requests and Responses: getting_started/introduction/req_and_resp.md
+        - Requests and Responses: getting_started/introduction/error_handling.md
+      - API Methods:
+        - Token Methods: getting_started/api_methods/token_methods.md
+        - Info Methods: getting_started/api_methods/info_methods.md
+        - Scan Methods: getting_started/api_methods/scan_methods.md
+        - Ban Methods: getting_started/api_methods/ban_methods.md
+        - Polling Methods: getting_started/api_methods/polling_methods.md
+      - API Responses:
+        - Token Responses: getting_started/api_responses/token_responses.md
+        - Info Responses: getting_started/api_responses/info_responses.md
+        - Scan Responses: getting_started/api_responses/scan_responses.md
+        - Ban Responses: getting_started/api_responses/ban_responses.md
+        - Polling Responses: getting_started/api_responses/polling_responses.md
+      - Event Polling:
+        - Concepts: getting_started/event_polling/concepts.md
+        - Broadcast Types: getting_started/event_polling/broadcast_types.md
+        - Polling Examples: getting_started/event_polling/polling_examples.md
+    - External Links:
+      - Telegram Links: extlinks/tglinks.md
+      - Libraries List: extlinks/lib_list.md
+
 theme:
   name: readthedocs
+  sticky_navigation: false
+  collapse_navigation: false
+  logo: img/logo.png
+  navigation_depth: 5
+
+
+# The directory containing the documentation source markdown files.
+# This can either be a relative directory, in which case it is resolved 
+# relative to the directory containing your configuration file, or it can
+# be an absolute directory path from the root of your local file system.
+# default: 'docs'
+docs_dir: docs
+
+# The directory where the output HTML and other files are created. 
+# This can either be a relative directory, in which case it is resolved 
+# relative to the directory containing your configuration file, or it can
+# be an absolute directory path from the root of your local file system.
+site_dir: site
+
+# Determines how warnings are handled. 
+# Set to true to halt processing when a warning is raised. 
+# Set to false to print a warning and continue processing.
+# default: false
+strict: true
+
+# Determines the address used when running mkdocs serve. 
+# Must be of the format IP:PORT.
+#
+# Allows a custom default to be set without the need to 
+# pass it through the --dev-addr option every time the mkdocs serve command is called.
+dev_addr: '127.0.0.1:8000'
+
+
+
+plugins:
+  # search plugin uses https://lunrjs.com/ as search engine.
+  search:
+    # A regular expression which matches the characters used as word separators when building the index.
+    separator: '[\s\-\.]+'
+    # An integer value that defines the minimum length for a search query. 
+    # By default searches shorter than 3 chars in length are ignored as search result quality
+    # with short search terms are poor. 
+    # However, for some use cases (such as documentation about Message Queues which might
+    # generate searches for 'MQ') it may be preferable to set a shorter limit.
+    min_search_length: 2
+
