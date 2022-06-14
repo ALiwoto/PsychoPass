@@ -70,27 +70,32 @@ nav:
     - Home: index.md
     - General:
       - About:
+        - 'index': about/index.md
         - Introduction: about/introduction.md
         - Frequently asked questions: about/faq.md
         - Troubleshooting: about/troubleshooting.md
     - Getting Started:
       - Introduction:
+        - 'index': getting_started/introduction/index.md
         - Introduction to API: getting_started/introduction/introduction_to_api.md
         - Requests and Responses: getting_started/introduction/req_and_resp.md
         - Requests and Responses: getting_started/introduction/error_handling.md
       - API Methods:
+        - 'index': getting_started/api_methods/index.md
         - Token Methods: getting_started/api_methods/token_methods.md
         - Info Methods: getting_started/api_methods/info_methods.md
         - Scan Methods: getting_started/api_methods/scan_methods.md
         - Ban Methods: getting_started/api_methods/ban_methods.md
         - Polling Methods: getting_started/api_methods/polling_methods.md
       - API Responses:
+        - 'index': getting_started/api_responses/index.md
         - Token Responses: getting_started/api_responses/token_responses.md
         - Info Responses: getting_started/api_responses/info_responses.md
         - Scan Responses: getting_started/api_responses/scan_responses.md
         - Ban Responses: getting_started/api_responses/ban_responses.md
         - Polling Responses: getting_started/api_responses/polling_responses.md
       - Event Polling:
+        - 'index': getting_started/event_polling/index.md
         - Concepts: getting_started/event_polling/concepts.md
         - Broadcast Types: getting_started/event_polling/broadcast_types.md
         - Polling Examples: getting_started/event_polling/polling_examples.md

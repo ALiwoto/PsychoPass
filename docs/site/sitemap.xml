@@ -6,6 +6,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://PsychoPass.animekaizoku.com/docs/about/</loc>
+         <lastmod>2022-06-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://PsychoPass.animekaizoku.com/docs/about/faq/</loc>
          <lastmod>2022-06-14</lastmod>
          <changefreq>daily</changefreq>
@@ -27,6 +32,11 @@
     </url>
     <url>
          <loc>https://PsychoPass.animekaizoku.com/docs/extlinks/tglinks/</loc>
+         <lastmod>2022-06-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://PsychoPass.animekaizoku.com/docs/getting_started/api_methods/</loc>
          <lastmod>2022-06-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -56,6 +66,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://PsychoPass.animekaizoku.com/docs/getting_started/api_responses/</loc>
+         <lastmod>2022-06-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://PsychoPass.animekaizoku.com/docs/getting_started/api_responses/ban_responses/</loc>
          <lastmod>2022-06-14</lastmod>
          <changefreq>daily</changefreq>
@@ -81,6 +96,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://PsychoPass.animekaizoku.com/docs/getting_started/event_polling/</loc>
+         <lastmod>2022-06-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://PsychoPass.animekaizoku.com/docs/getting_started/event_polling/broadcast_types/</loc>
          <lastmod>2022-06-14</lastmod>
          <changefreq>daily</changefreq>
@@ -92,6 +112,11 @@
     </url>
     <url>
          <loc>https://PsychoPass.animekaizoku.com/docs/getting_started/event_polling/polling_examples/</loc>
+         <lastmod>2022-06-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://PsychoPass.animekaizoku.com/docs/getting_started/introduction/</loc>
          <lastmod>2022-06-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
