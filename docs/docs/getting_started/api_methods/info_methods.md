@@ -1,8 +1,2 @@
+# Info Methods
 
-## one yes
-
-## two yes
-
-## three yes
-
-## four yes

@@ -72,6 +72,7 @@ nav:
       - About:
         - 'index': about/index.md
         - Introduction: about/introduction.md
+        - Flags and Labels: about/flags_and_labels.md
         - Frequently asked questions: about/faq.md
         - Troubleshooting: about/troubleshooting.md
     - Getting Started:
