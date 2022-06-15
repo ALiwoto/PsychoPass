@@ -79,7 +79,7 @@ nav:
         - 'index': getting_started/introduction/index.md
         - Introduction to API: getting_started/introduction/introduction_to_api.md
         - Requests and Responses: getting_started/introduction/req_and_resp.md
-        - Requests and Responses: getting_started/introduction/error_handling.md
+        - Error Handling: getting_started/introduction/error_handling.md
       - API Methods:
         - 'index': getting_started/api_methods/index.md
         - Token Methods: getting_started/api_methods/token_methods.md
@@ -107,7 +107,7 @@ theme:
   name: readthedocs
   sticky_navigation: false
   collapse_navigation: false
-  logo: img/logo.png
+  #logo: img/logo.png
   navigation_depth: 5
 
 
