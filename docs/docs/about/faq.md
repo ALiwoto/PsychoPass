@@ -1,10 +1,3 @@
-## faq.md file
+# Frequently asked questions
 
-
-## one yes
-
-## two yes
-
-## three yes
-
-## four yes
+> _This section doesn't contain any questions yet, feel free to check back later!_
