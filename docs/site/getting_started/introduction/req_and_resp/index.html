@@ -129,6 +129,22 @@
                 </li>
                 <li class="toctree-l2 current"><a class="reference internal current" href="./">Requests and Responses</a>
     <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#requests">Requests</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#requests_1">Requests</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#requestname">RequestName</a>
+        <ul>
+    <li class="toctree-l5"><a class="reference internal" href="#params">Params</a>
+    </li>
+    <li class="toctree-l5"><a class="reference internal" href="#example">Example</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#responses">Responses</a>
+    </li>
     </ul>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../error_handling/">Error Handling</a>
@@ -141,14 +157,6 @@
     <ul>
                 <li class="toctree-l2"><a class="reference internal" href="../../api_methods/">index</a>
     <ul>
-    <li class="toctree-l3"><a class="reference internal" href="../../api_methods/#requestname">RequestName</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="../../api_methods/#params">Params</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="../../api_methods/#example">Example</a>
-    </li>
-        </ul>
-    </li>
     </ul>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../../api_methods/token_methods/">Token Methods</a>
@@ -272,10 +280,74 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="one-yes">one yes</h2>
-<h2 id="two-yes">two yes</h2>
-<h2 id="three-yes">three yes</h2>
-<h2 id="four-yes">four yes</h2>
+                <h1 id="requests-and-responses">Requests and responses</h1>
+<p>This page will walk you through basics of sending a request to the API and parsing the received response from it.
+It will also show the format used to list and explain the methods and params inside of this docs.</p>
+<h2 id="requests">Requests</h2>
+<p>In this section, everything about how to send a specified request to the API and their necessary parameters are explained.</p>
+<blockquote>
+<p>You can find all API methods, their explanation and acceptable params <a href="../../api_methods/">here</a>.</p>
+</blockquote>
+<hr/>
+
+<h2 id="requests_1">Requests</h2>
+<p>We will be using curl to display how to send a request to the API to make it more simpler. Later on you can use online tools to convert a curl request to your desired programming language.</p>
+<p>Here is a sample request, all of the requests explained in this section will be in the following format:</p>
+<h3 id="requestname"><strong>RequestName</strong></h3>
+<p>Request explanation.</p>
+<h4 id="params"><strong>Params</strong></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Param</th>
+<th align="center">Type</th>
+<th align="center">Required</th>
+<th align="center">Permission</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">user-id</td>
+<td align="center">int64</td>
+<td align="center">No</td>
+<td align="center">Enforcer</td>
+</tr>
+<tr>
+<td align="center">reason</td>
+<td align="center">string</td>
+<td align="center">Yes</td>
+<td align="center">Enforcer</td>
+</tr>
+<tr>
+<td align="center">sample-param</td>
+<td align="center">bool</td>
+<td align="center">No</td>
+<td align="center">Enforcer</td>
+</tr>
+<tr>
+<td align="center">something</td>
+<td align="center">string</td>
+<td align="center">Yes</td>
+<td align="center">Inspector</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>reason: the reason.</li>
+<li>user-id: the user-id.</li>
+<li>sample-param: a sample param which doesn't really need to be passed to the api.</li>
+<li>something: a param. please do notice that this param can only be used by inspectors.</li>
+</ul>
+<h4 id="example"><strong>Example</strong></h4>
+<pre><code class="language-sh">curl 'https://PsychoPass.AnimeKaizoku.com/requestName' -H 'user-id: 12345' -H 'reason: the reason' \
+      -H 'simple-param: true' -H 'something: ok'
+</code></pre>
+<hr/>
+
+<h2 id="responses">Responses</h2>
+<blockquote>
+<p><em>This part doesn't contain any information yet, feel free to check it out later.</em></p>
+</blockquote>
               
             </div>
           </div><footer>

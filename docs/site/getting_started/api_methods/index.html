@@ -129,6 +129,22 @@
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../introduction/req_and_resp/">Requests and Responses</a>
     <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../introduction/req_and_resp/#requests">Requests</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../introduction/req_and_resp/#requests_1">Requests</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="../introduction/req_and_resp/#requestname">RequestName</a>
+        <ul>
+    <li class="toctree-l5"><a class="reference internal" href="../introduction/req_and_resp/#params">Params</a>
+    </li>
+    <li class="toctree-l5"><a class="reference internal" href="../introduction/req_and_resp/#example">Example</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../introduction/req_and_resp/#responses">Responses</a>
+    </li>
     </ul>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../introduction/error_handling/">Error Handling</a>
@@ -141,14 +157,6 @@
     <ul class="current">
                 <li class="toctree-l2 current"><a class="reference internal current" href="./">index</a>
     <ul class="current">
-    <li class="toctree-l3"><a class="reference internal" href="#requestname">RequestName</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#params">Params</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example">Example</a>
-    </li>
-        </ul>
-    </li>
     </ul>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="token_methods/">Token Methods</a>
@@ -280,60 +288,6 @@
 <li><a href="ban_methods/">Ban Methods</a></li>
 <li><a href="polling_methods/">Polling Methods</a></li>
 </ul>
-<hr/>
-
-<p>In this section, everything about how to send a specified request to the API and their necessary parameters are explained.</p>
-<p>We will be using curl to display how to send a request to the API to make it more simpler. Later on you can use online tools to convert a curl request to your desired programming language.</p>
-<p>Here is a sample request, all of the requests explained in this section will be in the following format:</p>
-<h2 id="requestname"><strong>RequestName</strong></h2>
-<p>Request explanation.</p>
-<h3 id="params"><strong>Params</strong></h3>
-<table>
-<thead>
-<tr>
-<th align="center">Param</th>
-<th align="center">Type</th>
-<th align="center">Required</th>
-<th align="center">Permission</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">user-id</td>
-<td align="center">int64</td>
-<td align="center">No</td>
-<td align="center">Enforcer</td>
-</tr>
-<tr>
-<td align="center">reason</td>
-<td align="center">string</td>
-<td align="center">Yes</td>
-<td align="center">Enforcer</td>
-</tr>
-<tr>
-<td align="center">sample-param</td>
-<td align="center">bool</td>
-<td align="center">No</td>
-<td align="center">Enforcer</td>
-</tr>
-<tr>
-<td align="center">something</td>
-<td align="center">string</td>
-<td align="center">Yes</td>
-<td align="center">Inspector</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>reason: the reason.</li>
-<li>user-id: the user-id.</li>
-<li>sample-param: a sample param which doesn't really need to be passed to the api.</li>
-<li>something: a param. please do notice that this param can only be used by inspectors.</li>
-</ul>
-<h3 id="example"><strong>Example</strong></h3>
-<pre><code class="language-sh">curl 'https://PsychoPass.AnimeKaizoku.com/requestName' -H 'user-id: 12345' -H 'reason: the reason' \
-      -H 'simple-param: true' -H 'something: ok'
-</code></pre>
               
             </div>
           </div><footer>

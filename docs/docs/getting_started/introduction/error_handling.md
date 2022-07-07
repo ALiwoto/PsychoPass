@@ -1,8 +1,5 @@
+# Error handling
 
-## one yes
+> _This page doesn't contain any content yet, feel free to check it out later._
 
-## two yes
 
-## three yes
-
-## four yes

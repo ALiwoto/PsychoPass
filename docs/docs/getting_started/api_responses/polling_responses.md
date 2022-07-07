@@ -1,8 +1,3 @@
+# Polling responses
 
-## one yes
-
-## two yes
-
-## three yes
-
-## four yes
+> _This page doesn't contain any content yet, feel free to check it out later._
