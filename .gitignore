@@ -3,6 +3,7 @@
 bin/
 *.exe
 vendor/
+env
 sibylBinary
 PsychoPass
 sibylSystem
