@@ -37,7 +37,7 @@ Request explanation.
 #### **Example**
 
 ```sh
-curl 'https://PsychoPass.AnimeKaizoku.com/requestName' -H 'user-id: 12345' -H 'reason: the reason' \
+curl 'https://PsychoPass.kaizoku.cyou/requestName' -H 'user-id: 12345' -H 'reason: the reason' \
       -H 'simple-param: true' -H 'something: ok'
 ```
 

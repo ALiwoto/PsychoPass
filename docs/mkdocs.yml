@@ -15,7 +15,7 @@ site_name: PsychoPass
 # e.g. some/page.md will be served from http://127.0.0.1:8000/foo/some/page/ 
 # to mimic the expected remote layout.
 # default: null
-site_url: https://PsychoPass.animekaizoku.com/docs/
+site_url: https://PsychoPass.kaizoku.cyou/docs/
 
 # When set, provides a link to your repository (GitHub, Bitbucket, GitLab, ...) on each page.
 # default: null
@@ -50,7 +50,7 @@ site_author: animekaizoku
 
 # Set the copyright information to be included in the documentation by the theme.
 # default: null
-copyright: © Copyright 2021-2022, <a href="https://github.com/ALiwoto">ALiwoto</a>, <a href="https://github.com/MinistryOfWelfare">Ministry Of Welfare</a> | <a href="https://animekaizoku.com/">Kaizoku Network</a>
+copyright: © Copyright 2021-2022, <a href="https://github.com/ALiwoto">ALiwoto</a>, <a href="https://github.com/MinistryOfWelfare">Ministry Of Welfare</a> | <a href="https://kaizoku.cyou/">Kaizoku Network</a>
 
 # Set the remote branch to commit to when using gh-deploy to deploy to GitHub Pages.
 # This option can be overridden by a command line option in gh-deploy.
