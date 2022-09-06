@@ -54,6 +54,9 @@ func LoadHandlers() {
 	bindHandler(banHandlers.RemoveBanHandler, "deleteBan", "removeBan",
 		"revertBan", "remBan", "rmBan")
 
+	// fullRevert handler
+	bindHandler(banHandlers.FullRevertHandler, "fullRevert")
+
 	// getInfo handlers
 	bindHandler(infoHandlers.GetInfoHandler, "getInfo", "fetchInfo")
 
