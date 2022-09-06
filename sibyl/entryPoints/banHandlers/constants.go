@@ -10,9 +10,10 @@ const (
 )
 
 const (
-	OriginAddBan    = "AddBan"
-	OriginMultiBan  = "MultiBan"
-	OriginRemoveBan = "RemoveBan"
+	OriginAddBan     = "AddBan"
+	OriginMultiBan   = "MultiBan"
+	OriginRemoveBan  = "RemoveBan"
+	OriginFullRevert = "FullRevert"
 )
 
 const (

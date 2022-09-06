@@ -240,35 +240,35 @@ func FullRevertHandler(c *gin.Context) {
 	userId := utils.GetParam(c, "user-id", "userId", "id")
 
 	if len(token) == 0 {
-		entry.SendNoTokenError(c, OriginRemoveBan)
+		entry.SendNoTokenError(c, OriginFullRevert)
 		return
 	}
 
 	d, err := database.GetTokenFromString(token)
 	if err != nil || d == nil {
-		entry.SendInvalidTokenError(c, OriginRemoveBan)
+		entry.SendInvalidTokenError(c, OriginFullRevert)
 		return
 	}
 
 	if !d.CanFullRevert() {
-		entry.SendPermissionDenied(c, OriginRemoveBan)
+		entry.SendPermissionDenied(c, OriginFullRevert)
 		return
 	}
 
 	id, err := strconv.ParseInt(userId, 10, 64)
 	if err != nil || sv.IsInvalidID(id) {
-		entry.SendInvalidUserIdError(c, OriginRemoveBan)
+		entry.SendInvalidUserIdError(c, OriginFullRevert)
 		return
 	}
 
 	if sv.IsForbiddenID(id) {
-		entry.SendPermissionDenied(c, OriginRemoveBan)
+		entry.SendPermissionDenied(c, OriginFullRevert)
 		return
 	}
 
 	u, _ := database.GetUserFromId(id)
 	if u == nil {
-		entry.SendUserNotFoundError(c, OriginRemoveBan)
+		entry.SendUserNotFoundError(c, OriginFullRevert)
 		return
 	}
 
