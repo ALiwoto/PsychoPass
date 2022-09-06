@@ -52,7 +52,11 @@ func AddBanByInfo(info *sv.MultiBanUserInfo, adder int64,
 }
 
 // DeleteUser will delete a user from the sibyl database.
+// WARNING: this function will NOT check for user existence inside of db,
+// it won't error out or panic if the user id is not found in the db, but it's
+// still waste of resources, do check the user before using this function.
 func DeleteUser(userID int64) {
+	userDbMap.Delete(userID)
 	lockdb()
 	SESSION.Delete(&sv.User{}, "user_id = ?", userID)
 	unlockdb()
