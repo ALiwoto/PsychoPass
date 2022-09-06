@@ -61,7 +61,7 @@ func applyMultiBan(data *sv.MultiBanRawData, by int64) {
 				}
 
 				*tmpUser = *cloneUser
-				database.UpdateBanparameter(tmpUser, data.IsSilent)
+				database.UpdateBanParameter(tmpUser, data.IsSilent)
 				continue
 			}
 			count = tmpUser.BanCount

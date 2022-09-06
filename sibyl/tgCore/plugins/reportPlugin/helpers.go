@@ -75,7 +75,7 @@ func pushScanToDatabase(scan *sv.Report) {
 			u.SourceGroup = "" /* TODO */
 			u.SetAsBanReason(scan.ReportReason)
 			u.IncreaseCrimeCoefficientAuto()
-			database.UpdateBanparameter(u, false)
+			database.UpdateBanParameter(u, false)
 			return
 		}
 		count = u.BanCount
@@ -120,7 +120,7 @@ func pushScanToDatabaseWithValidation(scan *sv.Report) {
 			}
 
 			*u = *tmpUser
-			database.UpdateBanparameter(u, false)
+			database.UpdateBanParameter(u, false)
 			return
 		}
 		count = u.BanCount

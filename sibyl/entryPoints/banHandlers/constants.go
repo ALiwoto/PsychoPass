@@ -10,13 +10,15 @@ const (
 )
 
 const (
-	OriginAddBan    = "AddBan"
-	OriginMultiBan  = "MultiBan"
-	OriginRemoveBan = "RemoveBan"
+	OriginAddBan     = "AddBan"
+	OriginMultiBan   = "MultiBan"
+	OriginRemoveBan  = "RemoveBan"
+	OriginFullRevert = "FullRevert"
 )
 
 const (
 	MessageUnbanned           = "User was unbanned"
+	MessageFullReverted       = "User was fully reverted"
 	MessageHistoryCleared     = "User's history has been cleared"
 	MessageApplyingMultiBan   = "Applying your multi-ban request in background"
 	MessageApplyingMultiUnBan = "Applying your multi-unban request in background"
