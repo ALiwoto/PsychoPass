@@ -274,7 +274,7 @@ func FullRevertHandler(c *gin.Context) {
 
 	database.DeleteUser(id)
 
-	entry.SendResult(c, MessageUnbanned)
+	entry.SendResult(c, MessageFullReverted)
 }
 
 // MultiUnBanHandler will unban multiple target users all at once
