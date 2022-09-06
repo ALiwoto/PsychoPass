@@ -96,8 +96,8 @@ func ClearHistory(user *sv.User) {
 	unlockdb()
 }
 
-// UpdateBanparameter will update a user's ban parameter into the database.
-func UpdateBanparameter(user *sv.User, silent bool) {
+// UpdateBanParameter will update a user's ban parameter into the database.
+func UpdateBanParameter(user *sv.User, silent bool) {
 	lockdb()
 	tx := SESSION.Begin()
 	tx.Save(user)

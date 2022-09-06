@@ -73,6 +73,12 @@ func (t *Token) CanBan() bool {
 	return t.Permission > Enforcer
 }
 
+// CanFullRevert returns true if and only if this token with its
+// current permission is able to fully revert someone on the api.
+func (t *Token) CanFullRevert() bool {
+	return t.Permission >= Owner
+}
+
 // CanCreateToken returns true if the token with its current
 // permission can create tokens in Sibyl System or not.
 func (t *Token) CanCreateToken() bool {
@@ -173,7 +179,7 @@ func (t *Token) GetFormattedCreatedDate() string {
 	return t.CreatedAt.Format("2006-01-02 at 15:04:05")
 }
 
-//---------------------------------------------------------
+// ---------------------------------------------------------
 func (p UserPermission) GetStringPermission() string {
 	switch p {
 	case NormalUser:

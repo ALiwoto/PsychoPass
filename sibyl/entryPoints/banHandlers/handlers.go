@@ -19,6 +19,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// AddBanHandler adds a new ban to the database.
 func AddBanHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "userId", "id", "user-id")
@@ -93,7 +94,7 @@ func AddBanHandler(c *gin.Context) {
 			u.SourceGroup = srcGroup
 			u.SetAsBanReason(banReason)
 			u.IncreaseCrimeCoefficientAuto()
-			database.UpdateBanparameter(u, false)
+			database.UpdateBanParameter(u, false)
 			entry.SendResult(c, &BanResult{
 				PreviousBan: &pre,
 				CurrentBan:  u,
@@ -120,6 +121,9 @@ func AddBanHandler(c *gin.Context) {
 	})
 }
 
+// MultiBanHandler adds multiple ban to the database.
+// this method won't block the http request coming from the user, it will instantly
+// send response to the user, after confirming that the user has correct permissions.
 func MultiBanHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	isSilent := ws.ToBool(utils.GetParam(c, "silent", "is-silent"))
@@ -172,6 +176,8 @@ func MultiBanHandler(c *gin.Context) {
 	entry.SendResult(c, MessageApplyingMultiBan)
 }
 
+// RemoveBanHandler will revert the target user's ban from the database,
+// setting their status to `Restored`.
 func RemoveBanHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 	userId := utils.GetParam(c, "user-id", "userId", "id")
@@ -224,6 +230,63 @@ func RemoveBanHandler(c *gin.Context) {
 	entry.SendResult(c, MessageUnbanned)
 }
 
+// FullRevertHandler is in the case that a target is either
+// banned OR already reverted currently, it will revert their ban, but
+// won't set their status to Restored, they will be a normal civilian who never
+// been banned before.
+// this method is owner-only.
+func FullRevertHandler(c *gin.Context) {
+	token := utils.GetParam(c, "token", "hash")
+	userId := utils.GetParam(c, "user-id", "userId", "id")
+
+	if len(token) == 0 {
+		entry.SendNoTokenError(c, OriginRemoveBan)
+		return
+	}
+
+	d, err := database.GetTokenFromString(token)
+	if err != nil || d == nil {
+		entry.SendInvalidTokenError(c, OriginRemoveBan)
+		return
+	}
+
+	if !d.CanFullRevert() {
+		entry.SendPermissionDenied(c, OriginRemoveBan)
+		return
+	}
+
+	id, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil || sv.IsInvalidID(id) {
+		entry.SendInvalidUserIdError(c, OriginRemoveBan)
+		return
+	}
+
+	if sv.IsForbiddenID(id) {
+		entry.SendPermissionDenied(c, OriginRemoveBan)
+		return
+	}
+
+	u, _ := database.GetUserFromId(id)
+	if u == nil {
+		entry.SendUserNotFoundError(c, OriginRemoveBan)
+		return
+	}
+
+	if !u.Banned && len(u.Reason) == 0 && len(u.BanFlags) == 0 {
+		if clearHistory {
+			database.ClearHistory(u)
+			entry.SendResult(c, MessageHistoryCleared)
+			return
+		}
+		entry.SendUserNotBannedError(c, OriginRemoveBan)
+		return
+	}
+
+	database.RemoveUserBan(u, clearHistory)
+	entry.SendResult(c, MessageUnbanned)
+}
+
+// MultiUnBanHandler will unban multiple target users all at once
 func MultiUnBanHandler(c *gin.Context) {
 	token := utils.GetParam(c, "token", "hash")
 
