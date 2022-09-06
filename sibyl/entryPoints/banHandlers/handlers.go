@@ -272,17 +272,8 @@ func FullRevertHandler(c *gin.Context) {
 		return
 	}
 
-	if !u.Banned && len(u.Reason) == 0 && len(u.BanFlags) == 0 {
-		if clearHistory {
-			database.ClearHistory(u)
-			entry.SendResult(c, MessageHistoryCleared)
-			return
-		}
-		entry.SendUserNotBannedError(c, OriginRemoveBan)
-		return
-	}
+	database.DeleteUser(id)
 
-	database.RemoveUserBan(u, clearHistory)
 	entry.SendResult(c, MessageUnbanned)
 }
 

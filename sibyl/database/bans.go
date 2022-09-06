@@ -54,12 +54,7 @@ func AddBanByInfo(info *sv.MultiBanUserInfo, adder int64,
 // DeleteUser will delete a user from the sibyl database.
 func DeleteUser(userID int64) {
 	lockdb()
-	tx := SESSION.Begin()
-	u := tx.Model(modelUser).Where("user_id = ?", userID)
-	if u != nil {
-		u.Delete(&sv.User{})
-	}
-	tx.Commit()
+	SESSION.Delete(&sv.User{}, "user_id = ?", userID)
 	unlockdb()
 }
 
