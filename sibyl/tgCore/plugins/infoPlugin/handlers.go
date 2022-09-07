@@ -5,6 +5,7 @@
 package infoPlugin
 
 import (
+	"runtime"
 	"strconv"
 
 	"github.com/ALiwoto/mdparser/mdparser"
@@ -13,14 +14,7 @@ import (
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
-	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
 )
-
-func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
-	statsCmd := handlers.NewCommand(StatsCmd, StatsHandler)
-	statsCmd.Triggers = t
-	d.AddHandler(statsCmd)
-}
 
 func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 	user := ctx.EffectiveUser
@@ -79,6 +73,10 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	md.Normal("\n\n• Server uptime: ")
 	md.Mono(sibylValues.GetPrettyUptime())
+	md.Normal("\n\n• Version: ")
+	md.Mono(runtime.Version())
+	md.Normal("\n\n• Cgo calls: ")
+	md.Mono(runtime.NumCgoCall())
 	_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode:             sibylValues.MarkDownV2,
 		DisableWebPagePreview: true,

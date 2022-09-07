@@ -10,7 +10,15 @@ import (
 	"github.com/ALiwoto/mdparser/mdparser"
 	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/shellUtils"
+	"github.com/PaulSonOfLars/gotgbot/v2/ext"
+	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
 )
+
+func LoadAllHandlers(d *ext.Dispatcher, t []rune) {
+	statsCmd := handlers.NewCommand(StatsCmd, StatsHandler)
+	statsCmd.Triggers = t
+	d.AddHandler(statsCmd)
+}
 
 func fetchGitStats(md mdparser.WMarkDown) {
 	rawGit := shellUtils.GetGitStats()
