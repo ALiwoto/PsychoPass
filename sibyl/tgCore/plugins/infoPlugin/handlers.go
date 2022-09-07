@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/ALiwoto/mdparser/mdparser"
+	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils/logging"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
@@ -73,10 +74,13 @@ func StatsHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	md.Normal("\n\n• Server uptime: ")
 	md.Mono(sibylValues.GetPrettyUptime())
-	md.Normal("\n\n• Version: ")
+	md.Normal("\n• Version: ")
 	md.Mono(runtime.Version())
-	md.Normal("\n\n• Cgo calls: ")
-	md.Mono(runtime.NumCgoCall())
+	md.Normal("\n• Cgo calls: ")
+	md.Mono(ssg.ToBase10(runtime.NumCgoCall()))
+	md.Normal("\n• Goroutines: ")
+	md.Mono(ssg.ToBase10(int64(runtime.NumGoroutine())))
+
 	_, _ = msg.Reply(b, md.ToString(), &gotgbot.SendMessageOpts{
 		ParseMode:             sibylValues.MarkDownV2,
 		DisableWebPagePreview: true,
