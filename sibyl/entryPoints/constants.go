@@ -35,6 +35,11 @@ const (
 	// target's user id cannot be found in the sibyl database.
 	ErrUserNotFound = "User not found"
 
+	// ErrRestoredOnly is the error message that should be sent when user is
+	// trying to use a method which can only be used on a target user with `Restored`
+	// status, but the target user doesn't have that status currently.
+	ErrRestoredOnly = "This feature can only be used on users with Restored status"
+
 	// ErrUserNotRegistered is the error message that should be sent when the
 	// target's user is not considered as a registered user.
 	ErrUserNotRegistered = "User not registered"

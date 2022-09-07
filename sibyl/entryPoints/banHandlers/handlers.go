@@ -266,9 +266,12 @@ func FullRevertHandler(c *gin.Context) {
 		return
 	}
 
-	u, _ := database.GetUserFromId(id)
-	if u == nil {
+	targetUser, _ := database.GetUserFromId(id)
+	if targetUser == nil {
 		entry.SendUserNotFoundError(c, OriginFullRevert)
+		return
+	} else if !targetUser.IsRestored() {
+		entry.SendRestoredOnlyError(c, OriginFullRevert)
 		return
 	}
 
