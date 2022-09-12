@@ -482,3 +482,10 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 	return ext.EndGroups
 }
+
+// LogFullRevert function will log the information about a full-revert
+// to the log channels.
+func LogFullRevert(b *gotgbot.Bot, ctx *ext.Context) error {
+
+	return ext.EndGroups
+}
