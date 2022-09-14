@@ -11,4 +11,8 @@ type FullRevertInfo struct {
 
 	// SourceUrl is the source url of the full-revert request.
 	SourceUrl string
+
+	// CrimeCoefficient field is the cc of the target user before getting
+	// reverted.
+	CrimeCoefficient int
 }
