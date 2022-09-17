@@ -10,6 +10,7 @@ import (
 	"github.com/AnimeKaizoku/ssg/ssg"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylBroadcast"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylConfig"
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylLogging"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/utils"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
@@ -485,7 +486,6 @@ func closeHandler(b *gotgbot.Bot, ctx *ext.Context) error {
 
 // LogFullRevert function will log the information about a full-revert
 // to the log channels.
-func LogFullRevert(b *gotgbot.Bot, ctx *ext.Context) error {
+func LogFullRevert(info *sibylLogging.FullRevertInfo) {
 
-	return ext.EndGroups
 }

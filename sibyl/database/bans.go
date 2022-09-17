@@ -7,6 +7,7 @@ package database
 import (
 	"time"
 
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylLogging"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 )
 
@@ -27,8 +28,8 @@ func AddBan(info *BanInfo) *sv.User {
 	user.IncreaseCrimeCoefficientAuto()
 	NewUser(user)
 
-	if sv.SendToADHandler != nil && !info.IsSilent {
-		go sv.SendToADHandler(user.ToDominatorData(true))
+	if sibylLogging.SendToADHandler != nil && !info.IsSilent {
+		go sibylLogging.SendToADHandler(user.ToDominatorData(true))
 	}
 
 	return user
@@ -76,8 +77,8 @@ func RemoveUserBan(user *sv.User, clearHistory bool) {
 	tx.Commit()
 	unlockdb()
 
-	if sv.SendToADHandler != nil {
-		go sv.SendToADHandler(user.ToDominatorData(false))
+	if sibylLogging.SendToADHandler != nil {
+		go sibylLogging.SendToADHandler(user.ToDominatorData(false))
 	}
 
 }
@@ -103,8 +104,8 @@ func UpdateBanParameter(user *sv.User, silent bool) {
 	tx.Commit()
 	unlockdb()
 
-	if sv.SendToADHandler != nil && !silent {
-		go sv.SendToADHandler(user.ToDominatorData(true))
+	if sibylLogging.SendToADHandler != nil && !silent {
+		go sibylLogging.SendToADHandler(user.ToDominatorData(true))
 	}
 }
 

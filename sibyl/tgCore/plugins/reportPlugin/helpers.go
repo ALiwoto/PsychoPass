@@ -7,6 +7,7 @@ package reportPlugin
 import (
 	"time"
 
+	"github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylLogging"
 	sv "github.com/MinistryOfWelfare/PsychoPass/sibyl/core/sibylValues"
 	"github.com/MinistryOfWelfare/PsychoPass/sibyl/database"
 	"github.com/PaulSonOfLars/gotgbot/v2"
@@ -154,7 +155,7 @@ func pushMultipleScanToDatabase(data *sv.MultiScanRawData) {
 func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 	sv.SendReportHandler = sendReportHandler
 	sv.SendMultiReportHandler = sendMultiReportHandler
-	sv.SendToADHandler = sendToADHandler
+	sibylLogging.SendToADHandler = sendToADHandler
 
 	scanCb := handlers.NewCallback(scanCallBackQuery, scanCallBackResponse)
 	multiScanCb := handlers.NewCallback(multiScanCallBackQuery, multiScanCallBackResponse)

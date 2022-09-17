@@ -19,7 +19,6 @@ type PollingUniqueId uint64
 type BanFlag string
 type SibylUpdateType string
 type ReportHandler func(r *Report)
-type AssaultDominatorHandler func(r *AssaultDominatorData)
 type MultiReportHandler func(data *MultiScanRawData)
 
 type StatValue struct {
