@@ -156,6 +156,7 @@ func LoadAllHandlers(d *ext.Dispatcher, triggers []rune) {
 	sv.SendReportHandler = sendReportHandler
 	sv.SendMultiReportHandler = sendMultiReportHandler
 	sibylLogging.SendToADHandler = sendToADHandler
+	sibylLogging.FullRevertLogger = LogFullRevert
 
 	scanCb := handlers.NewCallback(scanCallBackQuery, scanCallBackResponse)
 	multiScanCb := handlers.NewCallback(multiScanCallBackQuery, multiScanCallBackResponse)
