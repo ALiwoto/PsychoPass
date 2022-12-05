@@ -126,7 +126,7 @@ func MultiReportHandler(c *gin.Context) {
 		return
 	}
 
-	if !agent.CanBan() {
+	if !agent.CanReport() {
 		entry.SendPermissionDenied(c, OriginMultiScan)
 		return
 	}
